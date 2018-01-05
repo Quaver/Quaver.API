@@ -2,7 +2,7 @@
 A C# library for various parts of the rhythm [Quaver](https://github.com/Swan/Quaver) including chart parsing and difficulty calculation.
 
 ### Table of Contents ###
-* [What's Included](https://github.com/Swan/Quaver-API#what's included)
+* [What's Included](https://github.com/Swan/Quaver-API#whats-included)
 * [License](https://github.com/Swan/Quaver-API#license)
 
 # What's Included
