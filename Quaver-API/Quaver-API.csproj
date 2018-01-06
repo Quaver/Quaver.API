@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Enums\GameModes.cs" />
     <Compile Include="Enums\Grades.cs" />
+    <Compile Include="Enums\HitSounds.cs" />
     <Compile Include="Maps\Difficulty\v1\DifficultyCalculator.cs" />
     <Compile Include="Maps\Difficulty\v1\PatternAnalyzer.cs" />
     <Compile Include="Maps\Difficulty\v1\Patterns\PatternInfo.cs" />
