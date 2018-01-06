@@ -349,11 +349,11 @@ namespace Quaver.API.Maps
                     // Normal HitObjects
                     case 1:
                     case 5:
-                        qua.HitObjects.Add(new HitObjectInfo { StartTime = hitObject.StartTime, Lane = keyLane, EndTime = 0 });
+                        qua.HitObjects.Add(new HitObjectInfo { StartTime = hitObject.StartTime, Lane = keyLane, EndTime = 0, HitSound = (HitSounds)hitObject.HitSound});
                         break;
                     case 128:
                     case 22:
-                        qua.HitObjects.Add(new HitObjectInfo { StartTime = hitObject.StartTime, Lane = keyLane, EndTime = hitObject.EndTime });
+                        qua.HitObjects.Add(new HitObjectInfo { StartTime = hitObject.StartTime, Lane = keyLane, EndTime = hitObject.EndTime, HitSound = (HitSounds)hitObject.HitSound});
                         break;
                     default:
                         break;
@@ -424,7 +424,6 @@ namespace Quaver.API.Maps
 
             return maps;
         }
-
     }
 
     /// <summary>
@@ -483,6 +482,11 @@ namespace Quaver.API.Maps
         ///     The endtime of the HitObject (if greater than 0, it's considered a hold note.)
         /// </summary>
         public int EndTime { get; set; }
+
+        /// <summary>
+        ///     Bitwise combination of hit sounds for this object
+        /// </summary>
+        public HitSounds HitSound { get; set; }
 
         public object Clone()
         {
