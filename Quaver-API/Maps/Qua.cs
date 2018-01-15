@@ -16,7 +16,7 @@ namespace Quaver.API.Maps
         ///     The format version of the .qua file, so we can keep track of how
         ///     to deal with things depending on the version
         /// </summary>
-        public int FormatVersion { get; set; }
+        public int FormatVersion { get; set; } = 2;
 
         /// <summary>
         ///     The name of the audio file
@@ -36,12 +36,12 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     The unique Map Identifier (-1 if not submitted)
         /// </summary>
-        public int MapId { get; set; }
+        public int MapId { get; set; } = -1;
 
         /// <summary>
         ///     The unique Map Set identifier (-1 if not submitted)
         /// </summary>
-        public int MapSetId { get; set; }
+        public int MapSetId { get; set; } = -1;
 
         /// <summary>
         ///     The game mode for this map
@@ -476,7 +476,7 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     The lane the HitObject falls in
         /// </summary>
-        public int Lane { get; set; }
+        public int Lane { get; set; } = 1;
 
         /// <summary>
         ///     The endtime of the HitObject (if greater than 0, it's considered a hold note.)
@@ -486,7 +486,7 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     Bitwise combination of hit sounds for this object
         /// </summary>
-        public HitSounds HitSound { get; set; }
+        public HitSounds HitSound { get; set; } = HitSounds.Normal;
 
         public object Clone()
         {
