@@ -34,6 +34,11 @@ namespace Quaver.API.Maps
         public string BackgroundFile { get; set; }
 
         /// <summary>
+        ///     The name of the map's banner file
+        /// </summary>
+        public string BannerFile { get; set; }
+
+        /// <summary>
         ///     The unique Map Identifier (-1 if not submitted)
         /// </summary>
         public int MapId { get; set; } = -1;
