@@ -7,6 +7,7 @@ using Quaver.API.Enums;
 using Quaver.API.Osu;
 using Quaver.API.StepMania;
 using Quaver.API.Maps.Difficulty.v1;
+using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps
 {
@@ -114,7 +115,7 @@ namespace Quaver.API.Maps
 
             using (var file = File.OpenText(path))
             {
-                var serializer = new JsonSerializer();
+                var serializer = new Deserializer();
                 qua = (Qua)serializer.Deserialize(file, typeof(Qua));
             }
 
@@ -139,7 +140,7 @@ namespace Quaver.API.Maps
             // Save
             using (var file = File.CreateText(path))
             {
-                var serializer = new JsonSerializer() { Formatting = Newtonsoft.Json.Formatting.None };
+                var serializer = new Serializer();
                 serializer.Serialize(file, this);
             }
         }
