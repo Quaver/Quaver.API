@@ -180,9 +180,9 @@ namespace Quaver.API.Maps
         ///     Placeholder
         /// </summary>
         /// <returns></returns>
-        public int CalculateFakeDifficulty()
+        public float CalculateFakeDifficulty()
         {
-            return HitObjects.Count / FindSongLength(this);
+            return HitObjects.Count / (FindSongLength(this) / 1000f);
         }
 
         /// <summary>
