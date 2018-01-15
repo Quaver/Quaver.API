@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 using Quaver.API.Enums;
 using Quaver.API.Osu;
 using Quaver.API.StepMania;
@@ -101,7 +100,6 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     Is the Qua actually valid?
         /// </summary>
-        [JsonIgnore]
         public bool IsValidQua { get; set; }
 
         /// <summary>
