@@ -100,6 +100,7 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     Is the Qua actually valid?
         /// </summary>
+        [YamlIgnore]
         public bool IsValidQua { get; set; }
 
         /// <summary>
