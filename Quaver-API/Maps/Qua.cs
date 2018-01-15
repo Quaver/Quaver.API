@@ -363,7 +363,6 @@ namespace Quaver.API.Maps
             qua.IsValidQua = CheckQuaValidity(qua);
             qua.Sort();
 
-            Console.WriteLine(qua.Mode);
             return qua;
         }
 
