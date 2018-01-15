@@ -177,6 +177,15 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
+        ///     Placeholder
+        /// </summary>
+        /// <returns></returns>
+        public int CalculateFakeDifficulty()
+        {
+            return HitObjects.Count / FindSongLength(this);
+        }
+
+        /// <summary>
         ///     In Quaver, the key count is defined by the mode.
         ///     See: GameModes.cs
         /// </summary>
