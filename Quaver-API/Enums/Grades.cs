@@ -20,7 +20,6 @@ namespace Quaver.API.Enums
         S,
         SS,
         X,
-        XX,
-        XXX
+        XX
     }
 }
