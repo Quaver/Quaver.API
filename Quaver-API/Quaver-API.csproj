@@ -48,10 +48,15 @@
     <Compile Include="Enums\Grades.cs" />
     <Compile Include="Enums\HitSounds.cs" />
     <Compile Include="Enums\Judge.cs" />
+    <Compile Include="Gameplay\JudgeHealthWeighting.cs" />
+    <Compile Include="Gameplay\JudgeScoreWeighting.cs" />
     <Compile Include="Maps\Difficulty\v1\DifficultyCalculator.cs" />
     <Compile Include="Maps\Difficulty\v1\PatternAnalyzer.cs" />
     <Compile Include="Maps\Difficulty\v1\Patterns\PatternInfo.cs" />
     <Compile Include="Maps\Qua.cs" />
+    <Compile Include="Gameplay\GradePercentages.cs" />
+    <Compile Include="Gameplay\JudgeAccuracyWeighting.cs" />
+    <Compile Include="Gameplay\JudgeWindow.cs" />
     <Compile Include="Osu\PeppyBeatmap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StepMania\StepManiaFile.cs" />
