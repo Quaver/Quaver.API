@@ -209,12 +209,12 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="qua"></param>
         /// <returns></returns>
-        public static decimal FindCommonBpm(Qua qua)
+        public static double FindCommonBpm(Qua qua)
         {
             if (qua.TimingPoints.Count == 0)
                 return 0;
 
-            return Math.Round((decimal)qua.TimingPoints.GroupBy(i => i.Bpm).OrderByDescending(grp => grp.Count())
+            return Math.Round(qua.TimingPoints.GroupBy(i => i.Bpm).OrderByDescending(grp => grp.Count())
                 .Select(grp => grp.Key).First(), 2, MidpointRounding.AwayFromZero);
         }
 
