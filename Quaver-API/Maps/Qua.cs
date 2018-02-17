@@ -386,57 +386,75 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="sm"></param>
         /// <returns></returns>
-        public static List<Qua> ConvertStepManiaChart(StepManiaFile sm)
+        public static void ConvertStepManiaChart(StepManiaFile sm)
         {
             var maps = new List<Qua>();
 
-            // Set the base Qua data
-            var baseQua = new Qua
+            foreach (var chart in sm.Charts)
             {
-                Artist = sm.Artist,
-                Title = sm.Title,
-                Creator = sm.Credit,
-                Source = sm.Subtitle,
-                AudioFile = sm.Music,
-                BackgroundFile = sm.Background,
-                Description = "This map was converted from StepMania.",
-                FormatVersion = 1,
-                MapId = -1,
-                MapSetId = -1,
-                Mode = GameModes.Keys4,
-                Tags = "",
-                SongPreviewTime = (int)(sm.SampleStart * 1000f),
-                HitObjects = new List<HitObjectInfo>(),
-                TimingPoints = new List<TimingPointInfo>(),
-                SliderVelocities = new List<SliderVelocityInfo>()
-            };
-
-            // Stores the total track time throughout the map
-            var totalTrackTime = 0;
-
-            // Find the time in milliseconds of the timing points and add them to the list
-            for (var i = 0; i < sm.Bpms.Count; i++)
-            {
-                if (i == 0)
+                var baseQua = new Qua()
                 {
-                    // Add the first timing point to the total track time to get the correct offset.
-                    totalTrackTime += (int)Math.Round(60000 / sm.Bpms[i].BeatsPerMinute * sm.Bpms[i].Beats - sm.Offset * 1000, 0);
+                    FormatVersion = 1,
+                    Artist = sm.Artist,
+                    Title = sm.Title,
+                    AudioFile = sm.Music,
+                    BackgroundFile = sm.Background,
+                    BannerFile = "",
+                    Creator = sm.Credit,
+                    Description = "This map was converted from StepMania",
+                    DifficultyName = chart.Difficulty,
+                    TimingPoints = new List<TimingPointInfo>(),
+                    HitObjects = new List<HitObjectInfo>(),
+                    SongPreviewTime = (int)sm.SampleStart
+                };
 
-                    // Add the new timing point
-                    baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalTrackTime, Bpm = sm.Bpms[i].BeatsPerMinute });
+                // Convert BPM to Quaver Timing Points
+                var totalBpmTrackTime = 0f;
+
+                for (var i = 0; i < sm.Bpms.Count; i++)
+                {
+                    // Handle the first BPM point
+                    if (sm.Bpms[i].Beats == 0 && i == 0)
+                    {
+                        totalBpmTrackTime += 60000 / sm.Bpms[i].BeatsPerMinute * sm.Bpms[i].Beats - sm.Offset * 1000;
+                       
+                        // Add the first timing point
+                        baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalBpmTrackTime, Bpm = sm.Bpms[i].BeatsPerMinute });
+                    }
+
+                    // Add the timing point ahead of it if it exists
+                    if (sm.Bpms.Count <= i + 1)
+                        continue;
+
+                    totalBpmTrackTime += 60000 / sm.Bpms[i].BeatsPerMinute * Math.Abs(sm.Bpms[i + 1].Beats - sm.Bpms[i].Beats);
+                    baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalBpmTrackTime, Bpm = sm.Bpms[i + 1].BeatsPerMinute });
                 }
 
-                if (sm.Bpms.Count > i + 1)
+                // Convert StepMania note rows to Quaver HitObjects
+                var currentBeat = 0;
+                var totalBeatTrackTime = 0f;
+                foreach (var measure in chart.Measures)
                 {
-                    // Add to the total track time for the next point
-                    totalTrackTime += (int)Math.Round(60000 / sm.Bpms[i].BeatsPerMinute * Math.Abs(sm.Bpms[i + 1].Beats - sm.Bpms[i].Beats), 0);
+                    foreach (var beat in measure.NoteRows)
+                    {
+                        currentBeat++;
 
-                    // Add the new timing point
-                    baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalTrackTime, Bpm = sm.Bpms[i + 1].BeatsPerMinute });
+                        // Get the amount of milliseconds for this particular measure
+                        var msPerNote = 60000 / sm.Bpms[StepManiaFile.GetBpmIndexFromBeat(sm, currentBeat)].BeatsPerMinute * 4 / measure.NoteRows.Count;
+
+                        // If we're on the first beat, then the current track time should be the offset of the map.
+                        totalBeatTrackTime += (currentBeat == 1) ? -sm.Offset * 1000f : msPerNote;
+
+                        // Convert all Lane's HitObjects
+                        StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 1, beat.Lane1);
+                        StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 2, beat.Lane2);
+                        StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 3, beat.Lane3);
+                        StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 4, beat.Lane4);
+                    }
                 }
-            }
 
-            return maps;
+                maps.Add(baseQua);
+            }    
         }
     }
 
