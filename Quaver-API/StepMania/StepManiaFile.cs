@@ -122,8 +122,8 @@ namespace Quaver.API.StepMania
                             {
                                 // An individual bpm is split by "offset=bpm"
                                 var bpmSplit = bpm.Split('=').ToList();
-                                sm.Bpms.Add(new Bpm { Beats = int.Parse(bpmSplit[0]), BeatsPerMinute = float.Parse(bpmSplit[1]) });
-                            }
+                                sm.Bpms.Add(new Bpm { Beats = (int)float.Parse(bpmSplit[0], CultureInfo.InvariantCulture), BeatsPerMinute = float.Parse(bpmSplit[1], CultureInfo.InvariantCulture) });
+                            }             
                             continue;
                         case "#NOTES":
                             inNotes = true;
