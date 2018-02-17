@@ -398,13 +398,17 @@ namespace Quaver.API.Maps
                     Artist = sm.Artist,
                     Title = sm.Title,
                     AudioFile = sm.Music,
-                    BackgroundFile = sm.Background,
+                    BackgroundFile = sm.Background.Replace(".jpeg", ".jpg"),
                     BannerFile = "",
                     Creator = sm.Credit,
                     Description = "This map was converted from StepMania",
+                    Mode = GameModes.Keys4,
                     DifficultyName = chart.Difficulty,
+                    Source = "StepMania",
+                    Tags = "StepMania",
                     TimingPoints = new List<TimingPointInfo>(),
                     HitObjects = new List<HitObjectInfo>(),
+                    SliderVelocities = new List<SliderVelocityInfo>(),
                     SongPreviewTime = (int)sm.SampleStart
                 };
 
