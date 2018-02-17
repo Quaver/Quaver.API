@@ -92,22 +92,22 @@ namespace Quaver.API.StepMania
                     switch (key)
                     {
                         case "#TITLE":
-                            sm.Title = value;
+                            sm.Title = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
                             continue;
                         case "#SUBTITLE":
-                            sm.Subtitle = value;
+                            sm.Subtitle = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
                             continue;
                         case "#ARTIST":
-                            sm.Artist = value;
+                            sm.Artist = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
                             continue;
                         case "#CREDIT":
-                            sm.Credit = value;
+                            sm.Credit = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
                             continue;
                         case "#MUSIC":
-                            sm.Music = value;
+                            sm.Music = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
                             continue;
                         case "#BACKGROUND":
-                            sm.Background = value;
+                            sm.Background = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
                             continue;
                         case "#OFFSET":
                             sm.Offset = float.Parse(value);
