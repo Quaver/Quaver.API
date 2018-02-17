@@ -386,7 +386,7 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="sm"></param>
         /// <returns></returns>
-        public static void ConvertStepManiaChart(StepManiaFile sm)
+        public static List<Qua> ConvertStepManiaChart(StepManiaFile sm)
         {
             var maps = new List<Qua>();
 
@@ -454,7 +454,9 @@ namespace Quaver.API.Maps
                 }
 
                 maps.Add(baseQua);
-            }    
+            }
+
+            return maps;
         }
     }
 
