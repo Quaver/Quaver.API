@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Quaver.API.Maps;
 
 namespace Quaver.API.StepMania
 {
@@ -121,7 +122,7 @@ namespace Quaver.API.StepMania
                             {
                                 // An individual bpm is split by "offset=bpm"
                                 var bpmSplit = bpm.Split('=').ToList();
-                                sm.Bpms.Add(new Bpm { Beats = float.Parse(bpmSplit[0]), BeatsPerMinute = float.Parse(bpmSplit[1]) });
+                                sm.Bpms.Add(new Bpm { Beats = int.Parse(bpmSplit[0]), BeatsPerMinute = float.Parse(bpmSplit[1]) });
                             }
                             continue;
                         case "#NOTES":
@@ -254,6 +255,48 @@ namespace Quaver.API.StepMania
 
             return currentBpm;
         }
+
+        /// <summary>
+        ///     Converts an individual lane to a HitObject
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static void ConvertLaneToHitObject(List<HitObjectInfo> currentObjects, float time, int lane, NoteType type)
+        {
+            var hitObject = new HitObjectInfo() { Lane = lane };
+
+            switch (type)
+            {
+                case NoteType.None:
+                    break;
+                case NoteType.Normal:
+                    hitObject.StartTime = (int)time;
+                    break;
+                case NoteType.HoldHead:
+                    hitObject.StartTime = (int)time;
+                    hitObject.EndTime = -2147483648;
+                    break;
+                case NoteType.HoldTail:
+                    // For tails we need to find the last Object in this lane that has a HoldHead
+                    // and update it with the end time
+                    for (var i = currentObjects.Count; i > 0; i--)
+                    {
+                        if (currentObjects[i - 1]?.Lane != lane)
+                            continue;
+
+                        if (currentObjects[i - 1].EndTime == -2147483648)
+                            currentObjects[i - 1].EndTime = (int)time;
+                    }                      
+                    break;
+                default:
+                    break;
+            }
+
+            // Add the new HitObject
+            if (hitObject.StartTime != 0)
+                currentObjects.Add(hitObject);
+        }
     }
 
     /// <summary>
@@ -264,7 +307,7 @@ namespace Quaver.API.StepMania
         /// <summary>
         ///     The amount of beats in the map the bpm begins at
         /// </summary>
-        public float Beats { get; set; }
+        public int Beats { get; set; }
 
         /// <summary>
         ///     The actual BPM
