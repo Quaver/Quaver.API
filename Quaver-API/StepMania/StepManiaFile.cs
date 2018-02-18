@@ -340,6 +340,11 @@ namespace Quaver.API.StepMania
         ///     The list measures containing note data
         /// </summary>
         public List<NoteMeasure> Measures { get; set; }
+
+        /// <summary>
+        ///     Only used in Etterna Cache files. (Basically an MD5 Hash)
+        /// </summary>
+        public string ChartKey { get; set; }
     }
 
     // An individual measure for the map (as separated by ',' in the .sm file)
