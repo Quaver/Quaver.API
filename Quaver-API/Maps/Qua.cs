@@ -248,7 +248,7 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="qua"></param>
         /// <returns></returns>
-        private static bool CheckQuaValidity(Qua qua)
+        public static bool CheckQuaValidity(Qua qua)
         {
             // If there aren't any HitObjects
             if (qua.HitObjects.Count == 0)
