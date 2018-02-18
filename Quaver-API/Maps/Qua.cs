@@ -412,6 +412,9 @@ namespace Quaver.API.Maps
                     SongPreviewTime = (int)sm.SampleStart
                 };
 
+                // The amount of time BASS is off by, adding this to the StepMania offset should help it quite a bit
+                var bassOffset = 20f;
+
                 // Convert BPM to Quaver Timing Points
                 var totalBpmTrackTime = 0f;
 
@@ -420,7 +423,7 @@ namespace Quaver.API.Maps
                     // Handle the first BPM point
                     if (sm.Bpms[i].Beats == 0 && i == 0)
                     {
-                        totalBpmTrackTime += 60000 / sm.Bpms[i].BeatsPerMinute * sm.Bpms[i].Beats - sm.Offset * 1000;
+                        totalBpmTrackTime += 60000 / sm.Bpms[i].BeatsPerMinute * sm.Bpms[i].Beats - (sm.Offset * 1000 + bassOffset);
                        
                         // Add the first timing point
                         baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalBpmTrackTime, Bpm = sm.Bpms[i].BeatsPerMinute });
@@ -447,7 +450,7 @@ namespace Quaver.API.Maps
                         var msPerNote = 60000 / sm.Bpms[StepManiaFile.GetBpmIndexFromBeat(sm, currentBeat)].BeatsPerMinute * 4 / measure.NoteRows.Count;
 
                         // If we're on the first beat, then the current track time should be the offset of the map.
-                        totalBeatTrackTime += (currentBeat == 1) ? -sm.Offset * 1000f : msPerNote;
+                        totalBeatTrackTime += (currentBeat == 1) ? -sm.Offset * 1000f + bassOffset : msPerNote;
 
                         // Convert all Lane's HitObjects
                         StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 1, beat.Lane1);
