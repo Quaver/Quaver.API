@@ -439,7 +439,7 @@ namespace Quaver.API.Maps
 
                 // Convert StepMania note rows to Quaver HitObjects
                 var currentBeat = 0;
-                var totalBeatTrackTime = 0f;
+                var totalBeatTrackTime = -sm.Offset * 1000f + bassOffset;
                 foreach (var measure in chart.Measures)
                 {
                     foreach (var beat in measure.NoteRows)
@@ -450,7 +450,7 @@ namespace Quaver.API.Maps
                         var msPerNote = 60000 / sm.Bpms[StepManiaFile.GetBpmIndexFromBeat(sm, currentBeat)].BeatsPerMinute * 4 / measure.NoteRows.Count;
 
                         // If we're on the first beat, then the current track time should be the offset of the map.
-                        totalBeatTrackTime += (currentBeat == 1) ? -sm.Offset * 1000f + bassOffset : msPerNote;
+                        totalBeatTrackTime += msPerNote;
 
                         // Convert all Lane's HitObjects
                         StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 1, beat.Lane1);
