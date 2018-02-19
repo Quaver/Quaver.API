@@ -137,10 +137,10 @@ namespace Quaver.API.StepMania
                 if (inNotes)
                 {
                     // Skip comments
-                    if (line.Contains("//"))
+                    if (line.Contains("//") && !line.Contains(":") && !line.Contains(","))
                         continue;
-
-                    if (line.Contains(":"))
+                    
+                    if (line.Contains(":") || (line.Contains(":") && line.Contains("//")))
                         currentColons++;
 
                     switch (currentColons)
@@ -230,7 +230,7 @@ namespace Quaver.API.StepMania
 
                         // If the line is a ',', that means it marks the end of a new measure.
                         if (line.Trim().Contains(","))
-                            sm.Charts.Last().Measures.Add(new NoteMeasure { NoteRows = new List<NoteRow>() });
+                            sm.Charts.Last().Measures.Add(new NoteMeasure { NoteRows = new List<NoteRow>() });                    
                     }
                 }
             }
