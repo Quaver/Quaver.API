@@ -413,7 +413,7 @@ namespace Quaver.API.Maps
                 };
 
                 // The amount of time BASS is off by, adding this to the StepMania offset should help it quite a bit
-                var bassOffset = 20f;
+                var bassOffset = 0f;
 
                 // Convert BPM to Quaver Timing Points
                 var totalBpmTrackTime = 0f;
