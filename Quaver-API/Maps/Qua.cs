@@ -220,27 +220,12 @@ namespace Quaver.API.Maps
 
         /// <summary>
         ///     Finds the length of the beatmap
-        ///     (Time of the last hit object.)
         /// </summary>
         /// <param name="qua"></param>
         /// <returns></returns>
         public static int FindSongLength(Qua qua)
         {
-            if (qua.HitObjects.Count == 0)
-                return 0;
-
-            //Get song end by last note
-            var LastNoteEnd = 0;
-            for (var i = qua.HitObjects.Count - 1; i > 0; i--)
-            {
-                var ho = qua.HitObjects[i];
-                if (ho.EndTime > LastNoteEnd)
-                    LastNoteEnd = ho.EndTime;
-                else if (ho.StartTime > LastNoteEnd)
-                    LastNoteEnd = ho.StartTime;
-            }
-
-            return LastNoteEnd;
+            return qua.HitObjects.Count == 0 ? 0 : qua.HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
         }
 
         /// <summary>
