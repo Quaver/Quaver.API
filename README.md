@@ -1,4 +1,4 @@
-# Quaver-API
+# Quaver.API
 A C# library for various parts of the rhythm [Quaver](https://github.com/Swan/Quaver) including chart parsing and difficulty calculation.
 
 ### Table of Contents ###
