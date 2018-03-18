@@ -48,6 +48,7 @@
     <Compile Include="Enums\Grades.cs" />
     <Compile Include="Enums\HitSounds.cs" />
     <Compile Include="Enums\Judge.cs" />
+    <Compile Include="Enums\ModIdentifier.cs" />
     <Compile Include="Gameplay\JudgeHealthWeighting.cs" />
     <Compile Include="Gameplay\JudgeScoreWeighting.cs" />
     <Compile Include="Maps\Difficulty\v1\DifficultyCalculator.cs" />
