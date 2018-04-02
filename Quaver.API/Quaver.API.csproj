@@ -51,6 +51,7 @@
     <Compile Include="Enums\ModIdentifier.cs" />
     <Compile Include="Gameplay\JudgeHealthWeighting.cs" />
     <Compile Include="Gameplay\JudgeScoreWeighting.cs" />
+    <Compile Include="Helpers\GradeHelper.cs" />
     <Compile Include="Maps\Difficulty\v1\DifficultyCalculator.cs" />
     <Compile Include="Maps\Difficulty\v1\PatternAnalyzer.cs" />
     <Compile Include="Maps\Difficulty\v1\Patterns\PatternInfo.cs" />
