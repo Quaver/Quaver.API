@@ -219,7 +219,7 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        ///     Finds the length of the beatmap
+        ///     Finds the length of the map
         /// </summary>
         /// <param name="qua"></param>
         /// <returns></returns>
