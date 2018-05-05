@@ -51,7 +51,7 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     The game mode for this map
         /// </summary>
-        public GameModes Mode { get; set; }
+        public GameMode Mode { get; set; }
 
         /// <summary>
         ///     The title of the song
@@ -194,9 +194,9 @@ namespace Quaver.API.Maps
         {
             switch (Mode)
             {
-                case GameModes.Keys4:
+                case GameMode.Keys4:
                     return 4;
-                case GameModes.Keys7:
+                case GameMode.Keys7:
                     return 7;
                 default:
                     return -1;
@@ -244,7 +244,7 @@ namespace Quaver.API.Maps
                 return false;
 
             // Check if the mode is actually valid
-            if (!Enum.IsDefined(typeof(GameModes), qua.Mode))
+            if (!Enum.IsDefined(typeof(GameMode), qua.Mode))
                 return false;
 
             return true;
@@ -296,13 +296,13 @@ namespace Quaver.API.Maps
             switch (osu.KeyCount)
             {
                 case 4:
-                    qua.Mode = GameModes.Keys4;
+                    qua.Mode = GameMode.Keys4;
                     break;
                 case 7:
-                    qua.Mode = GameModes.Keys7;
+                    qua.Mode = GameMode.Keys7;
                     break;
                 default:
-                    qua.Mode = (GameModes)(-1);
+                    qua.Mode = (GameMode)(-1);
                     break;
             }
 
@@ -387,7 +387,7 @@ namespace Quaver.API.Maps
                     BannerFile = "",
                     Creator = sm.Credit,
                     Description = "This map was converted from StepMania",
-                    Mode = GameModes.Keys4,
+                    Mode = GameMode.Keys4,
                     DifficultyName = chart.Difficulty,
                     Source = "StepMania",
                     Tags = "StepMania",

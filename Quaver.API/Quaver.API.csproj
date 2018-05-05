@@ -44,7 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\GameModes.cs" />
+    <Compile Include="Enums\GameMode.cs" />
     <Compile Include="Enums\Grades.cs" />
     <Compile Include="Enums\HitSounds.cs" />
     <Compile Include="Enums\Judge.cs" />

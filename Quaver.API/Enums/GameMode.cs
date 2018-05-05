@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Enums
 {
-    public enum GameModes
+    public enum GameMode
     {
         Keys4 = 1,
         Keys7 = 2
