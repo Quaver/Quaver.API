@@ -7,19 +7,15 @@ using System.Threading.Tasks;
 namespace Quaver.API.Enums
 {
     /// <summary>
-    ///     Enum representation of grades
+    ///     An enum containing all of our judges
     /// </summary>
-    public enum Grades
+    public enum Judgement
     {
-        None,
-        A,
-        B,
-        C,
-        D,
-        F,
-        S,
-        SS,
-        X,
-        XX
+        Marv,
+        Perf,
+        Great,
+        Good,
+        Okay,
+        Miss
     }
 }

@@ -15,31 +15,31 @@ namespace Quaver.API.Helpers
         /// <param name="accuracy"></param>
         /// <param name="isPerfect"></param>
         /// <returns></returns>
-        public static Grades GetGradeFromAccuracy(float accuracy, bool isPerfect = false)
+        public static Grade GetGradeFromAccuracy(float accuracy, bool isPerfect = false)
         {
             switch (accuracy)
             {
                 case 100 when isPerfect:
-                    return Grades.XX;
+                    return Grade.XX;
                 case 100 when true:
-                    return Grades.X;
+                    return Grade.X;
                 default:
                     if (accuracy >= 99)
-                        return Grades.SS;
+                        return Grade.SS;
                     else if (accuracy >= 95)
-                        return Grades.S;
+                        return Grade.S;
                     else if (accuracy >= 90)
-                        return Grades.A;
+                        return Grade.A;
                     else if (accuracy >= 80)
-                        return Grades.B;
+                        return Grade.B;
                     else if (accuracy >= 70)
-                        return Grades.C;
+                        return Grade.C;
                     else if (accuracy >= 60)
-                        return Grades.D;
+                        return Grade.D;
                     break;
             }
 
-            return Grades.F;
+            return Grade.F;
         }
     }
 }
