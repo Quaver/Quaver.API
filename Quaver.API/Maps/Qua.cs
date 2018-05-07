@@ -13,85 +13,75 @@ namespace Quaver.API.Maps
     public class Qua
     {
         /// <summary>
-        ///     The format version of the .qua file, so we can keep track of how
-        ///     to deal with things depending on the version
-        /// </summary>
-        public int FormatVersion { get; set; } = 2;
-
-        /// <summary>
         ///     The name of the audio file
         /// </summary>
-        public string AudioFile { get; set; }
+        public string AudioFile { get; private set; }
 
         /// <summary>
         ///     Time in milliseconds of the song where the preview starts
         /// </summary>
-        public int SongPreviewTime { get; set; }
+        public int SongPreviewTime { get; private set; }
 
         /// <summary>
         ///     The name of the background file
         /// </summary>
-        public string BackgroundFile { get; set; }
-
-        /// <summary>
-        ///     The name of the map's banner file
-        /// </summary>
-        public string BannerFile { get; set; }
+        public string BackgroundFile { get; private set; }
 
         /// <summary>
         ///     The unique Map Identifier (-1 if not submitted)
         /// </summary>
-        public int MapId { get; set; } = -1;
+        public int MapId { get; private set; } = -1;
 
         /// <summary>
         ///     The unique Map Set identifier (-1 if not submitted)
         /// </summary>
-        public int MapSetId { get; set; } = -1;
+        public int MapSetId { get; private set; } = -1;
 
         /// <summary>
         ///     The game mode for this map
         /// </summary>
-        public GameMode Mode { get; set; }
+        public GameMode Mode { get; private set; }
 
         /// <summary>
         ///     The title of the song
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; private set; }
 
         /// <summary>
         ///     The artist of the song
         /// </summary>
-        public string Artist { get; set; }
+        public string Artist { get; private set; }
 
         /// <summary>
         ///     The source of the song (album, mixtape, etc.)
         /// </summary>
-        public string Source { get; set; }
+        public string Source { get; private set; }
 
         /// <summary>
         ///     Any tags that could be used to help find the song.
         /// </summary>
-        public string Tags { get; set; }
+        public string Tags { get; private set; }
 
         /// <summary>
         ///     The creator of the map
         /// </summary>
-        public string Creator { get; set; }
+        public string Creator { get; private set; }
 
         /// <summary>
         ///     The difficulty name of the map.
         /// </summary>
-        public string DifficultyName { get; set; }
+        public string DifficultyName { get; private set; }
 
         /// <summary>
         ///     A description about this map.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
         /// <summary>
         ///     TimingPoint .qua data
         /// </summary>
-        public List<TimingPointInfo> TimingPoints { get; set; }
+        public List<TimingPointInfo> TimingPoints { get; private set; }
+        
         /// <summary>
         ///     Slider Velocity .qua data
         /// </summary>
@@ -100,7 +90,7 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     HitObject .qua data
         /// </summary>
-        public List<HitObjectInfo> HitObjects { get; set; }
+        public List<HitObjectInfo> HitObjects { get; private set; }
 
         /// <summary>
         ///     Is the Qua actually valid?
@@ -115,7 +105,7 @@ namespace Quaver.API.Maps
         /// <param name="path"></param>
         public static Qua Parse(string path)
         {
-            var qua = new Qua();
+            Qua qua;
 
             using (var file = File.OpenText(path))
             {
@@ -150,33 +140,6 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        ///     Calculates the difficulty of a Qua object
-        /// </summary>
-        public void CalculateDifficulty(float rate = 1.0f)
-        {
-            if (HitObjects.Count == 0 || TimingPoints.Count == 0)
-                throw new ArgumentException();
-
-            // C# Meme, Clone the list of list of hitobjects & timing points
-            // since they are reference types.
-            var hitObjects = new List<HitObjectInfo>();
-            HitObjects.ForEach(x => hitObjects.Add((HitObjectInfo)x.Clone()));
-
-            var timingPoints = new List<TimingPointInfo>();
-            TimingPoints.ForEach(x => timingPoints.Add((TimingPointInfo)x.Clone()));
-
-            // Change the rate
-            hitObjects.ForEach(x => { x.StartTime = (int)Math.Round(x.StartTime / rate, 0); });
-            timingPoints.ForEach(x => { x.StartTime = (int)Math.Round(x.StartTime / rate, 0); });
-
-            // Remove artificial density in the map.
-            hitObjects = PatternAnalyzer.RemoveArtificialDensity(hitObjects, timingPoints);
-
-            // Find all map patterns
-            var patterns = PatternAnalyzer.AnalyzeMapPatterns(hitObjects);
-        }
-
-        /// <summary>
         ///     Placeholder
         /// </summary>
         /// <returns></returns>
@@ -200,7 +163,6 @@ namespace Quaver.API.Maps
                     return 7;
                 default:
                     return -1;
-                    break;
             }
         }
 
@@ -253,7 +215,7 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     Does some sorting of the Qua
         /// </summary>
-        public void Sort()
+        private void Sort()
         {
             try
             {
@@ -277,7 +239,6 @@ namespace Quaver.API.Maps
             // Init Qua with general information
             var qua = new Qua()
             {
-                FormatVersion = 1,
                 AudioFile = osu.AudioFilename,
                 SongPreviewTime = osu.PreviewTime,
                 BackgroundFile = osu.Background,
@@ -342,19 +303,29 @@ namespace Quaver.API.Maps
                 else if (hitObject.Key7)
                     keyLane = 7;
 
-                // Add HitObjects to the list depending on the object type
+                // ReSharper disable once SwitchStatementMissingSomeCases
                 switch (hitObject.Type)
                 {
-                    // Normal HitObjects
+                    // Add HitObjects to the list depending on the object type
                     case 1:
                     case 5:
-                        qua.HitObjects.Add(new HitObjectInfo { StartTime = hitObject.StartTime, Lane = keyLane, EndTime = 0, HitSound = (HitSounds)hitObject.HitSound});
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = hitObject.StartTime,
+                            Lane = keyLane,
+                            EndTime = 0,
+                            HitSound = (HitSounds) hitObject.HitSound
+                        });
                         break;
                     case 128:
                     case 22:
-                        qua.HitObjects.Add(new HitObjectInfo { StartTime = hitObject.StartTime, Lane = keyLane, EndTime = hitObject.EndTime, HitSound = (HitSounds)hitObject.HitSound});
-                        break;
-                    default:
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = hitObject.StartTime,
+                            Lane = keyLane,
+                            EndTime = hitObject.EndTime,
+                            HitSound = (HitSounds) hitObject.HitSound
+                        });
                         break;
                 }
             }
@@ -379,12 +350,10 @@ namespace Quaver.API.Maps
             {
                 var baseQua = new Qua()
                 {
-                    FormatVersion = 1,
                     Artist = sm.Artist,
                     Title = sm.Title,
                     AudioFile = sm.Music,
                     BackgroundFile = sm.Background.Replace(".jpeg", ".jpg"),
-                    BannerFile = "",
                     Creator = sm.Credit,
                     Description = "This map was converted from StepMania",
                     Mode = GameMode.Keys4,
@@ -396,10 +365,7 @@ namespace Quaver.API.Maps
                     SliderVelocities = new List<SliderVelocityInfo>(),
                     SongPreviewTime = (int)sm.SampleStart
                 };
-
-                // The amount of time BASS is off by, adding this to the StepMania offset should help it quite a bit
-                var bassOffset = 0f;
-
+                
                 // Convert BPM to Quaver Timing Points
                 var totalBpmTrackTime = 0f;
 
@@ -408,7 +374,7 @@ namespace Quaver.API.Maps
                     // Handle the first BPM point
                     if (sm.Bpms[i].Beats == 0 && i == 0)
                     {
-                        totalBpmTrackTime += 60000 / sm.Bpms[i].BeatsPerMinute * sm.Bpms[i].Beats - (sm.Offset * 1000 + bassOffset);
+                        totalBpmTrackTime += 60000 / sm.Bpms[i].BeatsPerMinute * sm.Bpms[i].Beats - (sm.Offset * 1000);
                        
                         // Add the first timing point
                         baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalBpmTrackTime, Bpm = sm.Bpms[i].BeatsPerMinute });
@@ -424,7 +390,7 @@ namespace Quaver.API.Maps
 
                 // Convert StepMania note rows to Quaver HitObjects
                 var currentBeat = 0;
-                var totalBeatTrackTime = -sm.Offset * 1000f + bassOffset;
+                var totalBeatTrackTime = -sm.Offset * 1000f;
                 foreach (var measure in chart.Measures)
                 {
                     foreach (var beat in measure.NoteRows)
@@ -449,74 +415,6 @@ namespace Quaver.API.Maps
             }
 
             return maps;
-        }
-    }
-
-    /// <summary>
-    ///     TimingPoints section of the .qua
-    /// </summary>
-    public class TimingPointInfo : ICloneable
-    {
-        /// <summary>
-        ///     The time in milliseconds for when this timing point begins
-        /// </summary>
-        public float StartTime { get; set; }
-
-        /// <summary>
-        ///     The BPM during this timing point
-        /// </summary>
-        public float Bpm { get; set; }
-
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-    }
-
-    /// <summary>
-    ///     SliderVelocities section of the .qua   
-    /// </summary>
-    public class SliderVelocityInfo
-    {
-        /// <summary>
-        ///     The time in milliseconds when the new SliderVelocity section begins
-        /// </summary>
-        public float StartTime { get; set; }
-
-        /// <summary>
-        ///     The velocity multiplier relative to the current timing section's BPM
-        /// </summary>
-        public float Multiplier { get; set; }
-    }
-
-    /// <summary>
-    ///     HitObjects section of the .qua
-    /// </summary>
-    public class HitObjectInfo : ICloneable
-    {
-        /// <summary>
-        ///     The time in milliseconds when the HitObject is supposed to be hit.
-        /// </summary>
-        public int StartTime { get; set; }
-
-        /// <summary>
-        ///     The lane the HitObject falls in
-        /// </summary>
-        public int Lane { get; set; } = 1;
-
-        /// <summary>
-        ///     The endtime of the HitObject (if greater than 0, it's considered a hold note.)
-        /// </summary>
-        public int EndTime { get; set; }
-
-        /// <summary>
-        ///     Bitwise combination of hit sounds for this object
-        /// </summary>
-        public HitSounds HitSound { get; set; } = HitSounds.Normal;
-
-        public object Clone()
-        {
-            return MemberwiseClone();
         }
     }
 }

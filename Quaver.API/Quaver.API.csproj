@@ -55,10 +55,13 @@
     <Compile Include="Maps\Difficulty\v1\DifficultyCalculator.cs" />
     <Compile Include="Maps\Difficulty\v1\PatternAnalyzer.cs" />
     <Compile Include="Maps\Difficulty\v1\Patterns\PatternInfo.cs" />
+    <Compile Include="Maps\HitObjectInfo.cs" />
     <Compile Include="Maps\Qua.cs" />
     <Compile Include="Gameplay\GradePercentages.cs" />
     <Compile Include="Gameplay\JudgeAccuracyWeighting.cs" />
     <Compile Include="Gameplay\JudgeWindow.cs" />
+    <Compile Include="Maps\SliderVelocityInfo.cs" />
+    <Compile Include="Maps\TimingPointInfo.cs" />
     <Compile Include="Osu\PeppyBeatmap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StepMania\StepManiaFile.cs" />
