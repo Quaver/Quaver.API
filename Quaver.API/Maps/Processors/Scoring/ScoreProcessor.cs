@@ -1,4 +1,7 @@
-﻿namespace Quaver.API.Maps.Processors
+﻿using System.Collections.Generic;
+using Quaver.API.Enums;
+
+namespace Quaver.API.Maps.Processors.Scoring
 {
     public abstract class ScoreProcessor
     {
@@ -8,12 +11,50 @@
         public Qua Map { get;  }
 
         /// <summary>
-        ///     The score 
+        ///     The total score the user has.
         /// </summary>
         public int Score { get; protected set; }
 
+        /// <summary>
+        ///     The accuracy the user has.
+        /// </summary>
         public float Accuracy { get; protected set; }
 
+        /// <summary>
+        ///     The judgement count for each judgement, initialized to 0 by default.
+        /// 
+        ///     Note: Not sure if modes will use different judgements, probably not.
+        /// </summary>
+        public Dictionary<Judgement, int> JudgementCount { get; } = new Dictionary<Judgement, int>()
+        {
+            {Judgement.Marv, 0},
+            {Judgement.Perf, 0},
+            {Judgement.Great, 0},
+            {Judgement.Good, 0},
+            {Judgement.Okay, 0},
+            {Judgement.Miss, 0}
+        };
+
+        /// <summary>
+        ///     The judgement windows defined per mode.
+        /// </summary>
+        public abstract Dictionary<Judgement, int> JudgementWindow { get; }
+
+        /// <summary>
+        ///     The weighting for score defined per mode.
+        /// </summary>
+        public abstract Dictionary<Judgement, int> JudgementScoreWeighting { get; }
+
+        /// <summary>
+        ///     The weighting for health defined per mode.
+        /// </summary>
+        public abstract Dictionary<Judgement, int> JudgementHealthWeighting { get; }
+
+        /// <summary>
+        ///     The percentage for each grade.
+        /// </summary>
+        public abstract Dictionary<Grade, int> GradePercentage { get; }
+        
         /// <summary>
         ///     Ctor - 
         /// </summary>
