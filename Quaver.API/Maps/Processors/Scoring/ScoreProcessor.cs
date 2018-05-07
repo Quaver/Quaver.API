@@ -21,6 +21,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         public float Accuracy { get; protected set; }
 
         /// <summary>
+        ///     The current health.
+        /// </summary>
+        public int Health { get; protected set; } = 100;
+
+        /// <summary>
         ///     The judgement count for each judgement, initialized to 0 by default.
         /// 
         ///     Note: Not sure if modes will use different judgements, probably not.
@@ -65,8 +70,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         }
 
          /// <summary>
-        ///     Calculates score and accuracy for a given object and hit time.
+        ///     Calculates score and accuracy for a given object and song time.
         /// </summary>
-        public abstract void CalculateScoreForObject();
+        public abstract void CalculateScoreForObject(HitObjectInfo hitObject, int songTime, bool didHit);
     }
 }

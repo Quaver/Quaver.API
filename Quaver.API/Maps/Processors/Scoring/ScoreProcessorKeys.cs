@@ -72,7 +72,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override void CalculateScoreForObject()
+        public override void CalculateScoreForObject(HitObjectInfo hitObject, int songTime, bool didHit)
         {
         }
     }
