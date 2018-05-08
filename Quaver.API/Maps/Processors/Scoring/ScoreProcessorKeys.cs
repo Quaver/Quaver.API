@@ -64,7 +64,6 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override Dictionary<Grade, int> GradePercentage { get; } = new Dictionary<Grade, int>()
         {
-            {Grade.None, -1},
             {Grade.XX, 100},
             {Grade.X, 100},
             {Grade.SS, 99},
@@ -73,7 +72,6 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Grade.B, 80},
             {Grade.C, 70},
             {Grade.D, 60},
-            {Grade.F, -1}
         };
 
         /// <inheritdoc />
