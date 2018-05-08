@@ -29,6 +29,12 @@ namespace Quaver.API.Maps
         /// </summary>
         public HitSounds HitSound { get; set; } = HitSounds.Normal;
 
+        /// <summary>
+        ///     If the object is a long note. (EndTime > 0)
+        /// </summary>
+        public bool IsLongNote => EndTime > 0;
+        
+        
         public object Clone()
         {
             return MemberwiseClone();
