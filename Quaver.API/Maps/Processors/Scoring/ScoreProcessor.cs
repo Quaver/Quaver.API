@@ -30,7 +30,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// 
         ///     Note: Not sure if modes will use different judgements, probably not.
         /// </summary>
-        public Dictionary<Judgement, int> JudgementCount { get; } = new Dictionary<Judgement, int>()
+        public Dictionary<Judgement, int> CurrentJudgements { get; } = new Dictionary<Judgement, int>()
         {
             {Judgement.Marv, 0},
             {Judgement.Perf, 0},
@@ -43,7 +43,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The judgement windows defined per mode.
         /// </summary>
-        public abstract Dictionary<Judgement, int> JudgementWindow { get; }
+        public abstract SortedDictionary<Judgement, int> JudgementWindow { get; }
 
         /// <summary>
         ///     The weighting for score defined per mode.
@@ -56,22 +56,49 @@ namespace Quaver.API.Maps.Processors.Scoring
         public abstract Dictionary<Judgement, int> JudgementHealthWeighting { get; }
 
         /// <summary>
+        ///     The weighting for accuracy.
+        /// </summary>
+        public abstract Dictionary<Judgement, int> JudgementAccuracyWeighting { get; }
+
+        /// <summary>
         ///     The percentage for each grade.
         /// </summary>
         public abstract Dictionary<Grade, int> GradePercentage { get; }
-        
+
+        /// <summary>
+        ///     The total amount of judgements that the user has gotten in this play session.
+        /// </summary>
+        protected int TotalJudgementCount
+        {
+            get
+            {
+                var sum = 0;
+
+                foreach (var item in CurrentJudgements)
+                    sum += item.Value;
+
+                return sum;
+            }
+        }
+
         /// <summary>
         ///     Ctor - 
         /// </summary>
         /// <param name="map"></param>
         public ScoreProcessor(Qua map)
         {
-            Map = map;
+            Map = map;        
         }
 
          /// <summary>
         ///     Calculates score and accuracy for a given object and song time.
         /// </summary>
-        public abstract void CalculateScoreForObject(HitObjectInfo hitObject, int songTime, bool didHit);
+        public abstract Judgement CalculateScoreForObject(HitObjectInfo hitObject, double songTime, bool isKeyPressed);
+
+        /// <summary>
+        ///     Calculates the accuracy of the current play session.
+        /// </summary>
+        /// <returns></returns>
+        protected abstract float CalculateAccuracy();
     }
 }
