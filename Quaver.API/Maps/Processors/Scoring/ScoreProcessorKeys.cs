@@ -23,7 +23,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override Dictionary<Judgement, int> JudgementWindow { get; } = new Dictionary<Judgement, int>
+        public override SortedDictionary<Judgement, int> JudgementWindow { get; } = new SortedDictionary<Judgement, int>
         {
             {Judgement.Marv, 16},
             {Judgement.Perf, 40},
@@ -62,6 +62,19 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
+        public override Dictionary<Judgement, int> JudgementAccuracyWeighting { get; } = new Dictionary<Judgement, int>()
+        {
+            {Judgement.Marv, 100},
+            {Judgement.Perf, 100},
+            {Judgement.Great, 50},
+            {Judgement.Good, -50},
+            {Judgement.Okay, -100},
+            {Judgement.Miss, 0}
+        };
+
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
         public override Dictionary<Grade, int> GradePercentage { get; } = new Dictionary<Grade, int>()
         {
             {Grade.XX, 100},
@@ -87,8 +100,53 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override void CalculateScoreForObject(HitObjectInfo hitObject, int songTime, bool didHit)
+        public override Judgement CalculateScoreForObject(HitObjectInfo hitObject, double songTime, bool isKeyPressed)
         {
+            // If the user has a key down at this time, we'll be checking if the user
+            // hit an object in its start time window.
+            if (isKeyPressed)
+            {                
+                // Check which window the object was hit in.
+                for (var i = 0; i < JudgementWindow.Count; i++)
+                {
+                    // User properly hit a note. 
+                    if (Math.Abs(hitObject.StartTime - songTime) <= JudgementWindow[(Judgement) i])
+                    {
+                        // Get the judgement the user got.
+                        var judgement = (Judgement) i;
+
+                        // Increase the judgement count per 
+                        CurrentJudgements[judgement]++;
+
+                        // Calculate the new accuracy.
+                        Accuracy = CalculateAccuracy();
+                        
+                        // TODO: Calculate Score
+                        // Add to their score.
+                        Console.WriteLine($"User hit object ({hitObject.StartTime},{hitObject.Lane})@{songTime} - {(Judgement) i} - {Accuracy}%");
+                        
+                        // Give back the received judgement.
+                        return judgement;
+                    }
+                }
+            }
+
+            return Judgement.Miss;
+        }
+
+        /// <inheritdoc />
+        /// <summary>
+        ///     Calculates the current accuracy.
+        /// </summary>
+        /// <returns></returns>
+        protected override float CalculateAccuracy()
+        {
+            float accuracy = 0;
+
+            foreach (var item in CurrentJudgements)
+                accuracy += item.Value * JudgementAccuracyWeighting[item.Key];
+      
+            return Math.Max(accuracy / (TotalJudgementCount * 100), 0) * 100;  
         }
 
         /// <summary>
