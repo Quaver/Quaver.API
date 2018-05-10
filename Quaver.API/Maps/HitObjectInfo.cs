@@ -1,5 +1,6 @@
 ﻿using System;
 using Quaver.API.Enums;
+using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps
 {
@@ -32,9 +33,9 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     If the object is a long note. (EndTime > 0)
         /// </summary>
+        [YamlIgnore]
         public bool IsLongNote => EndTime > 0;
-        
-        
+          
         public object Clone()
         {
             return MemberwiseClone();
