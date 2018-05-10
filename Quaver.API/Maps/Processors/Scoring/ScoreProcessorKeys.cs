@@ -20,6 +20,21 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         private int SummedScore { get; }
 
+        /// <summary>
+        ///     ?
+        /// </summary>
+        private int MultiplierCount { get; set; }
+
+        /// <summary>
+        ///     ?
+        /// </summary>
+        private int MultiplierIndex { get; set; }
+
+        /// <summary>
+        ///     ?
+        /// </summary>
+        private int ScoreCount { get; set; }
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -49,14 +64,14 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override Dictionary<Judgement, int> JudgementHealthWeighting { get; } = new Dictionary<Judgement, int>()
+        public override Dictionary<Judgement, float> JudgementHealthWeighting { get; } = new Dictionary<Judgement, float>()
         {
-            {Judgement.Marv, 100},
-            {Judgement.Perf, 50},
-            {Judgement.Great, 25},
-            {Judgement.Good, 10},
-            {Judgement.Okay, 5},
-            {Judgement.Miss, 0}
+            {Judgement.Marv, 0.5f},
+            {Judgement.Perf, 0.4f},
+            {Judgement.Great, 0.1f},
+            {Judgement.Good, -2.0f},
+            {Judgement.Okay, -2.5f},
+            {Judgement.Miss, -3.0f}
         };
 
         /// <inheritdoc />
@@ -102,36 +117,114 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override Judgement CalculateScoreForObject(HitObjectInfo hitObject, double songTime, bool isKeyPressed)
         {
+            // Initialize to just a none judgement since we haven't found it yet.
+            var judgement = Judgement.None;
+
+ #region HIT_CHECKING
             // If the user has a key down at this time, we'll be checking if the user
             // hit an object in its start time window.
             if (isKeyPressed)
-            {                
+            {
+                // Dictates if we've found the given window.
+                var foundWindow = false;
+                
                 // Check which window the object was hit in.
                 for (var i = 0; i < JudgementWindow.Count; i++)
                 {
-                    // User properly hit a note. 
-                    if (Math.Abs(hitObject.StartTime - songTime) <= JudgementWindow[(Judgement) i])
-                    {
-                        // Get the judgement the user got.
-                        var judgement = (Judgement) i;
+                    // Check if the user properly hit a note within the timing window iteration, if not
+                    // just move onto the next one and check.
+                    if (!(Math.Abs(hitObject.StartTime - songTime) <= JudgementWindow[(Judgement) i])) 
+                        continue;
+                    
+                    // Get the judgement the user got.
+                    judgement = (Judgement) i;
 
-                        // Increase the judgement count per 
-                        CurrentJudgements[judgement]++;
+                    // Increase the judgement count per 
+                    CurrentJudgements[judgement]++;
 
-                        // Calculate the new accuracy.
-                        Accuracy = CalculateAccuracy();
-                        
-                        // TODO: Calculate Score
-                        // Add to their score.
-                        Console.WriteLine($"User hit object ({hitObject.StartTime},{hitObject.Lane})@{songTime} - {(Judgement) i} - {Accuracy}%");
-                        
-                        // Give back the received judgement.
-                        return judgement;
-                    }
+                    foundWindow = true;
+                    break;
                 }
-            }
 
-            return Judgement.Miss;
+                // If we haven't found the window, then just return a None judgement.
+                if (!foundWindow)
+                    return Judgement.None;
+            }
+            // Handle non-key presses here (Long Notes)
+            else
+            {
+                judgement = Judgement.Miss;
+            }      
+#endregion
+
+#region SCORE_CALCULATION
+            // Calculate and set the new accuracy.
+            Accuracy = CalculateAccuracy();
+                        
+            // If the user didn't miss, then we want to update their combo and multiplier
+            // accordingly.
+            if (judgement < Judgement.Miss)
+            {
+                //Update Multiplier
+                if (judgement == Judgement.Good)
+                {
+                    MultiplierCount -= 10;
+                    if (MultiplierCount < 0)
+                        MultiplierCount = 0;
+                }
+                else
+                {
+                    if (MultiplierCount < 150)
+                        MultiplierCount++;
+                    else
+                        MultiplierCount = 150; //idk... just to be safe
+                }
+
+                // Add to the combo since the user hit.
+                Combo++;
+
+                // Set the max combo if applicable.
+                if (Combo > MaxCombo)
+                    MaxCombo = Combo;
+            }
+            // The user missed, so we want to update their multipler and reset their combo.
+            else
+            {
+                // Update Multiplier
+                MultiplierCount -= 20;
+                
+                if (MultiplierCount < 0) 
+                    MultiplierCount = 0;
+                
+                // Reset combo.
+                Combo = 0;
+            }
+                   
+            // Update multiplier index and score count.
+            MultiplierIndex = (int)Math.Floor(MultiplierCount/10f);
+            ScoreCount += JudgementScoreWeighting[judgement] + MultiplierIndex * 10;
+            
+            // Update total score.
+            Score = (int)(1000000 * ((double)ScoreCount / SummedScore));
+#endregion
+
+#region HEALTH_CALCULATION
+            // Add health based on the health weighting for that given judgement.
+            var newHealth = Health += JudgementHealthWeighting[judgement];
+
+            // Constrain health from 0-100
+            if (newHealth <= 0)
+                Health = 0;
+            else if (newHealth >= 100)
+                Health = 100;
+            else
+                Health = newHealth;          
+#endregion
+            
+            Console.WriteLine($"Object - ({hitObject.StartTime},{hitObject.Lane})@{songTime} - {judgement} - {Accuracy}% - {Score} - {Health}");
+
+            // Give back the received judgement.
+            return judgement;
         }
 
         /// <inheritdoc />
