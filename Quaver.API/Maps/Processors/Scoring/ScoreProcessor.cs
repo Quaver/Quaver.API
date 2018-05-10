@@ -23,8 +23,23 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The current health.
         /// </summary>
-        public int Health { get; protected set; } = 100;
+        public float Health { get; protected set; } = 100;
 
+        /// <summary>
+        ///     The user's current combo.
+        /// </summary>
+        public int Combo { get; protected set; }
+
+        /// <summary>
+        ///     The max combo achieved for this play session.
+        /// </summary>
+        public int MaxCombo { get; protected set; }
+
+        /// <summary>
+        ///     If the score is currently failed.
+        /// </summary>
+        public bool Failed => Health == 0;
+        
         /// <summary>
         ///     The judgement count for each judgement, initialized to 0 by default.
         /// 
@@ -53,7 +68,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The weighting for health defined per mode.
         /// </summary>
-        public abstract Dictionary<Judgement, int> JudgementHealthWeighting { get; }
+        public abstract Dictionary<Judgement, float> JudgementHealthWeighting { get; }
 
         /// <summary>
         ///     The weighting for accuracy.
@@ -91,7 +106,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         }
 
          /// <summary>
-        ///     Calculates score and accuracy for a given object and song time.
+        ///     Calculates score, accuracy, and health for a given object and song time.
         /// </summary>
         public abstract Judgement CalculateScoreForObject(HitObjectInfo hitObject, double songTime, bool isKeyPressed);
 
