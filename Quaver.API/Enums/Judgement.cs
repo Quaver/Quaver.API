@@ -11,6 +11,7 @@ namespace Quaver.API.Enums
     /// </summary>
     public enum Judgement
     {
+        None = -1,
         Marv,
         Perf,
         Great,
