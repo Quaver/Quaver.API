@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Quaver.API.Enums;
 
 namespace Quaver.API.Maps.Processors.Scoring
@@ -47,6 +48,18 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Judgement.Okay, 127},
         };
 
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        public override SortedDictionary<Judgement, float> WindowReleaseMultiplier { get; } = new SortedDictionary<Judgement, float>
+        {
+            {Judgement.Marv, 1.5f},
+            {Judgement.Perf, 1.7f},
+            {Judgement.Great, 1.8f},
+            {Judgement.Good, 2.0f},
+            {Judgement.Okay, 1.0f},
+        };
+        
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -100,7 +113,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Grade.C, 70},
             {Grade.D, 60},
         };
-
+   
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -114,55 +127,19 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override Judgement CalculateScoreForObject(HitObjectInfo hitObject, double songTime, bool isKeyPressed)
+        /// <param name="judgement"></param>
+        public override void CalculateScore(Judgement judgement)
         {
-            // Initialize to just a none judgement since we haven't found it yet.
-            var judgement = Judgement.None;
-
- #region HIT_CHECKING
-            // If the user has a key down at this time, we'll be checking if the user
-            // hit an object in its start time window.
-            if (isKeyPressed)
-            {
-                // Dictates if we've found the given window.
-                var foundWindow = false;
-                
-                // Check which window the object was hit in.
-                for (var i = 0; i < JudgementWindow.Count; i++)
-                {
-                    // Check if the user properly hit a note within the timing window iteration, if not
-                    // just move onto the next one and check.
-                    if (!(Math.Abs(hitObject.StartTime - songTime) <= JudgementWindow[(Judgement) i])) 
-                        continue;
-                    
-                    // Get the judgement the user got.
-                    judgement = (Judgement) i;
-
-                    // Increase the judgement count per 
-                    CurrentJudgements[judgement]++;
-
-                    foundWindow = true;
-                    break;
-                }
-
-                // If we haven't found the window, then just return a None judgement.
-                if (!foundWindow)
-                    return Judgement.None;
-            }
-            // Handle non-key presses here (Long Notes)
-            else
-            {
-                judgement = Judgement.Miss;
-            }      
-#endregion
-
-#region SCORE_CALCULATION
+            // Add to the current judgements.
+            CurrentJudgements[judgement]++;
+            
             // Calculate and set the new accuracy.
             Accuracy = CalculateAccuracy();
-                        
+            
+#region SCORE_CALCULATION                  
             // If the user didn't miss, then we want to update their combo and multiplier
             // accordingly.
-            if (judgement < Judgement.Miss)
+            if (judgement != Judgement.Miss)
             {
                 //Update Multiplier
                 if (judgement == Judgement.Good)
@@ -218,14 +195,9 @@ namespace Quaver.API.Maps.Processors.Scoring
                 Health = 100;
             else
                 Health = newHealth;          
-#endregion
-            
-            Console.WriteLine($"Object - ({hitObject.StartTime},{hitObject.Lane})@{songTime} - {judgement} - {Accuracy}% - {Score} - {Health}");
-
-            // Give back the received judgement.
-            return judgement;
+#endregion   
         }
-
+        
         /// <inheritdoc />
         /// <summary>
         ///     Calculates the current accuracy.
