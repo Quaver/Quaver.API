@@ -81,6 +81,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         public abstract Dictionary<Grade, int> GradePercentage { get; }
 
         /// <summary>
+        ///     The window multiplier for long notes.
+        ///     It multiplies the judgement window by this amount.
+        /// </summary>
+        public abstract SortedDictionary<Judgement, float> WindowReleaseMultiplier { get; }
+        
+        /// <summary>
         ///     The total amount of judgements that the user has gotten in this play session.
         /// </summary>
         protected int TotalJudgementCount
@@ -105,10 +111,10 @@ namespace Quaver.API.Maps.Processors.Scoring
             Map = map;        
         }
 
-         /// <summary>
-        ///     Calculates score, accuracy, and health for a given object and song time.
+        /// <summary>
+        ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
-        public abstract Judgement CalculateScoreForObject(HitObjectInfo hitObject, double songTime, bool isKeyPressed);
+        public abstract void CalculateScore(Judgement judgement);
 
         /// <summary>
         ///     Calculates the accuracy of the current play session.
