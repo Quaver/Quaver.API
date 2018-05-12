@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Quaver.API.Enums;
 
 namespace Quaver.API.Maps.Processors.Scoring
@@ -9,6 +10,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     The map that will have its score processed.
         /// </summary>
         public Qua Map { get;  }
+
+        /// <summary>
+        ///     The mods for this play.
+        /// </summary>
+        public ModIdentifier Mods { get; }
 
         /// <summary>
         ///     The total score the user has.
@@ -58,7 +64,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The judgement windows defined per mode.
         /// </summary>
-        public abstract SortedDictionary<Judgement, int> JudgementWindow { get; }
+        public abstract SortedDictionary<Judgement, float> JudgementWindow { get; set; }
 
         /// <summary>
         ///     The weighting for score defined per mode.
@@ -106,9 +112,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Ctor - 
         /// </summary>
         /// <param name="map"></param>
-        public ScoreProcessor(Qua map)
+        public ScoreProcessor(Qua map, ModIdentifier mods)
         {
-            Map = map;        
+            Map = map;
+            Mods = mods;
+            
+            InitializeMods();
         }
 
         /// <summary>
@@ -121,5 +130,52 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <returns></returns>
         protected abstract float CalculateAccuracy();
+
+        /// <summary>
+        ///     Initializes the mods for this given play.
+        ///     (Recalculates hit windows.)
+        /// </summary>
+        private void InitializeMods()
+        {
+            Console.WriteLine(Mods);
+            
+            // The rate of the audio.
+            var rate = 1.0;
+            
+            // Map mods to rate.
+            if (Mods.HasFlag(ModIdentifier.Speed05X))
+                rate = 0.5f;
+            else if (Mods.HasFlag(ModIdentifier.Speed06X))
+                rate = 0.6f;
+            else if (Mods.HasFlag(ModIdentifier.Speed07X))
+                rate = 0.7f;
+            else if (Mods.HasFlag(ModIdentifier.Speed08X))
+                rate = 0.8f;
+            else if (Mods.HasFlag(ModIdentifier.Speed09X))
+                rate = 0.9f;
+            else if (Mods.HasFlag(ModIdentifier.Speed11X))
+                rate = 1.1f;
+            else if (Mods.HasFlag(ModIdentifier.Speed12X))
+                rate = 1.2f;
+            else if (Mods.HasFlag(ModIdentifier.Speed13X))
+                rate = 1.3f;
+            else if (Mods.HasFlag(ModIdentifier.Speed14X))
+                rate = 1.4f;
+            else if (Mods.HasFlag(ModIdentifier.Speed15X))
+                rate = 1.5f;
+            else if (Mods.HasFlag(ModIdentifier.Speed16X))
+                rate = 1.6f;
+            else if (Mods.HasFlag(ModIdentifier.Speed17X))
+                rate = 1.7f;
+            else if (Mods.HasFlag(ModIdentifier.Speed18X))
+                rate = 1.8f;
+            else if (Mods.HasFlag(ModIdentifier.Speed19X))
+                rate = 1.9f;
+            else if (Mods.HasFlag(ModIdentifier.Speed20X))
+                rate = 2.0f;
+
+            for (var i = 0; i < JudgementWindow.Count; i++)
+                JudgementWindow[(Judgement) i] *= (float)rate;
+        }
     }
 }
