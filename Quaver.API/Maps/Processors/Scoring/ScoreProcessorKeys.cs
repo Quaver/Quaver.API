@@ -39,7 +39,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override SortedDictionary<Judgement, int> JudgementWindow { get; } = new SortedDictionary<Judgement, int>
+        public override SortedDictionary<Judgement, float> JudgementWindow { get; set; } = new SortedDictionary<Judgement, float>
         {
             {Judgement.Marv, 16},
             {Judgement.Perf, 40},
@@ -118,7 +118,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         /// </summary>
         /// <param name="map"></param>
-        public ScoreProcessorKeys(Qua map) : base(map)
+        public ScoreProcessorKeys(Qua map, ModIdentifier mods) : base(map, mods)
         {
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
