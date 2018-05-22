@@ -112,6 +112,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Ctor - 
         /// </summary>
         /// <param name="map"></param>
+        /// <param name="mods"></param>
         public ScoreProcessor(Qua map, ModIdentifier mods)
         {
             Map = map;
