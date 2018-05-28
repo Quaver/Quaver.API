@@ -27,5 +27,6 @@ namespace Quaver.API.Enums
         Speed20X = 1 << 15, // Speed 2.0x
         Strict = 1 << 16, // Makes the accuracy hit windows harder
         Chill = 1 << 17, // Makes the accuracy hit windows easier
+        NoPause = 1 << 18
     }
 }
