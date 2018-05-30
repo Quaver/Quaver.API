@@ -44,7 +44,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     If the score is currently failed.
         /// </summary>
-        public bool Failed => Health == 0;
+        public bool Failed => Health <= 0;
         
         /// <summary>
         ///     The judgement count for each judgement, initialized to 0 by default.
