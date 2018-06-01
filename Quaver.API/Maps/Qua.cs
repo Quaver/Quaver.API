@@ -143,9 +143,9 @@ namespace Quaver.API.Maps
         ///     Placeholder
         /// </summary>
         /// <returns></returns>
-        public float CalculateFakeDifficulty()
+        public float CalculateFakeDifficulty(float rate = 1.0f)
         {
-            return HitObjects.Count / (FindSongLength(this) / 1000f);
+            return HitObjects.Count / (FindSongLength(this) / (1000f * rate));
         }
 
         /// <summary>
