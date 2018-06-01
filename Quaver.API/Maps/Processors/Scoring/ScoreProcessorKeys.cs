@@ -46,6 +46,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Judgement.Great, 73},
             {Judgement.Good, 103},
             {Judgement.Okay, 127},
+            {Judgement.Miss, 164}
         };
 
         /// <inheritdoc />
