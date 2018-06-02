@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Quaver.API.Enums;
+using Quaver.API.Maps.Processors.Scoring.Data;
 
 namespace Quaver.API.Maps.Processors.Scoring
 {
@@ -45,7 +46,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     If the score is currently failed.
         /// </summary>
         public bool Failed => Health <= 0;
-        
+
+        /// <summary>
+        ///     The user's stats per object.
+        /// </summary>
+        public List<HitStat> Stats { get; }
+
         /// <summary>
         ///     The judgement count for each judgement, initialized to 0 by default.
         /// 
@@ -117,6 +123,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             Map = map;
             Mods = mods;
+            Stats = new List<HitStat>();
             
             InitializeMods();
         }
@@ -137,9 +144,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     (Recalculates hit windows.)
         /// </summary>
         private void InitializeMods()
-        {
-            Console.WriteLine(Mods);
-            
+        {            
             // The rate of the audio.
             var rate = 1.0;
             

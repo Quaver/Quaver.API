@@ -57,6 +57,7 @@
     <Compile Include="Maps\Difficulty\v1\PatternAnalyzer.cs" />
     <Compile Include="Maps\Difficulty\v1\Patterns\PatternInfo.cs" />
     <Compile Include="Maps\HitObjectInfo.cs" />
+    <Compile Include="Maps\Processors\Scoring\Data\HitStat.cs" />
     <Compile Include="Maps\Processors\Scoring\ScoreProcessor.cs" />
     <Compile Include="Maps\Processors\Scoring\ScoreProcessorKeys.cs" />
     <Compile Include="Maps\Qua.cs" />
