@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace Quaver.API.Osu
+namespace Quaver.API.Maps.Parsers
 {
     public class PeppyBeatmap
     {

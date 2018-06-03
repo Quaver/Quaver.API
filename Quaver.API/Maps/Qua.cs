@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Quaver.API.Enums;
-using Quaver.API.Osu;
-using Quaver.API.StepMania;
-using Quaver.API.Maps.Difficulty.v1;
+using Quaver.API.Maps.Parsers;
 using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps

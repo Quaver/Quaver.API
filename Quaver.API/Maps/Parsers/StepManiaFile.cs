@@ -5,10 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Quaver.API.Maps;
 
-namespace Quaver.API.StepMania
+namespace Quaver.API.Maps.Parsers
 {
     public class StepManiaFile
     {
