@@ -19,17 +19,17 @@ namespace Quaver.API {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    internal class APIResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal APIResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Quaver.API {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Quaver.API.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Quaver.API.APIResources", typeof(APIResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,66 @@ namespace Quaver.API {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to # The following are names to be used as bots and are randomly selected during gameplay. 
+        ///Swan
+        ///Staravia
+        ///arpia97
+        ///AiAe
+        ///barrysir
+        ///Vortex-
+        ///Juan
+        ///Daniel
+        ///D_
+        ///ATTang
+        ///Droptable
+        ///Riven
+        ///Jakachex
+        ///Suckjack
+        ///Windoze
+        ///Dakky
+        ///Crossflame
+        ///Dpis
+        ///Dulio
+        ///Eva
+        ///Iroha
+        ///Piggy
+        ///Usin
+        ///Howl
+        ///Nyo
+        ///Ripple
+        ///Eggplant
+        ///Melanzana
+        ///Sas
+        ///Cono
+        ///Russia
+        ///Aleana
+        ///Goose
+        ///Schiavo
+        ///Dean
+        ///Peppy
+        ///Fumi
+        ///Ami
+        ///Topo
+        ///Zozo
+        ///Riccardo
+        ///Giuseppe
+        ///Eddie
+        ///Dillon
+        ///Alice
+        ///Nikki
+        ///Kondy
+        ///Jhlee
+        ///Zino
+        ///Hyeon
+        ///Dawt
+        ///Vibe
+        ///Ray
+        ///Chack
+        ///Nora
+        ///Marco
+        ///Ami
+        ///JM
+        ///H [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string names {
             get {

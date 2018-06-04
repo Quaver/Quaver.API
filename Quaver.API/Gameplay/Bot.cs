@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
 using RandomNameGeneratorLibrary;
@@ -21,7 +23,12 @@ namespace Quaver.API.Gameplay
         /// <summary>
         ///     The bot's randomly generated name.
         /// </summary>
-        public string Name { get; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set => _name = $"Bot {value}";
+        }
 
         /// <summary>
         ///     The level of the bot (how good it is)
@@ -33,7 +40,9 @@ namespace Quaver.API.Gameplay
         /// </summary>
         public List<Judgement> Judgements { get; }
         
-        private static PersonNameGenerator NameRng { get; set; } = new PersonNameGenerator();
+        /// <summary>
+        ///     RNG
+        /// </summary>
         private static Random Rng { get; } = new Random();
 
         /// <summary>
@@ -48,7 +57,7 @@ namespace Quaver.API.Gameplay
             Judgements = new List<Judgement>();
 
             // Generate username for this bot.
-            Name = NameRng.GenerateRandomFemaleFirstName();
+            Name = GenerateRandomName();
 
             // Contains the random weights of each judgement 
             IWeightedRandomizer<int> weights;
@@ -119,9 +128,6 @@ namespace Quaver.API.Gameplay
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            // Put Bot in front of their name to make it clear.
-            Name = $"Bot {Name}";
         }
 
         /// <summary>
@@ -138,6 +144,16 @@ namespace Quaver.API.Gameplay
                 if (obj.IsLongNote)
                     Judgements.Add((Judgement) weights.NextWithReplacement());
             }
+        }
+
+        /// <summary>
+        ///     Generates a random file name from the list of bot names.
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateRandomName()
+        {
+            var names = APIResources.names.Split('\n');
+            return names[Rng.Next(1, names.Length - 1)];
         }
     }    
 }
