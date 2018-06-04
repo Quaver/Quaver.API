@@ -119,8 +119,9 @@ namespace Quaver.API.Gameplay
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
 
+            // Put Bot in front of their name to make it clear.
+            Name = $"Bot {Name}";
         }
 
         /// <summary>
