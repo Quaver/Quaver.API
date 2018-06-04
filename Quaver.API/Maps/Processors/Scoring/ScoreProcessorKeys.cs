@@ -42,11 +42,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         public override SortedDictionary<Judgement, float> JudgementWindow { get; set; } = new SortedDictionary<Judgement, float>
         {
             {Judgement.Marvelous, 16},
-            {Judgement.Perfect, 40},
-            {Judgement.Great, 73},
-            {Judgement.Good, 103},
+            {Judgement.Perfect, 43},
+            {Judgement.Great, 76},
+            {Judgement.Good, 106},
             {Judgement.Okay, 127},
-            {Judgement.Miss, 164}
+            {Judgement.Miss, 152}
         };
 
         /// <inheritdoc />
@@ -96,8 +96,8 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Judgement.Perfect, 100},
             {Judgement.Great, 50},
             {Judgement.Good, 25},
-            {Judgement.Okay, -100},
-            {Judgement.Miss, -50}
+            {Judgement.Okay, -50},
+            {Judgement.Miss, -25}
         };
 
         /// <inheritdoc />
