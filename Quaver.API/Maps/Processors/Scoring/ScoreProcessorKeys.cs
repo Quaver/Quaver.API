@@ -54,11 +54,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override SortedDictionary<Judgement, float> WindowReleaseMultiplier { get; } = new SortedDictionary<Judgement, float>
         {
-            {Judgement.Marvelous, 2.4f},
-            {Judgement.Perfect, 2.2f},
-            {Judgement.Great, 2f},
-            {Judgement.Good, 2f},
-            {Judgement.Okay, 1.0f},
+            {Judgement.Marvelous, 1.5f},
+            {Judgement.Perfect, 1.5f},
+            {Judgement.Great, 1.5f},
+            {Judgement.Good, 1.5f},
+            {Judgement.Okay, 1.5f},
         };
         
         /// <inheritdoc />
