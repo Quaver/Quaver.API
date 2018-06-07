@@ -78,8 +78,8 @@ namespace Quaver.API.Gameplay
                 case BotLevel.Noob:
                     weights = new DynamicWeightedRandomizer<int>();
                     
-                    weights.Add((int)Judgement.Marvelous, 30);
-                    weights.Add((int)Judgement.Perfect, 15);
+                    weights.Add((int)Judgement.Marv, 30);
+                    weights.Add((int)Judgement.Perf, 15);
                     weights.Add((int)Judgement.Great, 20);
                     weights.Add((int)Judgement.Good, 10);
                     weights.Add((int)Judgement.Okay, 5);
@@ -91,8 +91,8 @@ namespace Quaver.API.Gameplay
                 case BotLevel.Amateur:
                     weights = new DynamicWeightedRandomizer<int>();
                     
-                    weights.Add((int)Judgement.Marvelous, 75);
-                    weights.Add((int)Judgement.Perfect, 15);
+                    weights.Add((int)Judgement.Marv, 75);
+                    weights.Add((int)Judgement.Perf, 15);
                     weights.Add((int)Judgement.Great, 5);
                     weights.Add((int)Judgement.Good, 1);
                     weights.Add((int)Judgement.Okay, 1);
@@ -104,8 +104,8 @@ namespace Quaver.API.Gameplay
                 case BotLevel.Decent:
                     weights = new DynamicWeightedRandomizer<int>();
                     
-                    weights.Add((int)Judgement.Marvelous, 75);
-                    weights.Add((int)Judgement.Perfect, 20);
+                    weights.Add((int)Judgement.Marv, 75);
+                    weights.Add((int)Judgement.Perf, 20);
                     weights.Add((int)Judgement.Great, 2);
                     weights.Add((int)Judgement.Good, 1);
                     weights.Add((int)Judgement.Okay, 1);
@@ -119,10 +119,10 @@ namespace Quaver.API.Gameplay
                     
                     Map.HitObjects.ForEach(x =>
                     {
-                        Judgements.Add(Judgement.Marvelous);
+                        Judgements.Add(Judgement.Marv);
                         
                         if (x.IsLongNote)
-                            Judgements.Add(Judgement.Marvelous);
+                            Judgements.Add(Judgement.Marv);
                     });
                     break;
                 default:

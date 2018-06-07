@@ -41,8 +41,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override SortedDictionary<Judgement, float> JudgementWindow { get; set; } = new SortedDictionary<Judgement, float>
         {
-            {Judgement.Marvelous, 16},
-            {Judgement.Perfect, 43},
+            {Judgement.Marv, 16},
+            {Judgement.Perf, 43},
             {Judgement.Great, 76},
             {Judgement.Good, 106},
             {Judgement.Okay, 127},
@@ -54,8 +54,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override SortedDictionary<Judgement, float> WindowReleaseMultiplier { get; } = new SortedDictionary<Judgement, float>
         {
-            {Judgement.Marvelous, 1.5f},
-            {Judgement.Perfect, 1.5f},
+            {Judgement.Marv, 1.5f},
+            {Judgement.Perf, 1.5f},
             {Judgement.Great, 1.5f},
             {Judgement.Good, 1.5f},
             {Judgement.Okay, 1.5f},
@@ -66,8 +66,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override Dictionary<Judgement, int> JudgementScoreWeighting { get; } = new Dictionary<Judgement, int>()
         {
-            {Judgement.Marvelous, 100},
-            {Judgement.Perfect, 50},
+            {Judgement.Marv, 100},
+            {Judgement.Perf, 50},
             {Judgement.Great, 25},
             {Judgement.Good, 10},
             {Judgement.Okay, 5},
@@ -79,8 +79,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override Dictionary<Judgement, float> JudgementHealthWeighting { get; } = new Dictionary<Judgement, float>()
         {
-            {Judgement.Marvelous, 0.5f},
-            {Judgement.Perfect, 0.4f},
+            {Judgement.Marv, 0.5f},
+            {Judgement.Perf, 0.4f},
             {Judgement.Great, 0.2f},
             {Judgement.Good, -3.0f},
             {Judgement.Okay, -4.5f},
@@ -92,8 +92,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override Dictionary<Judgement, int> JudgementAccuracyWeighting { get; } = new Dictionary<Judgement, int>()
         {
-            {Judgement.Marvelous, 100},
-            {Judgement.Perfect, 100},
+            {Judgement.Marv, 100},
+            {Judgement.Perf, 100},
             {Judgement.Great, 50},
             {Judgement.Good, 25},
             {Judgement.Okay, -50},

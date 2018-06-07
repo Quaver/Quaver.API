@@ -8,9 +8,9 @@ namespace Quaver.API.Helpers
         {
             switch (j)
             {
-                case Judgement.Marvelous:
+                case Judgement.Marv:
                     return "MV";
-                case Judgement.Perfect:
+                case Judgement.Perf:
                     return "PF";
                 case Judgement.Great:
                     return "GR";

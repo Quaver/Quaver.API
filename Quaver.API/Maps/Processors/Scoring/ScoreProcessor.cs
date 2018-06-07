@@ -59,8 +59,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public Dictionary<Judgement, int> CurrentJudgements { get; } = new Dictionary<Judgement, int>()
         {
-            {Judgement.Marvelous, 0},
-            {Judgement.Perfect, 0},
+            {Judgement.Marv, 0},
+            {Judgement.Perf, 0},
             {Judgement.Great, 0},
             {Judgement.Good, 0},
             {Judgement.Okay, 0},

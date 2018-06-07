@@ -11,8 +11,8 @@ namespace Quaver.API.Enums
     /// </summary>
     public enum Judgement
     {
-        Marvelous,
-        Perfect,
+        Marv,
+        Perf,
         Great,
         Good,
         Okay,
