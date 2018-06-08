@@ -8,6 +8,11 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
     public struct HitStat
     {
         /// <summary>
+        ///     The type of hit this was.
+        /// </summary>
+        public HitStatType Type { get; }
+
+        /// <summary>
         ///     The HitObject that this is referencing to.
         /// </summary>
         public HitObjectInfo HitObject { get; }
@@ -37,6 +42,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// </summary>
         public float Health { get; }
 
+       
         /// <summary>
         ///     Ctor
         /// </summary>
@@ -46,7 +52,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// <param name="hitDifference"></param>
         /// <param name="acc"></param>
         /// <param name="health"></param>
-        public HitStat(HitObjectInfo hitObject, double songPos, Judgement judgement, double hitDifference, double acc, float health)
+        public HitStat(HitStatType type, HitObjectInfo hitObject, double songPos, Judgement judgement, double hitDifference, double acc, float health)
         {
             HitObject = hitObject;
             SongPosition = songPos;
@@ -54,8 +60,9 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
             HitDifference = hitDifference;
             Accuracy = acc;
             Health = health;
+            Type = type;
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
