@@ -183,5 +183,17 @@ namespace Quaver.API.Maps.Processors.Scoring
             for (var i = 0; i < JudgementWindow.Count; i++)
                 JudgementWindow[(Judgement) i] *= (float)rate;
         }
+
+        /// <summary>
+        ///     Gets the judgement breakdown from hit data.
+        /// </summary>
+        /// <returns></returns>
+        public string GetJudgementBreakdown()
+        {
+            var breakdown = "";
+            Stats.ForEach(x => breakdown += (int)x.Judgement);
+
+            return breakdown;
+        }
     }
 }
