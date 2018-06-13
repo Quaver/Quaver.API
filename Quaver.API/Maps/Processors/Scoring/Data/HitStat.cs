@@ -67,6 +67,6 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// 
         /// </summary>
         /// <returns></returns>
-        public override string ToString() => $"Obj @ {SongPosition} | Hit Diff @ {HitDifference} | {Judgement} | {Accuracy}% | Life: {Health}";
+        public override string ToString() => $"{SongPosition}|{HitDifference}|{Judgement}";
     }
 }
