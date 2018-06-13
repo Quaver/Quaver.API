@@ -31,6 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="osu-database-reader, Version=2.1.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\HoLLy.osu.DatabaseReader.2.1.0\lib\net40\osu-database-reader.dll</HintPath>
+    </Reference>
+    <Reference Include="osu.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\packages\osu.Shared.1.0.2\lib\net20\osu.Shared.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RandomNameGeneratorLibrary, Version=1.2.2.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\packages\RandomNameGeneratorLibrary.1.2.2.0\lib\net40\RandomNameGeneratorLibrary.dll</HintPath>
       <Private>True</Private>
@@ -59,8 +66,10 @@
     <Compile Include="Enums\ModIdentifier.cs" />
     <Compile Include="Gameplay\Bot.cs" />
     <Compile Include="Gameplay\BotLevel.cs" />
+    <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Helpers\GradeHelper.cs" />
     <Compile Include="Helpers\JudgementHelper.cs" />
+    <Compile Include="Helpers\StreamHelper.cs" />
     <Compile Include="Maps\HitObjectInfo.cs" />
     <Compile Include="Maps\Parsers\PeppyBeatmap.cs" />
     <Compile Include="Maps\Parsers\StepManiaFile.cs" />
@@ -77,6 +86,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>APIResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Replays\Replay.cs" />
+    <Compile Include="Replays\ReplayAutoplayFrame.cs" />
+    <Compile Include="Replays\ReplayFrame.cs" />
+    <Compile Include="Replays\ReplayKeyPressState.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -114,11 +114,12 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Grade.C, 70},
             {Grade.D, 60},
         };
-   
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
         /// <param name="map"></param>
+        /// <param name="mods"></param>
         public ScoreProcessorKeys(Qua map, ModIdentifier mods) : base(map, mods)
         {
             TotalJudgements = GetTotalJudgementCount();

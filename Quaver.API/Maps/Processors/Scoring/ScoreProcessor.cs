@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Processors.Scoring.Data;
+using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
 {
@@ -128,6 +129,11 @@ namespace Quaver.API.Maps.Processors.Scoring
             InitializeMods();
         }
 
+        public ScoreProcessor(Replay replay)
+        {
+            
+        }
+        
         /// <summary>
         ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
