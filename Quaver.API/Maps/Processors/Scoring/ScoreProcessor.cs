@@ -129,9 +129,22 @@ namespace Quaver.API.Maps.Processors.Scoring
             InitializeMods();
         }
 
+        /// <summary>
+        ///     Score processor from replay.
+        /// </summary>
+        /// <param name="replay"></param>
         public ScoreProcessor(Replay replay)
         {
-            
+            Mods = replay.Mods;
+            Score = replay.Score;
+            Accuracy = replay.Accuracy;
+            MaxCombo = replay.MaxCombo;
+            CurrentJudgements[Judgement.Marv] = replay.CountMarv;
+            CurrentJudgements[Judgement.Perf] = replay.CountPerf;
+            CurrentJudgements[Judgement.Great] = replay.CountGreat;
+            CurrentJudgements[Judgement.Good] = replay.CountGood;
+            CurrentJudgements[Judgement.Okay] = replay.CountOkay;
+            CurrentJudgements[Judgement.Miss] = replay.CountMiss;
         }
         
         /// <summary>

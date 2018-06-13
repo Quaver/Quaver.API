@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Quaver.API.Enums;
+using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
 {
@@ -125,6 +126,12 @@ namespace Quaver.API.Maps.Processors.Scoring
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
         }
+        
+        /// <summary>
+        ///     Ctor - 
+        /// </summary>
+        /// <param name="replay"></param>
+        public ScoreProcessorKeys(Replay replay) : base(replay){}
 
         /// <inheritdoc />
         /// <summary>

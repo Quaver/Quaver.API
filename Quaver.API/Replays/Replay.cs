@@ -154,7 +154,6 @@ namespace Quaver.API.Replays
                 // Add all the replay frames to the object
                 foreach (var frame in frames)
                 {
-                    Console.WriteLine(frame);
                     try
                     {
                         // Split up the frame string by SongTime|KeyPressState
@@ -221,27 +220,6 @@ namespace Quaver.API.Replays
             CountGood = processor.CurrentJudgements[Judgement.Good];
             CountOkay = processor.CurrentJudgements[Judgement.Okay];
             CountMiss = processor.CurrentJudgements[Judgement.Miss];
-        }
-
-        /// <summary>
-        ///     Converts the replay to a score processor.
-        /// </summary>
-        /// <returns></returns>
-        public ScoreProcessor ToScoreProcessor(GameMode mode)
-        {
-            ScoreProcessor processor;
-            
-            switch (mode)
-            {
-                case GameMode.Keys4:
-                case GameMode.Keys7:
-                    processor = new ScoreProcessorKeys(null, Mods);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
-            }
-
-            return processor;
         }
         
         /// <summary>
