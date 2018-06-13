@@ -134,6 +134,7 @@ namespace Quaver.API.Replays
                 Md5 = br.ReadString();
                 PlayerName = br.ReadString();
                 Date = Convert.ToDateTime(br.ReadString());
+                Mode = (GameMode)br.ReadInt32();
                 Mods = (ModIdentifier)br.ReadInt32();
                 Score = br.ReadInt32();
                 Accuracy = br.ReadSingle();
@@ -178,7 +179,8 @@ namespace Quaver.API.Replays
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(FramesToString())))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
             {
-                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}--{MapMd5}//{PlayerName}=w{(int) Mods}xxx={Score}--." +
+                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}--{MapMd5}//{PlayerName}=w--{(int)Mode}@@#" +
+                                                    $"{(int) Mods}xxx={Score}--." +
                                                     $"{Accuracy}--" + $"{MaxCombo}@#{CountMarv}$!---{CountPerf}" +
                                                     $"---{CountGreat}@!!{CountGood}.@@@!@!{CountOkay}----{CountMiss}" +
                                                     $"--{replayDataStream}");              
@@ -187,6 +189,7 @@ namespace Quaver.API.Replays
                 bw.Write(Md5);
                 bw.Write(PlayerName);
                 bw.Write(DateTime.Now.ToString(CultureInfo.InvariantCulture));
+                bw.Write((int)Mode);
                 bw.Write((int)Mods);
                 bw.Write(Score);
                 bw.Write(Accuracy);
