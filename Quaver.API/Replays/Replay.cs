@@ -42,12 +42,12 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The date of this replay.
         /// </summary>
-        public DateTime Date { get; private set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         ///     The MD5 Hash of the replay.
         /// </summary>
-        public string Md5 { get; private set; }
+        public string Md5 { get; set; }
 
         /// <summary>
         ///     The md5 hash of the map.
@@ -57,47 +57,47 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The score achieved
         /// </summary>
-        public int Score { get; private set; }
+        public int Score { get; set; }
 
         /// <summary>
         ///     The accuracy achieved
         /// </summary>
-        public float Accuracy { get; private set; }
+        public float Accuracy { get; set; }
 
         /// <summary>
         ///     The max combo achieved
         /// </summary>
-        public int MaxCombo { get; private set; }
+        public int MaxCombo { get; set; }
 
         /// <summary>
         ///     Amount of marv judgements
         /// </summary>
-        public int CountMarv { get; private set; }
+        public int CountMarv { get; set; }
 
         /// <summary>
         ///     Amount of perf judgements
         /// </summary>
-        public int CountPerf { get; private set; }
+        public int CountPerf { get; set; }
 
         /// <summary>
         ///     Amount of great judgements
         /// </summary>
-        public int CountGreat { get; private set; }
+        public int CountGreat { get; set; }
 
         /// <summary>
         ///     Amount of good judgements
         /// </summary>
-        public int CountGood { get; private set; }
+        public int CountGood { get; set; }
 
         /// <summary>
         ///     Amount of okay judgements
         /// </summary>
-        public int CountOkay { get; private set; }
+        public int CountOkay { get; set; }
 
         /// <summary>
         ///     Amount of miss judgements.
         /// </summary>
-        public int CountMiss { get; private set; }
+        public int CountMiss { get; set; }
 
         /// <summary>
         ///     Ctor -
@@ -351,5 +351,10 @@ namespace Quaver.API.Replays
 
             return frameStr;
         }
+
+        /// <summary>
+        ///     If the replay has any data in it.
+        /// </summary>
+        public bool HasData => Frames.Count > 0;
     }
 }
