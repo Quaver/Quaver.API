@@ -19,7 +19,7 @@ namespace Quaver.API {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class APIResources {
@@ -64,21 +64,18 @@ namespace Quaver.API {
         ///   Looks up a localized string similar to # The following are names to be used as bots and are randomly selected during gameplay. 
         ///Swan
         ///Staravia
-        ///arpia97
+        ///Arpia
         ///AiAe
-        ///barrysir
-        ///Vortex-
+        ///Barry
+        ///Vortex
         ///Juan
         ///Daniel
-        ///D_
         ///ATTang
-        ///Droptable
         ///Riven
-        ///Jakachex
-        ///Suckjack
-        ///Windoze
+        ///Jaka
+        ///Sukjak
         ///Dakky
-        ///Crossflame
+        ///XFlame
         ///Dpis
         ///Dulio
         ///Eva
@@ -88,8 +85,6 @@ namespace Quaver.API {
         ///Howl
         ///Nyo
         ///Ripple
-        ///Eggplant
-        ///Melanzana
         ///Sas
         ///Cono
         ///Russia
@@ -97,7 +92,6 @@ namespace Quaver.API {
         ///Goose
         ///Schiavo
         ///Dean
-        ///Peppy
         ///Fumi
         ///Ami
         ///Topo
@@ -107,12 +101,11 @@ namespace Quaver.API {
         ///Eddie
         ///Dillon
         ///Alice
-        ///Nikki
         ///Kondy
         ///Jhlee
         ///Zino
         ///Hyeon
-        ///Dawt
+        ///Dot
         ///Vibe
         ///Ray
         ///Chack
@@ -120,7 +113,18 @@ namespace Quaver.API {
         ///Marco
         ///Ami
         ///JM
-        ///H [rest of string was truncated]&quot;;.
+        ///Zak
+        ///Angie
+        ///Comet
+        ///Shave
+        ///Lithi
+        ///Cono
+        ///Flat
+        ///CRZ
+        ///Mike
+        ///Jason
+        ///Eugene
+        ///Namida [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string names {
             get {
