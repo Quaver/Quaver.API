@@ -1,4 +1,5 @@
 ﻿using Quaver.API.Maps;
+using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Replays
 {

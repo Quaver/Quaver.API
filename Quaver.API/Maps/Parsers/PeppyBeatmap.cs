@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Quaver.API.Enums;
+using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Maps.Parsers
 {
@@ -405,7 +407,115 @@ namespace Quaver.API.Maps.Parsers
             {
                 IsValid = false;
             }
+        }
+        
+        /// <summary>
+        ///     Converts an .osu file into a Qua object
+        /// </summary>
+        /// <returns></returns>
+        public Qua ToQua()
+        {
+            // Init Qua with general information
+            var qua = new Qua()
+            {
+                AudioFile = AudioFilename,
+                SongPreviewTime = PreviewTime,
+                BackgroundFile = Background,
+                MapId = -1,
+                MapSetId = -1,
+                Title = Title,
+                Artist = Artist,
+                Source = Source,
+                Tags = Tags,
+                Creator = Creator,
+                DifficultyName = Version,
+                Description = $"This is a Quaver converted version of {Creator}'s map."
+            };
 
+            // Get the correct game mode based on the amount of keys the map has.
+            switch (KeyCount)
+            {
+                case 4:
+                    qua.Mode = GameMode.Keys4;
+                    break;
+                case 7:
+                    qua.Mode = GameMode.Keys7;
+                    break;
+                default:
+                    qua.Mode = (GameMode)(-1);
+                    break;
+            }
+
+            // Initialize lists
+            qua.TimingPoints = new List<TimingPointInfo>();
+            qua.SliderVelocities = new List<SliderVelocityInfo>();
+            qua.HitObjects = new List<HitObjectInfo>();
+
+            // Get Timing Info
+            foreach (var tp in TimingPoints)
+                if (tp.Inherited == 1)
+                    qua.TimingPoints.Add(new TimingPointInfo { StartTime = tp.Offset, Bpm = 60000 / tp.MillisecondsPerBeat });
+
+            // Get SliderVelocity Info
+            foreach (var tp in TimingPoints)
+                if (tp.Inherited == 0)
+                    qua.SliderVelocities.Add(new SliderVelocityInfo { StartTime = tp.Offset, Multiplier = (float)Math.Round(0.10 / ((tp.MillisecondsPerBeat / -100) / 10), 2) });
+
+            // Get HitObject Info
+            foreach (var hitObject in HitObjects)
+            {
+                // Get the keyLane the hitObject is in
+                var keyLane = 0;
+
+                if (hitObject.Key1)
+                    keyLane = 1;
+                else if (hitObject.Key2)
+                    keyLane = 2;
+                else if (hitObject.Key3)
+                    keyLane = 3;
+                else if (hitObject.Key4)
+                    keyLane = 4;
+                else if (hitObject.Key5)
+                    keyLane = 5;
+                else if (hitObject.Key6)
+                    keyLane = 6;
+                else if (hitObject.Key7)
+                    keyLane = 7;
+
+                // ReSharper disable once SwitchStatementMissingSomeCases
+                switch (hitObject.Type)
+                {
+                    // Add HitObjects to the list depending on the object type
+                    case 1:
+                    case 5:
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = hitObject.StartTime,
+                            Lane = keyLane,
+                            EndTime = 0,
+                            HitSound = (HitSounds) hitObject.HitSound
+                        });
+                        break;
+                    case 128:
+                    case 22:
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = hitObject.StartTime,
+                            Lane = keyLane,
+                            EndTime = hitObject.EndTime,
+                            HitSound = (HitSounds) hitObject.HitSound
+                        });
+                        break;
+                }
+            }
+
+            // Do a validity check and some final sorting.
+            if (!qua.IsValid())
+                throw new ArgumentException();
+
+            qua.Sort();
+
+            return qua;
         }
     }
 

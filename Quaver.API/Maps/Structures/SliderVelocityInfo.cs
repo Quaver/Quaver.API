@@ -1,4 +1,4 @@
-﻿namespace Quaver.API.Maps
+﻿namespace Quaver.API.Maps.Structures
 {
     /// <summary>
     ///     SliderVelocities section of the .qua   
