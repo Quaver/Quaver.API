@@ -65,7 +65,7 @@
     <Compile Include="Helpers\GradeHelper.cs" />
     <Compile Include="Helpers\JudgementHelper.cs" />
     <Compile Include="Helpers\StreamHelper.cs" />
-    <Compile Include="Maps\Parsers\PeppyBeatmap.cs" />
+    <Compile Include="Maps\Parsers\OsuBeatmap.cs" />
     <Compile Include="Maps\Parsers\StepManiaFile.cs" />
     <Compile Include="Maps\Processors\Difficulty\DifficultyCalculator.cs" />
     <Compile Include="Maps\Processors\Difficulty\DifficultyCalculatorKeys.cs" />

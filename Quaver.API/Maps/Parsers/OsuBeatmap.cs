@@ -10,7 +10,7 @@ using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Maps.Parsers
 {
-    public class PeppyBeatmap
+    public class OsuBeatmap
     {
         /// <summary>
         ///     The original file name of the .osu
@@ -75,7 +75,7 @@ namespace Quaver.API.Maps.Parsers
         /// <summary>
         ///     Ctor - Automatically parses a Peppy beatmap
         /// </summary>
-        public PeppyBeatmap(string filePath)
+        public OsuBeatmap(string filePath)
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
