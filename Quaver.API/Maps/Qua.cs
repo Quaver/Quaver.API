@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
+using Quaver.API.Maps.Processors.Difficulty;
 using Quaver.API.Maps.Structures;
 using YamlDotNet.Serialization;
 
@@ -147,6 +148,34 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
+        ///     If the .qua file is actually valid.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValid()
+        {
+            // If there aren't any HitObjects
+            if (HitObjects.Count == 0)
+                return false;
+
+            // If there aren't any TimingPoints
+            if (TimingPoints.Count == 0)
+                return false;
+
+            // Check if the mode is actually valid
+            return Enum.IsDefined(typeof(GameMode), Mode);
+        }
+        
+        /// <summary>
+        ///     Does some sorting of the Qua
+        /// </summary>
+        public void Sort()
+        {
+            HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
+            TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
+            SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+        }
+     
+        /// <summary>
         ///     The average notes per second in the map.
         /// </summary>
         /// <returns></returns>
@@ -157,7 +186,7 @@ namespace Quaver.API.Maps
         ///    This translates mode to key count.
         /// </summary>
         /// <returns></returns>
-        public int FindKeyCount()
+        public int GetKeyCount()
         {
             switch (Mode)
             {
@@ -174,7 +203,7 @@ namespace Quaver.API.Maps
         /// Finds the most common BPM in a Qua object.
         /// </summary>
         /// <returns></returns>
-        public double FindCommonBpm()
+        public double GetCommonBpm()
         {
             if (TimingPoints.Count == 0)
                 return 0;
@@ -184,31 +213,24 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        ///     Does some sorting of the Qua
-        /// </summary>
-        public void Sort()
-        {
-            HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
-            TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
-            SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
-        }
-
-        /// <summary>
-        ///     If the .qua file is actually valid.
+        ///     Calculates the difficulty of the map.
         /// </summary>
         /// <returns></returns>
-        public bool IsValid()
+        public double CalculateDifficulty()
         {
-            // If there aren't any HitObjects
-            if (HitObjects.Count == 0)
-                return false;
+            DifficultyCalculator diffCalc;
+            
+            switch (Mode)
+            {
+                case GameMode.Keys4:
+                case GameMode.Keys7:
+                    diffCalc = new DifficultyCalculatorKeys(this);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException();
+            }
 
-            // If there aren't any TimingPoints
-            if (TimingPoints.Count == 0)
-                return false;
-
-            // Check if the mode is actually valid
-            return Enum.IsDefined(typeof(GameMode), Mode);
+            return diffCalc.CalculateDifficulty();
         }
     }
 }
