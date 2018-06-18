@@ -414,5 +414,7 @@ namespace Quaver.API.Maps
 
             return maps;
         }
+
+        public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";
     }
 }
