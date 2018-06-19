@@ -1,14 +1,13 @@
-﻿using System;
-using Quaver.API.Enums;
+﻿using Quaver.API.Enums;
 using YamlDotNet.Serialization;
 
-namespace Quaver.API.Maps
+namespace Quaver.API.Maps.Structures
 {
     
     /// <summary>
     ///     HitObjects section of the .qua
     /// </summary>
-    public class HitObjectInfo : ICloneable
+    public class HitObjectInfo
     {
         /// <summary>
         ///     The time in milliseconds when the HitObject is supposed to be hit.
@@ -35,10 +34,5 @@ namespace Quaver.API.Maps
         /// </summary>
         [YamlIgnore]
         public bool IsLongNote => EndTime > 0;
-          
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
     }
 }

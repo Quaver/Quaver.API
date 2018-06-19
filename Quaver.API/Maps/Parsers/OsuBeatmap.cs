@@ -5,10 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Quaver.API.Enums;
+using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Maps.Parsers
 {
-    public class PeppyBeatmap
+    public class OsuBeatmap
     {
         /// <summary>
         ///     The original file name of the .osu
@@ -65,15 +67,15 @@ namespace Quaver.API.Maps.Parsers
         public string Background { get; set; }
 
         // [TimingPoints]
-        public List<TimingPoint> TimingPoints { get; set; } = new List<TimingPoint>();
+        public List<OsuTimingPoint> TimingPoints { get; set; } = new List<OsuTimingPoint>();
 
         // [HitObjects]
-        public List<HitObject> HitObjects { get; set; } = new List<HitObject>();
+        public List<OsuHitObject> HitObjects { get; set; } = new List<OsuHitObject>();
 
         /// <summary>
         ///     Ctor - Automatically parses a Peppy beatmap
         /// </summary>
-        public PeppyBeatmap(string filePath)
+        public OsuBeatmap(string filePath)
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
 
@@ -310,7 +312,7 @@ namespace Quaver.API.Maps.Parsers
                             {
                                 string[] values = line.Split(',');
 
-                                var timingPoint = new TimingPoint();
+                                var timingPoint = new OsuTimingPoint();
 
                                 timingPoint.Offset = float.Parse(values[0], CultureInfo.InvariantCulture);
                                 timingPoint.MillisecondsPerBeat = float.Parse(values[1], CultureInfo.InvariantCulture);
@@ -343,60 +345,60 @@ namespace Quaver.API.Maps.Parsers
                             // We'll need to parse LNs differently than normal HitObjects,
                             // as they have a different syntax. 128 in the object's type
                             // signifies that it is an LN
-                            HitObject hitObject = new HitObject();
+                            OsuHitObject osuHitObject = new OsuHitObject();
 
-                            hitObject.X = Int32.Parse(values[0], CultureInfo.InvariantCulture);
+                            osuHitObject.X = Int32.Parse(values[0], CultureInfo.InvariantCulture);
 
                             // 4k and 7k have both different hit object parsing.
                             if (KeyCount == 4)
                             {
-                                if (hitObject.X >= 0 && hitObject.X <= 127)
-                                    hitObject.Key1 = true;
-                                else if (hitObject.X >= 128 && hitObject.X <= 255)
-                                    hitObject.Key2 = true;
-                                else if (hitObject.X >= 256 && hitObject.X <= 383)
-                                    hitObject.Key3 = true;
+                                if (osuHitObject.X >= 0 && osuHitObject.X <= 127)
+                                    osuHitObject.Key1 = true;
+                                else if (osuHitObject.X >= 128 && osuHitObject.X <= 255)
+                                    osuHitObject.Key2 = true;
+                                else if (osuHitObject.X >= 256 && osuHitObject.X <= 383)
+                                    osuHitObject.Key3 = true;
 
-                                else if (hitObject.X >= 384 && hitObject.X <= 511)
-                                    hitObject.Key4 = true;
+                                else if (osuHitObject.X >= 384 && osuHitObject.X <= 511)
+                                    osuHitObject.Key4 = true;
                             }
                             // 7k
                             else if (KeyCount == 7)
                             {
-                                if (hitObject.X >= 0 && hitObject.X <= 108)
-                                    hitObject.Key1 = true;
-                                else if (hitObject.X >= 109 && hitObject.X <= 181)
-                                    hitObject.Key2 = true;
-                                else if (hitObject.X >= 182 && hitObject.X <= 255)
-                                    hitObject.Key3 = true;
-                                else if (hitObject.X >= 256 && hitObject.X <= 328)
-                                    hitObject.Key4 = true;
-                                else if (hitObject.X >= 329 && hitObject.X <= 401)
-                                    hitObject.Key5 = true;
-                                else if (hitObject.X >= 402 && hitObject.X <= 474)
-                                    hitObject.Key6 = true;
-                                else if (hitObject.X >= 475 && hitObject.X <= 547)
-                                    hitObject.Key7 = true;
+                                if (osuHitObject.X >= 0 && osuHitObject.X <= 108)
+                                    osuHitObject.Key1 = true;
+                                else if (osuHitObject.X >= 109 && osuHitObject.X <= 181)
+                                    osuHitObject.Key2 = true;
+                                else if (osuHitObject.X >= 182 && osuHitObject.X <= 255)
+                                    osuHitObject.Key3 = true;
+                                else if (osuHitObject.X >= 256 && osuHitObject.X <= 328)
+                                    osuHitObject.Key4 = true;
+                                else if (osuHitObject.X >= 329 && osuHitObject.X <= 401)
+                                    osuHitObject.Key5 = true;
+                                else if (osuHitObject.X >= 402 && osuHitObject.X <= 474)
+                                    osuHitObject.Key6 = true;
+                                else if (osuHitObject.X >= 475 && osuHitObject.X <= 547)
+                                    osuHitObject.Key7 = true;
                             }
                             else
                             {
                                 IsValid = false;
                             }
 
-                            hitObject.Y = Int32.Parse(values[1], CultureInfo.InvariantCulture);
-                            hitObject.StartTime = Int32.Parse(values[2], CultureInfo.InvariantCulture);
-                            hitObject.Type = Int32.Parse(values[3], CultureInfo.InvariantCulture);
-                            hitObject.HitSound = Int32.Parse(values[4], CultureInfo.InvariantCulture);
-                            hitObject.Additions = "0:0:0:0:";
+                            osuHitObject.Y = Int32.Parse(values[1], CultureInfo.InvariantCulture);
+                            osuHitObject.StartTime = Int32.Parse(values[2], CultureInfo.InvariantCulture);
+                            osuHitObject.Type = Int32.Parse(values[3], CultureInfo.InvariantCulture);
+                            osuHitObject.HitSound = Int32.Parse(values[4], CultureInfo.InvariantCulture);
+                            osuHitObject.Additions = "0:0:0:0:";
 
                             // If it's an LN, we'll want to add the object's EndTime as well.
                             if (line.Contains("128"))
                             {
                                 var endTime = values[5].Substring(0, values[5].IndexOf(":"));
-                                hitObject.EndTime = Int32.Parse(endTime, CultureInfo.InvariantCulture);
+                                osuHitObject.EndTime = Int32.Parse(endTime, CultureInfo.InvariantCulture);
                             }
 
-                            HitObjects.Add(hitObject);
+                            HitObjects.Add(osuHitObject);
                         }
                     }
                 }
@@ -405,14 +407,122 @@ namespace Quaver.API.Maps.Parsers
             {
                 IsValid = false;
             }
+        }
+        
+        /// <summary>
+        ///     Converts an .osu file into a Qua object
+        /// </summary>
+        /// <returns></returns>
+        public Qua ToQua()
+        {
+            // Init Qua with general information
+            var qua = new Qua()
+            {
+                AudioFile = AudioFilename,
+                SongPreviewTime = PreviewTime,
+                BackgroundFile = Background,
+                MapId = -1,
+                MapSetId = -1,
+                Title = Title,
+                Artist = Artist,
+                Source = Source,
+                Tags = Tags,
+                Creator = Creator,
+                DifficultyName = Version,
+                Description = $"This is a Quaver converted version of {Creator}'s map."
+            };
 
+            // Get the correct game mode based on the amount of keys the map has.
+            switch (KeyCount)
+            {
+                case 4:
+                    qua.Mode = GameMode.Keys4;
+                    break;
+                case 7:
+                    qua.Mode = GameMode.Keys7;
+                    break;
+                default:
+                    qua.Mode = (GameMode)(-1);
+                    break;
+            }
+
+            // Initialize lists
+            qua.TimingPoints = new List<TimingPointInfo>();
+            qua.SliderVelocities = new List<SliderVelocityInfo>();
+            qua.HitObjects = new List<HitObjectInfo>();
+
+            // Get Timing Info
+            foreach (var tp in TimingPoints)
+                if (tp.Inherited == 1)
+                    qua.TimingPoints.Add(new TimingPointInfo { StartTime = tp.Offset, Bpm = 60000 / tp.MillisecondsPerBeat });
+
+            // Get SliderVelocity Info
+            foreach (var tp in TimingPoints)
+                if (tp.Inherited == 0)
+                    qua.SliderVelocities.Add(new SliderVelocityInfo { StartTime = tp.Offset, Multiplier = (float)Math.Round(0.10 / ((tp.MillisecondsPerBeat / -100) / 10), 2) });
+
+            // Get HitObject Info
+            foreach (var hitObject in HitObjects)
+            {
+                // Get the keyLane the hitObject is in
+                var keyLane = 0;
+
+                if (hitObject.Key1)
+                    keyLane = 1;
+                else if (hitObject.Key2)
+                    keyLane = 2;
+                else if (hitObject.Key3)
+                    keyLane = 3;
+                else if (hitObject.Key4)
+                    keyLane = 4;
+                else if (hitObject.Key5)
+                    keyLane = 5;
+                else if (hitObject.Key6)
+                    keyLane = 6;
+                else if (hitObject.Key7)
+                    keyLane = 7;
+
+                // ReSharper disable once SwitchStatementMissingSomeCases
+                switch (hitObject.Type)
+                {
+                    // Add HitObjects to the list depending on the object type
+                    case 1:
+                    case 5:
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = hitObject.StartTime,
+                            Lane = keyLane,
+                            EndTime = 0,
+                            HitSound = (HitSounds) hitObject.HitSound
+                        });
+                        break;
+                    case 128:
+                    case 22:
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = hitObject.StartTime,
+                            Lane = keyLane,
+                            EndTime = hitObject.EndTime,
+                            HitSound = (HitSounds) hitObject.HitSound
+                        });
+                        break;
+                }
+            }
+
+            // Do a validity check and some final sorting.
+            if (!qua.IsValid())
+                throw new ArgumentException();
+
+            qua.Sort();
+
+            return qua;
         }
     }
 
     /// <summary>
     ///     Struct for the timing point data.
     /// </summary>
-    public struct TimingPoint
+    public struct OsuTimingPoint
     {
         public float Offset { get; set; }
         public float MillisecondsPerBeat { get; set; }
@@ -427,7 +537,7 @@ namespace Quaver.API.Maps.Parsers
     /// <summary>
     ///  Struct for all the hit object data.
     /// </summary>
-    public struct HitObject
+    public struct OsuHitObject
     {
         public int X { get; set; }
         public int Y { get; set; }

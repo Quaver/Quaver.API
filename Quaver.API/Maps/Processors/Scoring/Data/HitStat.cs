@@ -1,4 +1,5 @@
 ﻿using Quaver.API.Enums;
+using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Maps.Processors.Scoring.Data
 {

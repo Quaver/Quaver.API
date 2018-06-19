@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Quaver.API.Enums;
+using Quaver.API.Maps.Structures;
+using static Quaver.API.Maps.Parsers.StepManiaFile;
 
 namespace Quaver.API.Maps.Parsers
 {
@@ -294,6 +297,87 @@ namespace Quaver.API.Maps.Parsers
             // Add the new HitObject
             if (hitObject.StartTime != 0)
                 currentObjects.Add(hitObject);
+        }
+        
+        
+        /// <summary>
+        ///     Converts a StepMania file object into a list of Qua.
+        /// </summary>
+        /// <param name="sm"></param>
+        /// <returns></returns>
+        public List<Qua> ToQua()
+        {
+            var maps = new List<Qua>();
+
+            foreach (var chart in Charts)
+            {
+                var baseQua = new Qua()
+                {
+                    Artist = Artist,
+                    Title = Title,
+                    AudioFile = Music,
+                    BackgroundFile = Background.Replace(".jpeg", ".jpg"),
+                    Creator = Credit,
+                    Description = "This map was converted from StepMania",
+                    Mode = GameMode.Keys4,
+                    DifficultyName = chart.Difficulty,
+                    Source = "StepMania",
+                    Tags = "StepMania",
+                    TimingPoints = new List<TimingPointInfo>(),
+                    HitObjects = new List<HitObjectInfo>(),
+                    SliderVelocities = new List<SliderVelocityInfo>(),
+                    SongPreviewTime = (int)SampleStart
+                };
+                
+                // Convert BPM to Quaver Timing Points
+                var totalBpmTrackTime = 0f;
+
+                for (var i = 0; i < Bpms.Count; i++)
+                {
+                    // Handle the first BPM point
+                    if (Bpms[i].Beats == 0 && i == 0)
+                    {
+                        totalBpmTrackTime += 60000 / Bpms[i].BeatsPerMinute * Bpms[i].Beats - (Offset * 1000);
+                       
+                        // Add the first timing point
+                        baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalBpmTrackTime, Bpm = Bpms[i].BeatsPerMinute });
+                    }
+
+                    // Add the timing point ahead of it if it exists
+                    if (Bpms.Count <= i + 1)
+                        continue;
+
+                    totalBpmTrackTime += 60000 / Bpms[i].BeatsPerMinute * Math.Abs(Bpms[i + 1].Beats - Bpms[i].Beats);
+                    baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalBpmTrackTime, Bpm = Bpms[i + 1].BeatsPerMinute });
+                }
+
+                // Convert StepMania note rows to Quaver HitObjects
+                var currentBeat = 0;
+                var totalBeatTrackTime = -Offset * 1000f;
+                foreach (var measure in chart.Measures)
+                {
+                    foreach (var beat in measure.NoteRows)
+                    {
+                        currentBeat++;
+
+                        // Get the amount of milliseconds for this particular measure
+                        var msPerNote = 60000 / Bpms[GetBpmIndexFromBeat(this, currentBeat)].BeatsPerMinute * 4 / measure.NoteRows.Count;
+
+                        // If we're on the first beat, then the current track time should be the offset of the map.
+                        totalBeatTrackTime += msPerNote;
+
+                        // Convert all Lane's HitObjects
+                        ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 1, beat.Lane1);
+                        ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 2, beat.Lane2);
+                        ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 3, beat.Lane3);
+                        ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 4, beat.Lane4);
+                    }
+                }
+
+                maps.Add(baseQua);
+            }
+
+            return maps;
         }
     }
 

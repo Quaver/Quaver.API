@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
+using Quaver.API.Maps.Processors.Difficulty;
+using Quaver.API.Maps.Structures;
 using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps
@@ -13,73 +16,73 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     The name of the audio file
         /// </summary>
-        public string AudioFile { get; private set; }
+        public string AudioFile { get; set; }
 
         /// <summary>
         ///     Time in milliseconds of the song where the preview starts
         /// </summary>
-        public int SongPreviewTime { get; private set; }
+        public int SongPreviewTime { get; set; }
 
         /// <summary>
         ///     The name of the background file
         /// </summary>
-        public string BackgroundFile { get; private set; }
+        public string BackgroundFile { get; set; }
 
         /// <summary>
         ///     The unique Map Identifier (-1 if not submitted)
         /// </summary>
-        public int MapId { get; private set; } = -1;
+        public int MapId { get; set; } = -1;
 
         /// <summary>
         ///     The unique Map Set identifier (-1 if not submitted)
         /// </summary>
-        public int MapSetId { get; private set; } = -1;
+        public int MapSetId { get; set; } = -1;
 
         /// <summary>
         ///     The game mode for this map
         /// </summary>
-        public GameMode Mode { get; private set; }
+        public GameMode Mode { get; set; }
 
         /// <summary>
         ///     The title of the song
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         ///     The artist of the song
         /// </summary>
-        public string Artist { get; private set; }
+        public string Artist { get; set; }
 
         /// <summary>
         ///     The source of the song (album, mixtape, etc.)
         /// </summary>
-        public string Source { get; private set; }
+        public string Source { get; set; }
 
         /// <summary>
         ///     Any tags that could be used to help find the song.
         /// </summary>
-        public string Tags { get; private set; }
+        public string Tags { get; set; }
 
         /// <summary>
         ///     The creator of the map
         /// </summary>
-        public string Creator { get; private set; }
+        public string Creator { get; set; }
 
         /// <summary>
         ///     The difficulty name of the map.
         /// </summary>
-        public string DifficultyName { get; private set; }
+        public string DifficultyName { get; set; }
 
         /// <summary>
         ///     A description about this map.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; set; }
 
         /// <summary>
         ///     TimingPoint .qua data
         /// </summary>
-        public List<TimingPointInfo> TimingPoints { get; private set; }
-        
+        public List<TimingPointInfo> TimingPoints { get; set; }
+
         /// <summary>
         ///     Slider Velocity .qua data
         /// </summary>
@@ -88,14 +91,20 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     HitObject .qua data
         /// </summary>
-        public List<HitObjectInfo> HitObjects { get; private set; }
+        public List<HitObjectInfo> HitObjects { get; set; }
 
         /// <summary>
-        ///     Is the Qua actually valid?
+        ///     Finds the length of the map
         /// </summary>
+        /// <returns></returns>
         [YamlIgnore]
-        public bool IsValidQua { get; set; }
-
+        public int Length => HitObjects.Count == 0 ? 0 : HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
+        
+        /// <summary>
+        ///     Ctor
+        /// </summary>
+        public Qua() {}
+ 
         /// <summary>
         ///     Takes in a path to a .qua file and attempts to parse it.
         ///     Will throw an error if unable to be parsed.
@@ -112,7 +121,8 @@ namespace Quaver.API.Maps
             }
 
             // Check the Qua object's validity.
-            qua.IsValidQua = CheckQuaValidity(qua);
+            if (!qua.IsValid())
+                throw new ArgumentException(".qua file does not have HitObjects, TimingPoints, or Mode invalid");
 
             // Try to sort the Qua before returning.
             qua.Sort();
@@ -138,20 +148,45 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        ///     Placeholder
+        ///     If the .qua file is actually valid.
         /// </summary>
         /// <returns></returns>
-        public float CalculateFakeDifficulty(float rate = 1.0f)
+        public bool IsValid()
         {
-            return HitObjects.Count / (FindSongLength(this) / (1000f * rate));
-        }
+            // If there aren't any HitObjects
+            if (HitObjects.Count == 0)
+                return false;
 
+            // If there aren't any TimingPoints
+            if (TimingPoints.Count == 0)
+                return false;
+
+            // Check if the mode is actually valid
+            return Enum.IsDefined(typeof(GameMode), Mode);
+        }
+        
         /// <summary>
-        ///     In Quaver, the key count is defined by the mode.
-        ///     See: GameModes.cs
+        ///     Does some sorting of the Qua
+        /// </summary>
+        public void Sort()
+        {
+            HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
+            TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
+            SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+        }
+     
+        /// <summary>
+        ///     The average notes per second in the map.
         /// </summary>
         /// <returns></returns>
-        public int FindKeyCountFromMode()
+        public float AverageNotesPerSecond(float rate = 1.0f) => HitObjects.Count / (Length / (1000f * rate));
+        
+        /// <summary>
+        ///    In Quaver, the key count is defined by the game mode.
+        ///    This translates mode to key count.
+        /// </summary>
+        /// <returns></returns>
+        public int GetKeyCount()
         {
             switch (Mode)
             {
@@ -160,259 +195,42 @@ namespace Quaver.API.Maps
                 case GameMode.Keys7:
                     return 7;
                 default:
-                    return -1;
+                    throw new InvalidEnumArgumentException();
             }
         }
 
         /// <summary>
         /// Finds the most common BPM in a Qua object.
         /// </summary>
-        /// <param name="qua"></param>
         /// <returns></returns>
-        public static double FindCommonBpm(Qua qua)
+        public double GetCommonBpm()
         {
-            if (qua.TimingPoints.Count == 0)
+            if (TimingPoints.Count == 0)
                 return 0;
 
-            return Math.Round(qua.TimingPoints.GroupBy(i => i.Bpm).OrderByDescending(grp => grp.Count())
+            return Math.Round(TimingPoints.GroupBy(i => i.Bpm).OrderByDescending(grp => grp.Count())
                 .Select(grp => grp.Key).First(), 2, MidpointRounding.AwayFromZero);
         }
 
         /// <summary>
-        ///     Finds the length of the map
+        ///     Calculates the difficulty of the map.
         /// </summary>
-        /// <param name="qua"></param>
         /// <returns></returns>
-        public static int FindSongLength(Qua qua)
+        public double CalculateDifficulty()
         {
-            return qua.HitObjects.Count == 0 ? 0 : qua.HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
-        }
-
-        /// <summary>
-        ///     Checks a Qua object's validity.
-        /// </summary>
-        /// <param name="qua"></param>
-        /// <returns></returns>
-        public static bool CheckQuaValidity(Qua qua)
-        {
-            // If there aren't any HitObjects
-            if (qua.HitObjects.Count == 0)
-                return false;
-
-            // If there aren't any TimingPoints
-            if (qua.TimingPoints.Count == 0)
-                return false;
-
-            // Check if the mode is actually valid
-            if (!Enum.IsDefined(typeof(GameMode), qua.Mode))
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
-        ///     Does some sorting of the Qua
-        /// </summary>
-        private void Sort()
-        {
-            try
+            DifficultyCalculator diffCalc;
+            
+            switch (Mode)
             {
-                HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
-                TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
-                SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
-            }
-            catch (Exception e)
-            {
-                IsValidQua = false;
-            }
-        }
-
-        /// <summary>
-        ///     Converts an .osu file into a Qua object
-        /// </summary>
-        /// <param name="osu"></param>
-        /// <returns></returns>
-        public static Qua ConvertOsuBeatmap(PeppyBeatmap osu)
-        {
-            // Init Qua with general information
-            var qua = new Qua()
-            {
-                AudioFile = osu.AudioFilename,
-                SongPreviewTime = osu.PreviewTime,
-                BackgroundFile = osu.Background,
-                MapId = -1,
-                MapSetId = -1,
-                Title = osu.Title,
-                Artist = osu.Artist,
-                Source = osu.Source,
-                Tags = osu.Tags,
-                Creator = osu.Creator,
-                DifficultyName = osu.Version,
-                Description = $"This is a Quaver converted version of {osu.Creator}'s map."
-            };
-
-            // Get the correct game mode based on the amount of keys the map has.
-            switch (osu.KeyCount)
-            {
-                case 4:
-                    qua.Mode = GameMode.Keys4;
-                    break;
-                case 7:
-                    qua.Mode = GameMode.Keys7;
+                case GameMode.Keys4:
+                case GameMode.Keys7:
+                    diffCalc = new DifficultyCalculatorKeys(this);
                     break;
                 default:
-                    qua.Mode = (GameMode)(-1);
-                    break;
+                    throw new InvalidEnumArgumentException();
             }
 
-            // Initialize lists
-            qua.TimingPoints = new List<TimingPointInfo>();
-            qua.SliderVelocities = new List<SliderVelocityInfo>();
-            qua.HitObjects = new List<HitObjectInfo>();
-
-            // Get Timing Info
-            foreach (var tp in osu.TimingPoints)
-                if (tp.Inherited == 1)
-                    qua.TimingPoints.Add(new TimingPointInfo { StartTime = tp.Offset, Bpm = 60000 / tp.MillisecondsPerBeat });
-
-            // Get SliderVelocity Info
-            foreach (var tp in osu.TimingPoints)
-                if (tp.Inherited == 0)
-                    qua.SliderVelocities.Add(new SliderVelocityInfo { StartTime = tp.Offset, Multiplier = (float)Math.Round(0.10 / ((tp.MillisecondsPerBeat / -100) / 10), 2) });
-
-            // Get HitObject Info
-            foreach (var hitObject in osu.HitObjects)
-            {
-                // Get the keyLane the hitObject is in
-                var keyLane = 0;
-
-                if (hitObject.Key1)
-                    keyLane = 1;
-                else if (hitObject.Key2)
-                    keyLane = 2;
-                else if (hitObject.Key3)
-                    keyLane = 3;
-                else if (hitObject.Key4)
-                    keyLane = 4;
-                else if (hitObject.Key5)
-                    keyLane = 5;
-                else if (hitObject.Key6)
-                    keyLane = 6;
-                else if (hitObject.Key7)
-                    keyLane = 7;
-
-                // ReSharper disable once SwitchStatementMissingSomeCases
-                switch (hitObject.Type)
-                {
-                    // Add HitObjects to the list depending on the object type
-                    case 1:
-                    case 5:
-                        qua.HitObjects.Add(new HitObjectInfo
-                        {
-                            StartTime = hitObject.StartTime,
-                            Lane = keyLane,
-                            EndTime = 0,
-                            HitSound = (HitSounds) hitObject.HitSound
-                        });
-                        break;
-                    case 128:
-                    case 22:
-                        qua.HitObjects.Add(new HitObjectInfo
-                        {
-                            StartTime = hitObject.StartTime,
-                            Lane = keyLane,
-                            EndTime = hitObject.EndTime,
-                            HitSound = (HitSounds) hitObject.HitSound
-                        });
-                        break;
-                }
-            }
-
-            // Do a validity check and some final sorting.
-            qua.IsValidQua = CheckQuaValidity(qua);
-            qua.Sort();
-
-            return qua;
-        }
-
-        /// <summary>
-        ///     Converts a StepMania file object into a list of Qua.
-        /// </summary>
-        /// <param name="sm"></param>
-        /// <returns></returns>
-        public static List<Qua> ConvertStepManiaChart(StepManiaFile sm)
-        {
-            var maps = new List<Qua>();
-
-            foreach (var chart in sm.Charts)
-            {
-                var baseQua = new Qua()
-                {
-                    Artist = sm.Artist,
-                    Title = sm.Title,
-                    AudioFile = sm.Music,
-                    BackgroundFile = sm.Background.Replace(".jpeg", ".jpg"),
-                    Creator = sm.Credit,
-                    Description = "This map was converted from StepMania",
-                    Mode = GameMode.Keys4,
-                    DifficultyName = chart.Difficulty,
-                    Source = "StepMania",
-                    Tags = "StepMania",
-                    TimingPoints = new List<TimingPointInfo>(),
-                    HitObjects = new List<HitObjectInfo>(),
-                    SliderVelocities = new List<SliderVelocityInfo>(),
-                    SongPreviewTime = (int)sm.SampleStart
-                };
-                
-                // Convert BPM to Quaver Timing Points
-                var totalBpmTrackTime = 0f;
-
-                for (var i = 0; i < sm.Bpms.Count; i++)
-                {
-                    // Handle the first BPM point
-                    if (sm.Bpms[i].Beats == 0 && i == 0)
-                    {
-                        totalBpmTrackTime += 60000 / sm.Bpms[i].BeatsPerMinute * sm.Bpms[i].Beats - (sm.Offset * 1000);
-                       
-                        // Add the first timing point
-                        baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalBpmTrackTime, Bpm = sm.Bpms[i].BeatsPerMinute });
-                    }
-
-                    // Add the timing point ahead of it if it exists
-                    if (sm.Bpms.Count <= i + 1)
-                        continue;
-
-                    totalBpmTrackTime += 60000 / sm.Bpms[i].BeatsPerMinute * Math.Abs(sm.Bpms[i + 1].Beats - sm.Bpms[i].Beats);
-                    baseQua.TimingPoints.Add(new TimingPointInfo { StartTime = totalBpmTrackTime, Bpm = sm.Bpms[i + 1].BeatsPerMinute });
-                }
-
-                // Convert StepMania note rows to Quaver HitObjects
-                var currentBeat = 0;
-                var totalBeatTrackTime = -sm.Offset * 1000f;
-                foreach (var measure in chart.Measures)
-                {
-                    foreach (var beat in measure.NoteRows)
-                    {
-                        currentBeat++;
-
-                        // Get the amount of milliseconds for this particular measure
-                        var msPerNote = 60000 / sm.Bpms[StepManiaFile.GetBpmIndexFromBeat(sm, currentBeat)].BeatsPerMinute * 4 / measure.NoteRows.Count;
-
-                        // If we're on the first beat, then the current track time should be the offset of the map.
-                        totalBeatTrackTime += msPerNote;
-
-                        // Convert all Lane's HitObjects
-                        StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 1, beat.Lane1);
-                        StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 2, beat.Lane2);
-                        StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 3, beat.Lane3);
-                        StepManiaFile.ConvertLaneToHitObject(baseQua.HitObjects, totalBeatTrackTime, 4, beat.Lane4);
-                    }
-                }
-
-                maps.Add(baseQua);
-            }
-
-            return maps;
+            return diffCalc.CalculateDifficulty();
         }
 
         public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";
