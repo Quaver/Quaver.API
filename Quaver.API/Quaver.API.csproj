@@ -31,12 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="osu-database-reader, Version=2.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\HoLLy.osu.DatabaseReader.2.1.0\lib\net40\osu-database-reader.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="osu-database-reader, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\HoLLy.osu.DatabaseReader.2.1.0\lib\net40\osu-database-reader.dll</HintPath>
     </Reference>
     <Reference Include="osu.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\osu.Shared.1.0.2\lib\net20\osu.Shared.dll</HintPath>
+      <HintPath>..\..\packages\osu.Shared.1.0.2\lib\net20\osu.Shared.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,11 +46,10 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Weighted Randomizer, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WeightedRandomizer.1.0.2\lib\net35\Weighted Randomizer.dll</HintPath>
+      <HintPath>..\..\packages\WeightedRandomizer.1.0.2\lib\net35\Weighted Randomizer.dll</HintPath>
     </Reference>
-    <Reference Include="YamlDotNet, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="YamlDotNet, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\YamlDotNet.4.3.3-pre0489\lib\net45\YamlDotNet.dll</HintPath>
-      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -90,9 +88,6 @@
     <Compile Include="Replays\ReplayKeyPressState.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="APIResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>APIResources.Designer.cs</LastGenOutput>
@@ -100,6 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\names.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
