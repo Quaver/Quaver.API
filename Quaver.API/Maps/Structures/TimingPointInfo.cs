@@ -1,8 +1,11 @@
-﻿namespace Quaver.API.Maps.Structures
+﻿using System;
+
+namespace Quaver.API.Maps.Structures
 {
     /// <summary>
     ///     TimingPoints section of the .qua
     /// </summary>
+    [Serializable]
     public class TimingPointInfo
     {
         /// <summary>

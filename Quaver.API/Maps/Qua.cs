@@ -11,6 +11,7 @@ using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps
 {
+    [Serializable]
     public class Qua
     {
         /// <summary>

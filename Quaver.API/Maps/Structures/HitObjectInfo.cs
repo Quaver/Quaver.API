@@ -1,4 +1,5 @@
-﻿using Quaver.API.Enums;
+﻿using System;
+using Quaver.API.Enums;
 using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
@@ -7,6 +8,7 @@ namespace Quaver.API.Maps.Structures
     /// <summary>
     ///     HitObjects section of the .qua
     /// </summary>
+    [Serializable]
     public class HitObjectInfo
     {
         /// <summary>
