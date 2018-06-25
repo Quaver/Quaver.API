@@ -6,16 +6,9 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss
 {
-    class QuaverStrainSolver
+    class QssData
     {
-        internal void GetQssData()
-        {
-
-        }
-
-        internal void CalculateOverallDifficulty()
-        {
-
-        }
+        internal float OverallDifficulty { get; set; }
+        internal float AverageNoteDensity { get; set; }
     }
 }
