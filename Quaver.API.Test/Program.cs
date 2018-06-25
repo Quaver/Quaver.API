@@ -15,6 +15,8 @@ namespace Quaver.API.Test
                                     $"'-qua <file path.qua>' - Get information about a .qua file\n" +
                                     $"'-osu <file path.osu> <output.qua>' - Convert an osu! (.osu) beatmap to .qua");
 
+                Console.ReadLine();
+
                 return;
             }
             
