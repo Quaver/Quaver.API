@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Quaver.API.Qss.DataStructures
+{
+    class FingerState
+    {
+        /// <summary>
+        /// Hand Index
+        /// </summary>
+        int HandIndex { get; set; }
+
+        /// <summary>
+        /// When your fingers are supposed to be at this state
+        /// </summary>
+        float StartTime { get; set; }
+
+        /// <summary>
+        /// State of fingers
+        /// </summary>
+        int State { get; set; }
+
+        /// <summary>
+        /// Strain Value (Difficulty)
+        /// </summary>
+        float Strain { get; set; }
+    }
+}
