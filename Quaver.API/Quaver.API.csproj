@@ -82,6 +82,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>APIResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Qss\DataStructures\FingerState.cs" />
+    <Compile Include="Qss\QssData.cs" />
     <Compile Include="Qss\QuaverStrainSolver.cs" />
     <Compile Include="Replays\Replay.cs" />
     <Compile Include="Replays\ReplayAutoplayFrame.cs" />
