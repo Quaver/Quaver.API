@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss.DataStructures
 {
-    enum FingerState
+    enum Hand
     {
-        Index,
-        Middle,
-        Ring,
-        Pinkie,
-        Thumb
+        Left,
+        Right
     }
 }

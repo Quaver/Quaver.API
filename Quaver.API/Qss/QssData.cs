@@ -11,6 +11,8 @@ namespace Quaver.API.Qss
     {
         internal float OverallDifficulty { get; set; }
         internal float AverageNoteDensity { get; set; }
-        internal List<FingerState> FingerStates { get; set; }
+        internal List<HitObjectData> HitObjects {get; set;}
+        internal List<GraphData> NoteDensityData { get; set; }
+        internal List<GraphData> StrainValueData { get; set; }
     }
 }
