@@ -11,6 +11,16 @@ namespace Quaver.API.Qss
     class QuaverStrainSolver
     {
         /// <summary>
+        /// Size of each graph partition in miliseconds
+        /// </summary>
+        internal const int GRAPH_INTERVAL_SIZE_MS = 500;
+
+        /// <summary>
+        /// Offset between each graph partition in miliseconds
+        /// </summary>
+        internal const int GRAPH_INTERVAL_OFFSET_MS = 100;
+
+        /// <summary>
         /// Compute and returns Qss Data for a map
         /// </summary>
         /// <param name="qua"></param>
@@ -36,7 +46,16 @@ namespace Quaver.API.Qss
         /// <param name="qua"></param>
         private static void ComputeNoteDensityData(QssData qssData, Qua qua)
         {
+            qssData.MapLength = qua.Length;
 
+            GraphData densityData;
+            for (var i = 0; i < qua.HitObjects.Count; i ++)
+            {
+                densityData = new GraphData()
+                {
+                    StartTime = qua.HitObjects[i].StartTime
+                };
+            }
         }
 
         /// <summary>

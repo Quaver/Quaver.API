@@ -9,6 +9,7 @@ namespace Quaver.API.Qss
 {
     class QssData
     {
+        internal float MapLength { get; set; }
         internal float OverallDifficulty { get; set; }
         internal float AverageNoteDensity { get; set; }
         internal List<HitObjectData> HitObjects {get; set; }
