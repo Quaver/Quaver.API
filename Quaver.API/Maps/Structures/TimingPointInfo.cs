@@ -1,4 +1,5 @@
 ﻿using System;
+using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
 {
@@ -17,5 +18,11 @@ namespace Quaver.API.Maps.Structures
         ///     The BPM during this timing point
         /// </summary>
         public float Bpm { get; set; }
+
+        /// <summary>
+        ///     The amount of milliseconds per beat this one takes up.
+        /// </summary>
+        [YamlIgnore]
+        public float MillisecondsPerBeat => 60000 / Bpm;
     }
 }
