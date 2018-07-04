@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss
 {
-    class QssData
+    public class QssData
     {
-        internal float MapLength { get; set; }
-        internal float OverallDifficulty { get; set; }
-        internal float AverageNoteDensity { get; set; }
-        internal List<HitObjectData> HitObjects {get; set; }
-        internal List<GraphData> NoteDensityData { get; set; }
-        internal List<GraphData> StrainValueData { get; set; }
+        public float MapLength { get; set; }
+        public float OverallDifficulty { get; set; }
+        public float AverageNoteDensity { get; set; }
+        public List<HitObjectData> HitObjects {get; set; }
+        public List<GraphData> NoteDensityData { get; set; }
+        public List<GraphData> StrainValueData { get; set; }
 
-        internal QssData()
+        public QssData()
         {
 
         }

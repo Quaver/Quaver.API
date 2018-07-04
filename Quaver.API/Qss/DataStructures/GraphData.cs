@@ -11,11 +11,11 @@ namespace Quaver.API.Qss.DataStructures
         /// <summary>
         /// Start Time
         /// </summary>
-        internal int StartTime { get; set; }
+        public int StartTime { get; set; }
 
         /// <summary>
         /// Y Value for current graph object. Used for note density and strain value.
         /// </summary>
-        internal float Value { get; set; }
+        public float Value { get; set; }
     }
 }

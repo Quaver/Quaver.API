@@ -8,10 +8,10 @@ namespace Quaver.API.Qss.DataStructures
 {
     class HitObjectData
     {
-        internal float StartTime { get; set; }
-        internal float EndTime { get; set; }
-        internal int KeyLane { get; set; }
-        internal float StrainValue { get; set; }
-        internal List<HitObjectData> LinkedChordedHitObjects { get; set; }
+        public float StartTime { get; set; }
+        public float EndTime { get; set; }
+        public int KeyLane { get; set; }
+        public float StrainValue { get; set; }
+        public List<HitObjectData> LinkedChordedHitObjects { get; set; }
     }
 }

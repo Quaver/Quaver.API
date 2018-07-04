@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss
 {
-    class QuaverStrainSolver
+    public class QuaverStrainSolver
     {
         /// <summary>
         /// Size of each graph partition in miliseconds
         /// </summary>
-        internal const int GRAPH_INTERVAL_SIZE_MS = 500;
+        public const int GRAPH_INTERVAL_SIZE_MS = 500;
 
         /// <summary>
         /// Offset between each graph partition in miliseconds
         /// </summary>
-        internal const int GRAPH_INTERVAL_OFFSET_MS = 100;
+        public const int GRAPH_INTERVAL_OFFSET_MS = 100;
 
         /// <summary>
         /// Compute and returns Qss Data for a map
         /// </summary>
         /// <param name="qua"></param>
         /// <returns>Qss Data</returns>
-        internal static QssData GetQssData(Qua qua)
+        public static QssData GetQssData(Qua qua)
         {
             QssData qssData = new QssData();
 
