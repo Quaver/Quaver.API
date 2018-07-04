@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss.DataStructures
 {
-    class HitObjectData
+    public class HitObjectData
     {
         public float StartTime { get; set; }
         public float EndTime { get; set; }

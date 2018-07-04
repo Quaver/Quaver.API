@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss.DataStructures
 {
-    class GraphData
+    public class GraphData
     {
         /// <summary>
         /// Start Time

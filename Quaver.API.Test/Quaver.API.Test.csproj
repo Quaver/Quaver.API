@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\OsuCommand.cs" />
+    <Compile Include="Commands\QssCommand.cs" />
     <Compile Include="Commands\QuaCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
