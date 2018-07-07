@@ -13,8 +13,6 @@ namespace Quaver.API.Qss
         public float OverallDifficulty { get; set; }
         public float AverageNoteDensity { get; set; }
         public List<HitObjectData> HitObjects {get; set; }
-        public List<GraphData> NoteDensityData { get; set; }
-        public List<GraphData> StrainValueData { get; set; }
 
         public QssData()
         {

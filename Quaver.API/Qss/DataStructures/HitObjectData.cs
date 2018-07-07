@@ -10,7 +10,7 @@ namespace Quaver.API.Qss.DataStructures
     {
         public float StartTime { get; set; }
         public float EndTime { get; set; }
-        public int KeyLane { get; set; }
+        public int Lane { get; set; }
         public float StrainValue { get; set; }
         public List<HitObjectData> LinkedChordedHitObjects { get; set; }
     }

@@ -48,12 +48,14 @@ namespace Quaver.API.Qss
         {
             qssData.MapLength = qua.Length;
 
-            GraphData densityData;
+            HitObjectData hitObjectData;
             for (var i = 0; i < qua.HitObjects.Count; i ++)
             {
-                densityData = new GraphData()
+                hitObjectData = new HitObjectData()
                 {
-                    StartTime = qua.HitObjects[i].StartTime
+                    StartTime = qua.HitObjects[i].StartTime,
+                    EndTime = qua.HitObjects[i].EndTime,
+                    Lane = qua.HitObjects[i].Lane
                 };
             }
         }
