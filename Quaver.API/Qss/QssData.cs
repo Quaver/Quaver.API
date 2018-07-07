@@ -1,4 +1,4 @@
-﻿using Quaver.API.Qss.DataStructures;
+﻿using Quaver.API.Qss.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +13,8 @@ namespace Quaver.API.Qss
         public float OverallDifficulty { get; set; }
         public float AverageNoteDensity { get; set; }
         public List<HitObjectData> HitObjects {get; set; }
+        public List<HitObjectData> LeftHandObjects { get; set; }
+        public List<HitObjectData> RightHandObjects { get; set; }
 
         public QssData()
         {

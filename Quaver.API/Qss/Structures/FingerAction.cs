@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quaver.API.Qss.DataStructures
+namespace Quaver.API.Qss.Structures
 {
-    enum FingerAction
+    public enum FingerAction
     {
         SimpleJack,
         TechnicalJack,

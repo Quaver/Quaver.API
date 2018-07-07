@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quaver.API.Qss.DataStructures
+namespace Quaver.API.Qss.Structures
 {
-    enum FingerState
+    enum Hand
     {
-        Index,
-        Middle,
-        Ring,
-        Pinkie,
-        Thumb
+        Left,
+        Right
     }
 }

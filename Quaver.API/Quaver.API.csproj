@@ -82,11 +82,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>APIResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Qss\DataStructures\FingerState.cs" />
-    <Compile Include="Qss\DataStructures\FingerAction.cs" />
-    <Compile Include="Qss\DataStructures\GraphData.cs" />
-    <Compile Include="Qss\DataStructures\Hand.cs" />
-    <Compile Include="Qss\DataStructures\HitObjectData.cs" />
+    <Compile Include="Qss\Structures\FingerState.cs" />
+    <Compile Include="Qss\Structures\FingerAction.cs" />
+    <Compile Include="Qss\Structures\Hand.cs" />
+    <Compile Include="Qss\Structures\HitObjectData.cs" />
     <Compile Include="Qss\QssData.cs" />
     <Compile Include="Qss\QuaverStrainSolver.cs" />
     <Compile Include="Replays\Replay.cs" />

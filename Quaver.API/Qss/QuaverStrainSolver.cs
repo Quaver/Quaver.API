@@ -1,5 +1,5 @@
 ﻿using Quaver.API.Maps;
-using Quaver.API.Qss.DataStructures;
+using Quaver.API.Qss.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,16 +48,6 @@ namespace Quaver.API.Qss
         {
             qssData.MapLength = qua.Length;
 
-            HitObjectData hitObjectData;
-            for (var i = 0; i < qua.HitObjects.Count; i ++)
-            {
-                hitObjectData = new HitObjectData()
-                {
-                    StartTime = qua.HitObjects[i].StartTime,
-                    EndTime = qua.HitObjects[i].EndTime,
-                    Lane = qua.HitObjects[i].Lane
-                };
-            }
         }
 
         /// <summary>
@@ -67,7 +57,22 @@ namespace Quaver.API.Qss
         /// <param name="qua"></param>
         private static void ComputeBaseStrainValues(QssData qssData, Qua qua)
         {
-            // Compute LN Weights
+            qssData.MapLength = qua.Length;
+
+            // Add hit objects from qua map to qssData
+            HitObjectData hitObjectData;
+            for (var i = 0; i < qua.HitObjects.Count; i++)
+            {
+                hitObjectData = new HitObjectData()
+                {
+                    StartTime = qua.HitObjects[i].StartTime,
+                    EndTime = qua.HitObjects[i].EndTime,
+                    Lane = qua.HitObjects[i].Lane
+                };
+                qssData.HitObjects.Add(hitObjectData);
+            }
+
+            // Compute LN Layering strain values
         }
 
         /// <summary>
@@ -76,7 +81,31 @@ namespace Quaver.API.Qss
         /// <param name="qssData"></param>
         private static void ComputeFingerStates(QssData qssData)
         {
+            // Assign key state
+            /*
+            for (var i = 0; i < qssData.HitObjects.Count; i++)
+            {
+                // todo: Temporary
+                if (qssData.HitObjects[i].Lane == 1)
+                {
+                    qssData.LeftHandObjects.Add(qssData.HitObjects[i]);
+                }
+            }
+            */
 
+            // Sort left hand/right hand
+            for (var i = 0; i < qssData.HitObjects.Count; i++)
+            {
+                // todo: Temporary
+                if (qssData.HitObjects[i].Lane <= 2)
+                {
+                    qssData.LeftHandObjects.Add(qssData.HitObjects[i]);
+                }
+                else
+                {
+                    qssData.RightHandObjects.Add(qssData.HitObjects[i]);
+                }
+            }
         }
 
         /// <summary>
