@@ -21,6 +21,11 @@ namespace Quaver.API.Qss
         public const int GRAPH_INTERVAL_OFFSET_MS = 100;
 
         /// <summary>
+        /// Max Lane Count. Will not check hit object indexes below the current index value subtracted by this value.
+        /// </summary>
+        public const int MAX_LANE_CHECK = 7;
+
+        /// <summary>
         /// Compute and returns Qss Data for a map
         /// </summary>
         /// <param name="qua"></param>
@@ -30,8 +35,7 @@ namespace Quaver.API.Qss
             QssData qssData = new QssData();
 
             ComputeNoteDensityData(qssData, qua);
-            ComputeBaseStrainValues(qssData, qua);
-            ComputeFingerStates(qssData);
+            ComputeBaseStrainStates(qssData, qua);
             ComputeFingerActions(qssData);
             ComputeActionPatterns(qssData);
             CalculateOverallDifficulty(qssData);
@@ -55,7 +59,7 @@ namespace Quaver.API.Qss
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
-        private static void ComputeBaseStrainValues(QssData qssData, Qua qua)
+        private static void ComputeBaseStrainStates(QssData qssData, Qua qua)
         {
             qssData.MapLength = qua.Length;
 
@@ -69,6 +73,38 @@ namespace Quaver.API.Qss
                     EndTime = qua.HitObjects[i].EndTime,
                     Lane = qua.HitObjects[i].Lane
                 };
+
+                // Calculate LN Multiplier
+                for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < qua.HitObjects.Count; j++)
+                {
+                    if (qua.HitObjects[j].StartTime > qua.HitObjects[i].EndTime)
+                    {
+                        break;
+                    }
+                    else if (qua.HitObjects[j].StartTime < qua.HitObjects[i].StartTime)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        // Target hitobject's LN ends after current hitobject's LN
+                        if (qua.HitObjects[j].EndTime > qua.HitObjects[i].EndTime)
+                        {
+                            hitObjectData.LnStrainMultiplier = 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+                        }
+                        // Target hitobject's LN ends before current hitobject's LN
+                        else if (qua.HitObjects[j].EndTime > 0)
+                        {
+                            hitObjectData.LnStrainMultiplier = 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+                        }
+                        // Target hitobject is not an LN
+                        else
+                        {
+                            hitObjectData.LnStrainMultiplier = 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+                        }
+                        break;
+                    }
+                }
 
                 // Assign Finger States
                 // Mania 4k
@@ -128,41 +164,6 @@ namespace Quaver.API.Qss
             }
 
             // Compute LN Layering strain values
-        }
-
-        /// <summary>
-        /// Computes the finger states for every note in a given beatmap
-        /// </summary>
-        /// <param name="qssData"></param>
-        private static void ComputeFingerStates(QssData qssData)
-        {
-            // Assign key state
-            /*
-            for (var i = 0; i < qssData.HitObjects.Count; i++)
-            {
-                // todo: Temporary
-                if (qssData.HitObjects[i].Lane == 1)
-                {
-                    qssData.LeftHandObjects.Add(qssData.HitObjects[i]);
-                }
-            }
-            */
-
-            // Sort left hand/right hand
-            /*
-            for (var i = 0; i < qssData.HitObjects.Count; i++)
-            {
-                // todo: Temporary
-                if (qssData.HitObjects[i].Lane <= 2)
-                {
-                    qssData.LeftHandObjects.Add(qssData.HitObjects[i]);
-                }
-                else
-                {
-                    qssData.RightHandObjects.Add(qssData.HitObjects[i]);
-                }
-            }
-            */
         }
 
         /// <summary>
