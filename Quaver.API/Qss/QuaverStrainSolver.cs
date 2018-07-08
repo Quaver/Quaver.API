@@ -74,35 +74,30 @@ namespace Quaver.API.Qss
                     Lane = qua.HitObjects[i].Lane
                 };
 
-                // Calculate LN Multiplier
+                // Calculate LN Multiplier (note: doesn't check for same hand
                 for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < qua.HitObjects.Count; j++)
                 {
                     if (qua.HitObjects[j].StartTime > qua.HitObjects[i].EndTime)
                     {
                         break;
                     }
-                    else if (qua.HitObjects[j].StartTime < qua.HitObjects[i].StartTime)
-                    {
-                        break;
-                    }
-                    else
+                    else if (qua.HitObjects[j].StartTime > qua.HitObjects[i].StartTime)
                     {
                         // Target hitobject's LN ends after current hitobject's LN
                         if (qua.HitObjects[j].EndTime > qua.HitObjects[i].EndTime)
                         {
-                            hitObjectData.LnStrainMultiplier = 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
                         }
                         // Target hitobject's LN ends before current hitobject's LN
                         else if (qua.HitObjects[j].EndTime > 0)
                         {
-                            hitObjectData.LnStrainMultiplier = 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
                         }
                         // Target hitobject is not an LN
                         else
                         {
-                            hitObjectData.LnStrainMultiplier = 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
                         }
-                        break;
                     }
                 }
 
