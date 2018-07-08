@@ -69,6 +69,61 @@ namespace Quaver.API.Qss
                     EndTime = qua.HitObjects[i].EndTime,
                     Lane = qua.HitObjects[i].Lane
                 };
+
+                // Assign Finger States
+                // Mania 4k
+                if (qua.Mode == Enums.GameMode.Keys4)
+                {
+                    switch (hitObjectData.Lane)
+                    {
+                        case 1:
+                            hitObjectData.FingerState = FingerState.Middle;
+                            break;
+                        case 2:
+                            hitObjectData.FingerState = FingerState.Index;
+                            break;
+                        case 3:
+                            hitObjectData.FingerState = FingerState.Index;
+                            break;
+                        case 4:
+                            hitObjectData.FingerState = FingerState.Middle;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                // Mania 7k
+                else if (qua.Mode == Enums.GameMode.Keys7)
+                {
+                    switch (hitObjectData.Lane)
+                    {
+                        case 1:
+                            hitObjectData.FingerState = FingerState.Ring;
+                            break;
+                        case 2:
+                            hitObjectData.FingerState = FingerState.Middle;
+                            break;
+                        case 3:
+                            hitObjectData.FingerState = FingerState.Index;
+                            break;
+                        case 4:
+                            hitObjectData.FingerState = FingerState.Thumb;
+                            break;
+                        case 5:
+                            hitObjectData.FingerState = FingerState.Index;
+                            break;
+                        case 6:
+                            hitObjectData.FingerState = FingerState.Middle;
+                            break;
+                        case 7:
+                            hitObjectData.FingerState = FingerState.Ring;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 qssData.HitObjects.Add(hitObjectData);
             }
 
@@ -94,6 +149,7 @@ namespace Quaver.API.Qss
             */
 
             // Sort left hand/right hand
+            /*
             for (var i = 0; i < qssData.HitObjects.Count; i++)
             {
                 // todo: Temporary
@@ -106,6 +162,7 @@ namespace Quaver.API.Qss
                     qssData.RightHandObjects.Add(qssData.HitObjects[i]);
                 }
             }
+            */
         }
 
         /// <summary>
