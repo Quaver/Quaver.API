@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss.Structures
 {
-    enum Hand
+    public enum Hand
     {
         Left,
-        Right
+        Right,
+        Ambiguous
     }
 }

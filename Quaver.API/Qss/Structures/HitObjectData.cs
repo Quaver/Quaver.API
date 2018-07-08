@@ -17,6 +17,7 @@ namespace Quaver.API.Qss.Structures
         public float PatternStrainMultiplier { get; set; } = 1;
         public float ManipulationStrainMultiplier { get; set; } = 1;
         public float StrainValue { get; set; } = 0;
+        public Hand Hand { get; set; }
         public FingerState FingerState { get; set; }
         public FingerAction FingerAction { get; set; }
         public String Pattern { get; set; } //todo: replace with enum

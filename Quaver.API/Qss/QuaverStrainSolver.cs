@@ -26,6 +26,11 @@ namespace Quaver.API.Qss
         public const int MAX_LANE_CHECK = 7;
 
         /// <summary>
+        /// If 2 hit objects are within miliseconds apart, they will be considered a chorded pair.
+        /// </summary>
+        public const int CHORD_THRESHOLD_MS = 10;
+
+        /// <summary>
         /// Compute and returns Qss Data for a map
         /// </summary>
         /// <param name="qua"></param>
@@ -36,6 +41,7 @@ namespace Quaver.API.Qss
 
             ComputeNoteDensityData(qssData, qua);
             ComputeBaseStrainStates(qssData, qua);
+            ComputeForChords(qssData);
             ComputeFingerActions(qssData);
             ComputeActionPatterns(qssData);
             CalculateOverallDifficulty(qssData);
@@ -56,6 +62,7 @@ namespace Quaver.API.Qss
 
         /// <summary>
         /// Get Note Data, and compute the base strain weights
+        /// The base strain weights are affected by LN layering
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
@@ -75,16 +82,17 @@ namespace Quaver.API.Qss
                 };
 
                 // Calculate LN Multiplier (note: doesn't check for same hand
+                // Also look for chords
                 for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < qua.HitObjects.Count; j++)
                 {
-                    if (qua.HitObjects[j].StartTime > qua.HitObjects[i].EndTime)
+                    if (qua.HitObjects[j].StartTime > hitObjectData.EndTime)
                     {
                         break;
                     }
-                    else if (qua.HitObjects[j].StartTime > qua.HitObjects[i].StartTime)
+                    else if (qua.HitObjects[j].StartTime > hitObjectData.StartTime)
                     {
                         // Target hitobject's LN ends after current hitobject's LN
-                        if (qua.HitObjects[j].EndTime > qua.HitObjects[i].EndTime)
+                        if (qua.HitObjects[j].EndTime > hitObjectData.EndTime)
                         {
                             hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
                         }
@@ -109,15 +117,19 @@ namespace Quaver.API.Qss
                     {
                         case 1:
                             hitObjectData.FingerState = FingerState.Middle;
+                            hitObjectData.Hand = Hand.Left;
                             break;
                         case 2:
                             hitObjectData.FingerState = FingerState.Index;
+                            hitObjectData.Hand = Hand.Left;
                             break;
                         case 3:
                             hitObjectData.FingerState = FingerState.Index;
+                            hitObjectData.Hand = Hand.Right;
                             break;
                         case 4:
                             hitObjectData.FingerState = FingerState.Middle;
+                            hitObjectData.Hand = Hand.Right;
                             break;
                         default:
                             break;
@@ -131,24 +143,31 @@ namespace Quaver.API.Qss
                     {
                         case 1:
                             hitObjectData.FingerState = FingerState.Ring;
+                            hitObjectData.Hand = Hand.Left;
                             break;
                         case 2:
                             hitObjectData.FingerState = FingerState.Middle;
+                            hitObjectData.Hand = Hand.Left;
                             break;
                         case 3:
                             hitObjectData.FingerState = FingerState.Index;
+                            hitObjectData.Hand = Hand.Left;
                             break;
                         case 4:
                             hitObjectData.FingerState = FingerState.Thumb;
+                            hitObjectData.Hand = Hand.Ambiguous;
                             break;
                         case 5:
                             hitObjectData.FingerState = FingerState.Index;
+                            hitObjectData.Hand = Hand.Right;
                             break;
                         case 6:
                             hitObjectData.FingerState = FingerState.Middle;
+                            hitObjectData.Hand = Hand.Right;
                             break;
                         case 7:
                             hitObjectData.FingerState = FingerState.Ring;
+                            hitObjectData.Hand = Hand.Right;
                             break;
                         default:
                             break;
@@ -157,8 +176,31 @@ namespace Quaver.API.Qss
 
                 qssData.HitObjects.Add(hitObjectData);
             }
+        }
 
-            // Compute LN Layering strain values
+        private static void ComputeForChords(QssData qssData)
+        {
+            float msDiff;
+            for (var i = 0; i < qssData.HitObjects.Count; i++)
+            {
+                for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < qssData.HitObjects.Count; j++)
+                {
+                    msDiff = qssData.HitObjects[j].StartTime - qssData.HitObjects[i].StartTime;
+                    if (msDiff < CHORD_THRESHOLD_MS)
+                    {
+                        if (msDiff > -CHORD_THRESHOLD_MS)
+                        {
+                            qssData.HitObjects[i].LinkedChordedHitObjects.Add(qssData.HitObjects[j]);
+                        }
+                    }
+
+                    // Stop the loop if target hitobject's starttime is above the threshold
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>
