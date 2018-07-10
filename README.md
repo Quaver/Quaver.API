@@ -34,4 +34,4 @@ If you are wanting to develop a feature with the goal of having it being in the 
 When contributing, please remember to follow our [code style](https://github.com/Swan/Quaver/blob/release/CODESTYLE.md), so the codebase is consistent across the board. If you have any issues with our approaches to structuring/styling our code, feel free to bring this up.
 
 # LICENSE
-The code in this repository is licensed under the AGPL-3.0. Please see the [LICENSE](https://github.com/Swan/Quaver-API/blob/master/LICENSE) file for more details.
+The code in this repository is licensed under AGPL-3.0. Please see the [LICENSE](https://github.com/Swan/Quaver-API/blob/master/LICENSE) file for more details.
