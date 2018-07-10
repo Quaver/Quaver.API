@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss
 {
-    class QssData
+    internal class QssData
     {
         internal float OverallDifficulty { get; set; }
         internal float AverageNoteDensity { get; set; }

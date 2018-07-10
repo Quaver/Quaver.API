@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss
 {
-    class QuaverStrainSolver
+    internal class QuaverStrainSolver
     {
         internal void GetQssData()
         {
