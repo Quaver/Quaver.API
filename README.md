@@ -4,7 +4,7 @@
   <img src="https://eggplants.org/9du6q8.jpg">
 </p>
 
->📖 Keep developing for [https://github.com/Swan/Quaver](Quaver) with these set of tools and C# libraries.
+>📖 Keep developing for [Quaver](https://github.com/Swan/Quaver) with these set of tools and C# libraries.
 
 ### Table of Contents ###
 * [What's Included](https://github.com/Swan/Quaver-API#whats-included)
