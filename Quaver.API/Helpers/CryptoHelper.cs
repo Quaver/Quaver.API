@@ -13,16 +13,16 @@ namespace Quaver.API.Helpers
         public static string StringToMd5(string input)
         {
             // Use input string to calculate MD5 hash
-            StringBuilder sb = new StringBuilder();
-            using (MD5 md5 = MD5.Create())
+            var sb = new StringBuilder();
+            using (var md5 = MD5.Create())
             {
-                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
+                var inputBytes = Encoding.ASCII.GetBytes(input);
+                var hashBytes = md5.ComputeHash(inputBytes);
 
                 // Convert the byte array to hexadecimal string
-                for (int i = 0; i < hashBytes.Length; i++)
+                foreach (var t in hashBytes)
                 {
-                    sb.Append(hashBytes[i].ToString("X2"));
+                    sb.Append(t.ToString("X2"));
                 }
                 return sb.ToString().ToLower();
             }
