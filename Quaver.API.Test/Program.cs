@@ -13,8 +13,8 @@ namespace Quaver.API.Test
                                     $"Here you can run a bunch of things to test the API.\n\n" +
                                     $"Commands:\n" +
                                     $"'-qua <file path.qua>' - Get information about a .qua file\n" +
-                                    $"'-osu <file path.osu> <output.qua>' - Convert an osu! (.osu) beatmap to .qua");
-
+                                    $"'-osu <file path.osu> <output.qua>' - Convert an osu! (.osu) beatmap to .qua\n" +
+                                    $"'-qss <file path.qua>' - Get qss data from a .qua file\n");
                 return;
             }
             
@@ -24,6 +24,9 @@ namespace Quaver.API.Test
                     new OsuCommand(args).Execute();
                     break;
                 case "-qua":
+                    new QuaCommand(args).Execute();
+                    break;
+                case "-qss":
                     new QuaCommand(args).Execute();
                     break;
                 default:

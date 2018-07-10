@@ -1,4 +1,4 @@
-﻿using Quaver.API.Qss.DataStructures;
+﻿using Quaver.API.Qss.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss
 {
-    internal class QssData
+    public class QssData
     {
-        internal float OverallDifficulty { get; set; }
-        internal float AverageNoteDensity { get; set; }
-        internal List<FingerState> FingerStates { get; set; }
+        public float MapLength { get; set; }
+        public float OverallDifficulty { get; set; }
+        public float AverageNoteDensity { get; set; }
+        public List<HitObjectData> HitObjects {get; set; }
+        public List<HitObjectData> LeftHandObjects { get; set; }
+        public List<HitObjectData> RightHandObjects { get; set; }
+
+        public QssData()
+        {
+
+        }
     }
 }
