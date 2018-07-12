@@ -55,7 +55,7 @@ namespace Quaver.API.Maps.Processors.Scoring
 
         /// <summary>
         ///     The judgement count for each judgement, initialized to 0 by default.
-        /// 
+        ///
         ///     Note: Not sure if modes will use different judgements, probably not.
         /// </summary>
         public Dictionary<Judgement, int> CurrentJudgements { get; } = new Dictionary<Judgement, int>()
@@ -98,11 +98,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     It multiplies the judgement window by this amount.
         /// </summary>
         public abstract SortedDictionary<Judgement, float> WindowReleaseMultiplier { get; }
-        
+
         /// <summary>
         ///     The total amount of judgements that the user has gotten in this play session.
         /// </summary>
-        protected int TotalJudgementCount
+        public virtual int TotalJudgementCount
         {
             get
             {
@@ -116,7 +116,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         }
 
         /// <summary>
-        ///     Ctor - 
+        ///     Ctor -
         /// </summary>
         /// <param name="map"></param>
         /// <param name="mods"></param>
@@ -125,7 +125,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             Map = map;
             Mods = mods;
             Stats = new List<HitStat>();
-            
+
             InitializeMods();
         }
 
@@ -146,7 +146,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             CurrentJudgements[Judgement.Okay] = replay.CountOkay;
             CurrentJudgements[Judgement.Miss] = replay.CountMiss;
         }
-        
+
         /// <summary>
         ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
@@ -163,10 +163,10 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     (Recalculates hit windows.)
         /// </summary>
         private void InitializeMods()
-        {            
+        {
             // The rate of the audio.
             var rate = 1.0;
-            
+
             // Map mods to rate.
             if (Mods.HasFlag(ModIdentifier.Speed05X))
                 rate = 0.5f;
