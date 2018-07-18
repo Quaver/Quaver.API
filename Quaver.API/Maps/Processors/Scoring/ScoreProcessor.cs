@@ -51,7 +51,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The user's stats per object.
         /// </summary>
-        public List<HitStat> Stats { get; }
+        public List<HitStat> Stats { get; set; }
 
         /// <summary>
         ///     The judgement count for each judgement, initialized to 0 by default.
