@@ -11,6 +11,7 @@ using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps
 {
+    [Serializable]
     public class Qua
     {
         /// <summary>
@@ -81,17 +82,17 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     TimingPoint .qua data
         /// </summary>
-        public List<TimingPointInfo> TimingPoints { get; set; }
+        public List<TimingPointInfo> TimingPoints { get; private set; } = new List<TimingPointInfo>();
 
         /// <summary>
         ///     Slider Velocity .qua data
         /// </summary>
-        public List<SliderVelocityInfo> SliderVelocities { get; set; }
+        public List<SliderVelocityInfo> SliderVelocities { get; private set; } = new List<SliderVelocityInfo>();
 
         /// <summary>
         ///     HitObject .qua data
         /// </summary>
-        public List<HitObjectInfo> HitObjects { get; set; }
+        public List<HitObjectInfo> HitObjects { get; private set; } = new List<HitObjectInfo>();
 
         /// <summary>
         ///     Finds the length of the map
@@ -99,7 +100,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         [YamlIgnore]
         public int Length => HitObjects.Count == 0 ? 0 : HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
-        
+
         /// <summary>
         ///     Ctor
         /// </summary>
@@ -174,7 +175,7 @@ namespace Quaver.API.Maps
             TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
             SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
         }
-     
+        
         /// <summary>
         ///     The average notes per second in the map.
         /// </summary>
@@ -212,6 +213,46 @@ namespace Quaver.API.Maps
                 .Select(grp => grp.Key).First(), 2, MidpointRounding.AwayFromZero);
         }
 
+        /// <summary>
+        ///     Gets the timing point at a particular time in the map.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public TimingPointInfo GetTimingPointAt(double time)
+        {
+            var point = TimingPoints.FindLast(x => x.StartTime <= time);
+            
+            // If the point can't be found, we want to return either null if there aren't
+            // any points, or the first timing point, since it'll be considered as apart of it anyway.
+            if (point == null)
+                return TimingPoints.Count == 0 ? null : TimingPoints.First();
+
+            return point;
+        } 
+
+        /// <summary>
+        ///    Finds the length of a timing point.
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
+        public double GetTimingPointLength(TimingPointInfo point)
+        {
+            // Find the index of the current timing point.
+            var index = TimingPoints.IndexOf(point);
+            
+            // ??
+            if (index == -1)
+                throw new ArgumentException();
+            
+            // There is another timing point ahead of this one
+            // so we'll need to get the length of the two points.
+            if (index + 1 < TimingPoints.Count)
+                return TimingPoints[index + 1].StartTime - TimingPoints[index].StartTime;
+            
+            // Only one timing point, so we can assume that it goes to the end of the map.
+            return Length - point.StartTime;
+        }
+        
         /// <summary>
         ///     Calculates the difficulty of the map.
         /// </summary>

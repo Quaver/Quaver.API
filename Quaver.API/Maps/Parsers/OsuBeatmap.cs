@@ -457,11 +457,6 @@ namespace Quaver.API.Maps.Parsers
                     break;
             }
 
-            // Initialize lists
-            qua.TimingPoints = new List<TimingPointInfo>();
-            qua.SliderVelocities = new List<SliderVelocityInfo>();
-            qua.HitObjects = new List<HitObjectInfo>();
-
             // Get Timing Info
             foreach (var tp in TimingPoints)
                 if (tp.Inherited == 1)
