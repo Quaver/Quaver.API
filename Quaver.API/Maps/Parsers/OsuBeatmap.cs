@@ -144,13 +144,13 @@ namespace Quaver.API.Maps.Parsers
                                     AudioFilename = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
                                     break;
                                 case "AudioLeadIn":
-                                    AudioLeadIn = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    AudioLeadIn = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "PreviewTime":
-                                    PreviewTime = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    PreviewTime = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "Countdown":
-                                    Countdown = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    Countdown = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "SampleSet":
                                     SampleSet = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value)); ;
@@ -159,18 +159,18 @@ namespace Quaver.API.Maps.Parsers
                                     StackLeniency = float.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "Mode":
-                                    Mode = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    Mode = int.Parse(value, CultureInfo.InvariantCulture);
                                     if (Mode != 3)
                                         IsValid = false;
                                     break;
                                 case "LetterboxInBreaks":
-                                    LetterboxInBreaks = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    LetterboxInBreaks = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "SpecialStyle":
-                                    SpecialStyle = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    SpecialStyle = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "WidescreenStoryboard":
-                                    WidescreenStoryboard = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    WidescreenStoryboard = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
 
                             }
@@ -196,10 +196,10 @@ namespace Quaver.API.Maps.Parsers
                                     DistanceSpacing = float.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "BeatDivisor":
-                                    BeatDivisor = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    BeatDivisor = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "GridSize":
-                                    GridSize = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    GridSize = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "TimelineZoom":
                                     TimelineZoom = float.Parse(value, CultureInfo.InvariantCulture);
@@ -244,10 +244,10 @@ namespace Quaver.API.Maps.Parsers
                                     Tags = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value));
                                     break;
                                 case "BeatmapID":
-                                    BeatmapID = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    BeatmapID = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "BeatmapSetID":
-                                    BeatmapSetID = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    BeatmapSetID = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 default:
                                     break;
@@ -270,7 +270,7 @@ namespace Quaver.API.Maps.Parsers
                                     HPDrainRate = float.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "CircleSize":
-                                    KeyCount = Int32.Parse(value, CultureInfo.InvariantCulture);
+                                    KeyCount = int.Parse(value, CultureInfo.InvariantCulture);
                                     if (KeyCount != 4 && KeyCount != 7)
                                         IsValid = false;
                                     break;
@@ -298,7 +298,7 @@ namespace Quaver.API.Maps.Parsers
                         // So there's no need to parse the storyboard data.
                         if (line.Contains("png") || line.Contains("jpg") || line.Contains("jpeg"))
                         {
-                            string[] values = line.Split(',');
+                            var values = line.Split(',');
                             Background = values[2].Replace("\"", "");
                         }
                     }
@@ -310,18 +310,19 @@ namespace Quaver.API.Maps.Parsers
                         {
                             if (line.Contains(","))
                             {
-                                string[] values = line.Split(',');
+                                var values = line.Split(',');
 
-                                var timingPoint = new OsuTimingPoint();
-
-                                timingPoint.Offset = float.Parse(values[0], CultureInfo.InvariantCulture);
-                                timingPoint.MillisecondsPerBeat = float.Parse(values[1], CultureInfo.InvariantCulture);
-                                timingPoint.Meter = Int32.Parse(values[2], CultureInfo.InvariantCulture);
-                                timingPoint.SampleType = Int32.Parse(values[3], CultureInfo.InvariantCulture);
-                                timingPoint.SampleSet = Int32.Parse(values[4], CultureInfo.InvariantCulture);
-                                timingPoint.Volume = Int32.Parse(values[5], CultureInfo.InvariantCulture);
-                                timingPoint.Inherited = Int32.Parse(values[6], CultureInfo.InvariantCulture);
-                                timingPoint.KiaiMode = Int32.Parse(values[7], CultureInfo.InvariantCulture);
+                                var timingPoint = new OsuTimingPoint
+                                {
+                                    Offset = float.Parse(values[0], CultureInfo.InvariantCulture),
+                                    MillisecondsPerBeat = float.Parse(values[1], CultureInfo.InvariantCulture),
+                                    Meter = int.Parse(values[2], CultureInfo.InvariantCulture),
+                                    SampleType = int.Parse(values[3], CultureInfo.InvariantCulture),
+                                    SampleSet = int.Parse(values[4], CultureInfo.InvariantCulture),
+                                    Volume = int.Parse(values[5], CultureInfo.InvariantCulture),
+                                    Inherited = int.Parse(values[6], CultureInfo.InvariantCulture),
+                                    KiaiMode = int.Parse(values[7], CultureInfo.InvariantCulture)
+                                };
 
                                 TimingPoints.Add(timingPoint);
                             }
@@ -340,62 +341,72 @@ namespace Quaver.API.Maps.Parsers
                             if (line.Contains("P") || line.Contains("L") || line.Contains("|"))
                                 continue;
 
-                            string[] values = line.Split(',');
+                            var values = line.Split(',');
 
                             // We'll need to parse LNs differently than normal HitObjects,
                             // as they have a different syntax. 128 in the object's type
                             // signifies that it is an LN
-                            OsuHitObject osuHitObject = new OsuHitObject();
-
-                            osuHitObject.X = Int32.Parse(values[0], CultureInfo.InvariantCulture);
-
-                            // 4k and 7k have both different hit object parsing.
-                            if (KeyCount == 4)
+                            var osuHitObject = new OsuHitObject
                             {
-                                if (osuHitObject.X >= 0 && osuHitObject.X <= 127)
-                                    osuHitObject.Key1 = true;
-                                else if (osuHitObject.X >= 128 && osuHitObject.X <= 255)
-                                    osuHitObject.Key2 = true;
-                                else if (osuHitObject.X >= 256 && osuHitObject.X <= 383)
-                                    osuHitObject.Key3 = true;
+                                X = int.Parse(values[0], CultureInfo.InvariantCulture)
+                            };
 
-                                else if (osuHitObject.X >= 384 && osuHitObject.X <= 511)
-                                    osuHitObject.Key4 = true;
-                            }
-                            // 7k
-                            else if (KeyCount == 7)
+
+                            switch (KeyCount)
                             {
-                                if (osuHitObject.X >= 0 && osuHitObject.X <= 108)
+                                // 4k and 7k have both different hit object parsing.
+                                case 4 when osuHitObject.X >= 0 && osuHitObject.X <= 127:
                                     osuHitObject.Key1 = true;
-                                else if (osuHitObject.X >= 109 && osuHitObject.X <= 181)
+                                    break;
+                                case 4 when osuHitObject.X >= 128 && osuHitObject.X <= 255:
                                     osuHitObject.Key2 = true;
-                                else if (osuHitObject.X >= 182 && osuHitObject.X <= 255)
+                                    break;
+                                case 4 when osuHitObject.X >= 256 && osuHitObject.X <= 383:
                                     osuHitObject.Key3 = true;
-                                else if (osuHitObject.X >= 256 && osuHitObject.X <= 328)
+                                    break;
+                                // 7k
+                                case 4:
+                                    if (osuHitObject.X >= 384 && osuHitObject.X <= 511)
+                                        osuHitObject.Key4 = true;
+                                    break;
+                                case 7 when osuHitObject.X >= 0 && osuHitObject.X <= 108:
+                                    osuHitObject.Key1 = true;
+                                    break;
+                                case 7 when osuHitObject.X >= 109 && osuHitObject.X <= 181:
+                                    osuHitObject.Key2 = true;
+                                    break;
+                                case 7 when osuHitObject.X >= 182 && osuHitObject.X <= 255:
+                                    osuHitObject.Key3 = true;
+                                    break;
+                                case 7 when osuHitObject.X >= 256 && osuHitObject.X <= 328:
                                     osuHitObject.Key4 = true;
-                                else if (osuHitObject.X >= 329 && osuHitObject.X <= 401)
+                                    break;
+                                case 7 when osuHitObject.X >= 329 && osuHitObject.X <= 401:
                                     osuHitObject.Key5 = true;
-                                else if (osuHitObject.X >= 402 && osuHitObject.X <= 474)
+                                    break;
+                                case 7 when osuHitObject.X >= 402 && osuHitObject.X <= 474:
                                     osuHitObject.Key6 = true;
-                                else if (osuHitObject.X >= 475 && osuHitObject.X <= 547)
-                                    osuHitObject.Key7 = true;
-                            }
-                            else
-                            {
-                                IsValid = false;
+                                    break;
+                                case 7:
+                                    if (osuHitObject.X >= 475 && osuHitObject.X <= 547)
+                                        osuHitObject.Key7 = true;
+                                    break;
+                                default:
+                                    IsValid = false;
+                                    break;
                             }
 
-                            osuHitObject.Y = Int32.Parse(values[1], CultureInfo.InvariantCulture);
-                            osuHitObject.StartTime = Int32.Parse(values[2], CultureInfo.InvariantCulture);
-                            osuHitObject.Type = Int32.Parse(values[3], CultureInfo.InvariantCulture);
-                            osuHitObject.HitSound = Int32.Parse(values[4], CultureInfo.InvariantCulture);
+                            osuHitObject.Y = int.Parse(values[1], CultureInfo.InvariantCulture);
+                            osuHitObject.StartTime = int.Parse(values[2], CultureInfo.InvariantCulture);
+                            osuHitObject.Type = int.Parse(values[3], CultureInfo.InvariantCulture);
+                            osuHitObject.HitSound = int.Parse(values[4], CultureInfo.InvariantCulture);
                             osuHitObject.Additions = "0:0:0:0:";
 
                             // If it's an LN, we'll want to add the object's EndTime as well.
                             if (line.Contains("128"))
                             {
                                 var endTime = values[5].Substring(0, values[5].IndexOf(":"));
-                                osuHitObject.EndTime = Int32.Parse(endTime, CultureInfo.InvariantCulture);
+                                osuHitObject.EndTime = int.Parse(endTime, CultureInfo.InvariantCulture);
                             }
 
                             HitObjects.Add(osuHitObject);
@@ -408,7 +419,7 @@ namespace Quaver.API.Maps.Parsers
                 IsValid = false;
             }
         }
-        
+
         /// <summary>
         ///     Converts an .osu file into a Qua object
         /// </summary>
