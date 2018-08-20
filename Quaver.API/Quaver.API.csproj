@@ -58,6 +58,7 @@
     <Compile Include="Enums\HitSounds.cs" />
     <Compile Include="Enums\Judgement.cs" />
     <Compile Include="Enums\ModIdentifier.cs" />
+    <Compile Include="Enums\RankedStatus.cs" />
     <Compile Include="Gameplay\Bot.cs" />
     <Compile Include="Gameplay\BotLevel.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />
