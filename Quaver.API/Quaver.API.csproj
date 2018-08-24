@@ -65,6 +65,7 @@
     <Compile Include="Helpers\GradeHelper.cs" />
     <Compile Include="Helpers\JudgementHelper.cs" />
     <Compile Include="Helpers\ModeHelper.cs" />
+    <Compile Include="Helpers\ModHelper.cs" />
     <Compile Include="Helpers\StreamHelper.cs" />
     <Compile Include="Maps\Parsers\OsuBeatmap.cs" />
     <Compile Include="Maps\Parsers\StepManiaFile.cs" />

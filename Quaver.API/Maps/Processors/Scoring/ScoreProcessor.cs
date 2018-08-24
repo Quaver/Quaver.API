@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Quaver.API.Enums;
+using Quaver.API.Helpers;
 using Quaver.API.Maps.Processors.Scoring.Data;
 using Quaver.API.Replays;
 
@@ -164,43 +165,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         private void InitializeMods()
         {
-            // The rate of the audio.
-            var rate = 1.0;
-
-            // Map mods to rate.
-            if (Mods.HasFlag(ModIdentifier.Speed05X))
-                rate = 0.5f;
-            else if (Mods.HasFlag(ModIdentifier.Speed06X))
-                rate = 0.6f;
-            else if (Mods.HasFlag(ModIdentifier.Speed07X))
-                rate = 0.7f;
-            else if (Mods.HasFlag(ModIdentifier.Speed08X))
-                rate = 0.8f;
-            else if (Mods.HasFlag(ModIdentifier.Speed09X))
-                rate = 0.9f;
-            else if (Mods.HasFlag(ModIdentifier.Speed11X))
-                rate = 1.1f;
-            else if (Mods.HasFlag(ModIdentifier.Speed12X))
-                rate = 1.2f;
-            else if (Mods.HasFlag(ModIdentifier.Speed13X))
-                rate = 1.3f;
-            else if (Mods.HasFlag(ModIdentifier.Speed14X))
-                rate = 1.4f;
-            else if (Mods.HasFlag(ModIdentifier.Speed15X))
-                rate = 1.5f;
-            else if (Mods.HasFlag(ModIdentifier.Speed16X))
-                rate = 1.6f;
-            else if (Mods.HasFlag(ModIdentifier.Speed17X))
-                rate = 1.7f;
-            else if (Mods.HasFlag(ModIdentifier.Speed18X))
-                rate = 1.8f;
-            else if (Mods.HasFlag(ModIdentifier.Speed19X))
-                rate = 1.9f;
-            else if (Mods.HasFlag(ModIdentifier.Speed20X))
-                rate = 2.0f;
-
             for (var i = 0; i < JudgementWindow.Count; i++)
-                JudgementWindow[(Judgement) i] *= (float)rate;
+                JudgementWindow[(Judgement) i] *= ModHelper.GetAudioRate(Mods);
         }
 
         /// <summary>
