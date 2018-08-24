@@ -176,10 +176,10 @@ namespace Quaver.API.Helpers
                 case 1.9f:
                     return ModIdentifier.Speed19X;
                 case 2.0f:
-                    return ModIdentifier.Speed19X;
+                    return ModIdentifier.Speed20X;
             }
 
-            return 0;
+            return ModIdentifier.None;
         }
     }
 }
