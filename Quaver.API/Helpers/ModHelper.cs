@@ -98,7 +98,7 @@ namespace Quaver.API.Helpers
         /// </summary>
         /// <param name="mods"></param>
         /// <returns></returns>
-        public static float GetAudioRate(ModIdentifier mods)
+        public static float GetRateFromMods(ModIdentifier mods)
         {
             // The rate of the audio.
             var rate = 1.0f;
@@ -136,6 +136,50 @@ namespace Quaver.API.Helpers
                 rate = 2.0f;
 
             return rate;
+        }
+
+        /// <summary>
+        ///     Gets a speed mod id from a given rate.
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <returns></returns>
+        public static ModIdentifier GetModsFromRate(float rate)
+        {
+            switch (rate)
+            {
+                case 0.5f:
+                    return ModIdentifier.Speed05X;
+                case 0.6f:
+                    return ModIdentifier.Speed06X;
+                case 0.7f:
+                    return ModIdentifier.Speed07X;
+                case 0.8f:
+                    return ModIdentifier.Speed08X;
+                case 0.9f:
+                    return ModIdentifier.Speed09X;
+                case 1.1f:
+                    return ModIdentifier.Speed11X;
+                case 1.2f:
+                    return ModIdentifier.Speed12X;
+                case 1.3f:
+                    return ModIdentifier.Speed13X;
+                case 1.4f:
+                    return ModIdentifier.Speed14X;
+                case 1.5f:
+                    return ModIdentifier.Speed15X;
+                case 1.6f:
+                    return ModIdentifier.Speed16X;
+                case 1.7f:
+                    return ModIdentifier.Speed17X;
+                case 1.8f:
+                    return ModIdentifier.Speed18X;
+                case 1.9f:
+                    return ModIdentifier.Speed19X;
+                case 2.0f:
+                    return ModIdentifier.Speed19X;
+            }
+
+            return 0;
         }
     }
 }

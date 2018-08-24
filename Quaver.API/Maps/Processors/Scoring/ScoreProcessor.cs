@@ -166,7 +166,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         private void InitializeMods()
         {
             for (var i = 0; i < JudgementWindow.Count; i++)
-                JudgementWindow[(Judgement) i] *= ModHelper.GetAudioRate(Mods);
+                JudgementWindow[(Judgement) i] *= ModHelper.GetRateFromMods(Mods);
         }
 
         /// <summary>
