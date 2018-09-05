@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -82,6 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>APIResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Qss\Colors.cs" />
     <Compile Include="Qss\Structures\FingerState.cs" />
     <Compile Include="Qss\Structures\FingerAction.cs" />
     <Compile Include="Qss\Structures\Hand.cs" />
