@@ -10,6 +10,36 @@ namespace Quaver.API.Qss
     internal class Colors
     {
         /// <summary>
+        /// Color for Beginner Tier (Skill Lvl 0 - 10)
+        /// </summary>
+        public static Color TierZeroColor { get; } = Color.FromArgb(128, 128, 128, 0);
+
+        /// <summary>
+        /// Color for First Tier Players (Skill Lvl 10 - 20)
+        /// </summary>
+        public static Color TierOneColor { get; } = Color.FromArgb(255, 0, 255, 0);
+
+        /// <summary>
+        /// Color for Second Tier Players (Skill Lvl 20 - 30)
+        /// </summary>
+        public static Color TierTwoColor { get; } = Color.FromArgb(255, 255, 255, 0);
+
+        /// <summary>
+        /// Color for Third Tier Players (Skill Lvl 30 - 40)
+        /// </summary>
+        public static Color TierThreeColor { get; } = Color.FromArgb(255, 255, 0, 0);
+
+        /// <summary>
+        /// Color for Fourth Tier Players (Skill Lvl 40+)
+        /// </summary>
+        public static Color TierFourColor { get; } = Color.FromArgb(255, 255, 0, 255);
+
+        /// <summary>
+        /// Max Tier Color (Lvl 50+)
+        /// </summary>
+        public static Color MaxTierColor { get; } = Color.FromArgb(255, 255, 200, 255);
+
+        /// <summary>
         /// Returns Color for general Strain Rating difficulty. Reads QSR (Quaver Strain Rating)
         /// This can be used to return Color to represent difficulty of a map or play.
         /// </summary>
@@ -17,7 +47,7 @@ namespace Quaver.API.Qss
         /// <returns></returns>
         public static Color GetStrainRatingColor(float qsr)
         {
-            var color = Color.FromArgb(255, 255, 255, 1);
+            var color = Color.FromArgb(255, 255, 255, 255);
             return color;
         }
 
@@ -28,7 +58,7 @@ namespace Quaver.API.Qss
         /// <returns></returns>
         public static Color GetNoteDensityColor(float nps)
         {
-            var color = Color.FromArgb(255, 255, 255, 1);
+            var color = Color.FromArgb(255, 255, 255, 255);
             return color;
         }
 
@@ -38,7 +68,7 @@ namespace Quaver.API.Qss
         /// <returns></returns>
         public static Color GetSkillColor()
         {
-            var color = Color.FromArgb(255, 255, 255, 1);
+            var color = Color.FromArgb(255, 255, 255, 255);
             return color;
         }
     }
