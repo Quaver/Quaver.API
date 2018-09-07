@@ -39,36 +39,6 @@ namespace Quaver.API.Qss
         private const float MAX_TIER_RATING = 50;
 
         /// <summary>
-        /// Color for Beginner Tier Songs (QSR 0 - 10)
-        /// </summary>
-        private static Color TierZeroColor { get; } = Color.FromArgb(128, 128, 128, 0);
-
-        /// <summary>
-        /// Color for First Tier Songs (QSR 10 - 20)
-        /// </summary>
-        private static Color TierOneColor { get; } = Color.FromArgb(255, 0, 255, 0);
-
-        /// <summary>
-        /// Color for Second Tier Songs (QSR 20 - 30)
-        /// </summary>
-        private static Color TierTwoColor { get; } = Color.FromArgb(255, 255, 255, 0);
-
-        /// <summary>
-        /// Color for Third Tier Songs (QSR 30 - 40)
-        /// </summary>
-        private static Color TierThreeColor { get; } = Color.FromArgb(255, 255, 0, 0);
-
-        /// <summary>
-        /// Color for Fourth Tier Songs (QSR 40+)
-        /// </summary>
-        private static Color TierFourColor { get; } = Color.FromArgb(255, 255, 0, 255);
-
-        /// <summary>
-        /// Max Tier Color (QSR 50+)
-        /// </summary>
-        private static Color MaxTierColor { get; } = Color.FromArgb(255, 255, 200, 255);
-
-        /// <summary>
         /// NPS interval used for color
         /// </summary>
         private const float NPS_RATING_1 = 7;
@@ -97,6 +67,66 @@ namespace Quaver.API.Qss
         /// NPS interval used for color
         /// </summary>
         private const float NPS_RATING_MAX = 42;
+
+        /// <summary>
+        /// Used for skill color delta
+        /// </summary>
+        private const float SKILL_COLOR_DELTA = 0.6f;
+
+        /// <summary>
+        /// Skill Color for Tech Jacks
+        /// </summary>
+        private static Color TechJackSkillColor { get; } = Color.FromArgb(255, 85, 169, 255);
+
+        /// <summary>
+        /// Skill Color for Long Jacks
+        /// </summary>
+        private static Color LongJackSkillColor { get; } = Color.FromArgb(255, 127, 84, 255);
+
+        /// <summary>
+        /// Skill Color for Anchors
+        /// </summary>
+        private static Color AnchorSkillColor { get; } = Color.FromArgb(255, 255, 80, 86);
+
+        /// <summary>
+        /// Skill Color for Rolls
+        /// </summary>
+        private static Color RollSkillColor { get; } = Color.FromArgb(255, 255, 203, 80);
+
+        /// <summary>
+        /// Skill Color for Release
+        /// </summary>
+        private static Color ReleaseSkillColor { get; } = Color.FromArgb(255, 68, 255, 80);
+
+        /// <summary>
+        /// Color for Beginner Tier Songs (QSR 0 - 10)
+        /// </summary>
+        private static Color TierZeroColor { get; } = Color.FromArgb(255, 128, 128, 128);
+
+        /// <summary>
+        /// Color for First Tier Songs (QSR 10 - 20)
+        /// </summary>
+        private static Color TierOneColor { get; } = Color.FromArgb(255, 0, 255, 0);
+
+        /// <summary>
+        /// Color for Second Tier Songs (QSR 20 - 30)
+        /// </summary>
+        private static Color TierTwoColor { get; } = Color.FromArgb(255, 255, 255, 0);
+
+        /// <summary>
+        /// Color for Third Tier Songs (QSR 30 - 40)
+        /// </summary>
+        private static Color TierThreeColor { get; } = Color.FromArgb(255, 255, 0, 0);
+
+        /// <summary>
+        /// Color for Fourth Tier Songs (QSR 40+)
+        /// </summary>
+        private static Color TierFourColor { get; } = Color.FromArgb(255, 255, 0, 255);
+
+        /// <summary>
+        /// Max Tier Color (QSR 50+)
+        /// </summary>
+        private static Color MaxTierColor { get; } = Color.FromArgb(255, 255, 200, 255);
 
         /// <summary>
         /// NPS Graph Color for anything below 7nps
@@ -246,13 +276,31 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// wip. Returns color of 2 combined skills. (Arbitrary example: 20% jack + 60% stream = yellowish-orange color)
+        /// WIP. Returns color of combined skill values.
         /// </summary>
         /// <returns></returns>
-        public static Color GetSkillColor()
+        public static Color GetSkillColor(float tjack, float ljack, float roll, float anchor, float release)
         {
-            var color = Color.FromArgb(255, 255, 255, 255);
-            return color;
+            // todo: this code is probably not gonna work, i'll need to test it later
+            var red = (int)(((TechJackSkillColor.R / 255f) * Math.Max(Math.Pow(tjack / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((LongJackSkillColor.R / 255f) * Math.Max(Math.Pow(ljack / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((RollSkillColor.R / 255f) * Math.Max(Math.Pow(roll / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((AnchorSkillColor.R / 255f) * Math.Max(Math.Pow(anchor / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((ReleaseSkillColor.R / 255f) * Math.Max(Math.Pow(release / TIER_4_RATING, SKILL_COLOR_DELTA), 1)) / 5f);
+
+            var green = (int)(((TechJackSkillColor.G / 255f) * Math.Max(Math.Pow(tjack / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((LongJackSkillColor.G / 255f) * Math.Max(Math.Pow(ljack / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((RollSkillColor.G / 255f) * Math.Max(Math.Pow(roll / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((AnchorSkillColor.G / 255f) * Math.Max(Math.Pow(anchor / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((ReleaseSkillColor.G / 255f) * Math.Max(Math.Pow(release / TIER_4_RATING, SKILL_COLOR_DELTA), 1)) / 5f);
+
+            var blue = (int)(((TechJackSkillColor.B / 255f) * Math.Max(Math.Pow(tjack / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((LongJackSkillColor.B / 255f) * Math.Max(Math.Pow(ljack / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((RollSkillColor.B / 255f) * Math.Max(Math.Pow(roll / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((AnchorSkillColor.B / 255f) * Math.Max(Math.Pow(anchor / TIER_4_RATING, SKILL_COLOR_DELTA), 1))
+                + ((ReleaseSkillColor.B / 255f) * Math.Max(Math.Pow(release / TIER_4_RATING, SKILL_COLOR_DELTA), 1)) / 5f);
+
+            return Color.FromArgb(255, red, green, blue);
         }
 
         /// <summary>
