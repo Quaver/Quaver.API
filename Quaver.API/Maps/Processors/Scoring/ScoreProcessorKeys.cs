@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Quaver.API.Enums;
@@ -36,6 +36,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     ?
         /// </summary>
         private int ScoreCount { get; set; }
+
+        /// <summary>
+        ///     Total Accuracy Weight Added
+        /// </summary>
+        private float AccuracyWeightCount { get; set; }
 
         /// <inheritdoc />
         /// <summary>
@@ -137,7 +142,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         /// </summary>
         /// <param name="judgement"></param>
-        public override void CalculateScore(Judgement judgement)
+        public override void CalculateScore(Judgement judgement, float hitDifference)
         {
             // Add to the current judgements.
             CurrentJudgements[judgement]++;
@@ -216,10 +221,15 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             float accuracy = 0;
 
+            // OLD (todo: remove later)
+            /*
             foreach (var item in CurrentJudgements)
                 accuracy += item.Value * JudgementAccuracyWeighting[item.Key];
       
-            return Math.Max(accuracy / (TotalJudgementCount * 100), 0) * 100;  
+            return Math.Max(accuracy / (TotalJudgementCount * 100), 0) * 100;
+            */
+
+            return Math.Max(AccuracyWeightCount / (TotalJudgementCount * 100), 0) * 100;
         }
 
         /// <summary>

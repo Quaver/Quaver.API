@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
@@ -151,7 +151,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
-        public abstract void CalculateScore(Judgement judgement);
+        public abstract void CalculateScore(Judgement judgement, float hitDifference);
 
         /// <summary>
         ///     Calculates the accuracy of the current play session.
