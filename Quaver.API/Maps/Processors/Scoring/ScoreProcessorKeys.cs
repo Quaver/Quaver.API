@@ -146,7 +146,14 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             // Add to the current judgements.
             CurrentJudgements[judgement]++;
-            
+
+            // Calculate current accuracy weight (todo: maybe put this in method? idk)
+            //todo: create constants
+            //todo: balancing
+            // 100 = 100% acc weight
+            // -150 = lowest acc weight that can be given is -50%, so yea)
+            AccuracyWeightCount += 100 + -150 * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+
             // Calculate and set the new accuracy.
             Accuracy = CalculateAccuracy();
             
@@ -219,10 +226,9 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <returns></returns>
         protected override float CalculateAccuracy()
         {
-            float accuracy = 0;
-
             // OLD (todo: remove later)
             /*
+             * float accuracy = 0;
             foreach (var item in CurrentJudgements)
                 accuracy += item.Value * JudgementAccuracyWeighting[item.Key];
       
