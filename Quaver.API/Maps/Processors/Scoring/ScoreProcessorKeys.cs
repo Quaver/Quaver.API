@@ -226,16 +226,20 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <returns></returns>
         protected override float CalculateAccuracy()
         {
-            // OLD (todo: remove later)
-            /*
-             * float accuracy = 0;
+            return Math.Max(AccuracyWeightCount / (TotalJudgementCount * 100), 0) * 100;
+        }
+
+        /// <summary>
+        ///     Old method to calculate accuracy with hit judgements
+        /// </summary>
+        /// <returns></returns>
+        protected float CalculateOldAccuracy()
+        {
+            float accuracy = 0;
             foreach (var item in CurrentJudgements)
                 accuracy += item.Value * JudgementAccuracyWeighting[item.Key];
-      
-            return Math.Max(accuracy / (TotalJudgementCount * 100), 0) * 100;
-            */
 
-            return Math.Max(AccuracyWeightCount / (TotalJudgementCount * 100), 0) * 100;
+            return Math.Max(accuracy / (TotalJudgementCount * 100), 0) * 100;
         }
 
         /// <summary>
