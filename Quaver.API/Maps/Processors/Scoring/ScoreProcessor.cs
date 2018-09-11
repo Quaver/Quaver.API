@@ -151,7 +151,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
-        public abstract void CalculateScore(Judgement judgement, float hitDifference);
+        public abstract void CalculateScore(float hitDifference, bool missed);
 
         /// <summary>
         ///     Calculates the accuracy of the current play session.

@@ -142,11 +142,20 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         /// </summary>
         /// <param name="judgement"></param>
-        public override void CalculateScore(float hitDifference)
+        public override void CalculateScore(float hitDifference, bool missed)
         {
-            // find judgement of hit
-            Judgement judgement = null;
+            // Find judgement of hit
+            var judgement = Judgement.Miss;
 
+            for (var j = 0; j < JudgementWindow.Count; j++)
+            {
+                if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j]))
+                    judgement = (Judgement)j;
+            }
+
+            // If judgement not missed and it is outside of hit window, ignore.
+            if (!missed && judgement == Judgement.Miss)
+                return;
 
             // Add to the current judgements.
             CurrentJudgements[judgement]++;
