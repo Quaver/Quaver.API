@@ -184,7 +184,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             // Calculate accuracy weight of current hit.
             if (!missed)
             {
-                AccuracyWeightCount += 100 - (100 + LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+                AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] + LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
             }
 
             // Calcualte accuracy weight for miss.
@@ -195,7 +195,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             }
 
             // Calculate and set the new accuracy.
-            Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * 100), 0) * 100;
+            Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
 
             #region SCORE_CALCULATION                  
             // If the user didn't miss, then we want to update their combo and multiplier.
@@ -232,9 +232,10 @@ namespace Quaver.API.Maps.Processors.Scoring
             // Update multiplier index and score count.
             MultiplierIndex = (int)Math.Floor((float)MultiplierCount/ MultiplierCountToIncreaseIndex);
             ScoreCount += JudgementScoreWeighting[judgement] + MultiplierIndex * MultiplierCountToIncreaseIndex;
-            
+
             // Update total score.
-            Score = (int)(1000000 * ((double)ScoreCount / SummedScore));
+            const float StandardizedMaxScore = 1000000;
+            Score = (int)(StandardizedMaxScore * ((double)ScoreCount / SummedScore));
             #endregion
 
             #region HEALTH_CALCULATION
@@ -262,7 +263,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             foreach (var item in CurrentJudgements)
                 accuracy += item.Value * JudgementAccuracyWeighting[item.Key];
 
-            return Math.Max(accuracy / (TotalJudgementCount * 100), 0) * 100;
+            return Math.Max(accuracy / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
         }
 
         /// <summary>
