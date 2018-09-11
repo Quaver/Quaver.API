@@ -142,8 +142,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         /// </summary>
         /// <param name="judgement"></param>
-        public override void CalculateScore(Judgement judgement, float hitDifference)
+        public override void CalculateScore(float hitDifference)
         {
+            // find judgement of hit
+            Judgement judgement = null;
+
+
             // Add to the current judgements.
             CurrentJudgements[judgement]++;
 
@@ -155,9 +159,9 @@ namespace Quaver.API.Maps.Processors.Scoring
             AccuracyWeightCount += 100 + -150 * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
 
             // Calculate and set the new accuracy.
-            Accuracy = CalculateAccuracy();
-            
-#region SCORE_CALCULATION                  
+            Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * 100), 0) * 100;
+
+            #region SCORE_CALCULATION                  
             // If the user didn't miss, then we want to update their combo and multiplier
             // accordingly.
             if (judgement != Judgement.Miss)
@@ -217,16 +221,6 @@ namespace Quaver.API.Maps.Processors.Scoring
             else
                 Health = newHealth;          
 #endregion   
-        }
-        
-        /// <inheritdoc />
-        /// <summary>
-        ///     Calculates the current accuracy.
-        /// </summary>
-        /// <returns></returns>
-        protected override float CalculateAccuracy()
-        {
-            return Math.Max(AccuracyWeightCount / (TotalJudgementCount * 100), 0) * 100;
         }
 
         /// <summary>
