@@ -32,10 +32,20 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         private int MultiplierIndex { get; set; }
 
+        /// <summary>
+        ///     Max Index for multiplier. Multiplier index can not increase more than this value.
+        /// </summary>
         private int MultiplierMaxIndex { get; } = 15;
 
+        /// <summary>
+        ///     Multiplier Count needed in order to increase the Multiplier Index by 1.
+        ///     By increasing this multiplier index, notes will be worth more score.
+        /// </summary>
         private int MultiplierCountToIncreaseIndex { get; } = 10;
 
+        /// <summary>
+        ///     This determines the max score.
+        /// </summary>
         private int MaxMultiplierCount => MultiplierMaxIndex * MultiplierCountToIncreaseIndex;
 
         /// <summary>
@@ -293,6 +303,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             var maxMultiplierCount = MultiplierMaxIndex * MultiplierCountToIncreaseIndex;
 
             // Calculate score for notes below max multiplier combo
+            // Note: This block could be a constant for songs that have max combo that exceeds the max multiplier count, but that will mean we will have to manually change the constant everytime we update any single other constant.
             for (var i = 1; i < TotalJudgements + 1 || i < maxMultiplierCount; i++)
                 summedScore += JudgementScoreWeighting[Judgement.Marv] + MultiplierCountToIncreaseIndex * (int) Math.Floor((float)i / MultiplierCountToIncreaseIndex);
 
