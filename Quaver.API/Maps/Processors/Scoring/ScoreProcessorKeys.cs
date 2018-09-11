@@ -15,24 +15,31 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Additionally a long note counts as two (Beginning and End).
         /// </summary>
         private int TotalJudgements { get; }
-        
-         /// <summary>
+
+        /// <summary>
         ///     See: ScoreProcessorKeys.CalculateSummedScore();
         /// </summary>
         private int SummedScore { get; }
 
         /// <summary>
-        ///     ?
+        ///     Counts consecutive hits for the score multiplier
+        ///     Max Multiplier Count is MultiplierMaxIndex * MultiplierCountToIncreaseIndex
         /// </summary>
         private int MultiplierCount { get; set; }
 
         /// <summary>
-        ///     ?
+        ///     After 10 hits, the multiplier index will increase.
         /// </summary>
         private int MultiplierIndex { get; set; }
 
+        private int MultiplierMaxIndex { get; } = 15;
+
+        private int MultiplierCountToIncreaseIndex { get; } = 10;
+
+        private int MaxMultiplierCount => MultiplierMaxIndex * MultiplierCountToIncreaseIndex;
+
         /// <summary>
-        ///     ?
+        ///     Total actual score. (Regular Score is ScoreCount / SummedScore)
         /// </summary>
         private int ScoreCount { get; set; }
 
@@ -182,23 +189,13 @@ namespace Quaver.API.Maps.Processors.Scoring
 
             #region SCORE_CALCULATION                  
             // If the user didn't miss, then we want to update their combo and multiplier.
-            // accordingly.
             if (judgement != Judgement.Miss)
             {
                 //Update Multiplier
                 if (judgement == Judgement.Good)
-                {
-                    MultiplierCount -= 10;
-                    if (MultiplierCount < 0)
-                        MultiplierCount = 0;
-                }
+                    MultiplierCount -= MultiplierCountToIncreaseIndex;
                 else
-                {
-                    if (MultiplierCount < 150)
-                        MultiplierCount++;
-                    else
-                        MultiplierCount = 150; //idk... just to be safe
-                }
+                    MultiplierCount++;
 
                 // Add to the combo since the user hit.
                 Combo++;
@@ -207,22 +204,24 @@ namespace Quaver.API.Maps.Processors.Scoring
                 if (Combo > MaxCombo)
                     MaxCombo = Combo;
             }
-            // The user missed, so we want to update their multipler and reset their combo.
+            // The user missed, so we want to decrease their multipler by 2 indexes and reset their combo.
             else
             {
-                // Update Multiplier
-                MultiplierCount -= 20;
-                
-                if (MultiplierCount < 0) 
-                    MultiplierCount = 0;
-                
-                // Reset combo.
+                MultiplierCount -= MultiplierCountToIncreaseIndex * 2;
                 Combo = 0;
             }
-                   
+
+            // Make sure the multiplier count doesn't go below 0
+            if (MultiplierCount < 0)
+                MultiplierCount = 0;
+
+            // Make sure the multiplier count is not over max multiplier count
+            else if (MultiplierCount > MaxMultiplierCount)
+                MultiplierCount = MaxMultiplierCount;
+
             // Update multiplier index and score count.
-            MultiplierIndex = (int)Math.Floor(MultiplierCount/10f);
-            ScoreCount += JudgementScoreWeighting[judgement] + MultiplierIndex * 10;
+            MultiplierIndex = (int)Math.Floor((float)MultiplierCount/ MultiplierCountToIncreaseIndex);
+            ScoreCount += JudgementScoreWeighting[judgement] + MultiplierIndex * MultiplierCountToIncreaseIndex;
             
             // Update total score.
             Score = (int)(1000000 * ((double)ScoreCount / SummedScore));
@@ -280,38 +279,26 @@ namespace Quaver.API.Maps.Processors.Scoring
         
         /// <summary>
         ///     Calculates the max score you can achieve in a song.
-        ///         - Counts every Marv Hit
+        ///         (Note: It assumes every hit is a Marv)
         ///
         ///     The user's current score is divided by this value then multiplied by 1,000,000
         ///     to get the score out of a million - the true max score.
-        ///
-        ///     When playing, your score multiplier starts at 0, then increases each 10-combo increment.
-        ///     The max score multiplier is 2.5x, and doesn't increase after 150 combo.
-        ///
-        ///     At that point, every marv will be worth 250 points, however a marv without any multiplier
-        ///     is worth 100 points.
-        ///
-        ///     25650 is the value when you add all the scores together for every successful Marv below 150 combo.
-        ///     
         /// </summary>
         /// <returns></returns>
         private int CalculateSummedScore()
         {
-            int summedScore;
+            var summedScore = 0;
 
             // Multiplier doesn't increase after this amount.
-            const int comboCap = 150;
-            
-            // Calculate max score
-            if (TotalJudgements < comboCap)
-            {
-                summedScore = 0;
-                
-                for (var i = 1; i < TotalJudgements + 1; i++)
-                    summedScore += 100 + 10 * (int) Math.Floor(i / 10f);
-            }
-            else
-                summedScore = 25650 + (TotalJudgements - (comboCap - 1)) * 250;
+            var maxMultiplierCount = MultiplierMaxIndex * MultiplierCountToIncreaseIndex;
+
+            // Calculate score for notes below max multiplier combo
+            for (var i = 1; i < TotalJudgements + 1 || i < maxMultiplierCount; i++)
+                summedScore += JudgementScoreWeighting[Judgement.Marv] + MultiplierCountToIncreaseIndex * (int) Math.Floor((float)i / MultiplierCountToIncreaseIndex);
+
+            // Calculate score for notes once max multiplier combo is reached
+            if (TotalJudgements >= maxMultiplierCount)
+                summedScore += (TotalJudgements - (maxMultiplierCount - 1)) * (JudgementScoreWeighting[Judgement.Marv] + maxMultiplierCount);
 
             return summedScore;
         }
