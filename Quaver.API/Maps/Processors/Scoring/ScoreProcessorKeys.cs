@@ -209,7 +209,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             Score = (int)(1000000 * ((double)ScoreCount / SummedScore));
 #endregion
 
-#region HEALTH_CALCULATION
+            #region HEALTH_CALCULATION
             // Add health based on the health weighting for that given judgement.
             var newHealth = Health += JudgementHealthWeighting[judgement];
 
@@ -220,7 +220,7 @@ namespace Quaver.API.Maps.Processors.Scoring
                 Health = 100;
             else
                 Health = newHealth;          
-#endregion   
+            #endregion   
         }
 
         /// <summary>
