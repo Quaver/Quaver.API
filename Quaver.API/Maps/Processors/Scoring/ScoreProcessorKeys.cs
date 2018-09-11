@@ -236,6 +236,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Old method to calculate accuracy with hit judgements
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Accuracy is automatically calculated from CalculateScore(). This method returns outdated acc value.")]
         protected float CalculateOldAccuracy()
         {
             float accuracy = 0;
