@@ -237,7 +237,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <returns></returns>
         [Obsolete("Accuracy is automatically calculated from CalculateScore(). This method returns outdated acc value.")]
-        protected float CalculateOldAccuracy()
+        protected override float CalculateAccuracy()
         {
             float accuracy = 0;
             foreach (var item in CurrentJudgements)
