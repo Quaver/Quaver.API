@@ -8,7 +8,6 @@ namespace Quaver.API.Maps.Processors.Scoring
 {
     public class ScoreProcessorKeys : ScoreProcessor
     {
-
         /// <summary>
         ///     The maximum amount of judgements.
         ///
@@ -41,6 +40,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Total Accuracy Weight Added
         /// </summary>
         private float AccuracyWeightCount { get; set; }
+
+        /// <summary>
+        ///     Lowest Accuracy that the player can recieve by hitting barely in the hit window
+        /// </summary>
+        private float LowestAccuracyWeight { get; } = -100;
 
         /// <inheritdoc />
         /// <summary>
@@ -160,18 +164,24 @@ namespace Quaver.API.Maps.Processors.Scoring
             // Add to the current judgements.
             CurrentJudgements[judgement]++;
 
-            // Calculate current accuracy weight (todo: maybe put this in method? idk)
-            //todo: create constants
-            //todo: balancing
-            // 100 = 100% acc weight
-            // -150 = lowest acc weight that can be given is -50%, so yea)
-            AccuracyWeightCount += 100 + -150 * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+            // Calculate accuracy weight of current hit.
+            if (!missed)
+            {
+                AccuracyWeightCount += 100 - (100 + LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+            }
+
+            // Calcualte accuracy weight for miss.
+            // (Note: if we decide to make missing worth 0%, remove this block of code.)
+            else
+            {
+                AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Miss];
+            }
 
             // Calculate and set the new accuracy.
             Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * 100), 0) * 100;
 
             #region SCORE_CALCULATION                  
-            // If the user didn't miss, then we want to update their combo and multiplier
+            // If the user didn't miss, then we want to update their combo and multiplier.
             // accordingly.
             if (judgement != Judgement.Miss)
             {
@@ -216,7 +226,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             
             // Update total score.
             Score = (int)(1000000 * ((double)ScoreCount / SummedScore));
-#endregion
+            #endregion
 
             #region HEALTH_CALCULATION
             // Add health based on the health weighting for that given judgement.
