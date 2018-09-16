@@ -159,40 +159,52 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="replay"></param>
         public ScoreProcessorKeys(Replay replay) : base(replay){}
 
-        /// <inheritdoc />
         /// <summary>
+        ///     Accuracy Calculation component of CalculateScore() if a note has been pressed/released properly
         /// </summary>
-        /// <param name="judgement"></param>
-        public override void CalculateScore(float hitDifference, bool missed)
+        /// <param name="hitDifference"></param>
+        /// <param name="isRelease"></param>
+        public void CalculateScore(float hitDifference, bool isRelease = false)
         {
             // Find judgement of hit
             var judgement = Judgement.Miss;
 
-            for (var j = 0; j < JudgementWindow.Count; j++)
+            if (isRelease)
             {
-                if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j]))
-                    judgement = (Judgement)j;
+                for (var j = 0; j < JudgementWindow.Count; j++)
+                {
+                    if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j] * WindowReleaseMultiplier[(Judgement)j]))
+                        judgement = (Judgement)j;
+                }
+            }
+            else
+            {
+                for (var j = 0; j < JudgementWindow.Count; j++)
+                {
+                    if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j]))
+                        judgement = (Judgement)j;
+                }
             }
 
-            // If judgement not missed and it is outside of hit window, ignore.
-            if (!missed && judgement == Judgement.Miss)
+            // If the press/release was outside of hit window, ignore.
+            if (judgement == Judgement.Miss)
                 return;
 
             // Add to the current judgements.
             CurrentJudgements[judgement]++;
+            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] + LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+            CalculateScore(judgement);
+        }
 
-            // Calculate accuracy weight of current hit.
-            if (!missed)
-            {
-                AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] + LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
-            }
-
-            // Calcualte accuracy weight for miss.
-            // (Note: if we decide to make missing worth 0%, remove this block of code.)
-            else
-            {
+        /// <inheritdoc />
+        /// <summary>
+        ///     Calculate Score and Health increase/decrease with a given judgement.
+        /// </summary>
+        /// <param name="judgement"></param>
+        public override void CalculateScore(Judgement judgement)
+        {
+            if (judgement == Judgement.Miss)
                 AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Miss];
-            }
 
             // Calculate and set the new accuracy.
             Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
