@@ -164,10 +164,10 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="hitDifference"></param>
         /// <param name="isRelease"></param>
-        public void CalculateScore(float hitDifference, bool isRelease = false)
+        public Judgement CalculateScore(float hitDifference, bool isRelease = false)
         {
             // Find judgement of hit
-            var judgement = Judgement.Miss;
+            var judgement = Judgement.Ghost;
 
             if (isRelease)
             {
@@ -187,13 +187,15 @@ namespace Quaver.API.Maps.Processors.Scoring
             }
 
             // If the press/release was outside of hit window, ignore.
-            if (judgement == Judgement.Miss)
-                return;
+            if (judgement == Judgement.Ghost)
+                return judgement;
 
             // Add to the current judgements.
             CurrentJudgements[judgement]++;
             AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] + LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
             CalculateScore(judgement);
+
+            return judgement;
         }
 
         /// <inheritdoc />
