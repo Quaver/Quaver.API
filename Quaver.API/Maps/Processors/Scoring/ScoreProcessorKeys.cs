@@ -173,7 +173,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             {
                 for (var j = 0; j < WindowReleaseMultiplier.Count; j++)
                 {
-                    if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j] * WindowReleaseMultiplier[(Judgement)j]))
+                    if (Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j] * WindowReleaseMultiplier[(Judgement)j])
                     {
                         judgement = (Judgement)j;
                         break;
@@ -184,7 +184,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             {
                 for (var j = 0; j < JudgementWindow.Count; j++)
                 {
-                    if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j]))
+                    if (Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j])
                     {
                         judgement = (Judgement)j;
                         break;
