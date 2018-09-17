@@ -171,24 +171,18 @@ namespace Quaver.API.Maps.Processors.Scoring
 
             if (isRelease)
             {
-                for (var j = 0; j < JudgementWindow.Count; j++)
+                for (var j = 0; j < WindowReleaseMultiplier.Count; j++)
                 {
-                    if ((Judgement)j != Judgement.Ghost)
-                    {
-                        if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j] * WindowReleaseMultiplier[(Judgement)j]))
-                            judgement = (Judgement)j;
-                    }
-                }
+                    if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j] * WindowReleaseMultiplier[(Judgement)j]))
+                        judgement = (Judgement)j;
+            }
             }
             else
             {
                 for (var j = 0; j < JudgementWindow.Count; j++)
                 {
-                    if ((Judgement)j != Judgement.Ghost)
-                    {
-                        if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j]))
-                            judgement = (Judgement)j;
-                    }
+                    if (!(Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j]))
+                        judgement = (Judgement)j;
                 }
             }
 
