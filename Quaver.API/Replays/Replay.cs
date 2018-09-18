@@ -100,6 +100,11 @@ namespace Quaver.API.Replays
         public int CountMiss { get; set; }
 
         /// <summary>
+        ///     The amount of times paused in the play.
+        /// </summary>
+        public int PauseCount { get; set; }
+
+        /// <summary>
         ///     Ctor -
         ///     Create fresh replay
         /// </summary>
@@ -145,6 +150,7 @@ namespace Quaver.API.Replays
                 CountGood = br.ReadInt32();
                 CountOkay = br.ReadInt32();
                 CountMiss = br.ReadInt32();
+                PauseCount = br.ReadInt32();
 
                 // Create the new list of replay frames.
                 Frames = new List<ReplayFrame>();
@@ -179,11 +185,10 @@ namespace Quaver.API.Replays
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(FramesToString())))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
             {
-                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}--{MapMd5}//{PlayerName}=w--{(int)Mode}@@#" +
-                                                    $"{(int) Mods}xxx={Score}--." +
-                                                    $"{Accuracy}--" + $"{MaxCombo}@#{CountMarv}$!---{CountPerf}" +
-                                                    $"---{CountGreat}@!!{CountGood}.@@@!@!{CountOkay}----{CountMiss}" +
-                                                    $"--{replayDataStream}");
+                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
+                                               $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
+                                               $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{replayDataStream}");
+
                 bw.Write(QuaverVersion);
                 bw.Write(MapMd5);
                 bw.Write(Md5);
@@ -200,6 +205,7 @@ namespace Quaver.API.Replays
                 bw.Write(CountGood);
                 bw.Write(CountOkay);
                 bw.Write(CountMiss);
+                bw.Write(PauseCount);
                 bw.Write(StreamHelper.ConvertStreamToByteArray(LZMACoder.Compress(replayDataStream)));
             }
         }
