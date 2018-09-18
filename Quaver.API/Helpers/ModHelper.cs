@@ -85,6 +85,9 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Autoplay:
                         modStrings.Add("Autoplay");
                         break;
+                    case ModIdentifier.Paused:
+                        modStrings.Add("Paused");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
                 }
