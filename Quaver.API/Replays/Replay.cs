@@ -25,12 +25,12 @@ namespace Quaver.API.Replays
         public List<ReplayFrame> Frames { get; }
 
         /// <summary>
-        ///
+        ///    The version of Quaver the play was done on.
         /// </summary>
         public string QuaverVersion { get; private set; } = "None";
 
         /// <summary>
-        ///
+        ///    The name of the player.
         /// </summary>
         public string PlayerName { get; }
 
@@ -43,6 +43,11 @@ namespace Quaver.API.Replays
         ///     The date of this replay.
         /// </summary>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        ///     The in milliseconds the score was played at.
+        /// </summary>
+        public long TimePlayed { get; set; }
 
         /// <summary>
         ///     The MD5 Hash of the replay.
@@ -139,6 +144,7 @@ namespace Quaver.API.Replays
                 Md5 = br.ReadString();
                 PlayerName = br.ReadString();
                 Date = Convert.ToDateTime(br.ReadString());
+                TimePlayed = br.ReadInt64();
                 Mode = (GameMode)br.ReadInt32();
                 Mods = (ModIdentifier)br.ReadInt32();
                 Score = br.ReadInt32();
@@ -185,7 +191,7 @@ namespace Quaver.API.Replays
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(FramesToString())))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
             {
-                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
+                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
                                                $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
                                                $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{replayDataStream}");
 
@@ -194,6 +200,7 @@ namespace Quaver.API.Replays
                 bw.Write(Md5);
                 bw.Write(PlayerName);
                 bw.Write(DateTime.Now.ToString(CultureInfo.InvariantCulture));
+                bw.Write(TimePlayed);
                 bw.Write((int)Mode);
                 bw.Write((int)Mods);
                 bw.Write(Score);
