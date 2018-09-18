@@ -198,7 +198,7 @@ namespace Quaver.API.Maps.Processors.Scoring
 
             // Add to the current judgements.
             CurrentJudgements[judgement]++;
-            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] + LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] - LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
             CalculateScore(judgement);
 
             return judgement;
