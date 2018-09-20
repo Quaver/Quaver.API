@@ -202,10 +202,18 @@ namespace Quaver.API.Maps.Processors.Scoring
             if (judgement == Judgement.Ghost)
                 return judgement;
 
-            // Update Acc weight + calculate score
-            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] - LowestAccuracyWeight) * (Math.Max(absoluteDifference - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+            // Calcualte and update acc weight
+            var hitOffsetMagnitude = JudgementAccuracyWeighting[Judgement.Marv] - LowestAccuracyWeight;
+            var hitOffsetRatio = (Math.Max(absoluteDifference - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+            AccuracyWeightCount +=
+                JudgementAccuracyWeighting[Judgement.Marv]
+                - hitOffsetMagnitude
+                * (float)(1 - Math.Cos(hitOffsetRatio * Math.PI))/2f;
+
+            // Calculate score
             CalculateScore(judgement);
 
+            // Return judgement recieved
             return judgement;
         }
 
