@@ -329,7 +329,7 @@ namespace Quaver.API.Maps.Processors.Scoring
 
             // Calculate score for notes below max multiplier combo
             // Note: This block could be a constant for songs that have max combo that exceeds the max multiplier count, but that will mean we will have to manually change the constant everytime we update any single other constant.
-            for (var i = 1; i < TotalJudgements + 1 || i < maxMultiplierCount; i++)
+            for (var i = 1; i <= TotalJudgements && i < maxMultiplierCount; i++)
                 summedScore += JudgementScoreWeighting[Judgement.Marv] + MultiplierCountToIncreaseIndex * (int) Math.Floor((float)i / MultiplierCountToIncreaseIndex);
 
             // Calculate score for notes once max multiplier combo is reached
