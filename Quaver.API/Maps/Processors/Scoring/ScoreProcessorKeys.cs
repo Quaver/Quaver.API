@@ -63,6 +63,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         private float LowestAccuracyWeight { get; } = -100;
 
+        /// <summary>
+        ///     Interval at which hit difference is rounded down to (in milliseconds)
+        /// </summary>
+        private float AccuracyWeightInterval { get; } = 4;
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -168,7 +173,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             // Find judgement of hit
             var judgement = Judgement.Ghost;
-            var absoluteDifference = Math.Abs(hitDifference);
+            var absoluteDifference = (float)Math.Floor(Math.Abs(hitDifference) / AccuracyWeightInterval) * AccuracyWeightInterval;
 
             if (isRelease)
             {
