@@ -92,7 +92,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Judgement.Good, 1.5f},
             {Judgement.Okay, 1.5f},
         };
-        
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -157,9 +157,9 @@ namespace Quaver.API.Maps.Processors.Scoring
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
         }
-        
+
         /// <summary>
-        ///     Ctor - 
+        ///     Ctor -
         /// </summary>
         /// <param name="replay"></param>
         public ScoreProcessorKeys(Replay replay) : base(replay){}
@@ -171,31 +171,21 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="isRelease"></param>
         public Judgement CalculateScore(float hitDifference, bool isRelease = false)
         {
-            // Find judgement of hit
-            var judgement = Judgement.Ghost;
             var absoluteDifference = (float)Math.Floor(Math.Abs(hitDifference) / AccuracyWeightInterval) * AccuracyWeightInterval;
 
-            if (isRelease)
+            var judgement = Judgement.Ghost;
+
+            // Find judgement of hit
+            for (var i = 0; i < JudgementWindow.Count; i++)
             {
-                for (var j = 0; j < WindowReleaseMultiplier.Count; j++)
-                {
-                    if (absoluteDifference <= JudgementWindow[(Judgement)j] * WindowReleaseMultiplier[(Judgement)j])
-                    {
-                        judgement = (Judgement)j;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                for (var j = 0; j < JudgementWindow.Count; j++)
-                {
-                    if (absoluteDifference <= JudgementWindow[(Judgement)j])
-                    {
-                        judgement = (Judgement)j;
-                        break;
-                    }
-                }
+                var j = (Judgement) i;
+                var window = isRelease ? JudgementWindow[j] * WindowReleaseMultiplier[j] : JudgementWindow[j];
+
+                if (!(absoluteDifference <= window))
+                    continue;
+
+                judgement = j;
+                break;
             }
 
             // If the press/release was outside of hit window, do not score.
@@ -234,7 +224,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             // Calculate and set the new accuracy.
             Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
 
-            #region SCORE_CALCULATION                  
+            #region SCORE_CALCULATION
             // If the user didn't miss, then we want to update their combo and multiplier.
             if (judgement != Judgement.Miss)
             {
@@ -285,8 +275,8 @@ namespace Quaver.API.Maps.Processors.Scoring
             else if (newHealth >= 100)
                 Health = 100;
             else
-                Health = newHealth;          
-            #endregion   
+                Health = newHealth;
+            #endregion
         }
 
         /// <summary>
@@ -324,7 +314,7 @@ namespace Quaver.API.Maps.Processors.Scoring
 
             return judgements;
         }
-        
+
         /// <summary>
         ///     Calculates the max score you can achieve in a song.
         ///         (Note: It assumes every hit is a Marv)
