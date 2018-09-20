@@ -168,12 +168,13 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             // Find judgement of hit
             var judgement = Judgement.Ghost;
+            var absoluteDifference = Math.Abs(hitDifference);
 
             if (isRelease)
             {
                 for (var j = 0; j < WindowReleaseMultiplier.Count; j++)
                 {
-                    if (Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j] * WindowReleaseMultiplier[(Judgement)j])
+                    if (absoluteDifference <= JudgementWindow[(Judgement)j] * WindowReleaseMultiplier[(Judgement)j])
                     {
                         judgement = (Judgement)j;
                         break;
@@ -184,7 +185,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             {
                 for (var j = 0; j < JudgementWindow.Count; j++)
                 {
-                    if (Math.Abs(hitDifference) <= JudgementWindow[(Judgement)j])
+                    if (absoluteDifference <= JudgementWindow[(Judgement)j])
                     {
                         judgement = (Judgement)j;
                         break;
@@ -192,13 +193,12 @@ namespace Quaver.API.Maps.Processors.Scoring
                 }
             }
 
-            // If the press/release was outside of hit window, ignore.
+            // If the press/release was outside of hit window, do not score.
             if (judgement == Judgement.Ghost)
                 return judgement;
 
-            // Add to the current judgements.
-            CurrentJudgements[judgement]++;
-            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] - LowestAccuracyWeight) * (Math.Max(Math.Abs(hitDifference) - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+            // Update Acc weight + calculate score
+            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - (JudgementAccuracyWeighting[Judgement.Marv] - LowestAccuracyWeight) * (Math.Max(absoluteDifference - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
             CalculateScore(judgement);
 
             return judgement;
@@ -211,6 +211,10 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="judgement"></param>
         public override void CalculateScore(Judgement judgement)
         {
+            // Update Judgement count
+            CurrentJudgements[judgement]++;
+
+            // Update acc weight if missed
             if (judgement == Judgement.Miss)
                 AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Miss];
 
