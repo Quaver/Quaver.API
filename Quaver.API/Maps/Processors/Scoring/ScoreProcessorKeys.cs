@@ -179,6 +179,11 @@ namespace Quaver.API.Maps.Processors.Scoring
             for (var i = 0; i < JudgementWindow.Count; i++)
             {
                 var j = (Judgement) i;
+
+                // Handles the case of if you release too early on a LN.
+                if (isRelease && j == Judgement.Miss)
+                    break;
+
                 var window = isRelease ? JudgementWindow[j] * WindowReleaseMultiplier[j] : JudgementWindow[j];
 
                 if (!(absoluteDifference <= window))
