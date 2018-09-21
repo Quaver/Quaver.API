@@ -29,6 +29,7 @@ namespace Quaver.API.Enums
         Strict = 1 << 16, // Makes the accuracy hit windows harder
         Chill = 1 << 17, // Makes the accuracy hit windows easier
         NoPause = 1 << 18, // Disallows pausing.
-        Autoplay = 1 << 19 // The game automatically plays it.
+        Autoplay = 1 << 19, // The game automatically plays it.
+        Paused = 1 << 20, // The user paused during gameplay.
     }
 }
