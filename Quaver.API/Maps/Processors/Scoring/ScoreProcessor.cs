@@ -17,7 +17,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The mods for this play.
         /// </summary>
-        public ModIdentifier Mods { get; }
+        public ModIdentifier Mods { get; set; }
 
         /// <summary>
         ///     The total score the user has.

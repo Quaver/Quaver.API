@@ -18,31 +18,36 @@ namespace Quaver.API.Replays
         ///     The game mode this replay is for.
         /// </summary>
         public GameMode Mode { get; }
-        
+
         /// <summary>
         ///     All of the replay frames.
         /// </summary>
         public List<ReplayFrame> Frames { get; }
 
         /// <summary>
-        /// 
+        ///    The version of Quaver the play was done on.
         /// </summary>
         public string QuaverVersion { get; private set; } = "None";
 
         /// <summary>
-        ///     
+        ///    The name of the player.
         /// </summary>
         public string PlayerName { get; }
 
         /// <summary>
         ///     The activated mods on this replay.
         /// </summary>
-        public ModIdentifier Mods { get; }
+        public ModIdentifier Mods { get; set; }
 
         /// <summary>
         ///     The date of this replay.
         /// </summary>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        ///     The in milliseconds the score was played at.
+        /// </summary>
+        public long TimePlayed { get; set; }
 
         /// <summary>
         ///     The MD5 Hash of the replay.
@@ -100,6 +105,11 @@ namespace Quaver.API.Replays
         public int CountMiss { get; set; }
 
         /// <summary>
+        ///     The amount of times paused in the play.
+        /// </summary>
+        public int PauseCount { get; set; }
+
+        /// <summary>
         ///     Ctor -
         ///     Create fresh replay
         /// </summary>
@@ -134,6 +144,7 @@ namespace Quaver.API.Replays
                 Md5 = br.ReadString();
                 PlayerName = br.ReadString();
                 Date = Convert.ToDateTime(br.ReadString());
+                TimePlayed = br.ReadInt64();
                 Mode = (GameMode)br.ReadInt32();
                 Mods = (ModIdentifier)br.ReadInt32();
                 Score = br.ReadInt32();
@@ -145,6 +156,7 @@ namespace Quaver.API.Replays
                 CountGood = br.ReadInt32();
                 CountOkay = br.ReadInt32();
                 CountMiss = br.ReadInt32();
+                PauseCount = br.ReadInt32();
 
                 // Create the new list of replay frames.
                 Frames = new List<ReplayFrame>();
@@ -170,25 +182,25 @@ namespace Quaver.API.Replays
                 }
             }
         }
-        
+
         /// <summary>
         ///    Writes the current replay to a binary file.
         /// </summary>
         public void Write(string path)
-        {     
+        {
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(FramesToString())))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
             {
-                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}--{MapMd5}//{PlayerName}=w--{(int)Mode}@@#" +
-                                                    $"{(int) Mods}xxx={Score}--." +
-                                                    $"{Accuracy}--" + $"{MaxCombo}@#{CountMarv}$!---{CountPerf}" +
-                                                    $"---{CountGreat}@!!{CountGood}.@@@!@!{CountOkay}----{CountMiss}" +
-                                                    $"--{replayDataStream}");              
+                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
+                                               $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
+                                               $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{replayDataStream}");
+
                 bw.Write(QuaverVersion);
                 bw.Write(MapMd5);
                 bw.Write(Md5);
                 bw.Write(PlayerName);
                 bw.Write(DateTime.Now.ToString(CultureInfo.InvariantCulture));
+                bw.Write(TimePlayed);
                 bw.Write((int)Mode);
                 bw.Write((int)Mods);
                 bw.Write(Score);
@@ -200,10 +212,11 @@ namespace Quaver.API.Replays
                 bw.Write(CountGood);
                 bw.Write(CountOkay);
                 bw.Write(CountMiss);
+                bw.Write(PauseCount);
                 bw.Write(StreamHelper.ConvertStreamToByteArray(LZMACoder.Compress(replayDataStream)));
             }
         }
-        
+
         /// <summary>
         ///     Adds a frame to the replay.
         /// </summary>
@@ -224,7 +237,7 @@ namespace Quaver.API.Replays
             CountOkay = processor.CurrentJudgements[Judgement.Okay];
             CountMiss = processor.CurrentJudgements[Judgement.Miss];
         }
-        
+
         /// <summary>
         ///     Generates a perfect replay for the keys game mode.
         /// </summary>
@@ -234,12 +247,12 @@ namespace Quaver.API.Replays
         public static Replay GeneratePerfectReplayKeys(Replay replay, Qua map)
         {
             var nonCombined = new List<ReplayAutoplayFrame>();
-            
+
             foreach (var hitObject in map.HitObjects)
             {
                 // Add key press frame
                 nonCombined.Add(new ReplayAutoplayFrame(hitObject, ReplayAutoplayFrameType.Press, hitObject.StartTime, KeyLaneToPressState(hitObject.Lane)));
-                
+
                 // If LN, add key up state at end time
                 if (hitObject.IsLongNote)
                     nonCombined.Add(new ReplayAutoplayFrame(hitObject, ReplayAutoplayFrameType.Release, hitObject.EndTime - 1, KeyLaneToPressState(hitObject.Lane)));
@@ -247,16 +260,16 @@ namespace Quaver.API.Replays
                 else
                     nonCombined.Add(new ReplayAutoplayFrame(hitObject, ReplayAutoplayFrameType.Release, hitObject.StartTime + 30, KeyLaneToPressState(hitObject.Lane)));
             }
-            
+
             // Order objects by time
             nonCombined = nonCombined.OrderBy(x => x.Time).ToList();
 
             // Global replay state so we can loop through in track it.
             ReplayKeyPressState state = 0;
-            
+
             // Add beginning frame w/ no press state. (-10000 just to be on the safe side.)
             replay.Frames.Add(new ReplayFrame(-10000, 0));
-            
+
             var startTimeGroup = nonCombined.GroupBy(x => x.Time).ToDictionary(x => x.Key, x => x.ToList());
 
             foreach (var item in startTimeGroup)
@@ -275,14 +288,14 @@ namespace Quaver.API.Replays
                             throw new ArgumentOutOfRangeException();
                     }
                 }
-                
+
                 //Console.WriteLine($"Added frame at: {item.Key} with state: {state}");
                 replay.Frames.Add(new ReplayFrame(item.Key, state));
             }
-      
+
             return replay;
         }
-        
+
         /// <summary>
         ///     Converts a lane to a key press state.
         /// </summary>
@@ -321,7 +334,7 @@ namespace Quaver.API.Replays
             var lanes = new List<int>();
 
             if (keys.HasFlag(ReplayKeyPressState.K1))
-                lanes.Add(0);            
+                lanes.Add(0);
             if (keys.HasFlag(ReplayKeyPressState.K2))
                 lanes.Add(1);
             if (keys.HasFlag(ReplayKeyPressState.K3))
@@ -337,7 +350,7 @@ namespace Quaver.API.Replays
 
              return lanes;
         }
-        
+
         /// <summary>
         ///     Converts all replay frames to a string
         /// </summary>
@@ -346,7 +359,7 @@ namespace Quaver.API.Replays
             // The format for the replay frames are the following:
             //     Time|KeysPressed,
             var frameStr = "";
-            
+
             if (debug)
                 Frames.ForEach(x => frameStr += $"{x.ToDebugString()}\r\n");
             else
