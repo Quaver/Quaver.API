@@ -61,7 +61,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     Lowest Accuracy that the player can recieve by hitting barely in the hit window
         /// </summary>
-        private float LowestAccuracyWeight { get; } = -75;
+        private float LowestAccuracyWeight { get; } = -62.5;
 
         /// <summary>
         ///     Interval at which hit difference is rounded down to (in milliseconds)
