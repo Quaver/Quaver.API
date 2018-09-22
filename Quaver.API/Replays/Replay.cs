@@ -372,5 +372,47 @@ namespace Quaver.API.Replays
         ///     If the replay has any data in it.
         /// </summary>
         public bool HasData => Frames.Count > 0;
+
+        /// <summary>
+        ///     Gets all of the individual unique key presses during the replay.
+        /// </summary>
+        public List<ReplayKeyPressInfo> GetKeyPresses()
+        {
+            var keyPresses = new List<ReplayKeyPressInfo>();
+
+            ReplayKeyPressState previousKeys = 0;
+
+            foreach (var frame in Frames)
+            {
+                if (frame.Keys != previousKeys)
+                {
+                    var currentLanes = KeyPressStateToLanes(frame.Keys);
+                    var previousLanes = KeyPressStateToLanes(previousKeys);
+
+                    var keyDifferences = currentLanes.Except(previousLanes)
+                        .Concat(previousLanes.Except(currentLanes))
+                        .ToList();
+
+                    foreach (var key in keyDifferences)
+                    {
+                        // key was pressed in this frame.
+                        if (currentLanes.Contains(key))
+                        {
+                            keyPresses.Add(new ReplayKeyPressInfo(KeyLaneToPressState(key + 1), frame.Time));
+                        }
+                        // Key was released in this frame.
+                        else if (previousLanes.Contains(key))
+                        {
+                            var foundPress = keyPresses.FindLast(x => x.Key == KeyLaneToPressState(key + 1));
+                            foundPress.TimeReleased = frame.Time;
+                        }
+                    }
+                }
+
+                previousKeys = frame.Keys;
+            }
+
+            return keyPresses;
+        }
     }
 }

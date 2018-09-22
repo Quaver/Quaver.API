@@ -1,9 +1,11 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Quaver.API.Helpers
 {
-    internal static class CryptoHelper
+    public static class CryptoHelper
     {
         /// <summary>
         ///     MD5 hash a string.
@@ -25,6 +27,22 @@ namespace Quaver.API.Helpers
                     sb.Append(t.ToString("X2"));
                 }
                 return sb.ToString().ToLower();
+            }
+        }
+
+        /// <summary>
+        ///     Gets the Md5 Checksum of a file, more specifically a .qua file.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string FileToMd5(string path)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(path))
+                {
+                    return BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", string.Empty).ToLower();
+                }
             }
         }
     }

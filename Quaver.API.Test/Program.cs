@@ -17,7 +17,7 @@ namespace Quaver.API.Test
 
                 return;
             }
-            
+
             switch (args[0])
             {
                 case "-osu":
@@ -26,9 +26,12 @@ namespace Quaver.API.Test
                 case "-qua":
                     new QuaCommand(args).Execute();
                     break;
+                case "-replay":
+                    new ReplayCommand(args).Execute();
+                    break;
                 default:
                     throw new ArgumentException();
             }
-        }     
+        }
     }
 }

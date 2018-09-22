@@ -88,7 +88,10 @@
     <Compile Include="Replays\Replay.cs" />
     <Compile Include="Replays\ReplayAutoplayFrame.cs" />
     <Compile Include="Replays\ReplayFrame.cs" />
+    <Compile Include="Replays\ReplayKeyPressInfo.cs" />
     <Compile Include="Replays\ReplayKeyPressState.cs" />
+    <Compile Include="Replays\Virtual\VirtualReplayKeyBinding.cs" />
+    <Compile Include="Replays\Virtual\VirtualReplayPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="APIResources.resx">
