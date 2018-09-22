@@ -1,4 +1,4 @@
-﻿namespace Quaver.API.Maps.Processors.Difficulty
+namespace Quaver.API.Maps.Processors.Difficulty
 {
     public abstract class DifficultyCalculator
     {
@@ -17,6 +17,6 @@
         ///     Calculates the difficulty of the map.
         /// </summary>
         /// <returns></returns>
-        public abstract double CalculateDifficulty();
+        public abstract double CalculateDifficulty(Qua map, float rate);
     }
 }
