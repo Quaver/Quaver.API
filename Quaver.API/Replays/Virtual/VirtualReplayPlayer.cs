@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Quaver.API.Enums;
@@ -44,12 +44,7 @@ namespace Quaver.API.Replays.Virtual
         /// <summary>
         ///     The current time in the replay.
         /// </summary>
-        public float Time => Replay.Frames[CurrentFrame].Time;
-
-        /// <summary>
-        ///     The list of key presses in the replay.
-        /// </summary>
-        public List<ReplayKeyPressInfo> KeyPresses { get; }
+        public int Time => Replay.Frames[CurrentFrame].Time;
 
         /// <summary>
         ///     Keeps track of if certain keys are pressed or not.
@@ -63,7 +58,6 @@ namespace Quaver.API.Replays.Virtual
         public VirtualReplayPlayer(Replay replay, Qua map)
         {
             Replay = replay;
-            KeyPresses = Replay.GetKeyPresses();
             Map = map;
 
             ScoreProcessor = new ScoreProcessorKeys(map, Replay.Mods);
@@ -189,7 +183,7 @@ namespace Quaver.API.Replays.Virtual
                         var hitDifference = hitObject.EndTime - Time;
 
                         // Calculate Score
-                        var judgement = ScoreProcessor.CalculateScore(hitDifference);
+                        var judgement = ScoreProcessor.CalculateScore(hitDifference, true);
 
                         // LN was released during a hit window.
                         if (judgement != Judgement.Ghost)

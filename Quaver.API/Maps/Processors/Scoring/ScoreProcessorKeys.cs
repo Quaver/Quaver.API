@@ -169,7 +169,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="hitDifference"></param>
         /// <param name="isRelease"></param>
-        public Judgement CalculateScore(float hitDifference, bool isRelease = false)
+        public Judgement CalculateScore(int hitDifference, bool isRelease = false)
         {
             var absoluteDifference = (float)Math.Floor(Math.Abs(hitDifference) / AccuracyWeightInterval) * AccuracyWeightInterval;
 

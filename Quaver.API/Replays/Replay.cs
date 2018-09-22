@@ -172,8 +172,7 @@ namespace Quaver.API.Replays
                         // Split up the frame string by SongTime|KeyPressState
                         var frameSplit = frame.Split('|');
 
-                        // Add the replay frame to the list!
-                        Frames.Add(new ReplayFrame(float.Parse(frameSplit[0]), (ReplayKeyPressState)Enum.Parse(typeof(ReplayKeyPressState), frameSplit[1])));
+                        Frames.Add(new ReplayFrame(int.Parse(frameSplit[0]), (ReplayKeyPressState)Enum.Parse(typeof(ReplayKeyPressState), frameSplit[1])));
                     }
                     catch (Exception e)
                     {
@@ -220,7 +219,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     Adds a frame to the replay.
         /// </summary>
-        public void AddFrame(float time, ReplayKeyPressState keys) => Frames.Add(new ReplayFrame(time, keys));
+        public void AddFrame(int time, ReplayKeyPressState keys) => Frames.Add(new ReplayFrame(time, keys));
 
         /// <summary>
         ///    Populates the replay header properties from a score processor.

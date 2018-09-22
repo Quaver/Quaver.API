@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
@@ -61,12 +61,6 @@ namespace Quaver.API.Test.Commands
             Console.WriteLine("-------------------------------------");
 
             var keyPresses = Replay.GetKeyPresses();
-
-            // Write Key Presses to file.
-            var str = "";
-            keyPresses.ForEach(x => { str += $"{x.Key} | {x.TimePressed} | {x.TimeReleased}\r\n"; });
-            File.WriteAllText("./debug.txt", str);
-
             Console.WriteLine($"Key Presses: {keyPresses.Count}");
 
             var virtualPlayer = new VirtualReplayPlayer(Replay, Map);
@@ -79,6 +73,7 @@ namespace Quaver.API.Test.Commands
             Console.WriteLine(virtualPlayer.ScoreProcessor.Score);
             Console.WriteLine(virtualPlayer.ScoreProcessor.Accuracy);
             Console.WriteLine(virtualPlayer.ScoreProcessor.TotalJudgementCount);
+            Console.WriteLine(virtualPlayer.ScoreProcessor.MaxCombo);
 
             Console.WriteLine("MARV: " + virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Marv]);
             Console.WriteLine("PERF: " + virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Perf]);
@@ -86,6 +81,11 @@ namespace Quaver.API.Test.Commands
             Console.WriteLine("GOOD: " + virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Good]);
             Console.WriteLine("OK: " + virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Okay]);
             Console.WriteLine("MS: " + virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Miss]);
+
+            // Write Key Presses to file.
+            var str = "";
+            virtualPlayer.ScoreProcessor.Stats.ForEach(x => { str += $"{x.Type}|{x.SongPosition}|{x.HitObject.Lane}|{x.HitDifference}|{x.Judgement}\r\n"; });
+            File.WriteAllText("./debug.txt", str);
         }
     }
 }

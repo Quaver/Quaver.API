@@ -21,7 +21,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// <summary>
         ///     The position in the song the object was hit.
         /// </summary>
-        public double SongPosition { get; }
+        public int SongPosition { get; }
 
         /// <summary>
         ///     The judgement received for this hit.
@@ -43,7 +43,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// </summary>
         public float Health { get; }
 
-       
+
         /// <summary>
         ///     Ctor
         /// </summary>
@@ -53,7 +53,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// <param name="hitDifference"></param>
         /// <param name="acc"></param>
         /// <param name="health"></param>
-        public HitStat(HitStatType type, HitObjectInfo hitObject, double songPos, Judgement judgement, double hitDifference, double acc, float health)
+        public HitStat(HitStatType type, HitObjectInfo hitObject, int songPos, Judgement judgement, double hitDifference, double acc, float health)
         {
             HitObject = hitObject;
             SongPosition = songPos;
@@ -63,9 +63,9 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
             Health = health;
             Type = type;
         }
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public override string ToString() => $"{SongPosition}|{HitDifference}|{Judgement}";
