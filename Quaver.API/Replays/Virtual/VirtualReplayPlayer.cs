@@ -165,7 +165,7 @@ namespace Quaver.API.Replays.Virtual
                     var hitDifference = hitObject.StartTime - Time;
 
                     // Calculate Score.
-                    var judgement = ScoreProcessor.CalculateScore(hitDifference);
+                    var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Press);
 
                     switch (judgement)
                     {
@@ -183,7 +183,7 @@ namespace Quaver.API.Replays.Virtual
                     }
 
                     // Add a new hit stat to the score processor.
-                    var stat = new HitStat(HitStatType.Hit, hitObject, Time, judgement, hitDifference,
+                    var stat = new HitStat(HitStatType.Hit, KeyPressType.Press, hitObject, Time, judgement, hitDifference,
                         ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                     ScoreProcessor.Stats.Add(stat);
@@ -206,13 +206,13 @@ namespace Quaver.API.Replays.Virtual
                         var hitDifference = hitObject.EndTime - Time;
 
                         // Calculate Score
-                        var judgement = ScoreProcessor.CalculateScore(hitDifference, true);
+                        var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Release);
 
                         // LN was released during a hit window.
                         if (judgement != Judgement.Ghost)
                         {
                             // Add a new hit stat to the score processor.
-                            var stat = new HitStat(HitStatType.Hit, hitObject, Time, judgement, hitDifference,
+                            var stat = new HitStat(HitStatType.Hit, KeyPressType.Release, hitObject, Time, judgement, hitDifference,
                                 ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                             ScoreProcessor.Stats.Add(stat);
@@ -223,7 +223,7 @@ namespace Quaver.API.Replays.Virtual
                             ScoreProcessor.CalculateScore(Judgement.Miss);
 
                             // Add a new stat to ScoreProcessor.
-                            var stat = new HitStat(HitStatType.Hit, hitObject, Time, Judgement.Miss, hitDifference,
+                            var stat = new HitStat(HitStatType.Hit, KeyPressType.Release, hitObject, Time, Judgement.Miss, hitDifference,
                                 ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                             ScoreProcessor.Stats.Add(stat);
@@ -257,7 +257,7 @@ namespace Quaver.API.Replays.Virtual
                 ScoreProcessor.CalculateScore(Judgement.Okay);
 
                 // Add new miss stat.
-                var stat = new HitStat(HitStatType.Miss, hitObject, Time, Judgement.Okay, int.MinValue,
+                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, Time, Judgement.Okay, int.MinValue,
                     ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                 ScoreProcessor.Stats.Add(stat);
@@ -283,7 +283,7 @@ namespace Quaver.API.Replays.Virtual
                     ScoreProcessor.CalculateScore(Judgement.Miss);
 
                     // Create a new HitStat to add to the ScoreProcessor.
-                    var stat = new HitStat(HitStatType.Miss, hitObject, Time, Judgement.Miss, int.MinValue,
+                    var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, Time, Judgement.Miss, int.MinValue,
                         ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                     ScoreProcessor.Stats.Add(stat);

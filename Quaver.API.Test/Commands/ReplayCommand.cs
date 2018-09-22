@@ -84,7 +84,7 @@ namespace Quaver.API.Test.Commands
 
             // Write Key Presses to file.
             var str = "";
-            virtualPlayer.ScoreProcessor.Stats.ForEach(x => { str += $"{x.Type}|{x.SongPosition}|{x.HitObject.Lane}|{x.HitDifference}|{x.Judgement}\r\n"; });
+            virtualPlayer.ScoreProcessor.Stats.ForEach(x => { str += $"{x.ToString()}\r\n"; });
             File.WriteAllText("./debug.txt", str);
         }
     }
