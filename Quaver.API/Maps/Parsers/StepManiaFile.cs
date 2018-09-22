@@ -323,9 +323,6 @@ namespace Quaver.API.Maps.Parsers
                     DifficultyName = chart.Difficulty,
                     Source = "StepMania",
                     Tags = "StepMania",
-                    TimingPoints = new List<TimingPointInfo>(),
-                    HitObjects = new List<HitObjectInfo>(),
-                    SliderVelocities = new List<SliderVelocityInfo>(),
                     SongPreviewTime = (int)SampleStart
                 };
                 

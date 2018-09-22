@@ -9,6 +9,7 @@ namespace Quaver.API.Enums
     [Flags]
     public enum ModIdentifier
     {
+        None = -1,
         NoSliderVelocity = 1 << 0, // No Slider Velocity
         Speed05X = 1 << 1, // Speed 0.5x,
         Speed06X = 1 << 2, // Speed 0.6x
@@ -28,6 +29,7 @@ namespace Quaver.API.Enums
         Strict = 1 << 16, // Makes the accuracy hit windows harder
         Chill = 1 << 17, // Makes the accuracy hit windows easier
         NoPause = 1 << 18, // Disallows pausing.
-        Autoplay = 1 << 19 // The game automatically plays it.
+        Autoplay = 1 << 19, // The game automatically plays it.
+        Paused = 1 << 20, // The user paused during gameplay.
     }
 }

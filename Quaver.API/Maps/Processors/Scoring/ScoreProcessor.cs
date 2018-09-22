@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Quaver.API.Enums;
+using Quaver.API.Helpers;
 using Quaver.API.Maps.Processors.Scoring.Data;
 using Quaver.API.Replays;
 
@@ -16,7 +17,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The mods for this play.
         /// </summary>
-        public ModIdentifier Mods { get; }
+        public ModIdentifier Mods { get; set; }
 
         /// <summary>
         ///     The total score the user has.
@@ -51,11 +52,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The user's stats per object.
         /// </summary>
-        public List<HitStat> Stats { get; }
+        public List<HitStat> Stats { get; set; }
 
         /// <summary>
         ///     The judgement count for each judgement, initialized to 0 by default.
-        /// 
+        ///
         ///     Note: Not sure if modes will use different judgements, probably not.
         /// </summary>
         public Dictionary<Judgement, int> CurrentJudgements { get; } = new Dictionary<Judgement, int>()
@@ -98,11 +99,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     It multiplies the judgement window by this amount.
         /// </summary>
         public abstract SortedDictionary<Judgement, float> WindowReleaseMultiplier { get; }
-        
+
         /// <summary>
         ///     The total amount of judgements that the user has gotten in this play session.
         /// </summary>
-        protected int TotalJudgementCount
+        public virtual int TotalJudgementCount
         {
             get
             {
@@ -116,7 +117,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         }
 
         /// <summary>
-        ///     Ctor - 
+        ///     Ctor -
         /// </summary>
         /// <param name="map"></param>
         /// <param name="mods"></param>
@@ -125,7 +126,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             Map = map;
             Mods = mods;
             Stats = new List<HitStat>();
-            
+
             InitializeMods();
         }
 
@@ -146,7 +147,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             CurrentJudgements[Judgement.Okay] = replay.CountOkay;
             CurrentJudgements[Judgement.Miss] = replay.CountMiss;
         }
-        
+
         /// <summary>
         ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
@@ -163,44 +164,9 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     (Recalculates hit windows.)
         /// </summary>
         private void InitializeMods()
-        {            
-            // The rate of the audio.
-            var rate = 1.0;
-            
-            // Map mods to rate.
-            if (Mods.HasFlag(ModIdentifier.Speed05X))
-                rate = 0.5f;
-            else if (Mods.HasFlag(ModIdentifier.Speed06X))
-                rate = 0.6f;
-            else if (Mods.HasFlag(ModIdentifier.Speed07X))
-                rate = 0.7f;
-            else if (Mods.HasFlag(ModIdentifier.Speed08X))
-                rate = 0.8f;
-            else if (Mods.HasFlag(ModIdentifier.Speed09X))
-                rate = 0.9f;
-            else if (Mods.HasFlag(ModIdentifier.Speed11X))
-                rate = 1.1f;
-            else if (Mods.HasFlag(ModIdentifier.Speed12X))
-                rate = 1.2f;
-            else if (Mods.HasFlag(ModIdentifier.Speed13X))
-                rate = 1.3f;
-            else if (Mods.HasFlag(ModIdentifier.Speed14X))
-                rate = 1.4f;
-            else if (Mods.HasFlag(ModIdentifier.Speed15X))
-                rate = 1.5f;
-            else if (Mods.HasFlag(ModIdentifier.Speed16X))
-                rate = 1.6f;
-            else if (Mods.HasFlag(ModIdentifier.Speed17X))
-                rate = 1.7f;
-            else if (Mods.HasFlag(ModIdentifier.Speed18X))
-                rate = 1.8f;
-            else if (Mods.HasFlag(ModIdentifier.Speed19X))
-                rate = 1.9f;
-            else if (Mods.HasFlag(ModIdentifier.Speed20X))
-                rate = 2.0f;
-
+        {
             for (var i = 0; i < JudgementWindow.Count; i++)
-                JudgementWindow[(Judgement) i] *= (float)rate;
+                JudgementWindow[(Judgement) i] *= ModHelper.GetRateFromMods(Mods);
         }
 
         /// <summary>
