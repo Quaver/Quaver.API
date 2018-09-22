@@ -104,8 +104,9 @@ namespace Quaver.API.Replays.Virtual
             if (CurrentFrame >= Replay.Frames.Count)
                 throw new InvalidOperationException("Cannot play the next replay frame because there aren't any frames left!");
 
-            //if (ScoreProcessor.Failed)
-            //    throw new InvalidOperationException("Cannot play the next replay frame because the player has already failed!");
+            if (ScoreProcessor.Failed)
+                throw new InvalidOperationException("Cannot play the next replay frame because the player has already failed!");
+
             CurrentFrame++;
 
             // Store the objects that need to be removed from the list of active objects.
