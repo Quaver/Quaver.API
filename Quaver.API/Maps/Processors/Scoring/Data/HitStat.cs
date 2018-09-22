@@ -1,4 +1,6 @@
-﻿using Quaver.API.Enums;
+﻿using System;
+using System.Text.RegularExpressions;
+using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Maps.Processors.Scoring.Data
@@ -12,6 +14,11 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         ///     The type of hit this was.
         /// </summary>
         public HitStatType Type { get; }
+
+        /// <summary>
+        ///     The type f key press this was for this stat.
+        /// </summary>
+        public KeyPressType KeyPressType { get; }
 
         /// <summary>
         ///     The HitObject that this is referencing to.
@@ -31,7 +38,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// <summary>
         ///     The difference between the the hit and the song position.
         /// </summary>
-        public double HitDifference { get; }
+        public int HitDifference { get; }
 
         /// <summary>
         ///     The user's accuracy at this point of the hit.
@@ -43,17 +50,19 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// </summary>
         public float Health { get; }
 
-
         /// <summary>
         ///     Ctor
         /// </summary>
+        /// <param name="type"></param>
+        /// <param name="keyPressType"></param>
         /// <param name="hitObject"></param>
         /// <param name="songPos"></param>
         /// <param name="judgement"></param>
         /// <param name="hitDifference"></param>
         /// <param name="acc"></param>
         /// <param name="health"></param>
-        public HitStat(HitStatType type, HitObjectInfo hitObject, int songPos, Judgement judgement, double hitDifference, double acc, float health)
+        public HitStat(HitStatType type, KeyPressType keyPressType, HitObjectInfo hitObject, int songPos,
+            Judgement judgement, int hitDifference, double acc, float health)
         {
             HitObject = hitObject;
             SongPosition = songPos;
@@ -62,12 +71,63 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
             Accuracy = acc;
             Health = health;
             Type = type;
+            KeyPressType = keyPressType;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="keyPressType"></param>
+        /// <param name="hitDifference"></param>
+        public HitStat(HitStatType type, KeyPressType keyPressType, int hitDifference)
+        {
+            Type = type;
+            KeyPressType = keyPressType;
+            HitDifference = hitDifference;
+
+            HitObject = null;
+            Judgement = Judgement.Ghost;
+            SongPosition = 0;
+            Accuracy = 0;
+            Health = 0;
+        }
+
+        /// <summary>
+        ///     Parse an individual breakdown.
+        /// </summary>
+        /// <param name="breakdownItem"></param>
+        /// <returns></returns>
+        public static HitStat FromBreakdownItem(string breakdownItem)
+        {
+            var match = Regex.Match(breakdownItem, @"^([-]?[\d]+)([N|P|R])$");
+
+            if (!match.Success)
+                throw new ArgumentException("breakdownItem doesn't match the specified format: " + breakdownItem);
+
+            KeyPressType keyPressType;
+
+            switch (match.Groups[2].Value)
+            {
+                case "N":
+                    keyPressType = KeyPressType.None;
+                    break;
+                case "P":
+                    keyPressType = KeyPressType.Press;
+                    break;
+                case "R":
+                    keyPressType = KeyPressType.Release;
+                    break;
+                default:
+                    throw new ArgumentException("Breakdown Item does not have a correct KeyPressType");
+            }
+
+            return new HitStat(HitStatType.Hit, keyPressType, int.Parse(match.Groups[1].Value));
         }
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        public override string ToString() => $"{SongPosition}|{HitDifference}|{Judgement}";
+        public override string ToString() => $"{SongPosition}|{KeyPressType}|{HitDifference}|{Judgement} @ HitObject {HitObject?.StartTime} ({HitObject?.Lane})";
     }
 }

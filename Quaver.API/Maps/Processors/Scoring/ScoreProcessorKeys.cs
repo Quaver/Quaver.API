@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Quaver.API.Enums;
+using Quaver.API.Maps.Processors.Scoring.Data;
 using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
@@ -168,8 +169,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Accuracy Calculation component of CalculateScore() if a note has been pressed/released properly
         /// </summary>
         /// <param name="hitDifference"></param>
-        /// <param name="isRelease"></param>
-        public Judgement CalculateScore(int hitDifference, bool isRelease = false)
+        /// <param name="keyPressType"></param>
+        public Judgement CalculateScore(int hitDifference, KeyPressType keyPressType)
         {
             var absoluteDifference = (float)Math.Floor(Math.Abs(hitDifference) / AccuracyWeightInterval) * AccuracyWeightInterval;
 
@@ -181,10 +182,10 @@ namespace Quaver.API.Maps.Processors.Scoring
                 var j = (Judgement) i;
 
                 // Handles the case of if you release too early on a LN.
-                if (isRelease && j == Judgement.Miss)
+                if (keyPressType == KeyPressType.Release && j == Judgement.Miss)
                     break;
 
-                var window = isRelease ? JudgementWindow[j] * WindowReleaseMultiplier[j] : JudgementWindow[j];
+                var window = keyPressType == KeyPressType.Release  ? JudgementWindow[j] * WindowReleaseMultiplier[j] : JudgementWindow[j];
 
                 if (!(absoluteDifference <= window))
                     continue;

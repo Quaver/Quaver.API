@@ -73,6 +73,7 @@
     <Compile Include="Maps\Processors\Difficulty\DifficultyCalculatorKeys.cs" />
     <Compile Include="Maps\Processors\Scoring\Data\HitStat.cs" />
     <Compile Include="Maps\Processors\Scoring\Data\HitStatType.cs" />
+    <Compile Include="Maps\Processors\Scoring\Data\KeyPressType.cs" />
     <Compile Include="Maps\Processors\Scoring\ScoreProcessor.cs" />
     <Compile Include="Maps\Processors\Scoring\ScoreProcessorKeys.cs" />
     <Compile Include="Maps\Qua.cs" />
