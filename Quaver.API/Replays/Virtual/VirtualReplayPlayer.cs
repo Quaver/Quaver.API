@@ -37,6 +37,16 @@ namespace Quaver.API.Replays.Virtual
         public List<HitObjectInfo> ActiveHeldLongNotes { get; }
 
         /// <summary>
+        ///     The list of active HitObjects that are scheduled for removal.
+        /// </summary>
+        private List<HitObjectInfo> ActiveHitObjectsToRemove { get; set; }
+
+        /// <summary>
+        ///     The list of active held long notes that are scheduled for removal.
+        /// </summary>
+        private List<HitObjectInfo> ActiveHeldLongNotesToRemove { get; set; }
+
+        /// <summary>
         ///     The current frame in the replay.
         /// </summary>
         public int CurrentFrame { get; private set; } = -1;
@@ -110,9 +120,19 @@ namespace Quaver.API.Replays.Virtual
             CurrentFrame++;
 
             // Store the objects that need to be removed from the list of active objects.
-            var activeObjectsToRemove = new List<HitObjectInfo>();
-            var activeHeldObjectsToRemove = new List<HitObjectInfo>();
+            ActiveHitObjectsToRemove = new List<HitObjectInfo>();
+            ActiveHeldLongNotesToRemove = new List<HitObjectInfo>();
 
+            HandleKeyPressesInFrame();
+            HandleMissedLongNoteReleases();
+            HandleMissedHitObjects();
+        }
+
+        /// <summary>
+        ///     Handles all key presses in the current replay frame.
+        /// </summary>
+        private void HandleKeyPressesInFrame()
+        {
             // Retrieve a list of the key press states in integer form.
             var currentFramePressed = Replay.KeyPressStateToLanes(Replay.Frames[CurrentFrame].Keys);
             var previousFramePressed = CurrentFrame > 0 ? Replay.KeyPressStateToLanes(Replay.Frames[CurrentFrame - 1].Keys) : new List<int>();
@@ -167,7 +187,7 @@ namespace Quaver.API.Replays.Virtual
                     ScoreProcessor.Stats.Add(stat);
 
                     // Object needs to be removed from ActiveObjects.
-                    activeObjectsToRemove.Add(hitObject);
+                    ActiveHitObjectsToRemove.Add(hitObject);
                 }
                 // This key was uniquely released during this frame.
                 else if (previousFramePressed.Contains(key))
@@ -204,15 +224,21 @@ namespace Quaver.API.Replays.Virtual
                         }
 
                         // Remove the object from its held state.
-                        activeHeldObjectsToRemove.Add(hitObject);
+                        ActiveHeldLongNotesToRemove.Add(hitObject);
                     }
                 }
             }
 
             // Remove all active objects after handling key presses/releases.
-            activeObjectsToRemove.ForEach(x => ActiveHitObjects.Remove(x));
-            activeHeldObjectsToRemove.ForEach(x => ActiveHeldLongNotes.Remove(x));
+            ActiveHitObjectsToRemove.ForEach(x => ActiveHitObjects.Remove(x));
+            ActiveHeldLongNotesToRemove.ForEach(x => ActiveHeldLongNotes.Remove(x));
+        }
 
+        /// <summary>
+        ///     Handles the replay frames for missed long notes.
+        /// </summary>
+        private void HandleMissedLongNoteReleases()
+        {
             // Handle missed LN releases.
             foreach (var hitObject in ActiveHeldLongNotes)
             {
@@ -229,11 +255,17 @@ namespace Quaver.API.Replays.Virtual
                 ScoreProcessor.Stats.Add(stat);
 
                 // Queue the object to be removed.
-                activeHeldObjectsToRemove.Add(hitObject);
+                ActiveHeldLongNotesToRemove.Add(hitObject);
             }
 
-            activeHeldObjectsToRemove.ForEach(x => ActiveHeldLongNotes.Remove(x));
+            ActiveHeldLongNotesToRemove.ForEach(x => ActiveHeldLongNotes.Remove(x));
+        }
 
+        /// <summary>
+        ///     Handles completely missed HitObjects.
+        /// </summary>
+        private void HandleMissedHitObjects()
+        {
             // Handle missed notes.
             foreach (var hitObject in ActiveHitObjects)
             {
@@ -254,13 +286,13 @@ namespace Quaver.API.Replays.Virtual
                         ScoreProcessor.Stats.Add(stat);
                     }
 
-                    activeObjectsToRemove.Add(hitObject);
+                    ActiveHitObjectsToRemove.Add(hitObject);
                 }
             }
 
             // Remove all objects
-            activeObjectsToRemove.ForEach(x => ActiveHitObjects.Remove(x));
-            activeHeldObjectsToRemove.ForEach(x => ActiveHeldLongNotes.Remove(x));
+            ActiveHitObjectsToRemove.ForEach(x => ActiveHitObjects.Remove(x));
+            ActiveHeldLongNotesToRemove.ForEach(x => ActiveHeldLongNotes.Remove(x));
         }
 
         /// <summary>
