@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -216,6 +216,7 @@ namespace Quaver.API.Maps
         ///     Calculates the difficulty of the map.
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Please use Quaver.API/QuaverStrainSolver/QssData")]
         public double CalculateDifficulty()
         {
             DifficultyCalculator diffCalc;
@@ -230,7 +231,8 @@ namespace Quaver.API.Maps
                     throw new InvalidEnumArgumentException();
             }
 
-            return diffCalc.CalculateDifficulty();
+            return 0;
+            //return diffCalc.CalculateDifficulty();
         }
 
         public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";

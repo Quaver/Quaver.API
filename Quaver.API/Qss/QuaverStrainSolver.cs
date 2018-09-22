@@ -1,4 +1,4 @@
-﻿using Quaver.API.Maps;
+using Quaver.API.Maps;
 using Quaver.API.Qss.Structures;
 using System;
 using System.Collections.Generic;
@@ -57,6 +57,10 @@ namespace Quaver.API.Qss
         private static void ComputeNoteDensityData(QssData qssData, Qua qua)
         {
             qssData.MapLength = qua.Length;
+            qssData.AverageNoteDensity = (float)qua.HitObjects.Count / qua.Length;
+
+            //todo: temp
+            qssData.OverallDifficulty = qssData.AverageNoteDensity;
 
         }
 

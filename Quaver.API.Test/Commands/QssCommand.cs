@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Quaver.API.Maps;
 using Quaver.API.Qss;
 
@@ -12,7 +12,7 @@ namespace Quaver.API.Test.Commands
         
         public override void Execute()
         {
-            QssData data = QuaverStrainSolver.GetQssData(Map);
+            var data = QuaverStrainSolver.GetQssData(Map);
             Console.WriteLine($"Qss Subject: {Map.Artist} - {Map.Title} [{Map.DifficultyName}]");
             Console.WriteLine($"Overall Difficulty: {data.OverallDifficulty}");
         }
