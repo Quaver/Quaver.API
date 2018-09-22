@@ -1,10 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
+using Quaver.API.Maps.Processors.Scoring;
+using Quaver.API.Maps.Processors.Scoring.Data;
 using Weighted_Randomizer;
 
 namespace Quaver.API.Gameplay
@@ -35,9 +37,9 @@ namespace Quaver.API.Gameplay
         public BotLevel Level { get; }
 
         /// <summary>
-        ///     The list of judgements for this particular bot.
+        ///     The list of HitStats for this bot.
         /// </summary>
-        public List<Judgement> Judgements { get; }
+        public List<HitStat> HitStats { get; }
         
         /// <summary>
         ///     RNG
@@ -53,63 +55,69 @@ namespace Quaver.API.Gameplay
         {
             Map = map;
             Level = level;
-            Judgements = new List<Judgement>();
+            HitStats = new List<HitStat>();
 
             // Generate username for this bot.
             Name = GenerateRandomName();
 
             // Contains the random weights of each judgement 
             IWeightedRandomizer<int> weights;
-            
+
+            // Create a fake score processor so we can access the judgement values.
+            var scoreProcessor = new ScoreProcessorKeys(new Qua(), 0);
+
             switch (Level)
             {
                 // Garbage bot. Okays every single object.
                 case BotLevel.Horrible:
                     Map.HitObjects.ForEach(x =>
                     {
-                        Judgements.Add(Judgement.Okay);
+                        HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int) scoreProcessor.JudgementWindow[Judgement.Okay]));
                         
                         if (x.IsLongNote)
-                            Judgements.Add(Judgement.Okay);
+                            HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Okay]));
                     });
                     break;
                 // Bad Player.
                 case BotLevel.Noob:
-                    weights = new DynamicWeightedRandomizer<int>();
-                    
-                    weights.Add((int)Judgement.Marv, 30);
-                    weights.Add((int)Judgement.Perf, 15);
-                    weights.Add((int)Judgement.Great, 20);
-                    weights.Add((int)Judgement.Good, 10);
-                    weights.Add((int)Judgement.Okay, 5);
-                    weights.Add((int)Judgement.Miss, 20);
-                      
+                    weights = new DynamicWeightedRandomizer<int>
+                    {
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Marv], 30},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Perf], 15},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Great], 20},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Good], 10},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Okay], 5},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Miss] + 1, 20}
+                    };
+
                     GenerateRandomJudgements(weights);
                     break;
                 // An amateur player, gets the job done.
                 case BotLevel.Amateur:
-                    weights = new DynamicWeightedRandomizer<int>();
-                    
-                    weights.Add((int)Judgement.Marv, 75);
-                    weights.Add((int)Judgement.Perf, 15);
-                    weights.Add((int)Judgement.Great, 5);
-                    weights.Add((int)Judgement.Good, 1);
-                    weights.Add((int)Judgement.Okay, 1);
-                    weights.Add((int)Judgement.Miss, 3);
-                      
+                    weights = new DynamicWeightedRandomizer<int>
+                    {
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Marv], 75},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Perf], 15},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Great], 5},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Good], 1},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Okay], 1},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Miss] + 1, 3}
+                    };
+
                     GenerateRandomJudgements(weights);
                     break;
                 // High level player.
                 case BotLevel.Decent:
-                    weights = new DynamicWeightedRandomizer<int>();
-                    
-                    weights.Add((int)Judgement.Marv, 75);
-                    weights.Add((int)Judgement.Perf, 20);
-                    weights.Add((int)Judgement.Great, 2);
-                    weights.Add((int)Judgement.Good, 1);
-                    weights.Add((int)Judgement.Okay, 1);
-                    weights.Add((int)Judgement.Miss, 1);
-                      
+                    weights = new DynamicWeightedRandomizer<int>
+                    {
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Marv], 75},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Perf], 20},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Great], 2},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Good], 1},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Okay], 1},
+                        {(int)scoreProcessor.JudgementWindow[Judgement.Miss] + 1, 1}
+                    };
+
                     GenerateRandomJudgements(weights);
                     break;
                 // God. Has marvelous on everything.
@@ -118,10 +126,10 @@ namespace Quaver.API.Gameplay
                     
                     Map.HitObjects.ForEach(x =>
                     {
-                        Judgements.Add(Judgement.Marv);
-                        
+                        HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Marv]));
+
                         if (x.IsLongNote)
-                            Judgements.Add(Judgement.Marv);
+                            HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Marv]));
                     });
                     break;
                 default:
@@ -137,11 +145,11 @@ namespace Quaver.API.Gameplay
         {
             foreach (var obj in Map.HitObjects)
             {       
-                Judgements.Add((Judgement) weights.NextWithReplacement());
+                HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, weights.NextWithReplacement()));
 
                 // Add another judgement if its a long note.
                 if (obj.IsLongNote)
-                    Judgements.Add((Judgement) weights.NextWithReplacement());
+                    HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, weights.NextWithReplacement()));
             }
         }
 
