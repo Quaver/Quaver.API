@@ -1,4 +1,4 @@
-﻿namespace Quaver.API.Maps.Processors.Difficulty
+namespace Quaver.API.Maps.Processors.Difficulty
 {
     public class DifficultyCalculatorKeys : DifficultyCalculator
     {
@@ -14,9 +14,6 @@
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        public override double CalculateDifficulty()
-        {
-            return 0.00;
-        }
+        public override double CalculateDifficulty(Qua map, float rate) => map.AverageNotesPerSecond(rate);
     }
 }
