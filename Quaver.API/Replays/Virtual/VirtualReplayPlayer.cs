@@ -183,7 +183,9 @@ namespace Quaver.API.Replays.Virtual
                     }
 
                     // Add a new hit stat to the score processor.
-                    var stat = new HitStat(HitStatType.Hit, hitObject, Time, judgement, hitDifference, ScoreProcessor.Accuracy, ScoreProcessor.Health);
+                    var stat = new HitStat(HitStatType.Hit, hitObject, Time, judgement, hitDifference,
+                        ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
                     ScoreProcessor.Stats.Add(stat);
 
                     // Object needs to be removed from ActiveObjects.
@@ -210,7 +212,9 @@ namespace Quaver.API.Replays.Virtual
                         if (judgement != Judgement.Ghost)
                         {
                             // Add a new hit stat to the score processor.
-                            var stat = new HitStat(HitStatType.Hit, hitObject, Time, judgement, hitDifference, ScoreProcessor.Accuracy, ScoreProcessor.Health);
+                            var stat = new HitStat(HitStatType.Hit, hitObject, Time, judgement, hitDifference,
+                                ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
                             ScoreProcessor.Stats.Add(stat);
                         }
                         // The LN was released too early (miss)
@@ -219,7 +223,9 @@ namespace Quaver.API.Replays.Virtual
                             ScoreProcessor.CalculateScore(Judgement.Miss);
 
                             // Add a new stat to ScoreProcessor.
-                            var stat = new HitStat(HitStatType.Hit, hitObject, Time, Judgement.Miss, hitDifference, ScoreProcessor.Accuracy, ScoreProcessor.Health);
+                            var stat = new HitStat(HitStatType.Hit, hitObject, Time, Judgement.Miss, hitDifference,
+                                ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
                             ScoreProcessor.Stats.Add(stat);
                         }
 
@@ -251,7 +257,9 @@ namespace Quaver.API.Replays.Virtual
                 ScoreProcessor.CalculateScore(Judgement.Okay);
 
                 // Add new miss stat.
-                var stat = new HitStat(HitStatType.Miss, hitObject, Time, Judgement.Okay, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health);
+                var stat = new HitStat(HitStatType.Miss, hitObject, Time, Judgement.Okay, int.MinValue,
+                    ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
                 ScoreProcessor.Stats.Add(stat);
 
                 // Queue the object to be removed.
@@ -275,7 +283,8 @@ namespace Quaver.API.Replays.Virtual
                     ScoreProcessor.CalculateScore(Judgement.Miss);
 
                     // Create a new HitStat to add to the ScoreProcessor.
-                    var stat = new HitStat(HitStatType.Miss, hitObject, Time, Judgement.Miss, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health);
+                    var stat = new HitStat(HitStatType.Miss, hitObject, Time, Judgement.Miss, int.MinValue,
+                        ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                     ScoreProcessor.Stats.Add(stat);
 
@@ -287,6 +296,10 @@ namespace Quaver.API.Replays.Virtual
                     }
 
                     ActiveHitObjectsToRemove.Add(hitObject);
+                }
+                else
+                {
+                    break;
                 }
             }
 
