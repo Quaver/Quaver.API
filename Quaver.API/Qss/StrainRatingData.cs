@@ -69,6 +69,11 @@ namespace Quaver.API.Qss
         public List<HitObjectData> AmbiguousHandObjects { get; private set; } = new List<HitObjectData>();
 
         /// <summary>
+        /// Total ammount of milliseconds in a second.
+        /// </summary>
+        public static float SECONDS_TO_MILLISECONDS = 1000;
+
+        /// <summary>
         ///     const
         /// </summary>
         /// <param name="qua"></param>
@@ -91,7 +96,7 @@ namespace Quaver.API.Qss
         private void ComputeNoteDensityData()
         {
             //MapLength = Qua.Length;
-            AverageNoteDensity = (float)Qua.HitObjects.Count / Qua.Length;
+            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Qua.HitObjects.Count / Qua.Length;
 
             //todo: solve note density graph
         }
