@@ -23,6 +23,11 @@ namespace Quaver.API.Qss.Structures
         public FingerState FingerState { get; set; }
 
         /// <summary>
+        ///     Current type of layering relating to LN
+        /// </summary>
+        public LnLayerType LnLayerType { get; set; } = LnLayerType.None;
+
+        /// <summary>
         ///     Strain Multiplier calculated by LN difficulty
         /// </summary>
         public float LnStrainMultiplier { get; set; } = 1;

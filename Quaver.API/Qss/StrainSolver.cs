@@ -148,29 +148,6 @@ namespace Quaver.API.Qss
         /// <param name="qua"></param>
         private void ComputeBaseStrainStates()
         {
-            // Variables for solving LN
-            var checkLane = new List<bool>();
-            var prevNoteIndex = new List<int>();
-
-            // create list for lane check
-            switch (Qua.Mode)
-            {
-                case Enums.GameMode.Keys4:
-                    for (var i = 0; i < 4; i++)
-                    {
-                        checkLane.Add(false);
-                        prevNoteIndex.Add(0);
-                    }
-                    break;
-                case Enums.GameMode.Keys7:
-                    for (var i = 0; i < 7; i++)
-                    {
-                        checkLane.Add(false);
-                        prevNoteIndex.Add(0);
-                    }
-                    break;
-            }
-
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Qua.HitObjects.Count; i++)
             {
@@ -190,61 +167,50 @@ namespace Quaver.API.Qss
                         break;
                 }
 
+                // Add Strain Solver Data to list
                 StrainSolverData.Add(curStrainData);
+            }
 
-                // Current lane index
-                /*
-                var laneIndex = Qua.HitObjects[i].Lane - 1;
-                prevNoteIndex[laneIndex] = i;
-
-                // Mark everylane for checking except the current lane
-                for (var j = 0; j < checkLane.Count; j++) checkLane[j] = false;
-                checkLane[laneIndex] = true;
-
-                // Solve LN
-                for (var j = prevNoteIndex[laneIndex]; j < Qua.HitObjects.Count; j++)
+            // Solve LN
+            // todo: put this in its own method maybe?
+            for (var i = 0; i < StrainSolverData.Count - 1; i++)
+            {
+                var curHitOb = StrainSolverData[i];
+                for (var j = i + 1; j < StrainSolverData.Count; j++)
                 {
-
-                    // Ignore if current lane is already checked
-                    if (!checkLane[Qua.HitObjects[j].Lane - 1])
-                        continue;
-
-                    // Break loop if note is way past LN end
-                    if (Qua.HitObjects[j].StartTime > hitObjectData.EndTime + THRESHOLD_LN_END_MS)
+                    // If the target hit object is way outside the current LN end, don't bother iterating through the rest.
+                    var nextHitOb = StrainSolverData[j];
+                    if (nextHitOb.StartTime > curHitOb.EndTime + THRESHOLD_LN_END_MS)
                         break;
 
-                    // Continue this iteration if note starts after LN start
-                    if (Qua.HitObjects[j].StartTime >= hitObjectData.StartTime - THRESHOLD_CHORD_CHECK_MS)
-                        continue;
+                    // Check to see if the target hitobject is layered inside the current LN
+                    if (nextHitOb.Hand == curHitOb.Hand && nextHitOb.StartTime >= curHitOb.StartTime + THRESHOLD_CHORD_CHECK_MS)
+                    {
+                        // Target hitobject's LN ends after current hitobject's LN end.
+                        if (nextHitOb.EndTime > curHitOb.EndTime)
+                            foreach (var k in curHitOb.HitObjects)
+                            {
+                                k.LnLayerType = LnLayerType.OutsideRelease;
+                                k.LnStrainMultiplier = 1.5f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            }
 
-                    // Determine 
-                    // Target hitobject's LN ends after current hitobject's LN
-                    if (Qua.HitObjects[j].EndTime > hitObjectData.EndTime)
-                        hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+                        // Target hitobject's LN ends before current hitobject's LN end
+                        else if (nextHitOb.EndTime > 0)
+                            foreach (var k in curHitOb.HitObjects)
+                            {
+                                k.LnLayerType = LnLayerType.InsideRelease;
+                                k.LnStrainMultiplier = 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            }
 
-                    // Target hitobject's LN ends before current hitobject's LN
-                    else if (Qua.HitObjects[j].EndTime > 0)
-                        hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
-
-                    // Target hitobject is not an LN
-                    else
-                        hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
-
-                    // Update lane checking variables
-                    checkLane[Qua.HitObjects[j].Lane - 1] = true;
-                    prevNoteIndex[Qua.HitObjects[j].Lane - 1] = j;
-
-                    // Check to see if we should still search for more chord objects
-                    var continueLoop = false;
-                    foreach (var k in checkLane)
-                        if (k)
-                        {
-                            continueLoop = true;
-                            break;
+                        // Target hitobject is not an LN
+                        else
+                            foreach (var k in curHitOb.HitObjects)
+                            {
+                                k.LnLayerType = LnLayerType.InsideTap;
+                                k.LnStrainMultiplier = 1.05f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            }
                     }
-                    if (!continueLoop) break;
                 }
-                */
             }
         }
 
@@ -303,7 +269,6 @@ namespace Quaver.API.Qss
             for (var i = 0; i < StrainSolverData.Count - 1; i++)
             {
                 var curHitOb = StrainSolverData[i];
-                //DebugString += (i + " | Start: " + curHitOb.StartTime + ", Hand: " + curHitOb.Hand + "\n");
 
                 // Find the next Hit Object in the current Hit Object's Hand
                 for (var j = i + 1; j < StrainSolverData.Count; j++)
@@ -311,7 +276,6 @@ namespace Quaver.API.Qss
                     var nextHitOb = StrainSolverData[j];
                     if (curHitOb.Hand == nextHitOb.Hand && nextHitOb.StartTime > curHitOb.StartTime)
                     {
-
                         // Determined by if there's a minijack within 2 set of chords/single notes
                         var actionJackFound = (nextHitOb.HandChordState & (1 << curHitOb.HandChordState - 1)) != 0;
 
@@ -326,7 +290,7 @@ namespace Quaver.API.Qss
                         FingerAction curAction;
 
                         //todo: REMOVE. this is for debuggin.
-                        DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + curHitOb.StartTime + "|"+nextHitOb.StartTime + "\n");
+                        //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + actionDuration + "\n");
 
                         // Trill/Roll
                         if (!actionChordFound && !actionSameState)
