@@ -92,6 +92,7 @@
     <Compile Include="Qss\Structures\FingerState.cs" />
     <Compile Include="Qss\Structures\FingerAction.cs" />
     <Compile Include="Qss\Structures\Hand.cs" />
+    <Compile Include="Qss\Structures\LnLayerType.cs" />
     <Compile Include="Qss\Structures\StrainSolverData.cs" />
     <Compile Include="Qss\StrainSolver.cs" />
     <Compile Include="Qss\Structures\StrainSolverHitObject.cs" />
