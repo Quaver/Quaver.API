@@ -309,60 +309,58 @@ namespace Quaver.API.Qss
                 for (var j = i + 1; j < StrainSolverData.Count; j++)
                 {
                     var nextHitOb = StrainSolverData[j];
-                    if (curHitOb.Hand == nextHitOb.Hand)
-                        continue;
-
-                    if (nextHitOb.StartTime > curHitOb.StartTime)
-                        continue;
-
-                    // Determined by if there's a minijack within 2 set of chords/single notes
-                    var actionJackFound = (nextHitOb.HandChordState & (1 << curHitOb.HandChordState - 1)) != 0;
-
-                    // Determined by if a chord is found in either finger state
-                    var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
-
-                    // Determined by if both fingerstates are exactly the same
-                    var actionSameState = curHitOb.HandChordState == nextHitOb.HandChordState;
-
-                    // Determined by how long the current finger action is
-                    var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
-                    FingerAction curAction;
-
-                    //todo: REMOVE. this is for debuggin.
-                    //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + curHitOb.StartTime + "|"+nextHitOb.StartTime + "\n");
-
-                    // Trill/Roll
-                    if (!actionChordFound && !actionSameState)
+                    if (curHitOb.Hand == nextHitOb.Hand && nextHitOb.StartTime > curHitOb.StartTime)
                     {
-                        curAction = FingerAction.Roll;
-                        Roll++;
+
+                        // Determined by if there's a minijack within 2 set of chords/single notes
+                        var actionJackFound = (nextHitOb.HandChordState & (1 << curHitOb.HandChordState - 1)) != 0;
+
+                        // Determined by if a chord is found in either finger state
+                        var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
+
+                        // Determined by if both fingerstates are exactly the same
+                        var actionSameState = curHitOb.HandChordState == nextHitOb.HandChordState;
+
+                        // Determined by how long the current finger action is
+                        var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
+                        FingerAction curAction;
+
+                        //todo: REMOVE. this is for debuggin.
+                        //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + curHitOb.StartTime + "|"+nextHitOb.StartTime + "\n");
+
+                        // Trill/Roll
+                        if (!actionChordFound && !actionSameState)
+                        {
+                            curAction = FingerAction.Roll;
+                            Roll++;
+                        }
+
+                        // Simple Jack
+                        else if (actionSameState)
+                        {
+                            curAction = FingerAction.SimpleJack;
+                            SJack++;
+                        }
+
+                        // Tech Jack
+                        else if (actionJackFound)
+                        {
+                            curAction = FingerAction.TechnicalJack;
+                            TJack++;
+                        }
+
+                        // Bracket
+                        else
+                        {
+                            curAction = FingerAction.Bracket;
+                            Bracket++;
+                        }
+
+                        //Assign current finger action to hit object
+                        curHitOb.FingerAction = curAction;
+
+                        break;
                     }
-
-                    // Simple Jack
-                    else if (actionSameState)
-                    {
-                        curAction = FingerAction.SimpleJack;
-                        SJack++;
-                    }
-
-                    // Tech Jack
-                    else if (actionJackFound)
-                    {
-                        curAction = FingerAction.TechnicalJack;
-                        TJack++;
-                    }
-
-                    // Bracket
-                    else
-                    {
-                        curAction = FingerAction.Bracket;
-                        Bracket++;
-                    }
-
-                    //Assign current finger action to hit object
-                    curHitOb.FingerAction = curAction;
-
-                    break;
                 }
             }
 
