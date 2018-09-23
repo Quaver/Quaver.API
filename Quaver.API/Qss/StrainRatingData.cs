@@ -259,29 +259,6 @@ namespace Quaver.API.Qss
         /// </summary>
         private void ComputeForChords()
         {
-            // variables for solving chords
-            var checkLane = new List<bool>();
-            var prevNoteIndex = new List<int>();
-
-            // create list for lane check
-            switch (Qua.Mode)
-            {
-                case Enums.GameMode.Keys4:
-                    for (var i = 0; i < 4; i++)
-                    {
-                        checkLane.Add(false);
-                        prevNoteIndex.Add(0);
-                    }
-                    break;
-                case Enums.GameMode.Keys7:
-                    for (var i = 0; i < 7; i++)
-                    {
-                        checkLane.Add(false);
-                        prevNoteIndex.Add(0);
-                    }
-                    break;
-            }
-
             // Search through whole hit object list and find chords
             for (var i = 0; i < StrainSolverData.Count - 1; i++)
             {
@@ -296,57 +273,22 @@ namespace Quaver.API.Qss
                     {
                         if (StrainSolverData[i].Hand == StrainSolverData[j].Hand)
                         {
+                            // There should really only be one hit object for 4k, but maybe more than for 7k
+                            foreach (var k in StrainSolverData[j].HitObjects)
+                                StrainSolverData[i].HitObjects.Add(k);
 
+                            // Remove chorded object
+                            StrainSolverData.Remove(StrainSolverData[j]);
                         }
                     }
                 }
+            }
 
-
-                /*
-                // Current lane index
-                var laneIndex = StrainSolverData[i].Lane - 1;
-                prevNoteIndex[laneIndex] = i;
-
-                // Mark everylane for checking except the current lane
-                for (var j = 0; j < checkLane.Count; j++) checkLane[j] = false;
-                checkLane[laneIndex] = true;
-                prevNoteIndex[StrainSolverData[i].Lane - 1] = i;
-
-                // Search for chords
-                for (var j = prevNoteIndex[laneIndex]; j < StrainSolverData.Count; j++)
-                {
-                    // Ignore if current lane is already checked
-                    if (!checkLane[StrainSolverData[j].Lane - 1])
-                    {
-                        // How far apart the two notes are
-                        var msDiff = StrainSolverData[j].StartTime - StrainSolverData[i].StartTime;
-
-                        // Break loop if current object is over check threshold
-                        if (msDiff >= THRESHOLD_CHORD_CHECK_MS)
-                        {
-                            checkLane[StrainSolverData[j].Lane - 1] = true;
-                            break;
-                        }
-
-                        // Check if the object is inside the hit window
-                        if (Math.Abs(msDiff) < THRESHOLD_CHORD_CHECK_MS)
-                        {
-                            checkLane[StrainSolverData[j].Lane - 1] = true;
-                            StrainSolverData[i].LinkedChordedHitObjects.Add(StrainSolverData[j]);
-                        }
-                    }
-
-                    // Check to see if we should still search for more chord objects
-                    var continueLoop = false;
-                    foreach (var k in checkLane)
-                        if (k)
-                        {
-                            continueLoop = true;
-                            break;
-                        }
-                    if (!continueLoop) break;
-                }
-                */
+            // Calculate HandChord State State Index (Value of the keys pressed on a single hand)
+            for (var i = 0; i < StrainSolverData.Count; i++)
+            {
+                foreach (var j in StrainSolverData[i].HitObjects)
+                    StrainSolverData[i].HandChordState += (int)j.FingerState;
             }
         }
 
@@ -363,21 +305,6 @@ namespace Quaver.API.Qss
         /// <param name="qssData"></param>
         private void ComputeFingerActions()
         {
-            // Solve for HandChord (More than 2 keys pressed on a single hand
-            for (var i = 0; i < StrainSolverData.Count; i++)
-            {
-                StrainSolverData[i].HandChordStateIndex += (int)StrainSolverData[i].FingerState;
-
-                for (var j = 0; j < StrainSolverData[i].LinkedChordedHitObjects.Count; j++)
-                {
-                    if (StrainSolverData[i].LinkedChordedHitObjects[j].Hand == StrainSolverData[i].Hand)
-                    {
-                        StrainSolverData[i].HandChord = true;
-                        StrainSolverData[i].HandChordStateIndex += (int)StrainSolverData[i].LinkedChordedHitObjects[j].FingerState;
-                    }
-                }
-            }
-
             // Solve for Finger Action
             for (var i = 0; i < StrainSolverData.Count - 1;  i++)
             {
@@ -394,16 +321,16 @@ namespace Quaver.API.Qss
                         continue;
 
                     // Determined by if there's a minijack within 2 set of chords/single notes
-                    var actionJackFound = (nextHitOb.HandChordStateIndex & (1 << curHitOb.HandChordStateIndex - 1)) != 0;
+                    var actionJackFound = (nextHitOb.HandChordState & (1 << curHitOb.HandChordState - 1)) != 0;
 
                     // Determined by if a chord is found in either finger state
                     var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
 
                     // Determined by if both fingerstates are exactly the same
-                    var actionSameState = curHitOb.HandChordStateIndex == nextHitOb.HandChordStateIndex;
+                    var actionSameState = curHitOb.HandChordState == nextHitOb.HandChordState;
 
                     //todo: REMOVE. this is for debuggin.
-                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordStateIndex + ", n-index: " + nextHitOb.HandChordStateIndex + "\n");
+                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", n-index: " + nextHitOb.HandChordState + "\n");
 
                     // Determined by how long the current finger action is
                     var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;

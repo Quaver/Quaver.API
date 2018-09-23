@@ -23,6 +23,6 @@ namespace Quaver.API.Qss.Structures
         public FingerAction FingerAction { get; set; }
         public string Pattern { get; set; } //todo: replace with enum
         public bool HandChord => HitObjects.Count > 1;
-        public int HandChordStateIndex { get; set; } = 0;
+        public int HandChordState { get; set; } = 0;
     }
 }
