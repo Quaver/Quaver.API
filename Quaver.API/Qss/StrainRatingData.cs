@@ -333,6 +333,12 @@ namespace Quaver.API.Qss
             }
         }
 
+        //todo: remove this later. TEMP
+        public int Roll { get; set; } = 0;
+        public int SJack { get; set; } = 0;
+        public int TJack { get; set; } = 0;
+        public int Bracket { get; set; } = 0;
+
         /// <summary>
         ///     Scans every finger state, and determines its action (JACK/TRILL/TECH, ect).
         ///     Action-Strain multiplier is applied in computation.
@@ -385,24 +391,28 @@ namespace Quaver.API.Qss
                     if (!actionChordFound && !actionSameState)
                     {
                         curAction = FingerAction.Roll;
+                        Roll++;
                     }
 
                     // Simple Jack
                     else if (actionSameState)
                     {
                         curAction = FingerAction.SimpleJack;
+                        SJack++;
                     }
 
                     // Tech Jack
                     else if (actionJackFound)
                     {
                         curAction = FingerAction.TechnicalJack;
+                        TJack++;
                     }
 
                     // Bracket
                     else
                     {
                         curAction = FingerAction.Bracket;
+                        Bracket++;
                     }
 
                     //Assign current finger action to hit object
