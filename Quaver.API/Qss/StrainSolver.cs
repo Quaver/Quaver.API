@@ -295,7 +295,7 @@ namespace Quaver.API.Qss
                         if (!actionChordFound && !actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 560, 51, 0.7f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 560, 51, 0.91f); // todo: temp. Apply actual constants later
                             Roll++;
                         }
 
@@ -303,7 +303,7 @@ namespace Quaver.API.Qss
                         else if (actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 560, 55, 0.7f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 560, 55, 0.86f); // todo: temp. Apply actual constants later
                             SJack++;
                         }
 
@@ -311,7 +311,7 @@ namespace Quaver.API.Qss
                         else if (actionJackFound)
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 560, 54, 0.7f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 560, 54, 0.85f); // todo: temp. Apply actual constants later
                             TJack++;
                         }
 
@@ -319,7 +319,7 @@ namespace Quaver.API.Qss
                         else
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 560, 55, 0.7f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 560, 55, 0.82f); // todo: temp. Apply actual constants later
                             Bracket++;
                         }
 
