@@ -100,25 +100,26 @@ namespace Quaver.API.Qss
         /// <returns></returns>
         public static Color GetStrainRatingColor(float qsr)
         {
-            // Gradient value for two colors
-            float val;
-
             // Tier 0 and negative rating?
-            /*
-            if (qsr <= 0)
+            if (qsr <= DifficultyTierInterval[DifficultyTier.Tier1])
+                return DifficultyTierColor[DifficultyTier.Tier1];
+
+            // Find color for qsr
+            for (var i = 0; i < DifficultyTierInterval.Count - 1; i++)
             {
-                return TierZeroColor;
+                var val = qsr - DifficultyTierInterval[(DifficultyTier)i];
+                var current = (DifficultyTier)i;
+                var next = (DifficultyTier)(i+1);
+                var denominator = DifficultyTierInterval[next] - DifficultyTierInterval[current];
+
+                // return proper color if qsr value is between current and next interval
+                if (val >= 0 && val < denominator)
+                {
+                    return GetGradientColor(DifficultyTierColor[current], DifficultyTierColor[next], val/denominator);
+                }
             }
 
-            // Tier 0
-            else if (qsr < TIER_1_RATING)
-            {
-                val = qsr / TIER_1_RATING;
-                return GetGradientColor(TierZeroColor, TierOneColor, val);
-            }
-
-            // Max Tier
-            */
+            // qsr exceeds max tier interval for max color
             return DifficultyTierColor[DifficultyTier.TierMax];
         }
 
@@ -129,18 +130,26 @@ namespace Quaver.API.Qss
         /// <returns></returns>
         public static Color GetNoteDensityColor(float nps)
         {
-            // Gradient value for two colors
-            float val;
+            // Tier 0 and negative density?
+            if (nps <= DensityTierInterval[NoteDensityTier.Tier1])
+                return DensityTierColor[NoteDensityTier.Tier1];
 
-            /*
-            // Nps Interval 0 (0 - 7nps)
-            if (nps < NPS_RATING_1)
+            // Find color for density
+            for (var i = 0; i < DensityTierInterval.Count - 1; i++)
             {
-                val = nps / NPS_RATING_1;
-                return GetGradientColor(NpsColor0, NpsColor1, val);
-            }*/
+                var val = nps - DensityTierInterval[(NoteDensityTier)i];
+                var current = (NoteDensityTier)i;
+                var next = (NoteDensityTier)(i + 1);
+                var denominator = DensityTierInterval[next] - DensityTierInterval[current];
 
-            // Max nps Interval (42+ nps)
+                // return proper color if qsr value is between current and next interval
+                if (val >= 0 && val < denominator)
+                {
+                    return GetGradientColor(DensityTierColor[current], DensityTierColor[next], val / denominator);
+                }
+            }
+
+            // density exceeds max tier interval for max color
             return DensityTierColor[NoteDensityTier.TierMax];
         }
 

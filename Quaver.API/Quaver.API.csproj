@@ -54,11 +54,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\DifficultyTier.cs" />
     <Compile Include="Enums\GameMode.cs" />
     <Compile Include="Enums\Grade.cs" />
     <Compile Include="Enums\HitSounds.cs" />
     <Compile Include="Enums\Judgement.cs" />
     <Compile Include="Enums\ModIdentifier.cs" />
+    <Compile Include="Enums\NoteDensityTier.cs" />
     <Compile Include="Enums\RankedStatus.cs" />
     <Compile Include="Gameplay\Bot.cs" />
     <Compile Include="Gameplay\BotLevel.cs" />
