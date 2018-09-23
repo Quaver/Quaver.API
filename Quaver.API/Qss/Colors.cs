@@ -33,13 +33,13 @@ namespace Quaver.API.Qss
         /// </summary>
         public static Dictionary<DifficultyTier, Color> DifficultyTierColor { get; } = new Dictionary<DifficultyTier, Color>
         {
-            { DifficultyTier. Tier1, Color.FromArgb(255, 85, 169, 255) },
-            { DifficultyTier.Tier2, Color.FromArgb(255, 85, 169, 255) },
-            { DifficultyTier.Tier3, Color.FromArgb(255, 85, 169, 255) },
-            { DifficultyTier.Tier4, Color.FromArgb(255, 85, 169, 255) },
-            { DifficultyTier.Tier5, Color.FromArgb(255, 85, 169, 255) },
-            { DifficultyTier.Tier6, Color.FromArgb(255, 85, 169, 255) },
-            { DifficultyTier.TierMax, Color.FromArgb(255, 85, 169, 255) }
+            { DifficultyTier. Tier1, Color.FromArgb(255, 126, 111, 90) },
+            { DifficultyTier.Tier2, Color.FromArgb(222, 222, 222, 255) },
+            { DifficultyTier.Tier3, Color.FromArgb(255, 242, 218, 104) },
+            { DifficultyTier.Tier4, Color.FromArgb(255, 146, 255, 172) },
+            { DifficultyTier.Tier5, Color.FromArgb(255, 112, 227, 225) },
+            { DifficultyTier.Tier6, Color.FromArgb(255, 255, 146, 255) },
+            { DifficultyTier.TierMax, Color.FromArgb(255, 255, 97, 119) }
         };
 
         /// <summary>
