@@ -303,6 +303,7 @@ namespace Quaver.API.Qss
             for (var i = 0; i < StrainSolverData.Count - 1; i++)
             {
                 var curHitOb = StrainSolverData[i];
+                DebugString += "Start: " + curHitOb.StartTime + ", Hand: " + curHitOb.Hand + "\n");
 
                 // Find the next Hit Object in the current Hit Object's Hand
                 for (var j = i + 1; j < StrainSolverData.Count; j++)
