@@ -351,7 +351,7 @@ namespace Quaver.API.Qss
             {
                 OverallDifficulty += i.ActionStrainCoefficient;
             }
-            OverallDifficulty *= StrainSolverData.Count / Qua.Length;
+            OverallDifficulty / Qua.Length;
         }
 
         /// <summary>
