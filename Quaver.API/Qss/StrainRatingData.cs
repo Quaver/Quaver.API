@@ -122,7 +122,13 @@ namespace Quaver.API.Qss
         /// <param name="qua"></param>
         public StrainRatingData(Qua qua)
         {
+            // Assign reference qua
             Qua = qua;
+
+            // Don't bother calculating map difficulty if there's less than 2 hit objects
+            if (Qua.HitObjects.Count < 2) return;
+
+            // Solve for difficulty
             ComputeNoteDensityData();
             ComputeBaseStrainStates();
             ComputeForChords();
@@ -334,6 +340,77 @@ namespace Quaver.API.Qss
         /// <param name="qssData"></param>
         private void ComputeFingerActions()
         {
+            // Solve for HandChord (More than 2 keys pressed on a single hand
+            for (var i = 0; i < HitObjects.Count; i++)
+            {
+                for (var j = 0; j < HitObjects[i].LinkedChordedHitObjects.Count; j++)
+                {
+                    if (HitObjects[i].LinkedChordedHitObjects[j].Hand == HitObjects[i].Hand)
+                    {
+                        HitObjects[i].HandChord = true;
+                        HitObjects[i].HandChordStateIndex += (byte)Math.Pow((int)HitObjects[j].FingerState, 2);
+                    }
+                }
+            }
+
+            // Solve for Finger Action
+            for (var i = 0; i < HitObjects.Count - 1;  i++)
+            {
+                var curHitOb = HitObjects[i];
+
+                // Find the next Hit Object in the current Hit Object's Hand
+                for (var j = i + 1; j < HitObjects.Count; j++)
+                {
+                    var nextHitOb = HitObjects[j];
+                    if (curHitOb.Hand == nextHitOb.Hand)
+                        continue;
+
+                    if (nextHitOb.StartTime > curHitOb.StartTime + THRESHOLD_CHORD_CHECK_MS)
+                        continue;
+
+                    // Determined by if there's a minijack within 2 set of chords/single notes
+                    var actionJackFound = (b & (1 << curHitOb.HandChordStateIndex - nextHitOb.HandChordStateIndex)) != 0;
+
+                    // Determined by if a chord is found in either finger state
+                    var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
+
+                    // Determined by if both fingerstates are exactly the same
+                    var actionSameState = curHitOb.HandChordStateIndex == nextHitOb.HandChordStateIndex;
+
+                    // Determined by how long the current finger action is
+                    var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
+                    FingerAction curAction;
+
+                    // Trill/Roll
+                    if (!actionChordFound && !actionSameState)
+                    {
+                        curAction = FingerAction.Roll;
+                    }
+
+                    // Simple Jack
+                    else if (actionSameState)
+                    {
+                        curAction = FingerAction.SimpleJack;
+                    }
+
+                    // Tech Jack
+                    else if (actionJackFound)
+                    {
+                        curAction = FingerAction.TechnicalJack;
+                    }
+
+                    // Bracket
+                    else
+                    {
+                        curAction = FingerAction.Bracket;
+                    }
+
+                    //Assign current finger action to hit object
+                    curHitOb.FingerAction = curAction;
+
+                    break;
+                }
+            }
 
         }
 

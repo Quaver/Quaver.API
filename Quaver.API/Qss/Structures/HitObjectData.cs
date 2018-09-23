@@ -22,5 +22,7 @@ namespace Quaver.API.Qss.Structures
         public FingerAction FingerAction { get; set; }
         public string Pattern { get; set; } //todo: replace with enum
         public List<HitObjectData> LinkedChordedHitObjects { get; set; } = new List<HitObjectData>();
+        public bool HandChord { get; set; }
+        public byte HandChordStateIndex { get; set; } = 0;
     }
 }

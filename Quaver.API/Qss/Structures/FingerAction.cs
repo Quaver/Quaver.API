@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +10,7 @@ namespace Quaver.API.Qss.Structures
     {
         SimpleJack,
         TechnicalJack,
-        Trill,
+        Roll,
         Bracket
     }
 }
