@@ -54,22 +54,7 @@ namespace Quaver.API.Qss
         /// <summary>
         ///     Hit objects in the map used for solving difficulty
         /// </summary>
-        public List<HitObjectData> HitObjects { get; private set; } = new List<HitObjectData>();
-
-        /// <summary>
-        ///     Hit objects that will be played with the left hand
-        /// </summary>
-        public List<HitObjectData> LeftHandObjects { get; private set; } = new List<HitObjectData>();
-
-        /// <summary>
-        ///     Hit objects that will be played with the right hand
-        /// </summary>
-        public List<HitObjectData> RightHandObjects { get; private set; } = new List<HitObjectData>();
-
-        /// <summary>
-        ///     Hit objects that can be played with either right or left hand. Used for even keyed keymodes (5K/7K)
-        /// </summary>
-        public List<HitObjectData> AmbiguousHandObjects { get; private set; } = new List<HitObjectData>();
+        public List<StrainSolverData> StrainSolverData { get; private set; } = new List<StrainSolverData>();
 
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
@@ -187,17 +172,34 @@ namespace Quaver.API.Qss
             }
 
             // Add hit objects from qua map to qssData
-            HitObjectData hitObjectData;
             for (var i = 0; i < Qua.HitObjects.Count; i++)
             {
-                hitObjectData = new HitObjectData()
+                var curStrainData = new StrainSolverData()
                 {
                     StartTime = Qua.HitObjects[i].StartTime,
-                    EndTime = Qua.HitObjects[i].EndTime,
-                    Lane = Qua.HitObjects[i].Lane
+                    EndTime = Qua.HitObjects[i].EndTime
                 };
 
+                var curHitOb = (StrainSolverHitObject)Qua.HitObjects[i];
+
+                // Assign Finger and Hand States
+                switch (Qua.Mode)
+                {
+                    case Enums.GameMode.Keys4:
+                        curHitOb.FingerState = LaneToFinger4K[Qua.HitObjects[i].Lane];
+                        curStrainData.Hand = LaneToHand4K[Qua.HitObjects[i].Lane];
+                        break;
+                    case Enums.GameMode.Keys7:
+                        curHitOb.FingerState = LaneToFinger7K[Qua.HitObjects[i].Lane];
+                        curStrainData.Hand = LaneToHand7K[Qua.HitObjects[i].Lane];
+                        break;
+                }
+
+                curStrainData.HitObjects.Add(curHitOb);
+                StrainSolverData.Add(curStrainData);
+
                 // Current lane index
+                /*
                 var laneIndex = Qua.HitObjects[i].Lane - 1;
                 prevNoteIndex[laneIndex] = i;
 
@@ -248,21 +250,7 @@ namespace Quaver.API.Qss
                     }
                     if (!continueLoop) break;
                 }
-
-                // Assign Finger and Hand States
-                switch (Qua.Mode)
-                {
-                    case Enums.GameMode.Keys4:
-                        hitObjectData.FingerState = LaneToFinger4K[hitObjectData.Lane];
-                        hitObjectData.Hand = LaneToHand4K[hitObjectData.Lane];
-                        break;
-                    case Enums.GameMode.Keys7:
-                        hitObjectData.FingerState = LaneToFinger7K[hitObjectData.Lane];
-                        hitObjectData.Hand = LaneToHand7K[hitObjectData.Lane];
-                        break;
-                }
-
-                HitObjects.Add(hitObjectData);
+                */
             }
         }
 
@@ -295,38 +283,56 @@ namespace Quaver.API.Qss
             }
 
             // Search through whole hit object list and find chords
-            for (var i = 0; i < Qua.HitObjects.Count; i++)
+            for (var i = 0; i < StrainSolverData.Count - 1; i++)
             {
+                for (var j = i + 1; j < StrainSolverData.Count - 1; j++)
+                {
+                    var msDiff = StrainSolverData[j].StartTime - StrainSolverData[i].StartTime;
+
+                    if (msDiff > THRESHOLD_CHORD_CHECK_MS)
+                        break;
+
+                    if (Math.Abs(msDiff) <= THRESHOLD_CHORD_CHECK_MS)
+                    {
+                        if (StrainSolverData[i].Hand == StrainSolverData[j].Hand)
+                        {
+
+                        }
+                    }
+                }
+
+
+                /*
                 // Current lane index
-                var laneIndex = Qua.HitObjects[i].Lane - 1;
+                var laneIndex = StrainSolverData[i].Lane - 1;
                 prevNoteIndex[laneIndex] = i;
 
                 // Mark everylane for checking except the current lane
                 for (var j = 0; j < checkLane.Count; j++) checkLane[j] = false;
                 checkLane[laneIndex] = true;
-                prevNoteIndex[Qua.HitObjects[i].Lane - 1] = i;
+                prevNoteIndex[StrainSolverData[i].Lane - 1] = i;
 
                 // Search for chords
-                for (var j = prevNoteIndex[laneIndex]; j < Qua.HitObjects.Count; j++)
+                for (var j = prevNoteIndex[laneIndex]; j < StrainSolverData.Count; j++)
                 {
                     // Ignore if current lane is already checked
-                    if (!checkLane[Qua.HitObjects[j].Lane - 1])
+                    if (!checkLane[StrainSolverData[j].Lane - 1])
                     {
                         // How far apart the two notes are
-                        var msDiff = Qua.HitObjects[j].StartTime - Qua.HitObjects[i].StartTime;
+                        var msDiff = StrainSolverData[j].StartTime - StrainSolverData[i].StartTime;
 
                         // Break loop if current object is over check threshold
                         if (msDiff >= THRESHOLD_CHORD_CHECK_MS)
                         {
-                            checkLane[Qua.HitObjects[j].Lane - 1] = true;
+                            checkLane[StrainSolverData[j].Lane - 1] = true;
                             break;
                         }
 
                         // Check if the object is inside the hit window
                         if (Math.Abs(msDiff) < THRESHOLD_CHORD_CHECK_MS)
                         {
-                            checkLane[Qua.HitObjects[j].Lane - 1] = true;
-                            HitObjects[i].LinkedChordedHitObjects.Add(HitObjects[j]);
+                            checkLane[StrainSolverData[j].Lane - 1] = true;
+                            StrainSolverData[i].LinkedChordedHitObjects.Add(StrainSolverData[j]);
                         }
                     }
 
@@ -340,6 +346,7 @@ namespace Quaver.API.Qss
                         }
                     if (!continueLoop) break;
                 }
+                */
             }
         }
 
@@ -357,29 +364,29 @@ namespace Quaver.API.Qss
         private void ComputeFingerActions()
         {
             // Solve for HandChord (More than 2 keys pressed on a single hand
-            for (var i = 0; i < HitObjects.Count; i++)
+            for (var i = 0; i < StrainSolverData.Count; i++)
             {
-                HitObjects[i].HandChordStateIndex += (int)HitObjects[i].FingerState;
+                StrainSolverData[i].HandChordStateIndex += (int)StrainSolverData[i].FingerState;
 
-                for (var j = 0; j < HitObjects[i].LinkedChordedHitObjects.Count; j++)
+                for (var j = 0; j < StrainSolverData[i].LinkedChordedHitObjects.Count; j++)
                 {
-                    if (HitObjects[i].LinkedChordedHitObjects[j].Hand == HitObjects[i].Hand)
+                    if (StrainSolverData[i].LinkedChordedHitObjects[j].Hand == StrainSolverData[i].Hand)
                     {
-                        HitObjects[i].HandChord = true;
-                        HitObjects[i].HandChordStateIndex += (int)HitObjects[i].LinkedChordedHitObjects[j].FingerState;
+                        StrainSolverData[i].HandChord = true;
+                        StrainSolverData[i].HandChordStateIndex += (int)StrainSolverData[i].LinkedChordedHitObjects[j].FingerState;
                     }
                 }
             }
 
             // Solve for Finger Action
-            for (var i = 0; i < HitObjects.Count - 1;  i++)
+            for (var i = 0; i < StrainSolverData.Count - 1;  i++)
             {
-                var curHitOb = HitObjects[i];
+                var curHitOb = StrainSolverData[i];
 
                 // Find the next Hit Object in the current Hit Object's Hand
-                for (var j = i + 1; j < HitObjects.Count; j++)
+                for (var j = i + 1; j < StrainSolverData.Count; j++)
                 {
-                    var nextHitOb = HitObjects[j];
+                    var nextHitOb = StrainSolverData[j];
                     if (curHitOb.Hand == nextHitOb.Hand)
                         continue;
 
