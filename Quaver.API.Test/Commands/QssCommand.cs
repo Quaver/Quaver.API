@@ -12,9 +12,9 @@ namespace Quaver.API.Test.Commands
         
         public override void Execute()
         {
-            //var data = StrainRatingData.GetQssData(Map);
-            //Console.WriteLine($"Qss Subject: {Map.Artist} - {Map.Title} [{Map.DifficultyName}]");
-            //Console.WriteLine($"Overall Difficulty: {data.OverallDifficulty}");
+            var qss = new StrainRatingData(Map);
+            Console.WriteLine($"Map: {Map.Artist} - {Map.Title} [{Map.DifficultyName}]");
+            Console.WriteLine($"Overall Difficulty: {qss.OverallDifficulty}");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Quaver.API.Test.Commands;
 
 namespace Quaver.API.Test
@@ -27,7 +27,7 @@ namespace Quaver.API.Test
                     new QuaCommand(args).Execute();
                     break;
                 case "-qss":
-                    new QuaCommand(args).Execute();
+                    new QssCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
