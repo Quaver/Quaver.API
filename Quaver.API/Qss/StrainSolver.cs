@@ -299,6 +299,13 @@ namespace Quaver.API.Qss
         /// <param name="qssData"></param>
         private void ComputeFingerActions()
         {
+
+            //temp debug
+            for (var i = 0; i < StrainSolverData.Count || i < 50; i++)
+            {
+                DebugString += StrainSolverData[i].StartTime + ", ";
+            }
+
             // Solve for Finger Action
             for (var i = 0; i < StrainSolverData.Count - 1;  i++)
             {
@@ -308,7 +315,6 @@ namespace Quaver.API.Qss
                 for (var j = i + 1; j < StrainSolverData.Count; j++)
                 {
                     var nextHitOb = StrainSolverData[j];
-                    DebugString += nextHitOb.StartTime + ", ";
                     if (curHitOb.Hand == nextHitOb.Hand)
                         continue;
 
