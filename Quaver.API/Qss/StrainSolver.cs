@@ -287,7 +287,6 @@ namespace Quaver.API.Qss
 
                         // Determined by how long the current finger action is
                         var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
-                        FingerAction curAction;
 
                         //todo: REMOVE. this is for debuggin.
                         //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + actionDuration + "\n");
@@ -295,39 +294,39 @@ namespace Quaver.API.Qss
                         // Trill/Roll
                         if (!actionChordFound && !actionSameState)
                         {
-                            curAction = FingerAction.Roll;
+                            curHitOb.FingerAction = FingerAction.Roll;
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 500, 51, 1); // todo: temp. Apply actual constants later
                             Roll++;
                         }
 
                         // Simple Jack
                         else if (actionSameState)
                         {
-                            curAction = FingerAction.SimpleJack;
+                            curHitOb.FingerAction = FingerAction.SimpleJack;
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 100, 500, 55, 1); // todo: temp. Apply actual constants later
                             SJack++;
                         }
 
                         // Tech Jack
                         else if (actionJackFound)
                         {
-                            curAction = FingerAction.TechnicalJack;
+                            curHitOb.FingerAction = FingerAction.TechnicalJack;
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 60, 500, 54, 1); // todo: temp. Apply actual constants later
                             TJack++;
                         }
 
                         // Bracket
                         else
                         {
-                            curAction = FingerAction.Bracket;
+                            curHitOb.FingerAction = FingerAction.Bracket;
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 500, 55, 1); // todo: temp. Apply actual constants later
                             Bracket++;
                         }
-
-                        //Assign current finger action to hit object
-                        curHitOb.FingerAction = curAction;
 
                         break;
                     }
                 }
             }
-
         }
 
         /// <summary>
@@ -347,7 +346,22 @@ namespace Quaver.API.Qss
         private void CalculateOverallDifficulty()
         {
             //todo: temporary.
-            OverallDifficulty = AverageNoteDensity * 3.25f;
+            //OverallDifficulty = AverageNoteDensity * 3.25f;
+            foreach (var i in StrainSolverData)
+            {
+                OverallDifficulty += i.ActionStrainCoefficient;
+            }
+            OverallDifficulty *= StrainSolverData.Count / Qua.Length;
+        }
+
+        /// <summary>
+        ///     Used to calculate Coefficient for Strain Difficulty
+        /// </summary>
+        private float GetCoefficientValue(float duration, float xMin, float xMax, float strainMax, float exp)
+        {
+            //todo: temp. Linear for now
+            //todo: apply cosine curve
+            return 1 + (strainMax - 1) * (1 - Math.Min(Math.Max(0, duration - xMin)/(xMax - xMin), 1));
         }
     }
 }

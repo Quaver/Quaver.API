@@ -14,10 +14,10 @@ namespace Quaver.API.Qss.Structures
         public float StartTime { get; set; }
         public float EndTime { get; set; }
 
-        public float ActionStrainMultiplier { get; set; } = 1;
+        public float ActionStrainCoefficient { get; set; } = 1;
         public float PatternStrainMultiplier { get; set; } = 1;
         public float ManipulationStrainMultiplier { get; set; } = 1;
-        public float StrainValue { get; set; } = 0;
+        public float TotalStrainValue { get; set; } = 0;
 
         public Hand Hand { get; set; }
         public FingerAction FingerAction { get; set; }
