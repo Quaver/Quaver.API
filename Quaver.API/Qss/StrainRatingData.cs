@@ -255,7 +255,7 @@ namespace Quaver.API.Qss
                     case Enums.GameMode.Keys4:
                         hitObjectData.FingerState = LaneToFinger4K[hitObjectData.Lane];
                         hitObjectData.Hand = LaneToHand4K[hitObjectData.Lane];
-                        DebugString += "Finger: " + LaneToFinger4K[hitObjectData.Lane] + " | Hand: " + LaneToHand4K[hitObjectData.Lane];
+                        DebugString += "Finger: " + LaneToFinger4K[hitObjectData.Lane] + " | Hand: " + LaneToHand4K[hitObjectData.Lane] + "\n";
                         break;
                     case Enums.GameMode.Keys7:
                         hitObjectData.FingerState = LaneToFinger7K[hitObjectData.Lane];
@@ -355,12 +355,14 @@ namespace Quaver.API.Qss
             // Solve for HandChord (More than 2 keys pressed on a single hand
             for (var i = 0; i < HitObjects.Count; i++)
             {
+                HitObjects[i].HandChordStateIndex += (int)HitObjects[i].FingerState;
+
                 for (var j = 0; j < HitObjects[i].LinkedChordedHitObjects.Count; j++)
                 {
                     if (HitObjects[i].LinkedChordedHitObjects[j].Hand == HitObjects[i].Hand)
                     {
                         HitObjects[i].HandChord = true;
-                        HitObjects[i].HandChordStateIndex += (int)HitObjects[j].FingerState;
+                        HitObjects[i].HandChordStateIndex += (int)HitObjects[i].LinkedChordedHitObjects[j].FingerState;
                     }
                 }
             }
