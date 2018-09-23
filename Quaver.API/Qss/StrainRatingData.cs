@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss
 {
+    /// <summary>
+    ///     Will be used to solve Strain Rating.
+    /// </summary>
     public class StrainRatingData
     {
         /// <summary>
@@ -35,11 +38,35 @@ namespace Quaver.API.Qss
         /// </summary>
         public const int CHORD_THRESHOLD_MS = 10;
 
-        public float OverallDifficulty { get; set; } = 0;
-        public float AverageNoteDensity { get; set; } = 0;
-        public List<HitObjectData> HitObjects { get; set; }
-        public List<HitObjectData> LeftHandObjects { get; set; }
-        public List<HitObjectData> RightHandObjects { get; set; }
+        /// <summary>
+        /// Overall difficulty of the map
+        /// </summary>
+        public float OverallDifficulty { get; private set; } = 0;
+
+        /// <summary>
+        /// Average note density of the map
+        /// </summary>
+        public float AverageNoteDensity { get; private set; } = 0;
+
+        /// <summary>
+        /// Hit objects in the map used for solving difficulty
+        /// </summary>
+        public List<HitObjectData> HitObjects { get; private set; } = new List<HitObjectData>();
+
+        /// <summary>
+        /// Hit objects that will be played with the left hand
+        /// </summary>
+        public List<HitObjectData> LeftHandObjects { get; private set; } = new List<HitObjectData>();
+
+        /// <summary>
+        /// Hit objects that will be played with the right hand
+        /// </summary>
+        public List<HitObjectData> RightHandObjects { get; private set; } = new List<HitObjectData>();
+
+        /// <summary>
+        /// Hit objects that can be played with either right or left hand. Used for even keyed keymodes (5K/7K)
+        /// </summary>
+        public List<HitObjectData> AmbiguousHandObjects { get; private set; } = new List<HitObjectData>();
 
         /// <summary>
         ///     const
