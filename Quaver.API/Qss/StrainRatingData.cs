@@ -213,7 +213,7 @@ namespace Quaver.API.Qss
                     if (!checkLane[Qua.HitObjects[j].Lane - 1])
                         continue;
 
-                    // Break loop if note is way paste LN end
+                    // Break loop if note is way past LN end
                     if (Qua.HitObjects[j].StartTime > hitObjectData.EndTime + THRESHOLD_LN_END_MS)
                         break;
 
@@ -304,29 +304,30 @@ namespace Quaver.API.Qss
                 // Mark everylane for checking except the current lane
                 for (var j = 0; j < checkLane.Count; j++) checkLane[j] = false;
                 checkLane[laneIndex] = true;
+                prevNoteIndex[Qua.HitObjects[i].Lane - 1] = i;
 
                 // Search for chords
                 for (var j = prevNoteIndex[laneIndex]; j < Qua.HitObjects.Count; j++)
                 {
                     // Ignore if current lane is already checked
-                    if (!checkLane[Qua.HitObjects[j].Lane - 1]) continue;
-
-                    // How far apart the two notes are
-                    var msDiff = Qua.HitObjects[j].StartTime - Qua.HitObjects[i].StartTime;
-
-                    // Break loop if current object is over check threshold
-                    if (msDiff >= THRESHOLD_CHORD_CHECK_MS)
+                    if (!checkLane[Qua.HitObjects[j].Lane - 1])
                     {
-                        checkLane[Qua.HitObjects[j].Lane - 1] = true;
-                        break;
-                    }
+                        // How far apart the two notes are
+                        var msDiff = Qua.HitObjects[j].StartTime - Qua.HitObjects[i].StartTime;
 
-                    // Check if the object is inside the hit window
-                    if (Math.Abs(msDiff) < THRESHOLD_CHORD_CHECK_MS)
-                    {
-                        checkLane[Qua.HitObjects[j].Lane - 1] = true;
-                        HitObjects[i].LinkedChordedHitObjects.Add(HitObjects[j]);
-                        prevNoteIndex[Qua.HitObjects[j].Lane - 1] = j;
+                        // Break loop if current object is over check threshold
+                        if (msDiff >= THRESHOLD_CHORD_CHECK_MS)
+                        {
+                            checkLane[Qua.HitObjects[j].Lane - 1] = true;
+                            break;
+                        }
+
+                        // Check if the object is inside the hit window
+                        if (Math.Abs(msDiff) < THRESHOLD_CHORD_CHECK_MS)
+                        {
+                            checkLane[Qua.HitObjects[j].Lane - 1] = true;
+                            HitObjects[i].LinkedChordedHitObjects.Add(HitObjects[j]);
+                        }
                     }
 
                     // Check to see if we should still search for more chord objects
