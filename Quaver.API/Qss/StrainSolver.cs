@@ -301,10 +301,10 @@ namespace Quaver.API.Qss
         {
 
             //temp debug
-            for (var i = 0; i < StrainSolverData.Count || i < 50; i++)
+            /*for (var i = 0; i < StrainSolverData.Count || i < 50; i++)
             {
-                DebugString += StrainSolverData[i].StartTime + ", ";
-            }
+                //DebugString += StrainSolverData[i].StartTime + ", ";
+            }*/
 
             // Solve for Finger Action
             for (var i = 0; i < StrainSolverData.Count - 1;  i++)
