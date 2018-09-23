@@ -375,7 +375,7 @@ namespace Quaver.API.Qss
                         continue;
 
                     // Determined by if there's a minijack within 2 set of chords/single notes
-                    var actionJackFound = (b & (1 << curHitOb.HandChordStateIndex - nextHitOb.HandChordStateIndex)) != 0;
+                    var actionJackFound = (nextHitOb.HandChordStateIndex & (1 << curHitOb.HandChordStateIndex - 1)) != 0;
 
                     // Determined by if a chord is found in either finger state
                     var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
