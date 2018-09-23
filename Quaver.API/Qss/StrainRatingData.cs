@@ -14,12 +14,12 @@ namespace Quaver.API.Qss
     public class StrainRatingData
     {
         /// <summary>
-        /// Size of each graph partition in miliseconds
+        ///     Size of each graph partition in miliseconds
         /// </summary>
         public const int GRAPH_INTERVAL_SIZE_MS = 500;
 
         /// <summary>
-        /// Offset between each graph partition in miliseconds
+        ///     Offset between each graph partition in miliseconds
         /// </summary>
         public const int GRAPH_INTERVAL_OFFSET_MS = 100;
 
@@ -27,47 +27,47 @@ namespace Quaver.API.Qss
         private const float THRESHOLD_CHORD_CHECK_MS = 8;
 
         /// <summary>
-        /// Total ammount of milliseconds in a second.
+        ///     Total ammount of milliseconds in a second.
         /// </summary>
         public const float SECONDS_TO_MILLISECONDS = 1000;
 
         /// <summary>
-        /// Map that will be referenced for calculation
+        ///     Map that will be referenced for calculation
         /// </summary>
         public Qua Qua { get; private set; }
 
         /// <summary>
-        /// Overall difficulty of the map
+        ///     Overall difficulty of the map
         /// </summary>
         public float OverallDifficulty { get; private set; } = 0;
 
         /// <summary>
-        /// Average note density of the map
+        ///     Average note density of the map
         /// </summary>
         public float AverageNoteDensity { get; private set; } = 0;
 
         /// <summary>
-        /// Hit objects in the map used for solving difficulty
+        ///     Hit objects in the map used for solving difficulty
         /// </summary>
         public List<HitObjectData> HitObjects { get; private set; } = new List<HitObjectData>();
 
         /// <summary>
-        /// Hit objects that will be played with the left hand
+        ///     Hit objects that will be played with the left hand
         /// </summary>
         public List<HitObjectData> LeftHandObjects { get; private set; } = new List<HitObjectData>();
 
         /// <summary>
-        /// Hit objects that will be played with the right hand
+        ///     Hit objects that will be played with the right hand
         /// </summary>
         public List<HitObjectData> RightHandObjects { get; private set; } = new List<HitObjectData>();
 
         /// <summary>
-        /// Hit objects that can be played with either right or left hand. Used for even keyed keymodes (5K/7K)
+        ///     Hit objects that can be played with either right or left hand. Used for even keyed keymodes (5K/7K)
         /// </summary>
         public List<HitObjectData> AmbiguousHandObjects { get; private set; } = new List<HitObjectData>();
 
         /// <summary>
-        /// Assumes that the assigned hand will be the one to press that key
+        ///     Assumes that the assigned hand will be the one to press that key
         /// </summary>
         private Dictionary<int, Hand> LaneToHand4K { get; set; } = new Dictionary<int, Hand>()
         {
@@ -78,7 +78,7 @@ namespace Quaver.API.Qss
         };
 
         /// <summary>
-        /// Assumes that the assigned hand will be the one to press that key
+        ///     Assumes that the assigned hand will be the one to press that key
         /// </summary>
         private Dictionary<int, Hand> LaneToHand7K { get; set; } = new Dictionary<int, Hand>()
         {
@@ -92,7 +92,7 @@ namespace Quaver.API.Qss
         };
 
         /// <summary>
-        /// Assumes that the assigned finger will be the one to press that key.
+        ///     Assumes that the assigned finger will be the one to press that key.
         /// </summary>
         private Dictionary<int, FingerState> LaneToFinger4K { get; set; } = new Dictionary<int, FingerState>()
         {
@@ -103,7 +103,7 @@ namespace Quaver.API.Qss
         };
 
         /// <summary>
-        /// Assumes that the assigned finger will be the one to press that key.
+        ///     Assumes that the assigned finger will be the one to press that key.
         /// </summary>
         private Dictionary<int, FingerState> LaneToFinger7K { get; set; } = new Dictionary<int, FingerState>()
         {
@@ -132,7 +132,7 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// Compute and generate Note Density Data.
+        ///     Compute and generate Note Density Data.
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
@@ -145,8 +145,8 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// Get Note Data, and compute the base strain weights
-        /// The base strain weights are affected by LN layering
+        ///     Get Note Data, and compute the base strain weights
+        ///     The base strain weights are affected by LN layering
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
@@ -235,8 +235,8 @@ namespace Quaver.API.Qss
                             continueLoop = true;
                             break;
                     }
-                if (!continueLoop) break;
-            }
+                    if (!continueLoop) break;
+                }
 
                 // Assign Finger and Hand States
                 switch (Qua.Mode)
@@ -255,6 +255,9 @@ namespace Quaver.API.Qss
             }
         }
 
+        /// <summary>
+        ///     Iterate through the HitObject list and assign HitObjects to each chord
+        /// </summary>
         private void ComputeForChords()
         {
             // variables for solving chords
@@ -325,8 +328,8 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// Scans every finger state, and determines its action (JACK/TRILL/TECH, ect).
-        /// Action-Strain multiplier is applied in computation.
+        ///     Scans every finger state, and determines its action (JACK/TRILL/TECH, ect).
+        ///     Action-Strain multiplier is applied in computation.
         /// </summary>
         /// <param name="qssData"></param>
         private void ComputeFingerActions()
@@ -335,8 +338,8 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// Scans every finger action and compute a pattern multiplier.
-        /// Pattern manipulation, and inflated patterns are factored into calculation.
+        ///     Scans every finger action and compute a pattern multiplier.
+        ///     Pattern manipulation, and inflated patterns are factored into calculation.
         /// </summary>
         /// <param name="qssData"></param>
         private void ComputeActionPatterns()
@@ -345,7 +348,7 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// Calculates the general difficulty of a beatmap
+        ///     Calculates the general difficulty of a beatmap
         /// </summary>
         /// <param name="qssData"></param>
         private void CalculateOverallDifficulty()
