@@ -256,7 +256,7 @@ namespace Quaver.API.Qss
             // Search through whole hit object list and find chords
             for (var i = 0; i < StrainSolverData.Count - 1; i++)
             {
-                for (var j = i + 1; j < StrainSolverData.Count - 1; j++)
+                for (var j = i + 1; j < StrainSolverData.Count; j++)
                 {
                     var msDiff = StrainSolverData[j].StartTime - StrainSolverData[i].StartTime;
 
@@ -272,7 +272,7 @@ namespace Quaver.API.Qss
                                 StrainSolverData[i].HitObjects.Add(k);
 
                             // Remove chorded object
-                            StrainSolverData.Remove(StrainSolverData[j]);
+                            StrainSolverData.RemoveAt(j);
                         }
                     }
                 }
@@ -300,7 +300,7 @@ namespace Quaver.API.Qss
         private void ComputeFingerActions()
         {
             // Solve for Finger Action
-            for (var i = 0; i < StrainSolverData.Count - 1;  i++)
+            for (var i = 0; i < StrainSolverData.Count - 1; i++)
             {
                 var curHitOb = StrainSolverData[i];
 
