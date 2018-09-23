@@ -9,13 +9,13 @@ using Quaver.API.Enums;
 namespace Quaver.API.Qss
 {
     /// <summary>
-    /// Generates Colors for anything related to QSR and note density,
-    /// This class and its contents are only used for generating colors,
+    ///     Generates Colors for anything related to QSR and note density,
+    ///     This class and its contents are only used for generating colors,
     /// </summary>
     public static class Colors
     {
         /// <summary>
-        /// Interval at which each difficulty tier starts at
+        ///     Interval at which each difficulty tier starts at
         /// </summary>
         public static Dictionary<DifficultyTier, float> DifficultyTierInterval { get; } = new Dictionary<DifficultyTier, float>()
         {
@@ -29,7 +29,7 @@ namespace Quaver.API.Qss
         };
 
         /// <summary>
-        /// Colors to represent each difficulty tier
+        ///     Colors to represent each difficulty tier
         /// </summary>
         public static Dictionary<DifficultyTier, Color> DifficultyTierColor { get; } = new Dictionary<DifficultyTier, Color>
         {
@@ -63,38 +63,38 @@ namespace Quaver.API.Qss
         };
 
         /// <summary>
-        /// Skill Color for Tech Jacks
+        ///     Skill Color for Tech Jacks
         /// </summary>
         private static Color TechJackSkillColor { get; } = Color.FromArgb(255, 85, 169, 255);
 
         /// <summary>
-        /// Skill Color for Long Jacks
+        ///     Skill Color for Long Jacks
         /// </summary>
         private static Color LongJackSkillColor { get; } = Color.FromArgb(255, 127, 84, 255);
 
         /// <summary>
-        /// Skill Color for Anchors
+        ///     Skill Color for Anchors
         /// </summary>
         private static Color AnchorSkillColor { get; } = Color.FromArgb(255, 255, 80, 86);
 
         /// <summary>
-        /// Skill Color for Rolls
+        ///     Skill Color for Rolls
         /// </summary>
         private static Color RollSkillColor { get; } = Color.FromArgb(255, 255, 203, 80);
 
         /// <summary>
-        /// Skill Color for Release
+        ///     Skill Color for Release
         /// </summary>
         private static Color ReleaseSkillColor { get; } = Color.FromArgb(255, 68, 255, 80);
 
         /// <summary>
-        /// Used for skill color delta
+        ///     Used for skill color delta
         /// </summary>
         private const float SKILL_COLOR_DELTA = 0.6f;
 
         /// <summary>
-        /// Returns Color for general Strain Rating difficulty. Reads QSR (Quaver Strain Rating)
-        /// This can be used to return Color to represent difficulty of a map or play.
+        ///     Returns Color for general Strain Rating difficulty. Reads QSR (Quaver Strain Rating)
+        ///     This can be used to return Color to represent difficulty of a map or play.
         /// </summary>
         /// <param name="qsr"></param>
         /// <returns></returns>
@@ -124,7 +124,7 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// Returns Color for note density graph area. Reads NPS (Notes per second)
+        ///     Returns Color for note density graph area. Reads NPS (Notes per second)
         /// </summary>
         ///  /// <param name="nps"></param>
         /// <returns></returns>
@@ -154,7 +154,7 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// WIP. Returns color of combined skill values.
+        ///     WIP. Returns color of combined skill values.
         /// </summary>
         /// <returns></returns>
         public static Color GetSkillColor(float tjack, float ljack, float roll, float anchor, float release)
@@ -204,7 +204,7 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// Returns an int value between 0 and 255
+        ///     Returns an int value between 0 and 255
         /// </summary>
         /// <param name="f"></param>
         /// <returns></returns>
