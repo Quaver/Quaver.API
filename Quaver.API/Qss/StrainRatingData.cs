@@ -317,7 +317,7 @@ namespace Quaver.API.Qss
                     if (curHitOb.Hand == nextHitOb.Hand)
                         continue;
 
-                    if (nextHitOb.StartTime > curHitOb.StartTime + THRESHOLD_CHORD_CHECK_MS)
+                    if (nextHitOb.StartTime > curHitOb.StartTime)
                         continue;
 
                     // Determined by if there's a minijack within 2 set of chords/single notes
@@ -329,12 +329,12 @@ namespace Quaver.API.Qss
                     // Determined by if both fingerstates are exactly the same
                     var actionSameState = curHitOb.HandChordState == nextHitOb.HandChordState;
 
-                    //todo: REMOVE. this is for debuggin.
-                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", n-index: " + nextHitOb.HandChordState + "\n");
-
                     // Determined by how long the current finger action is
                     var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
                     FingerAction curAction;
+
+                    //todo: REMOVE. this is for debuggin.
+                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + actionDuration + "\n");
 
                     // Trill/Roll
                     if (!actionChordFound && !actionSameState)
