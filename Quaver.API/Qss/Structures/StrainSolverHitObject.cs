@@ -10,8 +10,13 @@ namespace Quaver.API.Qss.Structures
     /// <summary>
     ///     An expanded version of hit object that is used for QSS implementations in API/editor/calculation
     /// </summary>
-    public class StrainSolverHitObject : HitObjectInfo
+    public class StrainSolverHitObject
     {
+        /// <summary>
+        ///     The HitObject this class is referencing
+        /// </summary>
+        public HitObjectInfo HitObject { get; set; }
+
         /// <summary>
         ///     Current Finger State of the hit object
         /// </summary>
@@ -27,5 +32,11 @@ namespace Quaver.API.Qss.Structures
         ///     Note: This is not used for QSS calculation. It is for display/ui purposes.
         /// </summary>
         public float StrainValue { get; set; }
+
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="hitOb"></param>
+        public StrainSolverHitObject(HitObjectInfo hitOb) => HitObject = hitOb;
     }
 }

@@ -180,7 +180,7 @@ namespace Quaver.API.Qss
                     EndTime = Qua.HitObjects[i].EndTime
                 };
 
-                var curHitOb = (StrainSolverHitObject)Qua.HitObjects[i];
+                var curHitOb = new StrainSolverHitObject(Qua.HitObjects[i]);
 
                 // Assign Finger and Hand States
                 switch (Qua.Mode)
