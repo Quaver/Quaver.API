@@ -42,6 +42,9 @@ namespace Quaver.API.Qss
             { DifficultyTier.TierMax, Color.FromArgb(255, 85, 169, 255) }
         };
 
+        /// <summary>
+        ///     Interval at which each note density tier starts at
+        /// </summary>
         public static Dictionary<NoteDensityTier, float> DensityTierInterval { get; } = new Dictionary<NoteDensityTier, float>()
         {
             { NoteDensityTier.Tier1, 7 },
@@ -52,6 +55,9 @@ namespace Quaver.API.Qss
             { NoteDensityTier.TierMax, 42 }
         };
 
+        /// <summary>
+        ///     Colors to represent each note density tier
+        /// </summary>
         public static Dictionary<NoteDensityTier, Color> DensityTierColor { get; } = new Dictionary<NoteDensityTier, Color>
         {
             { NoteDensityTier.Tier1, Color.FromArgb(255, 25, 25, 204) },
