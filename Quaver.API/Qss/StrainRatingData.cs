@@ -77,7 +77,7 @@ namespace Quaver.API.Qss
             Qua = qua;
             ComputeNoteDensityData();
             ComputeBaseStrainStates();
-            ComputeForChords();
+            //ComputeForChords();
             ComputeFingerActions();
             ComputeActionPatterns();
             CalculateOverallDifficulty();
