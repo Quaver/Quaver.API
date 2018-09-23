@@ -23,25 +23,18 @@ namespace Quaver.API.Qss
         /// </summary>
         public const int GRAPH_INTERVAL_OFFSET_MS = 100;
 
+        private const float THRESHOLD_LN_END_MS = 42;
+        private const float THRESHOLD_CHORD_CHECK_MS = 8;
+
         /// <summary>
         /// Total ammount of milliseconds in a second.
         /// </summary>
         public const float SECONDS_TO_MILLISECONDS = 1000;
 
         /// <summary>
-        /// Max Lane Count. Will not check hit object indexes below the current index value subtracted by this value.
-        /// </summary>
-        public const int MAX_LANE_CHECK = 7;
-
-        /// <summary>
         /// Map that will be referenced for calculation
         /// </summary>
         public Qua Qua { get; private set; }
-
-        /// <summary>
-        /// If 2 hit objects are within miliseconds apart, they will be considered a chorded pair.
-        /// </summary>
-        public const int CHORD_THRESHOLD_MS = 10;
 
         /// <summary>
         /// Overall difficulty of the map
@@ -132,7 +125,7 @@ namespace Quaver.API.Qss
             Qua = qua;
             ComputeNoteDensityData();
             ComputeBaseStrainStates();
-            //ComputeForChords();
+            ComputeForChords();
             ComputeFingerActions();
             ComputeActionPatterns();
             CalculateOverallDifficulty();
@@ -159,6 +152,29 @@ namespace Quaver.API.Qss
         /// <param name="qua"></param>
         private void ComputeBaseStrainStates()
         {
+            // Variables for solving LN
+            var checkLane = new List<bool>();
+            var prevNoteIndex = new List<int>();
+
+            // create list for lane check
+            switch (Qua.Mode)
+            {
+                case Enums.GameMode.Keys4:
+                    for (var i = 0; i < 4; i++)
+                    {
+                        checkLane.Add(false);
+                        prevNoteIndex.Add(0);
+                    }
+                    break;
+                case Enums.GameMode.Keys7:
+                    for (var i = 0; i < 7; i++)
+                    {
+                        checkLane.Add(false);
+                        prevNoteIndex.Add(0);
+                    }
+                    break;
+            }
+
             // Add hit objects from qua map to qssData
             HitObjectData hitObjectData;
             for (var i = 0; i < Qua.HitObjects.Count; i++)
@@ -170,33 +186,57 @@ namespace Quaver.API.Qss
                     Lane = Qua.HitObjects[i].Lane
                 };
 
-                // Calculate LN Multiplier (note: doesn't check for same hand
-                // Also look for chords
-                for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < Qua.HitObjects.Count; j++)
+                // Current lane index
+                var laneIndex = Qua.HitObjects[i].Lane - 1;
+                prevNoteIndex[laneIndex] = i;
+
+                // Mark everylane for checking except the current lane
+                for (var j = 0; j < checkLane.Count; j++) checkLane[j] = false;
+                checkLane[laneIndex] = true;
+
+                // Solve LN
+                for (var j = prevNoteIndex[laneIndex]; j < Qua.HitObjects.Count; j++)
                 {
-                    if (Qua.HitObjects[j].StartTime > hitObjectData.EndTime)
-                    {
+
+                    // Ignore if current lane is already checked
+                    if (!checkLane[Qua.HitObjects[j].Lane - 1])
+                        continue;
+
+                    // Break loop if note is way paste LN end
+                    if (Qua.HitObjects[j].StartTime > hitObjectData.EndTime + THRESHOLD_LN_END_MS)
                         break;
+
+                    // Continue this iteration if note starts after LN start
+                    if (Qua.HitObjects[j].StartTime >= hitObjectData.StartTime - THRESHOLD_CHORD_CHECK_MS)
+                        continue;
+
+                    // Determine 
+                    // Target hitobject's LN ends after current hitobject's LN
+                    if (Qua.HitObjects[j].EndTime > hitObjectData.EndTime)
+                        hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+
+                    // Target hitobject's LN ends before current hitobject's LN
+                    else if (Qua.HitObjects[j].EndTime > 0)
+                        hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+
+                    // Target hitobject is not an LN
+                    else
+                        hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
+
+                    // Update lane checking variables
+                    checkLane[Qua.HitObjects[j].Lane - 1] = true;
+                    prevNoteIndex[Qua.HitObjects[j].Lane - 1] = j;
+
+                    // Check to see if we should still search for more chord objects
+                    var continueLoop = false;
+                    foreach (var k in checkLane)
+                        if (k)
+                        {
+                            continueLoop = true;
+                            break;
                     }
-                    else if (Qua.HitObjects[j].StartTime > hitObjectData.StartTime)
-                    {
-                        // Target hitobject's LN ends after current hitobject's LN
-                        if (Qua.HitObjects[j].EndTime > hitObjectData.EndTime)
-                        {
-                            hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
-                        }
-                        // Target hitobject's LN ends before current hitobject's LN
-                        else if (Qua.HitObjects[j].EndTime > 0)
-                        {
-                            hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
-                        }
-                        // Target hitobject is not an LN
-                        else
-                        {
-                            hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
-                        }
-                    }
-                }
+                if (!continueLoop) break;
+            }
 
                 // Assign Finger and Hand States
                 switch (Qua.Mode)
@@ -217,30 +257,71 @@ namespace Quaver.API.Qss
 
         private void ComputeForChords()
         {
-            // search through whole hit object list and find chords
-            /*
-            float msDiff;
+            // variables for solving chords
+            var checkLane = new List<bool>();
+            var prevNoteIndex = new List<int>();
+
+            // create list for lane check
+            switch (Qua.Mode)
+            {
+                case Enums.GameMode.Keys4:
+                    for (var i = 0; i < 4; i++)
+                    {
+                        checkLane.Add(false);
+                        prevNoteIndex.Add(0);
+                    }
+                    break;
+                case Enums.GameMode.Keys7:
+                    for (var i = 0; i < 7; i++)
+                    {
+                        checkLane.Add(false);
+                        prevNoteIndex.Add(0);
+                    }
+                    break;
+            }
+
+            // Search through whole hit object list and find chords
             for (var i = 0; i < Qua.HitObjects.Count; i++)
             {
-                for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < Qua.HitObjects.Count; j++)
+                // Current lane index
+                var laneIndex = Qua.HitObjects[i].Lane - 1;
+                prevNoteIndex[laneIndex] = i;
+
+                // Mark everylane for checking except the current lane
+                for (var j = 0; j < checkLane.Count; j++) checkLane[j] = false;
+                checkLane[laneIndex] = true;
+
+                // Search for chords
+                for (var j = prevNoteIndex[laneIndex]; j < Qua.HitObjects.Count; j++)
                 {
-                    msDiff = Qua.HitObjects[j].StartTime - Qua.HitObjects[i].StartTime;
-                    if (msDiff < CHORD_THRESHOLD_MS)
+                    // Ignore if current lane is already checked
+                    if (!checkLane[Qua.HitObjects[j].Lane - 1]) continue;
+
+                    // How far apart the two notes are
+                    var msDiff = Qua.HitObjects[j].StartTime - Qua.HitObjects[i].StartTime;
+
+                    // Break loop if current object is over check threshold
+                    if (msDiff >= THRESHOLD_CHORD_CHECK_MS) break;
+
+                    // Check if the object is inside the hit window
+                    if (Math.Abs(msDiff) < THRESHOLD_CHORD_CHECK_MS)
                     {
-                        if (msDiff > -CHORD_THRESHOLD_MS)
-                        {
-                            HitObjects[i].LinkedChordedHitObjects.Add(HitObjects[j]);
-                        }
+                        HitObjects[i].LinkedChordedHitObjects.Add(HitObjects[j]);
+                        checkLane[Qua.HitObjects[j].Lane - 1] = true;
+                        prevNoteIndex[Qua.HitObjects[j].Lane - 1] = j;
                     }
 
-                    // Stop the loop if target hitobject's starttime is above the threshold
-                    else
-                    {
-                        break;
-                    }
+                    // Check to see if we should still search for more chord objects
+                    var continueLoop = false;
+                    foreach (var k in checkLane)
+                        if (k)
+                        {
+                            continueLoop = true;
+                            break;
+                        }
+                    if (!continueLoop) break;
                 }
             }
-            */
         }
 
         /// <summary>
