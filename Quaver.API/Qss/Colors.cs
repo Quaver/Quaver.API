@@ -190,28 +190,28 @@ namespace Quaver.API.Qss
             // Tier 1
             else if (qsr < TIER_2_RATING)
             {
-                val = qsr / (TIER_2_RATING -TIER_1_RATING);
+                val = (qsr - TIER_1_RATING) / (TIER_2_RATING - TIER_1_RATING);
                 return GetGradientColor(TierOneColor, TierTwoColor, val);
             }
 
             // Tier 2
             else if (qsr < TIER_3_RATING)
             {
-                val = qsr / (TIER_3_RATING - TIER_2_RATING);
+                val = (qsr - TIER_2_RATING) / (TIER_3_RATING - TIER_2_RATING);
                 return GetGradientColor(TierTwoColor, TierThreeColor, val);
             }
 
             // Tier 3
             else if (qsr < TIER_4_RATING)
             {
-                val = qsr / (TIER_4_RATING - TIER_3_RATING);
+                val = (qsr - TIER_3_RATING) / (TIER_4_RATING - TIER_3_RATING);
                 return GetGradientColor(TierThreeColor, TierFourColor, val);
             }
 
             // Tier 4
             else if (qsr < MAX_TIER_RATING)
             {
-                val = qsr / (MAX_TIER_RATING - TIER_4_RATING);
+                val = (qsr - TIER_4_RATING) / (MAX_TIER_RATING - TIER_4_RATING);
                 return GetGradientColor(TierFourColor, MaxTierColor, val);
             }
 
@@ -239,35 +239,35 @@ namespace Quaver.API.Qss
             // Nps Interval 1 (7 - 14nps)
             else if (nps < NPS_RATING_2)
             {
-                val = nps / (NPS_RATING_2 - NPS_RATING_1);
+                val = (nps - NPS_RATING_1) / (NPS_RATING_2 - NPS_RATING_1);
                 return GetGradientColor(NpsColor1, NpsColor2, val);
             }
 
             // Nps Interval 2 (14 - 21nps)
             else if (nps < NPS_RATING_3)
             {
-                val = nps / (NPS_RATING_3 - NPS_RATING_2);
+                val = (nps - NPS_RATING_2) / (NPS_RATING_3 - NPS_RATING_2);
                 return GetGradientColor(NpsColor2, NpsColor3, val);
             }
 
             // Nps Interval 3 (21 - 28nps)
             else if (nps < NPS_RATING_4)
             {
-                val = nps / (NPS_RATING_4 - NPS_RATING_3);
+                val = (nps - NPS_RATING_3) / (NPS_RATING_4 - NPS_RATING_3);
                 return GetGradientColor(NpsColor3, NpsColor4, val);
             }
 
             // Nps Interval 4 (28 - 35nps)
             else if (nps < NPS_RATING_5)
             {
-                val = nps / (NPS_RATING_5 - NPS_RATING_4);
+                val = (nps - NPS_RATING_4) / (NPS_RATING_5 - NPS_RATING_4);
                 return GetGradientColor(NpsColor4, NpsColor5, val);
             }
 
             // Nps Interval 5 (35 - 42nps)
             else if (nps < NPS_RATING_MAX)
             {
-                val = nps / (NPS_RATING_MAX - NPS_RATING_5);
+                val = (nps - NPS_RATING_5) / (NPS_RATING_MAX - NPS_RATING_5);
                 return GetGradientColor(NpsColor5, NpsColorMax, val);
             }
 
