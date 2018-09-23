@@ -295,7 +295,7 @@ namespace Quaver.API.Qss
                         if (!actionChordFound && !actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 260, 51, 1); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 560, 51, 0.7f); // todo: temp. Apply actual constants later
                             Roll++;
                         }
 
@@ -303,7 +303,7 @@ namespace Quaver.API.Qss
                         else if (actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 260, 55, 1); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 560, 55, 0.7f); // todo: temp. Apply actual constants later
                             SJack++;
                         }
 
@@ -311,7 +311,7 @@ namespace Quaver.API.Qss
                         else if (actionJackFound)
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 260, 54, 1); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 560, 54, 0.7f); // todo: temp. Apply actual constants later
                             TJack++;
                         }
 
@@ -319,7 +319,7 @@ namespace Quaver.API.Qss
                         else
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 260, 55, 1); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 560, 55, 0.7f); // todo: temp. Apply actual constants later
                             Bracket++;
                         }
 
@@ -361,7 +361,7 @@ namespace Quaver.API.Qss
         {
             //todo: temp. Linear for now
             //todo: apply cosine curve
-            return 1 + (strainMax - 1) * (1 - Math.Min(Math.Max(0, duration - xMin)/(xMax - xMin), 1));
+            return 1 + (strainMax - 1) * (float)Math.Pow((1 - Math.Min(Math.Max(0, duration - xMin)/(xMax - xMin), 1)), exp);
         }
     }
 }
