@@ -255,7 +255,6 @@ namespace Quaver.API.Qss
                     case Enums.GameMode.Keys4:
                         hitObjectData.FingerState = LaneToFinger4K[hitObjectData.Lane];
                         hitObjectData.Hand = LaneToHand4K[hitObjectData.Lane];
-                        DebugString += "Finger: " + LaneToFinger4K[hitObjectData.Lane] + " | Hand: " + LaneToHand4K[hitObjectData.Lane] + "\n";
                         break;
                     case Enums.GameMode.Keys7:
                         hitObjectData.FingerState = LaneToFinger7K[hitObjectData.Lane];
@@ -392,7 +391,7 @@ namespace Quaver.API.Qss
                     var actionSameState = curHitOb.HandChordStateIndex == nextHitOb.HandChordStateIndex;
 
                     //todo: REMOVE. this is for debuggin.
-                    //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordStateIndex + "\n");
+                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordStateIndex + "\n");
 
                     // Determined by how long the current finger action is
                     var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
