@@ -268,7 +268,8 @@ namespace Quaver.API.Qss
         /// <param name="qssData"></param>
         private void CalculateOverallDifficulty()
         {
-            OverallDifficulty = AverageNoteDensity;
+            //todo: temporary.
+            OverallDifficulty = AverageNoteDensity * 3.25f;
         }
     }
 }
