@@ -312,9 +312,9 @@ namespace Quaver.API.Qss
         /// <returns></returns>
         public static Color GetGradientColor(Color color1, Color color2, float value)
         {
-            var red = FloatToByteInt(((color1.R - color2.R) * value) + Math.Min(color1.R, color2.R));
-            var green = FloatToByteInt(((color1.G - color2.G) * value) + Math.Min(color1.G, color2.G));
-            var blue = FloatToByteInt(((color1.B - color2.B) * value) + Math.Min(color1.B, color2.B));
+            var red = FloatToByteInt(((color2.R - color1.R) * value) + color1.R);
+            var green = FloatToByteInt(((color2.G - color1.G) * value) + color1.G);
+            var blue = FloatToByteInt(((color2.B - color1.B) * value) + color1.B);
 
             return Color.FromArgb(255, red, green, blue);
         }
