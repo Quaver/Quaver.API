@@ -11,7 +11,7 @@ namespace Quaver.API.Qss
     /// Generates Colors for anything related to QSR and note density,
     /// This class and its contents are only used for generating colors,
     /// </summary>
-    internal class Colors
+    public static class Colors
     {
         /// <summary>
         /// QSR required in order to be considered first tier
