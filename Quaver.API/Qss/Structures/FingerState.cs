@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +8,10 @@ namespace Quaver.API.Qss.Structures
 {
     public enum FingerState
     {
-        Index,
-        Middle,
-        Ring,
-        Pinkie,
-        Thumb
+        Index = 1,
+        Middle = 2,
+        Ring = 4,
+        Pinkie = 8,
+        Thumb = 16
     }
 }

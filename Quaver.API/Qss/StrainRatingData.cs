@@ -354,7 +354,7 @@ namespace Quaver.API.Qss
                     if (HitObjects[i].LinkedChordedHitObjects[j].Hand == HitObjects[i].Hand)
                     {
                         HitObjects[i].HandChord = true;
-                        HitObjects[i].HandChordStateIndex += (byte)Math.Pow((int)HitObjects[j].FingerState, 2);
+                        HitObjects[i].HandChordStateIndex += (byte)HitObjects[j].FingerState;
                     }
                 }
             }
