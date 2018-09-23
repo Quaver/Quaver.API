@@ -315,13 +315,17 @@ namespace Quaver.API.Qss
                     var msDiff = Qua.HitObjects[j].StartTime - Qua.HitObjects[i].StartTime;
 
                     // Break loop if current object is over check threshold
-                    if (msDiff >= THRESHOLD_CHORD_CHECK_MS) break;
+                    if (msDiff >= THRESHOLD_CHORD_CHECK_MS)
+                    {
+                        checkLane[Qua.HitObjects[j].Lane - 1] = true;
+                        break;
+                    }
 
                     // Check if the object is inside the hit window
                     if (Math.Abs(msDiff) < THRESHOLD_CHORD_CHECK_MS)
                     {
-                        HitObjects[i].LinkedChordedHitObjects.Add(HitObjects[j]);
                         checkLane[Qua.HitObjects[j].Lane - 1] = true;
+                        HitObjects[i].LinkedChordedHitObjects.Add(HitObjects[j]);
                         prevNoteIndex[Qua.HitObjects[j].Lane - 1] = j;
                     }
 
@@ -391,7 +395,7 @@ namespace Quaver.API.Qss
                     var actionSameState = curHitOb.HandChordStateIndex == nextHitOb.HandChordStateIndex;
 
                     //todo: REMOVE. this is for debuggin.
-                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordStateIndex + "\n");
+                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordStateIndex + ", n-index: " + nextHitOb.HandChordStateIndex + "\n");
 
                     // Determined by how long the current finger action is
                     var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
