@@ -299,13 +299,6 @@ namespace Quaver.API.Qss
         /// <param name="qssData"></param>
         private void ComputeFingerActions()
         {
-
-            //temp debug
-            for (var i = 0; i < StrainSolverData.Count || i < 50; i++)
-            {
-                DebugString += StrainSolverData[i].StartTime + ", ";
-            }
-
             // Solve for Finger Action
             for (var i = 0; i < StrainSolverData.Count - 1;  i++)
             {
@@ -335,7 +328,7 @@ namespace Quaver.API.Qss
                     FingerAction curAction;
 
                     //todo: REMOVE. this is for debuggin.
-                    //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + actionDuration + "\n");
+                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + curHitOb.StartTime + "|"+nextHitOb.StartTime + "\n");
 
                     // Trill/Roll
                     if (!actionChordFound && !actionSameState)
