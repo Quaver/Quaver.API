@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +21,6 @@ namespace Quaver.API.Qss.Structures
         public FingerState FingerState { get; set; }
         public FingerAction FingerAction { get; set; }
         public string Pattern { get; set; } //todo: replace with enum
-        public List<HitObjectData> LinkedChordedHitObjects { get; set; }
+        public List<HitObjectData> LinkedChordedHitObjects { get; set; } = new List<HitObjectData>();
     }
 }

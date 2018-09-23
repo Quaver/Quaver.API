@@ -24,6 +24,11 @@ namespace Quaver.API.Qss
         public const int GRAPH_INTERVAL_OFFSET_MS = 100;
 
         /// <summary>
+        /// Total ammount of milliseconds in a second.
+        /// </summary>
+        public const float SECONDS_TO_MILLISECONDS = 1000;
+
+        /// <summary>
         /// Max Lane Count. Will not check hit object indexes below the current index value subtracted by this value.
         /// </summary>
         public const int MAX_LANE_CHECK = 7;
@@ -69,9 +74,54 @@ namespace Quaver.API.Qss
         public List<HitObjectData> AmbiguousHandObjects { get; private set; } = new List<HitObjectData>();
 
         /// <summary>
-        /// Total ammount of milliseconds in a second.
+        /// Assumes that the assigned hand will be the one to press that key
         /// </summary>
-        public static float SECONDS_TO_MILLISECONDS = 1000;
+        private Dictionary<int, Hand> LaneToHand4K { get; set; } = new Dictionary<int, Hand>()
+        {
+            { 1, Hand.Left },
+            { 2, Hand.Left },
+            { 3, Hand.Right },
+            { 4, Hand.Right }
+        };
+
+        /// <summary>
+        /// Assumes that the assigned hand will be the one to press that key
+        /// </summary>
+        private Dictionary<int, Hand> LaneToHand7K { get; set; } = new Dictionary<int, Hand>()
+        {
+            { 1, Hand.Left },
+            { 2, Hand.Left },
+            { 3, Hand.Left },
+            { 4, Hand.Ambiguous },
+            { 5, Hand.Right },
+            { 6, Hand.Right },
+            { 7, Hand.Right }
+        };
+
+        /// <summary>
+        /// Assumes that the assigned finger will be the one to press that key.
+        /// </summary>
+        private Dictionary<int, FingerState> LaneToFinger4K { get; set; } = new Dictionary<int, FingerState>()
+        {
+            { 1, FingerState.Middle },
+            { 2, FingerState.Index },
+            { 3, FingerState.Index },
+            { 4, FingerState.Middle }
+        };
+
+        /// <summary>
+        /// Assumes that the assigned finger will be the one to press that key.
+        /// </summary>
+        private Dictionary<int, FingerState> LaneToFinger7K { get; set; } = new Dictionary<int, FingerState>()
+        {
+            { 1, FingerState.Ring },
+            { 2, FingerState.Middle },
+            { 3, FingerState.Index },
+            { 4, FingerState.Thumb },
+            { 5, FingerState.Index },
+            { 6, FingerState.Middle },
+            { 7, FingerState.Ring }
+        };
 
         /// <summary>
         ///     const
@@ -148,69 +198,17 @@ namespace Quaver.API.Qss
                     }
                 }
 
-                // Assign Finger States
-                // Mania 4k
-                if (Qua.Mode == Enums.GameMode.Keys4)
+                // Assign Finger and Hand States
+                switch (Qua.Mode)
                 {
-                    switch (hitObjectData.Lane)
-                    {
-                        case 1:
-                            hitObjectData.FingerState = FingerState.Middle;
-                            hitObjectData.Hand = Hand.Left;
-                            break;
-                        case 2:
-                            hitObjectData.FingerState = FingerState.Index;
-                            hitObjectData.Hand = Hand.Left;
-                            break;
-                        case 3:
-                            hitObjectData.FingerState = FingerState.Index;
-                            hitObjectData.Hand = Hand.Right;
-                            break;
-                        case 4:
-                            hitObjectData.FingerState = FingerState.Middle;
-                            hitObjectData.Hand = Hand.Right;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                // Mania 7k
-                else if (Qua.Mode == Enums.GameMode.Keys7)
-                {
-                    switch (hitObjectData.Lane)
-                    {
-                        case 1:
-                            hitObjectData.FingerState = FingerState.Ring;
-                            hitObjectData.Hand = Hand.Left;
-                            break;
-                        case 2:
-                            hitObjectData.FingerState = FingerState.Middle;
-                            hitObjectData.Hand = Hand.Left;
-                            break;
-                        case 3:
-                            hitObjectData.FingerState = FingerState.Index;
-                            hitObjectData.Hand = Hand.Left;
-                            break;
-                        case 4:
-                            hitObjectData.FingerState = FingerState.Thumb;
-                            hitObjectData.Hand = Hand.Ambiguous;
-                            break;
-                        case 5:
-                            hitObjectData.FingerState = FingerState.Index;
-                            hitObjectData.Hand = Hand.Right;
-                            break;
-                        case 6:
-                            hitObjectData.FingerState = FingerState.Middle;
-                            hitObjectData.Hand = Hand.Right;
-                            break;
-                        case 7:
-                            hitObjectData.FingerState = FingerState.Ring;
-                            hitObjectData.Hand = Hand.Right;
-                            break;
-                        default:
-                            break;
-                    }
+                    case Enums.GameMode.Keys4:
+                        hitObjectData.FingerState = LaneToFinger4K[hitObjectData.Lane];
+                        hitObjectData.Hand = LaneToHand4K[hitObjectData.Lane];
+                        break;
+                    case Enums.GameMode.Keys7:
+                        hitObjectData.FingerState = LaneToFinger7K[hitObjectData.Lane];
+                        hitObjectData.Hand = LaneToHand7K[hitObjectData.Lane];
+                        break;
                 }
 
                 HitObjects.Add(hitObjectData);
@@ -219,6 +217,8 @@ namespace Quaver.API.Qss
 
         private void ComputeForChords()
         {
+            // search through whole hit object list and find chords
+            /*
             float msDiff;
             for (var i = 0; i < Qua.HitObjects.Count; i++)
             {
@@ -240,6 +240,7 @@ namespace Quaver.API.Qss
                     }
                 }
             }
+            */
         }
 
         /// <summary>
