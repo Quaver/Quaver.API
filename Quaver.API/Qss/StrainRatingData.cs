@@ -72,27 +72,16 @@ namespace Quaver.API.Qss
         ///     const
         /// </summary>
         /// <param name="qua"></param>
-        public StrainRatingData(Qua qua) => Qua = qua;
-
-        /*
-        /// <summary>
-        /// Compute and returns Qss Data for a map
-        /// </summary>
-        /// <param name="qua"></param>
-        /// <returns>Qss Data</returns>
-        public static QssData GetQssData(Qua qua)
+        public StrainRatingData(Qua qua)
         {
-            var qssData = new QssData();
-
-            ComputeNoteDensityData(qssData, qua);
-            ComputeBaseStrainStates(qssData, qua);
-            ComputeForChords(qssData);
-            ComputeFingerActions(qssData);
-            ComputeActionPatterns(qssData);
-            CalculateOverallDifficulty(qssData);
-
-            return qssData;
-        }*/
+            Qua = qua;
+            ComputeNoteDensityData();
+            ComputeBaseStrainStates();
+            ComputeForChords();
+            ComputeFingerActions();
+            ComputeActionPatterns();
+            CalculateOverallDifficulty();
+        }
 
         /// <summary>
         /// Compute and generate Note Density Data.
@@ -104,9 +93,7 @@ namespace Quaver.API.Qss
             //MapLength = Qua.Length;
             AverageNoteDensity = (float)Qua.HitObjects.Count / Qua.Length;
 
-            //todo: temp
-            OverallDifficulty = AverageNoteDensity;
-
+            //todo: solve note density graph
         }
 
         /// <summary>
