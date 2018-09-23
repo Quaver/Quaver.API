@@ -14,6 +14,11 @@ namespace Quaver.API.Qss
     public class StrainRatingData
     {
         /// <summary>
+        /// TODO: remove this later. TEMPORARY.
+        /// </summary>
+        public string DebugString { get; private set; } = "";
+
+        /// <summary>
         ///     Size of each graph partition in miliseconds
         /// </summary>
         public const int GRAPH_INTERVAL_SIZE_MS = 500;
@@ -354,7 +359,7 @@ namespace Quaver.API.Qss
                     if (HitObjects[i].LinkedChordedHitObjects[j].Hand == HitObjects[i].Hand)
                     {
                         HitObjects[i].HandChord = true;
-                        HitObjects[i].HandChordStateIndex += (byte)HitObjects[j].FingerState;
+                        HitObjects[i].HandChordStateIndex += (int)HitObjects[j].FingerState;
                     }
                 }
             }
@@ -382,6 +387,9 @@ namespace Quaver.API.Qss
 
                     // Determined by if both fingerstates are exactly the same
                     var actionSameState = curHitOb.HandChordStateIndex == nextHitOb.HandChordStateIndex;
+
+                    //todo: REMOVE. this is for debuggin.
+                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordStateIndex + "\n");
 
                     // Determined by how long the current finger action is
                     var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;

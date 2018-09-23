@@ -23,6 +23,6 @@ namespace Quaver.API.Qss.Structures
         public string Pattern { get; set; } //todo: replace with enum
         public List<HitObjectData> LinkedChordedHitObjects { get; set; } = new List<HitObjectData>();
         public bool HandChord { get; set; }
-        public byte HandChordStateIndex { get; set; } = 0;
+        public int HandChordStateIndex { get; set; } = 0;
     }
 }
