@@ -304,7 +304,7 @@ namespace Quaver.API.Qss
         }
 
         /// <summary>
-        /// Returns color from percentage in between two colors
+        ///     Returns color from percentage in between two colors
         /// </summary>
         /// <param name="color1">First Color</param>
         /// <param name="color2">Second Color</param>
@@ -312,11 +312,18 @@ namespace Quaver.API.Qss
         /// <returns></returns>
         public static Color GetGradientColor(Color color1, Color color2, float value)
         {
-            var red = (int)(Math.Abs(color1.R - color2.R) * value) + Math.Min(color1.R, color2.R);
-            var green = (int)(Math.Abs(color1.G - color2.G) * value) + Math.Min(color1.G, color2.G);
-            var blue = (int)(Math.Abs(color1.B - color2.B) * value) + Math.Min(color1.B, color2.B);
+            var red = FloatToByteInt(((color1.R - color2.R) * value) + Math.Min(color1.R, color2.R));
+            var green = FloatToByteInt(((color1.G - color2.G) * value) + Math.Min(color1.G, color2.G));
+            var blue = FloatToByteInt(((color1.B - color2.B) * value) + Math.Min(color1.B, color2.B));
 
             return Color.FromArgb(255, red, green, blue);
         }
+
+        /// <summary>
+        /// Returns an int value between 0 and 255
+        /// </summary>
+        /// <param name="f"></param>
+        /// <returns></returns>
+        public static int FloatToByteInt(float f) => (int)Math.Max(Math.Min(f, 0), 255);
     }
 }
