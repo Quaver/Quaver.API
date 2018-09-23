@@ -11,7 +11,7 @@ namespace Quaver.API.Qss
     /// <summary>
     ///     Will be used to solve Strain Rating.
     /// </summary>
-    public class StrainRatingData
+    public class StrainSolver
     {
         /// <summary>
         /// TODO: remove this later. TEMPORARY.
@@ -110,7 +110,7 @@ namespace Quaver.API.Qss
         ///     const
         /// </summary>
         /// <param name="qua"></param>
-        public StrainRatingData(Qua qua)
+        public StrainSolver(Qua qua)
         {
             // Assign reference qua
             Qua = qua;
