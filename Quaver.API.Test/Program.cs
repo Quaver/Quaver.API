@@ -14,7 +14,8 @@ namespace Quaver.API.Test
                                     $"Commands:\n" +
                                     $"'-qua <file path.qua>' - Get information about a .qua file\n" +
                                     $"'-osu <file path.osu> <output.qua>' - Convert an osu! (.osu) beatmap to .qua\n" +
-                                    $"'-qss <file path.qua>' - Get qss data from a .qua file\n");
+                                    $"'-qss <file path.qua>' - Get qss data from a .qua file\n" +
+                                    $"'-qssbatch <file path>' - Get multiple qss data from a folder\n");
                 return;
             }
             
@@ -28,6 +29,9 @@ namespace Quaver.API.Test
                     break;
                 case "-qss":
                     new QssCommand(args).Execute();
+                    break;
+                case "-qssbatch":
+                    new QssBatchCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
