@@ -91,8 +91,7 @@
     <Compile Include="Qss\Structures\FingerAction.cs" />
     <Compile Include="Qss\Structures\Hand.cs" />
     <Compile Include="Qss\Structures\HitObjectData.cs" />
-    <Compile Include="Qss\QssData.cs" />
-    <Compile Include="Qss\QuaverStrainSolver.cs" />
+    <Compile Include="Qss\StrainRatingData.cs" />
     <Compile Include="Replays\Replay.cs" />
     <Compile Include="Replays\ReplayAutoplayFrame.cs" />
     <Compile Include="Replays\ReplayFrame.cs" />

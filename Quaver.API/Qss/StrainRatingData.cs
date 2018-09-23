@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Qss
 {
-    public class QuaverStrainSolver
+    public class StrainRatingData
     {
         /// <summary>
         /// Size of each graph partition in miliseconds
@@ -26,10 +26,28 @@ namespace Quaver.API.Qss
         public const int MAX_LANE_CHECK = 7;
 
         /// <summary>
+        /// Map that will be referenced for calculation
+        /// </summary>
+        public Qua Qua { get; private set; }
+
+        /// <summary>
         /// If 2 hit objects are within miliseconds apart, they will be considered a chorded pair.
         /// </summary>
         public const int CHORD_THRESHOLD_MS = 10;
 
+        public float OverallDifficulty { get; set; } = 0;
+        public float AverageNoteDensity { get; set; } = 0;
+        public List<HitObjectData> HitObjects { get; set; }
+        public List<HitObjectData> LeftHandObjects { get; set; }
+        public List<HitObjectData> RightHandObjects { get; set; }
+
+        /// <summary>
+        ///     const
+        /// </summary>
+        /// <param name="qua"></param>
+        public StrainRatingData(Qua qua) => Qua = qua;
+
+        /*
         /// <summary>
         /// Compute and returns Qss Data for a map
         /// </summary>
@@ -47,20 +65,20 @@ namespace Quaver.API.Qss
             CalculateOverallDifficulty(qssData);
 
             return qssData;
-        }
+        }*/
 
         /// <summary>
         /// Compute and generate Note Density Data.
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
-        private static void ComputeNoteDensityData(QssData qssData, Qua qua)
+        private void ComputeNoteDensityData()
         {
-            qssData.MapLength = qua.Length;
-            qssData.AverageNoteDensity = (float)qua.HitObjects.Count / qua.Length;
+            //MapLength = Qua.Length;
+            AverageNoteDensity = (float)Qua.HitObjects.Count / Qua.Length;
 
             //todo: temp
-            qssData.OverallDifficulty = qssData.AverageNoteDensity;
+            OverallDifficulty = AverageNoteDensity;
 
         }
 
@@ -70,38 +88,36 @@ namespace Quaver.API.Qss
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
-        private static void ComputeBaseStrainStates(QssData qssData, Qua qua)
+        private void ComputeBaseStrainStates()
         {
-            qssData.MapLength = qua.Length;
-
             // Add hit objects from qua map to qssData
             HitObjectData hitObjectData;
-            for (var i = 0; i < qua.HitObjects.Count; i++)
+            for (var i = 0; i < Qua.HitObjects.Count; i++)
             {
                 hitObjectData = new HitObjectData()
                 {
-                    StartTime = qua.HitObjects[i].StartTime,
-                    EndTime = qua.HitObjects[i].EndTime,
-                    Lane = qua.HitObjects[i].Lane
+                    StartTime = Qua.HitObjects[i].StartTime,
+                    EndTime = Qua.HitObjects[i].EndTime,
+                    Lane = Qua.HitObjects[i].Lane
                 };
 
                 // Calculate LN Multiplier (note: doesn't check for same hand
                 // Also look for chords
-                for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < qua.HitObjects.Count; j++)
+                for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < Qua.HitObjects.Count; j++)
                 {
-                    if (qua.HitObjects[j].StartTime > hitObjectData.EndTime)
+                    if (Qua.HitObjects[j].StartTime > hitObjectData.EndTime)
                     {
                         break;
                     }
-                    else if (qua.HitObjects[j].StartTime > hitObjectData.StartTime)
+                    else if (Qua.HitObjects[j].StartTime > hitObjectData.StartTime)
                     {
                         // Target hitobject's LN ends after current hitobject's LN
-                        if (qua.HitObjects[j].EndTime > hitObjectData.EndTime)
+                        if (Qua.HitObjects[j].EndTime > hitObjectData.EndTime)
                         {
                             hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
                         }
                         // Target hitobject's LN ends before current hitobject's LN
-                        else if (qua.HitObjects[j].EndTime > 0)
+                        else if (Qua.HitObjects[j].EndTime > 0)
                         {
                             hitObjectData.LnStrainMultiplier *= 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
                         }
@@ -115,7 +131,7 @@ namespace Quaver.API.Qss
 
                 // Assign Finger States
                 // Mania 4k
-                if (qua.Mode == Enums.GameMode.Keys4)
+                if (Qua.Mode == Enums.GameMode.Keys4)
                 {
                     switch (hitObjectData.Lane)
                     {
@@ -141,7 +157,7 @@ namespace Quaver.API.Qss
                 }
 
                 // Mania 7k
-                else if (qua.Mode == Enums.GameMode.Keys7)
+                else if (Qua.Mode == Enums.GameMode.Keys7)
                 {
                     switch (hitObjectData.Lane)
                     {
@@ -178,23 +194,23 @@ namespace Quaver.API.Qss
                     }
                 }
 
-                qssData.HitObjects.Add(hitObjectData);
+                HitObjects.Add(hitObjectData);
             }
         }
 
-        private static void ComputeForChords(QssData qssData)
+        private void ComputeForChords()
         {
             float msDiff;
-            for (var i = 0; i < qssData.HitObjects.Count; i++)
+            for (var i = 0; i < Qua.HitObjects.Count; i++)
             {
-                for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < qssData.HitObjects.Count; j++)
+                for (var j = i - MAX_LANE_CHECK < 0 ? 0 : i - MAX_LANE_CHECK; j < Qua.HitObjects.Count; j++)
                 {
-                    msDiff = qssData.HitObjects[j].StartTime - qssData.HitObjects[i].StartTime;
+                    msDiff = Qua.HitObjects[j].StartTime - Qua.HitObjects[i].StartTime;
                     if (msDiff < CHORD_THRESHOLD_MS)
                     {
                         if (msDiff > -CHORD_THRESHOLD_MS)
                         {
-                            qssData.HitObjects[i].LinkedChordedHitObjects.Add(qssData.HitObjects[j]);
+                            HitObjects[i].LinkedChordedHitObjects.Add(HitObjects[j]);
                         }
                     }
 
@@ -212,7 +228,7 @@ namespace Quaver.API.Qss
         /// Action-Strain multiplier is applied in computation.
         /// </summary>
         /// <param name="qssData"></param>
-        private static void ComputeFingerActions(QssData qssData)
+        private void ComputeFingerActions()
         {
 
         }
@@ -222,7 +238,7 @@ namespace Quaver.API.Qss
         /// Pattern manipulation, and inflated patterns are factored into calculation.
         /// </summary>
         /// <param name="qssData"></param>
-        private static void ComputeActionPatterns(QssData qssData)
+        private void ComputeActionPatterns()
         {
 
         }
@@ -231,9 +247,9 @@ namespace Quaver.API.Qss
         /// Calculates the general difficulty of a beatmap
         /// </summary>
         /// <param name="qssData"></param>
-        private static void CalculateOverallDifficulty(QssData qssData)
+        private void CalculateOverallDifficulty()
         {
-            qssData.OverallDifficulty = 0;
+            OverallDifficulty = 0;
         }
     }
 }
