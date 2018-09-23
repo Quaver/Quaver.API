@@ -308,6 +308,7 @@ namespace Quaver.API.Qss
                 for (var j = i + 1; j < StrainSolverData.Count; j++)
                 {
                     var nextHitOb = StrainSolverData[j];
+                    DebugString += nextHitOb.StartTime + ", ";
                     if (curHitOb.Hand == nextHitOb.Hand)
                         continue;
 
@@ -328,7 +329,7 @@ namespace Quaver.API.Qss
                     FingerAction curAction;
 
                     //todo: REMOVE. this is for debuggin.
-                    DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + actionDuration + "\n");
+                    //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + actionDuration + "\n");
 
                     // Trill/Roll
                     if (!actionChordFound && !actionSameState)
