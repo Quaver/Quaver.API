@@ -324,6 +324,6 @@ namespace Quaver.API.Qss
         /// </summary>
         /// <param name="f"></param>
         /// <returns></returns>
-        public static int FloatToByteInt(float f) => (int)Math.Max(Math.Min(f, 0), 255);
+        public static int FloatToByteInt(float f) => (int)Math.Min(Math.Max(f, 0), 255);
     }
 }
