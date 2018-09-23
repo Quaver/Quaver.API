@@ -174,13 +174,8 @@ namespace Quaver.API.Qss
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Qua.HitObjects.Count; i++)
             {
-                var curStrainData = new StrainSolverData()
-                {
-                    StartTime = Qua.HitObjects[i].StartTime,
-                    EndTime = Qua.HitObjects[i].EndTime
-                };
-
                 var curHitOb = new StrainSolverHitObject(Qua.HitObjects[i]);
+                var curStrainData = new StrainSolverData(curHitOb);
 
                 // Assign Finger and Hand States
                 switch (Qua.Mode)
@@ -195,7 +190,6 @@ namespace Quaver.API.Qss
                         break;
                 }
 
-                curStrainData.HitObjects.Add(curHitOb);
                 StrainSolverData.Add(curStrainData);
 
                 // Current lane index
