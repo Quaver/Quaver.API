@@ -287,7 +287,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         if (!actionChordFound && !actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 560, 51, 0.91f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 660, 51, 0.91f); // todo: temp. Apply actual constants later
                             Roll++;
                         }
 
@@ -295,7 +295,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 560, 55, 0.86f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 660, 55, 0.86f); // todo: temp. Apply actual constants later
                             SJack++;
                         }
 
@@ -303,7 +303,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionJackFound)
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 560, 54, 0.85f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 660, 54, 0.85f); // todo: temp. Apply actual constants later
                             TJack++;
                         }
 
@@ -311,7 +311,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 560, 55, 0.82f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 660, 55, 0.82f); // todo: temp. Apply actual constants later
                             Bracket++;
                         }
 
@@ -344,6 +344,146 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 OverallDifficulty += i.ActionStrainCoefficient;
             }
             OverallDifficulty /= StrainSolverData.Count;
+
+            // Solve for difficulty (temporary)
+            // Difficulty is determined by how long each action is and how difficult they are.
+            //  - longer actions have more weight due to it taking up more of the maps' length.
+            //  - generally shorter actions are harder, but a bunch of hard actions are obviously more difficulty than a single hard action
+
+            // overall difficulty = sum of all actions:(difficulty * action length) / map length
+            // todo: action length is currently manually calculated.
+            // todo: maybe store action length in StrainSolverData because it already gets calculated earlier?
+
+
+            // todo: make this look better
+            switch (Map.Mode)
+            {
+                // 4k difficulty calculation
+                case Enums.GameMode.Keys4:
+                    #region 4k calc
+                    // left hand
+                    for (var i = 0; i < StrainSolverData.Count - 1; i++)
+                    {
+                        if (StrainSolverData[i].Hand == Hand.Left)
+                        {
+                            //find next left hand
+                            for (var j = i + 1; j < StrainSolverData.Count; j++)
+                            {
+                                if (StrainSolverData[j].Hand == Hand.Left)
+                                {
+                                    OverallDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    // right hand
+                    for (var i = 0; i < StrainSolverData.Count - 1; i++)
+                    {
+                        if (StrainSolverData[i].Hand == Hand.Right)
+                        {
+                            //find next left hand
+                            for (var j = i + 1; j < StrainSolverData.Count; j++)
+                            {
+                                if (StrainSolverData[j].Hand == Hand.Right)
+                                {
+                                    OverallDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    OverallDifficulty /= Map.Length * 2;
+                    break;
+                    #endregion
+
+                // 7k difficulty calculation is more longer because we have to solve for the ambiguious hand.
+                // to get difficulty, we must calcualte difficulty twice and assigning ambiguious hand is either hand in both calculations.
+                case Enums.GameMode.Keys7:
+                    #region 7k calc
+                    var ambiguiousHandOnLeftDifficulty = 0f;
+                    var ambiguiousHandOnRightDifficulty = 0f;
+
+                    // ambiguious hand on left
+                    //left hand
+                    for (var i = 0; i < StrainSolverData.Count - 1; i++)
+                    {
+                        if (StrainSolverData[i].Hand == Hand.Left || StrainSolverData[i].Hand == Hand.Ambiguous)
+                        {
+                            //find next left hand
+                            for (var j = i + 1; j < StrainSolverData.Count; j++)
+                            {
+                                if (StrainSolverData[j].Hand == Hand.Left || StrainSolverData[j].Hand == Hand.Ambiguous)
+                                {
+                                    ambiguiousHandOnLeftDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    // right hand
+                    for (var i = 0; i < StrainSolverData.Count - 1; i++)
+                    {
+                        if (StrainSolverData[i].Hand == Hand.Right)
+                        {
+                            //find next left hand
+                            for (var j = i + 1; j < StrainSolverData.Count; j++)
+                            {
+                                if (StrainSolverData[j].Hand == Hand.Right)
+                                {
+                                    ambiguiousHandOnLeftDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    ambiguiousHandOnLeftDifficulty /= Map.Length * 2;
+
+                    // ambiguious hand on right
+                    //left hand
+                    for (var i = 0; i < StrainSolverData.Count - 1; i++)
+                    {
+                        if (StrainSolverData[i].Hand == Hand.Left)
+                        {
+                            //find next left hand
+                            for (var j = i + 1; j < StrainSolverData.Count; j++)
+                            {
+                                if (StrainSolverData[j].Hand == Hand.Left)
+                                {
+                                    ambiguiousHandOnRightDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    // right hand
+                    for (var i = 0; i < StrainSolverData.Count - 1; i++)
+                    {
+                        if (StrainSolverData[i].Hand == Hand.Right || StrainSolverData[i].Hand == Hand.Ambiguous)
+                        {
+                            //find next left hand
+                            for (var j = i + 1; j < StrainSolverData.Count; j++)
+                            {
+                                if (StrainSolverData[j].Hand == Hand.Right || StrainSolverData[j].Hand == Hand.Ambiguous)
+                                {
+                                    ambiguiousHandOnRightDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    //get 7k diff
+                    OverallDifficulty = (ambiguiousHandOnLeftDifficulty + ambiguiousHandOnRightDifficulty) / 2f;
+
+                    break;
+                    #endregion
+            }
         }
 
         /// <summary>
