@@ -287,7 +287,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         if (!actionChordFound && !actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 660, 51, 0.91f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 460, 51, 0.91f); // todo: temp. Apply actual constants later
                             Roll++;
                         }
 
@@ -295,7 +295,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 660, 55, 0.86f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 460, 55, 0.86f); // todo: temp. Apply actual constants later
                             SJack++;
                         }
 
@@ -303,7 +303,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionJackFound)
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 660, 54, 0.85f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 460, 54, 0.85f); // todo: temp. Apply actual constants later
                             TJack++;
                         }
 
@@ -311,7 +311,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 660, 55, 0.82f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 460, 55, 0.82f); // todo: temp. Apply actual constants later
                             Bracket++;
                         }
 
@@ -477,6 +477,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                             }
                         }
                     }
+
+                    ambiguiousHandOnRightDifficulty /= Map.Length * 2f;
 
                     //get 7k diff
                     OverallDifficulty = (ambiguiousHandOnLeftDifficulty + ambiguiousHandOnRightDifficulty) / 2f;
