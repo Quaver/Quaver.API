@@ -14,6 +14,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
     public class StrainSolverKeys : StrainSolver
     {
         /// <summary>
+        ///     Overall difficulty of the map
+        /// </summary>
+        public override float OverallDifficulty { get; internal set; } = 0;
+
+        /// <summary>
         /// TODO: remove this later. TEMPORARY.
         /// </summary>
         public string DebugString { get; private set; } = "";
@@ -35,16 +40,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Total ammount of milliseconds in a second.
         /// </summary>
         public const float SECONDS_TO_MILLISECONDS = 1000;
-
-        /// <summary>
-        ///     Map that will be referenced for calculation
-        /// </summary>
-        public Qua Qua { get; private set; }
-
-        /// <summary>
-        ///     Overall difficulty of the map
-        /// </summary>
-        public float OverallDifficulty { get; private set; } = 0;
 
         /// <summary>
         ///     Average note density of the map
@@ -110,13 +105,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     const
         /// </summary>
         /// <param name="qua"></param>
-        public StrainSolverKeys(Qua qua)
+        public StrainSolverKeys(Qua map) : base(map)
         {
-            // Assign reference qua
-            Qua = qua;
-
             // Don't bother calculating map difficulty if there's less than 2 hit objects
-            if (Qua.HitObjects.Count < 2) return;
+            if (map.HitObjects.Count < 2) return;
 
             // Solve for difficulty
             ComputeNoteDensityData();
@@ -135,7 +127,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         private void ComputeNoteDensityData()
         {
             //MapLength = Qua.Length;
-            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Qua.HitObjects.Count / Qua.Length;
+            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / Map.Length;
 
             //todo: solve note density graph
         }
@@ -149,21 +141,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         private void ComputeBaseStrainStates()
         {
             // Add hit objects from qua map to qssData
-            for (var i = 0; i < Qua.HitObjects.Count; i++)
+            for (var i = 0; i < Map.HitObjects.Count; i++)
             {
-                var curHitOb = new StrainSolverHitObject(Qua.HitObjects[i]);
+                var curHitOb = new StrainSolverHitObject(Map.HitObjects[i]);
                 var curStrainData = new StrainSolverData(curHitOb);
 
                 // Assign Finger and Hand States
-                switch (Qua.Mode)
+                switch (Map.Mode)
                 {
                     case Enums.GameMode.Keys4:
-                        curHitOb.FingerState = LaneToFinger4K[Qua.HitObjects[i].Lane];
-                        curStrainData.Hand = LaneToHand4K[Qua.HitObjects[i].Lane];
+                        curHitOb.FingerState = LaneToFinger4K[Map.HitObjects[i].Lane];
+                        curStrainData.Hand = LaneToHand4K[Map.HitObjects[i].Lane];
                         break;
                     case Enums.GameMode.Keys7:
-                        curHitOb.FingerState = LaneToFinger7K[Qua.HitObjects[i].Lane];
-                        curStrainData.Hand = LaneToHand7K[Qua.HitObjects[i].Lane];
+                        curHitOb.FingerState = LaneToFinger7K[Map.HitObjects[i].Lane];
+                        curStrainData.Hand = LaneToHand7K[Map.HitObjects[i].Lane];
                         break;
                 }
 
