@@ -74,6 +74,7 @@
     <Compile Include="Maps\Parsers\StepManiaFile.cs" />
     <Compile Include="Maps\Processors\Difficulty\DifficultyCalculator.cs" />
     <Compile Include="Maps\Processors\Difficulty\DifficultyCalculatorKeys.cs" />
+    <Compile Include="Maps\Processors\Difficulty\StrainSolver.cs" />
     <Compile Include="Maps\Processors\Scoring\Data\HitStat.cs" />
     <Compile Include="Maps\Processors\Scoring\Data\HitStatType.cs" />
     <Compile Include="Maps\Processors\Scoring\ScoreProcessor.cs" />

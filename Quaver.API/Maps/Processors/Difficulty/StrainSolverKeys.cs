@@ -11,7 +11,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
     /// <summary>
     ///     Will be used to solve Strain Rating.
     /// </summary>
-    public class StrainSolverKeys
+    public class StrainSolverKeys : StrainSolver
     {
         /// <summary>
         /// TODO: remove this later. TEMPORARY.
