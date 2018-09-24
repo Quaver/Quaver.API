@@ -11,7 +11,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
     /// <summary>
     ///     Will be used to solve Strain Rating.
     /// </summary>
-    public class StrainSolver
+    public class StrainSolverKeys
     {
         /// <summary>
         /// TODO: remove this later. TEMPORARY.
@@ -110,7 +110,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
         ///     const
         /// </summary>
         /// <param name="qua"></param>
-        public StrainSolver(Qua qua)
+        public StrainSolverKeys(Qua qua)
         {
             // Assign reference qua
             Qua = qua;

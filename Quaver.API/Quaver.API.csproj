@@ -94,7 +94,7 @@
     <Compile Include="Maps\Processors\Difficulty\Structures\Hand.cs" />
     <Compile Include="Maps\Processors\Difficulty\Structures\LnLayerType.cs" />
     <Compile Include="Maps\Processors\Difficulty\Structures\StrainSolverData.cs" />
-    <Compile Include="Maps\Processors\Difficulty\StrainSolver.cs" />
+    <Compile Include="Maps\Processors\Difficulty\StrainSolverKeys.cs" />
     <Compile Include="Maps\Processors\Difficulty\Structures\StrainSolverHitObject.cs" />
     <Compile Include="Replays\Replay.cs" />
     <Compile Include="Replays\ReplayAutoplayFrame.cs" />

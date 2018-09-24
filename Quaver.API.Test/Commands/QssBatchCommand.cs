@@ -21,7 +21,7 @@ namespace Quaver.API.Test.Commands
         
         public override void Execute()
         {
-            var qss = new StrainSolver(Map);
+            var qss = new StrainSolverKeys(Map);
             Console.WriteLine($"Map: {Map.Artist} - {Map.Title} [{Map.DifficultyName}]");
             Console.WriteLine($"Overall Difficulty: {qss.OverallDifficulty}");
         }
