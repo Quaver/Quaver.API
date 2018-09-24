@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
-using Weighted_Randomizer;
 
 namespace Quaver.API.Gameplay
 {
@@ -57,9 +56,6 @@ namespace Quaver.API.Gameplay
 
             // Generate username for this bot.
             Name = GenerateRandomName();
-
-            // Contains the random weights of each judgement 
-            IWeightedRandomizer<int> weights;
             
             switch (Level)
             {
@@ -75,42 +71,33 @@ namespace Quaver.API.Gameplay
                     break;
                 // Bad Player.
                 case BotLevel.Noob:
-                    weights = new DynamicWeightedRandomizer<int>();
-                    
-                    weights.Add((int)Judgement.Marv, 30);
-                    weights.Add((int)Judgement.Perf, 15);
-                    weights.Add((int)Judgement.Great, 20);
-                    weights.Add((int)Judgement.Good, 10);
-                    weights.Add((int)Judgement.Okay, 5);
-                    weights.Add((int)Judgement.Miss, 20);
-                      
-                    GenerateRandomJudgements(weights);
+                    Map.HitObjects.ForEach(x =>
+                    {
+                        Judgements.Add(Judgement.Good);
+
+                        if (x.IsLongNote)
+                            Judgements.Add(Judgement.Good);
+                    });
                     break;
                 // An amateur player, gets the job done.
                 case BotLevel.Amateur:
-                    weights = new DynamicWeightedRandomizer<int>();
-                    
-                    weights.Add((int)Judgement.Marv, 75);
-                    weights.Add((int)Judgement.Perf, 15);
-                    weights.Add((int)Judgement.Great, 5);
-                    weights.Add((int)Judgement.Good, 1);
-                    weights.Add((int)Judgement.Okay, 1);
-                    weights.Add((int)Judgement.Miss, 3);
-                      
-                    GenerateRandomJudgements(weights);
+                    Map.HitObjects.ForEach(x =>
+                    {
+                        Judgements.Add(Judgement.Great);
+
+                        if (x.IsLongNote)
+                            Judgements.Add(Judgement.Great);
+                    });
                     break;
                 // High level player.
                 case BotLevel.Decent:
-                    weights = new DynamicWeightedRandomizer<int>();
-                    
-                    weights.Add((int)Judgement.Marv, 75);
-                    weights.Add((int)Judgement.Perf, 20);
-                    weights.Add((int)Judgement.Great, 2);
-                    weights.Add((int)Judgement.Good, 1);
-                    weights.Add((int)Judgement.Okay, 1);
-                    weights.Add((int)Judgement.Miss, 1);
-                      
-                    GenerateRandomJudgements(weights);
+                    Map.HitObjects.ForEach(x =>
+                    {
+                        Judgements.Add(Judgement.Perf);
+
+                        if (x.IsLongNote)
+                            Judgements.Add(Judgement.Perf);
+                    });
                     break;
                 // God. Has marvelous on everything.
                 case BotLevel.ATTang:
@@ -130,28 +117,12 @@ namespace Quaver.API.Gameplay
         }
 
         /// <summary>
-        ///     Generates and fills random weighted judgements
-        /// </summary>
-        /// <param name="weights"></param>
-        private void GenerateRandomJudgements(IWeightedRandomizer<int> weights)
-        {
-            foreach (var obj in Map.HitObjects)
-            {       
-                Judgements.Add((Judgement) weights.NextWithReplacement());
-
-                // Add another judgement if its a long note.
-                if (obj.IsLongNote)
-                    Judgements.Add((Judgement) weights.NextWithReplacement());
-            }
-        }
-
-        /// <summary>
         ///     Generates a random file name from the list of bot names.
         /// </summary>
         /// <returns></returns>
         public static string GenerateRandomName()
         {
-            var names = APIResources.names.Split('\n');
+            var names = ResourceStore.names.Split('\n');
             return names[Rng.Next(1, names.Length - 1)];
         }
     }    
