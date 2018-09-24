@@ -484,6 +484,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     break;
                     #endregion
             }
+
+            // calculate stamina (temp solution)
+            // it just uses the map's length.
+            // 10 seconds = 0.9x multiplier
+            // 100 seconds = 1.0x multiplier
+            // 1000 seconds = 1.1x multiplier
+            // 10000 seconds = 1.2x multiplier, ect.
+            OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length) / 10);
         }
 
         /// <summary>
