@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quaver.API.Maps.Processors.Difficulty.Structures
+namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
     /// <summary>
     ///     An expanded version of hit object that is used for QSS implementations in API/editor/calculation
