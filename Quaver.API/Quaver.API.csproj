@@ -72,8 +72,6 @@
     <Compile Include="Helpers\StreamHelper.cs" />
     <Compile Include="Maps\Parsers\OsuBeatmap.cs" />
     <Compile Include="Maps\Parsers\StepManiaFile.cs" />
-    <Compile Include="Maps\Processors\Difficulty\DifficultyCalculator.cs" />
-    <Compile Include="Maps\Processors\Difficulty\DifficultyCalculatorKeys.cs" />
     <Compile Include="Maps\Processors\Difficulty\StrainSolver.cs" />
     <Compile Include="Maps\Processors\Scoring\Data\HitStat.cs" />
     <Compile Include="Maps\Processors\Scoring\Data\HitStatType.cs" />
@@ -89,7 +87,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>APIResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Maps\Processors\Difficulty\Colors.cs" />
+    <Compile Include="Maps\Processors\Difficulty\StrainColors.cs" />
     <Compile Include="Maps\Processors\Difficulty\Rulesets\Keys\Structures\FingerState.cs" />
     <Compile Include="Maps\Processors\Difficulty\Rulesets\Keys\Structures\FingerAction.cs" />
     <Compile Include="Maps\Processors\Difficulty\Rulesets\Keys\Structures\Hand.cs" />
