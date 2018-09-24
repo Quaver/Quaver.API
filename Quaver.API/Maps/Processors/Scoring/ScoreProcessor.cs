@@ -85,11 +85,6 @@ namespace Quaver.API.Maps.Processors.Scoring
         public abstract Dictionary<Judgement, float> JudgementHealthWeighting { get; }
 
         /// <summary>
-        ///     The weighting for accuracy.
-        /// </summary>
-        public abstract Dictionary<Judgement, int> JudgementAccuracyWeighting { get; }
-
-        /// <summary>
         ///     The percentage for each grade.
         /// </summary>
         public abstract Dictionary<Grade, int> GradePercentage { get; }
@@ -152,12 +147,6 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
         public abstract void CalculateScore(Judgement judgement);
-
-        /// <summary>
-        ///     Calculates the accuracy of the current play session.
-        /// </summary>
-        /// <returns></returns>
-        protected abstract float CalculateAccuracy();
 
         /// <summary>
         ///     Initializes the mods for this given play.

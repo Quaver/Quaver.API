@@ -133,14 +133,6 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override Dictionary<Judgement, int> JudgementAccuracyWeighting { get; } = new Dictionary<Judgement, int>()
-        {
-            
-        };
-
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
         public override Dictionary<Grade, int> GradePercentage { get; } = new Dictionary<Grade, int>()
         {
             {Grade.XX, 100},
@@ -284,16 +276,6 @@ namespace Quaver.API.Maps.Processors.Scoring
             else
                 Health = newHealth;
             #endregion
-        }
-
-        /// <summary>
-        ///     Old method to calculate accuracy with hit judgements
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Accuracy is automatically calculated from CalculateScore(). This method returns outdated acc value.")]
-        protected override float CalculateAccuracy()
-        {
-            return 0;
         }
 
         /// <summary>
