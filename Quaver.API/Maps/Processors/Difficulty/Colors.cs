@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using Quaver.API.Enums;
 
-namespace Quaver.API.Qss
+namespace Quaver.API.Maps.Processors.Difficulty
 {
     /// <summary>
     ///     Generates Colors for anything related to QSR and note density,

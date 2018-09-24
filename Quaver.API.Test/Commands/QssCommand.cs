@@ -1,6 +1,6 @@
 using System;
 using Quaver.API.Maps;
-using Quaver.API.Qss;
+using Quaver.API.Maps.Processors.Difficulty;
 
 namespace Quaver.API.Test.Commands
 {

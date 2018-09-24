@@ -1,12 +1,12 @@
 using Quaver.API.Maps;
-using Quaver.API.Qss.Structures;
+using Quaver.API.Maps.Processors.Difficulty.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quaver.API.Qss
+namespace Quaver.API.Maps.Processors.Difficulty
 {
     /// <summary>
     ///     Will be used to solve Strain Rating.
