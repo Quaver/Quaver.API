@@ -12,7 +12,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
     ///     Generates Colors for anything related to QSR and note density,
     ///     This class and its contents are only used for generating colors,
     /// </summary>
-    public static class Colors
+    public static class StrainColors
     {
         /// <summary>
         ///     Interval at which each difficulty tier starts at
