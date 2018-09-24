@@ -6,6 +6,7 @@ using System.Linq;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty;
+using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 using Quaver.API.Maps.Structures;
 using YamlDotNet.Serialization;
 
@@ -260,13 +261,13 @@ namespace Quaver.API.Maps
         [Obsolete("Please use Quaver.API/QuaverStrainSolver/QssData")]
         public double CalculateDifficulty()
         {
-            DifficultyCalculator diffCalc;
+            StrainSolverKeys diffCalc;
             
             switch (Mode)
             {
                 case GameMode.Keys4:
                 case GameMode.Keys7:
-                    diffCalc = new DifficultyCalculatorKeys(this);
+                    diffCalc = new StrainSolverKeys(this);
                     break;
                 default:
                     throw new InvalidEnumArgumentException();
