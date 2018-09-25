@@ -18,7 +18,7 @@ namespace Quaver.API.Test
                                     $"'-qssbatch <file path>' - Get multiple qss data from a folder\n");
                 return;
             }
-            
+
             switch (args[0])
             {
                 case "-osu":
@@ -32,10 +32,12 @@ namespace Quaver.API.Test
                     break;
                 case "-qssbatch":
                     new QssBatchCommand(args).Execute();
+                case "-replay":
+                    new ReplayCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
             }
-        }     
+        }
     }
 }

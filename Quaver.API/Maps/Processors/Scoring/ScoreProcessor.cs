@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
@@ -173,10 +173,29 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Gets the judgement breakdown from hit data.
         /// </summary>
         /// <returns></returns>
-        public string GetJudgementBreakdown()
+        public string GetHitBreakdown()
         {
             var breakdown = "";
-            Stats.ForEach(x => breakdown += (int)x.Judgement);
+
+            Stats.ForEach(x =>
+            {
+                breakdown += x.HitDifference;
+
+                switch (x.KeyPressType)
+                {
+                    case KeyPressType.None:
+                        breakdown += "N";
+                        break;
+                    case KeyPressType.Press:
+                        breakdown += "P";
+                        break;
+                    case KeyPressType.Release:
+                        breakdown += "R";
+                        break;
+                }
+
+                breakdown += ",";
+            });
 
             return breakdown;
         }

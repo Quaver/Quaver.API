@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Quaver.API.Enums;
+using Quaver.API.Maps.Processors.Scoring.Data;
 using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
 {
     public class ScoreProcessorKeys : ScoreProcessor
     {
-
         /// <summary>
         ///     The maximum amount of judgements.
         ///
@@ -16,26 +16,58 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Additionally a long note counts as two (Beginning and End).
         /// </summary>
         private int TotalJudgements { get; }
-        
-         /// <summary>
+
+        /// <summary>
         ///     See: ScoreProcessorKeys.CalculateSummedScore();
         /// </summary>
         private int SummedScore { get; }
 
         /// <summary>
-        ///     ?
+        ///     Counts consecutive hits for the score multiplier
+        ///     Max Multiplier Count is MultiplierMaxIndex * MultiplierCountToIncreaseIndex
         /// </summary>
         private int MultiplierCount { get; set; }
 
         /// <summary>
-        ///     ?
+        ///     After 10 hits, the multiplier index will increase.
         /// </summary>
         private int MultiplierIndex { get; set; }
 
         /// <summary>
-        ///     ?
+        ///     Max Index for multiplier. Multiplier index can not increase more than this value.
+        /// </summary>
+        private int MultiplierMaxIndex { get; } = 15;
+
+        /// <summary>
+        ///     Multiplier Count needed in order to increase the Multiplier Index by 1.
+        ///     By increasing this multiplier index, notes will be worth more score.
+        /// </summary>
+        private int MultiplierCountToIncreaseIndex { get; } = 10;
+
+        /// <summary>
+        ///     This determines the max score.
+        /// </summary>
+        private int MaxMultiplierCount => MultiplierMaxIndex * MultiplierCountToIncreaseIndex;
+
+        /// <summary>
+        ///     Total actual score. (Regular Score is ScoreCount / SummedScore)
         /// </summary>
         private int ScoreCount { get; set; }
+
+        /// <summary>
+        ///     Total Accuracy Weight Added
+        /// </summary>
+        private float AccuracyWeightCount { get; set; }
+
+        /// <summary>
+        ///     Lowest Accuracy that the player can recieve by hitting barely in the hit window
+        /// </summary>
+        private float LowestAccuracyWeight { get; } = -62.5f;
+
+        /// <summary>
+        ///     Interval at which hit difference is rounded down to (in milliseconds)
+        /// </summary>
+        private float AccuracyWeightInterval { get; } = 4;
 
         /// <inheritdoc />
         /// <summary>
@@ -61,7 +93,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Judgement.Good, 1.5f},
             {Judgement.Okay, 1.5f},
         };
-        
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -126,44 +158,83 @@ namespace Quaver.API.Maps.Processors.Scoring
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
         }
-        
+
         /// <summary>
-        ///     Ctor - 
+        ///     Ctor -
         /// </summary>
         /// <param name="replay"></param>
         public ScoreProcessorKeys(Replay replay) : base(replay){}
 
+        /// <summary>
+        ///     Accuracy Calculation component of CalculateScore() if a note has been pressed/released properly
+        /// </summary>
+        /// <param name="hitDifference"></param>
+        /// <param name="keyPressType"></param>
+        public Judgement CalculateScore(int hitDifference, KeyPressType keyPressType)
+        {
+            var absoluteDifference = (float)Math.Floor(Math.Abs(hitDifference) / AccuracyWeightInterval) * AccuracyWeightInterval;
+
+            var judgement = Judgement.Ghost;
+
+            // Find judgement of hit
+            for (var i = 0; i < JudgementWindow.Count; i++)
+            {
+                var j = (Judgement) i;
+
+                // Handles the case of if you release too early on a LN.
+                if (keyPressType == KeyPressType.Release && j == Judgement.Miss)
+                    break;
+
+                var window = keyPressType == KeyPressType.Release  ? JudgementWindow[j] * WindowReleaseMultiplier[j] : JudgementWindow[j];
+
+                if (!(absoluteDifference <= window))
+                    continue;
+
+                judgement = j;
+                break;
+            }
+
+            // If the press/release was outside of hit window, do not score.
+            if (judgement == Judgement.Ghost)
+                return judgement;
+
+            // Calcualte and update acc weight
+            var hitOffsetMagnitude = JudgementAccuracyWeighting[Judgement.Marv] - LowestAccuracyWeight;
+            var hitOffsetRatio = (Math.Max(absoluteDifference - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
+            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - hitOffsetMagnitude * (float)(1 - Math.Cos(hitOffsetRatio * Math.PI)) / 2f;
+
+            // Calculate score
+            CalculateScore(judgement);
+
+            return judgement;
+        }
+
         /// <inheritdoc />
         /// <summary>
+        ///     Calculate Score and Health increase/decrease with a given judgement.
         /// </summary>
         /// <param name="judgement"></param>
         public override void CalculateScore(Judgement judgement)
         {
-            // Add to the current judgements.
+            // Update Judgement count
             CurrentJudgements[judgement]++;
-            
+
+            // Update acc weight if missed
+            if (judgement == Judgement.Miss)
+                AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Miss];
+
             // Calculate and set the new accuracy.
-            Accuracy = CalculateAccuracy();
-            
-#region SCORE_CALCULATION                  
-            // If the user didn't miss, then we want to update their combo and multiplier
-            // accordingly.
+            Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
+
+            #region SCORE_CALCULATION
+            // If the user didn't miss, then we want to update their combo and multiplier.
             if (judgement != Judgement.Miss)
             {
                 //Update Multiplier
                 if (judgement == Judgement.Good)
-                {
-                    MultiplierCount -= 10;
-                    if (MultiplierCount < 0)
-                        MultiplierCount = 0;
-                }
+                    MultiplierCount -= MultiplierCountToIncreaseIndex;
                 else
-                {
-                    if (MultiplierCount < 150)
-                        MultiplierCount++;
-                    else
-                        MultiplierCount = 150; //idk... just to be safe
-                }
+                    MultiplierCount++;
 
                 // Add to the combo since the user hit.
                 Combo++;
@@ -172,28 +243,31 @@ namespace Quaver.API.Maps.Processors.Scoring
                 if (Combo > MaxCombo)
                     MaxCombo = Combo;
             }
-            // The user missed, so we want to update their multipler and reset their combo.
+            // The user missed, so we want to decrease their multipler by 2 indexes and reset their combo.
             else
             {
-                // Update Multiplier
-                MultiplierCount -= 20;
-                
-                if (MultiplierCount < 0) 
-                    MultiplierCount = 0;
-                
-                // Reset combo.
+                MultiplierCount -= MultiplierCountToIncreaseIndex * 2;
                 Combo = 0;
             }
-                   
-            // Update multiplier index and score count.
-            MultiplierIndex = (int)Math.Floor(MultiplierCount/10f);
-            ScoreCount += JudgementScoreWeighting[judgement] + MultiplierIndex * 10;
-            
-            // Update total score.
-            Score = (int)(1000000 * ((double)ScoreCount / SummedScore));
-#endregion
 
-#region HEALTH_CALCULATION
+            // Make sure the multiplier count doesn't go below 0
+            if (MultiplierCount < 0)
+                MultiplierCount = 0;
+
+            // Make sure the multiplier count is not over max multiplier count
+            else if (MultiplierCount > MaxMultiplierCount)
+                MultiplierCount = MaxMultiplierCount;
+
+            // Update multiplier index and score count.
+            MultiplierIndex = (int)Math.Floor((float)MultiplierCount/ MultiplierCountToIncreaseIndex);
+            ScoreCount += JudgementScoreWeighting[judgement] + MultiplierIndex * MultiplierCountToIncreaseIndex;
+
+            // Update total score.
+            const float StandardizedMaxScore = 1000000;
+            Score = (int)(StandardizedMaxScore * ((double)ScoreCount / SummedScore));
+            #endregion
+
+            #region HEALTH_CALCULATION
             // Add health based on the health weighting for that given judgement.
             var newHealth = Health += JudgementHealthWeighting[judgement];
 
@@ -203,23 +277,23 @@ namespace Quaver.API.Maps.Processors.Scoring
             else if (newHealth >= 100)
                 Health = 100;
             else
-                Health = newHealth;          
-#endregion   
+                Health = newHealth;
+            #endregion
         }
-        
-        /// <inheritdoc />
+
         /// <summary>
-        ///     Calculates the current accuracy.
+        ///     Old method to calculate accuracy with hit judgements
         /// </summary>
         /// <returns></returns>
+        [Obsolete("Accuracy is automatically calculated from CalculateScore(). This method returns outdated acc value.")]
         protected override float CalculateAccuracy()
         {
             float accuracy = 0;
 
             foreach (var item in CurrentJudgements)
                 accuracy += item.Value * JudgementAccuracyWeighting[item.Key];
-      
-            return Math.Max(accuracy / (TotalJudgementCount * 100), 0) * 100;  
+
+            return Math.Max(accuracy / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
         }
 
         /// <summary>
@@ -243,41 +317,30 @@ namespace Quaver.API.Maps.Processors.Scoring
 
             return judgements;
         }
-        
+
         /// <summary>
         ///     Calculates the max score you can achieve in a song.
-        ///         - Counts every Marv Hit
+        ///         (Note: It assumes every hit is a Marv)
         ///
         ///     The user's current score is divided by this value then multiplied by 1,000,000
         ///     to get the score out of a million - the true max score.
-        ///
-        ///     When playing, your score multiplier starts at 0, then increases each 10-combo increment.
-        ///     The max score multiplier is 2.5x, and doesn't increase after 150 combo.
-        ///
-        ///     At that point, every marv will be worth 250 points, however a marv without any multiplier
-        ///     is worth 100 points.
-        ///
-        ///     25650 is the value when you add all the scores together for every successful Marv below 150 combo.
-        ///     
         /// </summary>
         /// <returns></returns>
         private int CalculateSummedScore()
         {
-            int summedScore;
+            var summedScore = 0;
 
             // Multiplier doesn't increase after this amount.
-            const int comboCap = 150;
-            
-            // Calculate max score
-            if (TotalJudgements < comboCap)
-            {
-                summedScore = 0;
-                
-                for (var i = 1; i < TotalJudgements + 1; i++)
-                    summedScore += 100 + 10 * (int) Math.Floor(i / 10f);
-            }
-            else
-                summedScore = 25650 + (TotalJudgements - (comboCap - 1)) * 250;
+            var maxMultiplierCount = MultiplierMaxIndex * MultiplierCountToIncreaseIndex;
+
+            // Calculate score for notes below max multiplier combo
+            // Note: This block could be a constant for songs that have max combo that exceeds the max multiplier count, but that will mean we will have to manually change the constant everytime we update any single other constant.
+            for (var i = 1; i <= TotalJudgements && i < maxMultiplierCount; i++)
+                summedScore += JudgementScoreWeighting[Judgement.Marv] + MultiplierCountToIncreaseIndex * (int) Math.Floor((float)i / MultiplierCountToIncreaseIndex);
+
+            // Calculate score for notes once max multiplier combo is reached
+            if (TotalJudgements >= maxMultiplierCount)
+                summedScore += (TotalJudgements - (maxMultiplierCount - 1)) * (JudgementScoreWeighting[Judgement.Marv] + maxMultiplierCount);
 
             return summedScore;
         }

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quaver.API", "Quaver.API\Quaver.API.csproj", "{0C6869BD-4E34-4C92-A853-E09F2B320601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quaver.API", "Quaver.API\Quaver.API.csproj", "{D80E1584-78F8-402F-9774-C5056024C242}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quaver.API.Test", "Quaver.API.Test\Quaver.API.Test.csproj", "{EA20F9A0-6C4D-41EE-9D46-8C21FA34882F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quaver.API.Test", "Quaver.API.Test\Quaver.API.Test.csproj", "{5C98B96D-EECC-4128-AE09-A09530525F8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,16 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0C6869BD-4E34-4C92-A853-E09F2B320601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C6869BD-4E34-4C92-A853-E09F2B320601}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C6869BD-4E34-4C92-A853-E09F2B320601}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C6869BD-4E34-4C92-A853-E09F2B320601}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA20F9A0-6C4D-41EE-9D46-8C21FA34882F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA20F9A0-6C4D-41EE-9D46-8C21FA34882F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA20F9A0-6C4D-41EE-9D46-8C21FA34882F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA20F9A0-6C4D-41EE-9D46-8C21FA34882F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D80E1584-78F8-402F-9774-C5056024C242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D80E1584-78F8-402F-9774-C5056024C242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D80E1584-78F8-402F-9774-C5056024C242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D80E1584-78F8-402F-9774-C5056024C242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C98B96D-EECC-4128-AE09-A09530525F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C98B96D-EECC-4128-AE09-A09530525F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C98B96D-EECC-4128-AE09-A09530525F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C98B96D-EECC-4128-AE09-A09530525F8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91AFD0EA-8EC6-4A33-9BF6-FD908ECB183E}
 	EndGlobalSection
 EndGlobal

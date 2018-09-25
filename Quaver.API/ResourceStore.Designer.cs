@@ -22,14 +22,14 @@ namespace Quaver.API {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class APIResources {
+    internal class ResourceStore {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal APIResources() {
+        internal ResourceStore() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Quaver.API {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Quaver.API.APIResources", typeof(APIResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Quaver.API.ResourceStore", typeof(ResourceStore).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Quaver.API {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to # The following are names to be used as bots and are randomly selected during gameplay. 
+        ///   Looks up a localized string similar to # The following are names to be used as bots and are randomly selected during gameplay.
         ///Swan
         ///Staravia
         ///Arpia
@@ -69,62 +69,35 @@ namespace Quaver.API {
         ///Barry
         ///Vortex
         ///Juan
-        ///Daniel
         ///ATTang
         ///Riven
-        ///Jaka
-        ///Sukjak
+        ///Jakads
+        ///Sujak
         ///Dakky
         ///XFlame
         ///Dpis
         ///Dulio
-        ///Eva
         ///Iroha
         ///Piggy
-        ///Usin
         ///Howl
         ///Nyo
-        ///Ripple
-        ///Sas
-        ///Cono
-        ///Russia
+        ///Schiavo
         ///Aleana
         ///Goose
-        ///Schiavo
-        ///Dean
         ///Fumi
-        ///Ami
         ///Topo
-        ///Zozo
-        ///Riccardo
-        ///Giuseppe
         ///Eddie
-        ///Dillon
-        ///Alice
         ///Kondy
-        ///Jhlee
-        ///Zino
         ///Hyeon
-        ///Dot
+        ///Dawt
         ///Vibe
-        ///Ray
-        ///Chack
         ///Nora
         ///Marco
         ///Ami
         ///JM
         ///Zak
-        ///Angie
-        ///Comet
-        ///Shave
-        ///Lithi
-        ///Cono
-        ///Flat
-        ///CRZ
-        ///Mike
-        ///Jason
-        ///Eugene
-        ///Namida [rest of string was truncated]&quot;;.
+        ///CloudHolic
+        ///.
         /// </summary>
         internal static string names {
             get {
