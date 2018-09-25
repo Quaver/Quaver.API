@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
+using Quaver.API.Maps.Processors.Scoring;
+using Quaver.API.Maps.Processors.Scoring.Data;
 
 namespace Quaver.API.Gameplay
 {
@@ -34,10 +36,10 @@ namespace Quaver.API.Gameplay
         public BotLevel Level { get; }
 
         /// <summary>
-        ///     The list of judgements for this particular bot.
+        ///     The list of HitStats for this bot.
         /// </summary>
-        public List<Judgement> Judgements { get; }
-        
+        public List<HitStat> HitStats { get; }
+
         /// <summary>
         ///     RNG
         /// </summary>
@@ -52,63 +54,66 @@ namespace Quaver.API.Gameplay
         {
             Map = map;
             Level = level;
-            Judgements = new List<Judgement>();
+            HitStats = new List<HitStat>();
 
             // Generate username for this bot.
             Name = GenerateRandomName();
-            
+
+            // Create a fake score processor so we can access the judgement values.
+            var scoreProcessor = new ScoreProcessorKeys(new Qua(), 0);
+
             switch (Level)
             {
                 // Garbage bot. Okays every single object.
                 case BotLevel.Horrible:
                     Map.HitObjects.ForEach(x =>
                     {
-                        Judgements.Add(Judgement.Okay);
-                        
+                        HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Okay]));
+
                         if (x.IsLongNote)
-                            Judgements.Add(Judgement.Okay);
+                            HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Okay]));
                     });
                     break;
                 // Bad Player.
                 case BotLevel.Noob:
                     Map.HitObjects.ForEach(x =>
                     {
-                        Judgements.Add(Judgement.Good);
+                        HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Good]));
 
                         if (x.IsLongNote)
-                            Judgements.Add(Judgement.Good);
+                            HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Good]));
                     });
                     break;
                 // An amateur player, gets the job done.
                 case BotLevel.Amateur:
                     Map.HitObjects.ForEach(x =>
                     {
-                        Judgements.Add(Judgement.Great);
+                        HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Great]));
 
                         if (x.IsLongNote)
-                            Judgements.Add(Judgement.Great);
+                            HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Great]));
                     });
                     break;
                 // High level player.
                 case BotLevel.Decent:
                     Map.HitObjects.ForEach(x =>
                     {
-                        Judgements.Add(Judgement.Perf);
+                        HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Perf]));
 
                         if (x.IsLongNote)
-                            Judgements.Add(Judgement.Perf);
+                            HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Perf]));
                     });
                     break;
                 // God. Has marvelous on everything.
                 case BotLevel.ATTang:
                     Name = "ATTang";
-                    
+
                     Map.HitObjects.ForEach(x =>
                     {
-                        Judgements.Add(Judgement.Marv);
-                        
+                        HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Marv]));
+
                         if (x.IsLongNote)
-                            Judgements.Add(Judgement.Marv);
+                            HitStats.Add(new HitStat(HitStatType.Hit, KeyPressType.Press, (int)scoreProcessor.JudgementWindow[Judgement.Marv]));
                     });
                     break;
                 default:
@@ -125,5 +130,5 @@ namespace Quaver.API.Gameplay
             var names = ResourceStore.names.Split('\n');
             return names[Rng.Next(1, names.Length - 1)];
         }
-    }    
+    }
 }
