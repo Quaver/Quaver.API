@@ -62,7 +62,17 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     Lowest Accuracy that the player can recieve by hitting barely in the hit window
         /// </summary>
-        private float LowestAccuracyWeight { get; } = -62.5f;
+        private float WorstAccuracyWeight { get; } = -60f;
+
+        /// <summary>
+        ///     Highest Accuracy that the player can recieve by hitting on time
+        /// </summary>
+        private float BestAccuracyWeight { get; } = 100f;
+
+        /// <summary>
+        ///     Accuracy you that the player recieves for missing
+        /// </summary>
+        private float MissAccuracyWeight { get; } = -20f;
 
         /// <summary>
         ///     Interval at which hit difference is rounded down to (in milliseconds)
@@ -118,19 +128,6 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Judgement.Good, -3.0f},
             {Judgement.Okay, -4.5f},
             {Judgement.Miss, -6.0f}
-        };
-
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public override Dictionary<Judgement, int> JudgementAccuracyWeighting { get; } = new Dictionary<Judgement, int>()
-        {
-            {Judgement.Marv, 100},
-            {Judgement.Perf, 100},
-            {Judgement.Great, 50},
-            {Judgement.Good, 25},
-            {Judgement.Okay, -50},
-            {Judgement.Miss, -25}
         };
 
         /// <inheritdoc />
@@ -199,9 +196,9 @@ namespace Quaver.API.Maps.Processors.Scoring
                 return judgement;
 
             // Calcualte and update acc weight
-            var hitOffsetMagnitude = JudgementAccuracyWeighting[Judgement.Marv] - LowestAccuracyWeight;
+            var hitOffsetMagnitude = BestAccuracyWeight - WorstAccuracyWeight;
             var hitOffsetRatio = (Math.Max(absoluteDifference - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
-            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - hitOffsetMagnitude * (float)(1 - Math.Cos(hitOffsetRatio * Math.PI)) / 2f;
+            AccuracyWeightCount += BestAccuracyWeight - hitOffsetMagnitude * (float)(1 - Math.Cos(hitOffsetRatio * Math.PI)) / 2f;
 
             // Calculate score
             CalculateScore(judgement);
@@ -221,10 +218,10 @@ namespace Quaver.API.Maps.Processors.Scoring
 
             // Update acc weight if missed
             if (judgement == Judgement.Miss)
-                AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Miss];
+                AccuracyWeightCount += MissAccuracyWeight;
 
             // Calculate and set the new accuracy.
-            Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
+            Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * BestAccuracyWeight), 0) * BestAccuracyWeight;
 
             #region SCORE_CALCULATION
             // If the user didn't miss, then we want to update their combo and multiplier.
@@ -279,21 +276,6 @@ namespace Quaver.API.Maps.Processors.Scoring
             else
                 Health = newHealth;
             #endregion
-        }
-
-        /// <summary>
-        ///     Old method to calculate accuracy with hit judgements
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete("Accuracy is automatically calculated from CalculateScore(). This method returns outdated acc value.")]
-        protected override float CalculateAccuracy()
-        {
-            float accuracy = 0;
-
-            foreach (var item in CurrentJudgements)
-                accuracy += item.Value * JudgementAccuracyWeighting[item.Key];
-
-            return Math.Max(accuracy / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
         }
 
         /// <summary>
