@@ -255,10 +255,10 @@ namespace Quaver.API.Maps
         }
         
         /// <summary>
-        ///     Calculates the difficulty of the map.
+        ///     Solves the difficulty of the map and returns the data for it.
         /// </summary>
         /// <returns></returns>
-        public StrainSolver CalculateDifficulty(float rate)
+        public StrainSolver SolveDifficulty(float rate)
         {
             switch (Mode)
             {
