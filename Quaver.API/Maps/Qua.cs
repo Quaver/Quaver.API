@@ -258,23 +258,17 @@ namespace Quaver.API.Maps
         ///     Calculates the difficulty of the map.
         /// </summary>
         /// <returns></returns>
-        public double CalculateDifficulty(float rate)
+        public StrainSolver CalculateDifficulty(float rate)
         {
-            StrainSolverKeys diffCalc;
-            
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    diffCalc = new StrainSolverKeys(this, rate);
-                    break;
+                    return new StrainSolverKeys(this, rate);
                 case GameMode.Keys7:
-                    diffCalc = new StrainSolverKeys(this, rate);
-                    break;
+                    return new StrainSolverKeys(this, rate);
                 default:
                     throw new InvalidEnumArgumentException();
             }
-
-            return 0;
         }
 
         public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";
