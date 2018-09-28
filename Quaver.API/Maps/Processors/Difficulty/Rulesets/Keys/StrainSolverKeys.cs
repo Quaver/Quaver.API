@@ -105,14 +105,26 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     const
         /// </summary>
         /// <param name="qua"></param>
-        public StrainSolverKeys(Qua map) : base(map)
+        public StrainSolverKeys(Qua map, float rate = 1) : base(map, rate)
         {
             // Don't bother calculating map difficulty if there's less than 2 hit objects
             if (map.HitObjects.Count < 2) return;
 
             // Solve for difficulty
+            CalculateDifficulty(rate);
+        }
+
+        /// <summary>
+        ///     Calculate difficulty of a map with given rate
+        /// </summary>
+        /// <param name="rate"></param>
+        public void CalculateDifficulty(float rate = 1)
+        {
+            // If map does not exist, ignore calculation.
+            if (Map == null) return;
+
             ComputeNoteDensityData();
-            ComputeBaseStrainStates();
+            ComputeBaseStrainStates(rate);
             ComputeForChords();
             ComputeFingerActions();
             ComputeActionPatterns();
@@ -138,13 +150,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
-        private void ComputeBaseStrainStates()
+        private void ComputeBaseStrainStates(float rate)
         {
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Map.HitObjects.Count; i++)
             {
                 var curHitOb = new StrainSolverHitObject(Map.HitObjects[i]);
-                var curStrainData = new StrainSolverData(curHitOb);
+                var curStrainData = new StrainSolverData(curHitOb, rate);
 
                 // Assign Finger and Hand States
                 switch (Map.Mode)

@@ -25,10 +25,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public bool HandChord => HitObjects.Count > 1;
         public int HandChordState { get; set; } = 0;
 
-        public StrainSolverData(StrainSolverHitObject hitOb)
+        public StrainSolverData(StrainSolverHitObject hitOb, float rate = 1)
         {
-            StartTime = hitOb.HitObject.StartTime;
-            EndTime = hitOb.HitObject.EndTime;
+            StartTime = hitOb.HitObject.StartTime / rate;
+            EndTime = hitOb.HitObject.EndTime / rate;
             HitObjects.Add(hitOb);
         }
     }
