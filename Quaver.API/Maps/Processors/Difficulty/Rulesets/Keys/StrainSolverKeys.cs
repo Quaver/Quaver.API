@@ -515,7 +515,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             //todo: temp. Linear for now
             //todo: apply cosine curve
-            return 1 + (strainMax - 1) * (float)Math.Pow((1 - Math.Min(Math.Max(0, duration - xMin)/(xMax - xMin), 1)), exp);
+            const float lowestDifficulty = 1;
+            return lowestDifficulty + (strainMax - lowestDifficulty) * (1 - Math.Min(1, Math.Max(0, (duration - xMin) / (xMax - xMin))));
         }
     }
 }
