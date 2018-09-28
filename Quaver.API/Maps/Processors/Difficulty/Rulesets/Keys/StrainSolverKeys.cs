@@ -123,12 +123,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // If map does not exist, ignore calculation.
             if (Map == null) return;
 
-            ComputeNoteDensityData();
+            ComputeNoteDensityData(rate);
             ComputeBaseStrainStates(rate);
             ComputeForChords();
             ComputeFingerActions();
             ComputeActionPatterns();
-            CalculateOverallDifficulty();
+            CalculateOverallDifficulty(rate);
         }
 
         /// <summary>
@@ -136,10 +136,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
-        private void ComputeNoteDensityData()
+        private void ComputeNoteDensityData(float rate = 1)
         {
             //MapLength = Qua.Length;
-            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / Map.Length;
+            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * rate);
 
             //todo: solve note density graph
         }
@@ -347,7 +347,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Calculates the general difficulty of a beatmap
         /// </summary>
         /// <param name="qssData"></param>
-        private void CalculateOverallDifficulty()
+        private void CalculateOverallDifficulty(float rate = 1)
         {
             //todo: temporary.
             //OverallDifficulty = AverageNoteDensity * 3.25f;
@@ -407,7 +407,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
 
-                    OverallDifficulty /= Map.Length * 2;
+                    OverallDifficulty /= Map.Length * 2 * rate;
                     break;
                     #endregion
 
@@ -453,7 +453,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
 
-                    ambiguiousHandOnLeftDifficulty /= Map.Length * 2;
+                    ambiguiousHandOnLeftDifficulty /= Map.Length * 2 * rate;
 
                     // ambiguious hand on right
                     //left hand
@@ -490,7 +490,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
 
-                    ambiguiousHandOnRightDifficulty /= Map.Length * 2f;
+                    ambiguiousHandOnRightDifficulty /= Map.Length * 2 * rate;
 
                     //get 7k diff
                     OverallDifficulty = (ambiguiousHandOnLeftDifficulty + ambiguiousHandOnRightDifficulty) / 2f;
@@ -505,7 +505,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // 100 seconds = 1.0x multiplier
             // 1000 seconds = 1.1x multiplier
             // 10000 seconds = 1.2x multiplier, ect.
-            OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length) / 10);
+            OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length * rate) / 10);
         }
 
         /// <summary>
