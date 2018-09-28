@@ -353,13 +353,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="qssData"></param>
         private void CalculateOverallDifficulty(float rate)
         {
-            //todo: temporary.
-            //OverallDifficulty = AverageNoteDensity * 3.25f;
-            foreach (var i in StrainSolverData)
+            // Calculate the strain value for every data point
+            foreach (var data in StrainSolverData)
             {
-                OverallDifficulty += i.ActionStrainCoefficient;
+                data.CalculateStrainValue();
             }
-            OverallDifficulty /= StrainSolverData.Count;
 
             // Solve for difficulty (temporary)
             // Difficulty is determined by how long each action is and how difficult they are.
@@ -406,7 +404,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (StrainSolverData[j].Hand == Hand.Left)
                         {
-                            calculatedDiff += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                            calculatedDiff += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
                             break;
                         }
                     }
@@ -423,7 +421,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (StrainSolverData[j].Hand == Hand.Right)
                         {
-                            calculatedDiff += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                            calculatedDiff += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
                             break;
                         }
                     }
@@ -455,7 +453,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (StrainSolverData[j].Hand == Hand.Left || StrainSolverData[j].Hand == Hand.Ambiguous)
                         {
-                            ambiguiousHandOnLeftDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                            ambiguiousHandOnLeftDifficulty += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
                             break;
                         }
                     }
@@ -472,7 +470,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (StrainSolverData[j].Hand == Hand.Right)
                         {
-                            ambiguiousHandOnLeftDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                            ambiguiousHandOnLeftDifficulty += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
                             break;
                         }
                     }
@@ -492,7 +490,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (StrainSolverData[j].Hand == Hand.Left)
                         {
-                            ambiguiousHandOnRightDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                            ambiguiousHandOnRightDifficulty += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
                             break;
                         }
                     }
@@ -509,7 +507,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (StrainSolverData[j].Hand == Hand.Right || StrainSolverData[j].Hand == Hand.Ambiguous)
                         {
-                            ambiguiousHandOnRightDifficulty += StrainSolverData[i].ActionStrainCoefficient * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
+                            ambiguiousHandOnRightDifficulty += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
                             break;
                         }
                     }
