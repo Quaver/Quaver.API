@@ -92,18 +92,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// </summary>
         public void CalculateStrainValue()
         {
+            // Calculate the strain value of each individual object and add to total
             foreach (var hitOb in HitObjects)
             {
                 hitOb.StrainValue = ActionStrainCoefficient * PatternStrainMultiplier * ManipulationStrainMultiplier * hitOb.LnStrainMultiplier;
-                TotalStrainValue += hitOb.StrainValue
+                TotalStrainValue += hitOb.StrainValue;
             }
+
+            // Average the strain value between the two objects
             TotalStrainValue /= HitObjects.Count;
         }
 
         public void SolveFingerState()
         {
             HandChordState = 0;
-            foreach (var hitOb in HitObjects) HandChordState += (int)j.FingerState;
+            foreach (var hitOb in HitObjects) HandChordState += (int)hitOb.FingerState;
         }
     }
 }

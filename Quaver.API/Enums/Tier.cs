@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Enums
 {
-    public enum NoteDensityTier
+    /// <summary>
+    ///     Used for colors and value intervals
+    /// </summary>
+    public enum Tier
     {
         Tier1,
         Tier2,
         Tier3,
         Tier4,
         Tier5,
-        TierMax
+        Tier6,
+        Tier7
     }
 }
