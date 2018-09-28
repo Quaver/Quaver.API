@@ -33,7 +33,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         public const int GRAPH_INTERVAL_OFFSET_MS = 100;
 
+        //todo: document. Might change names/logic later
+        // threshold on when to ignore LN layering if startTime/endTime between 2 hit objects are too close to eachother
         private const float THRESHOLD_LN_END_MS = 42;
+        // threshold on when to ignore notes when merging multiple hit objects into chords
         private const float THRESHOLD_CHORD_CHECK_MS = 8;
 
         /// <summary>
@@ -142,6 +145,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * rate);
 
             //todo: solve note density graph
+            // put stuff here
         }
 
         /// <summary>
@@ -219,7 +223,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        ///     Iterate through the HitObject list and assign HitObjects to each chord
+        ///     Iterate through the HitObject list and merges the chords together into one data point
         /// </summary>
         private void ComputeForChords()
         {
@@ -248,11 +252,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 }
             }
 
-            // Calculate HandChord State State Index (Value of the keys pressed on a single hand)
+            // Solve finger state of every object once chords have been found and applied.
             for (var i = 0; i < StrainSolverData.Count; i++)
             {
-                foreach (var j in StrainSolverData[i].HitObjects)
-                    StrainSolverData[i].HandChordState += (int)j.FingerState;
+                StrainSolverData[i].SolveFingerState();
             }
         }
 

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
+    /// <summary>
+    ///     Is determined by a finger's action between two finger states
+    /// </summary>
     public enum FingerAction
     {
         SimpleJack,
