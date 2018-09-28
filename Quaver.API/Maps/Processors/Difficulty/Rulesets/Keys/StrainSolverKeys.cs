@@ -439,6 +439,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             // 7k difficulty calculation is more longer because we have to solve for the ambiguious hand.
             // to get difficulty, we must calcualte difficulty twice and assigning ambiguious hand is either hand in both calculations.
+            // TODO: logic error. Finger ambiguous hands should count as finger states rather than actions.
             var ambiguiousHandOnLeftDifficulty = 0f;
             var ambiguiousHandOnRightDifficulty = 0f;
 
