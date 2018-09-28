@@ -202,9 +202,9 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// <returns></returns>
         public static Color GetGradientColor(Color color1, Color color2, float value)
         {
-            var red = FloatToByteInt(((color2.R - color1.R) * value) + color1.R);
-            var green = FloatToByteInt(((color2.G - color1.G) * value) + color1.G);
-            var blue = FloatToByteInt(((color2.B - color1.B) * value) + color1.B);
+            var red = FloatToByte(((color2.R - color1.R) * value) + color1.R);
+            var green = FloatToByte(((color2.G - color1.G) * value) + color1.G);
+            var blue = FloatToByte(((color2.B - color1.B) * value) + color1.B);
 
             return Color.FromArgb(255, red, green, blue);
         }
@@ -214,6 +214,6 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// </summary>
         /// <param name="f"></param>
         /// <returns></returns>
-        public static int FloatToByteInt(float f) => (int)Math.Min(Math.Max(f, 0), 255);
+        public static byte FloatToByte(float f) => (byte)Math.Min(Math.Max(f, 0), 255);
     }
 }
