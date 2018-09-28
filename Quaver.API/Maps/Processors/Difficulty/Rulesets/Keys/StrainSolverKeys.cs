@@ -407,7 +407,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
 
-                    OverallDifficulty /= Map.Length * 2 * rate;
+                    OverallDifficulty /= 2 * Map.Length / rate;
                     break;
                     #endregion
 
@@ -453,7 +453,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
 
-                    ambiguiousHandOnLeftDifficulty /= Map.Length * 2 * rate;
+                    ambiguiousHandOnLeftDifficulty /= 2 * Map.Length / rate;
 
                     // ambiguious hand on right
                     //left hand
@@ -490,7 +490,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
 
-                    ambiguiousHandOnRightDifficulty /= Map.Length * 2 * rate;
+                    ambiguiousHandOnRightDifficulty /= 2 * Map.Length / rate;
 
                     //get 7k diff
                     OverallDifficulty = (ambiguiousHandOnLeftDifficulty + ambiguiousHandOnRightDifficulty) / 2f;
@@ -505,7 +505,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // 100 seconds = 1.0x multiplier
             // 1000 seconds = 1.1x multiplier
             // 10000 seconds = 1.2x multiplier, ect.
-            OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length * rate) / 10);
+            OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length / rate) / 10);
         }
 
         /// <summary>
