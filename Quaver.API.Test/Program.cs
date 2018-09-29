@@ -32,6 +32,7 @@ namespace Quaver.API.Test
                     break;
                 case "-qssbatch":
                     new QssBatchCommand(args).Execute();
+                    break;
                 case "-replay":
                     new ReplayCommand(args).Execute();
                     break;

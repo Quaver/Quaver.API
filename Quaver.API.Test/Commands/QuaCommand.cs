@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Quaver.API.Maps;
 
 namespace Quaver.API.Test.Commands
@@ -15,9 +15,7 @@ namespace Quaver.API.Test.Commands
                                 $"Title: {Map.Title}\n" +
                                 $"Difficulty Name: {Map.Mode}\n" +
                                 $"Mode: {Map.Mode}\n" +
-                                $"Average NPS: {Map.AverageNotesPerSecond()}\n" +
-                                $"Common BPM: {Map.GetCommonBpm()}\n" +
-                                $"Difficulty Rating: {Map.CalculateDifficulty()}");
+                                $"Average NPS: {Map.AverageNotesPerSecond()}\n");
         }
     }
 }
