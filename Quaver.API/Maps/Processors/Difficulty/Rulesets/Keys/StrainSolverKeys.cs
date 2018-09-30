@@ -348,7 +348,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        ///     Calculates the general difficulty of a beatmap
+        ///     Calculates the general difficulty of a map
         /// </summary>
         /// <param name="qssData"></param>
         private void CalculateOverallDifficulty(float rate)
@@ -390,135 +390,62 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length / rate) / 10);
         }
 
+        /// <summary>
+        ///     Calculate the general difficulty for a 4K map
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <returns></returns>
         private float CalculateDifficulty4K(float rate)
         {
             float calculatedDiff = 0;
 
             // left hand
-            for (var i = 0; i < StrainSolverData.Count - 1; i++)
+            foreach (var data in StrainSolverData)
             {
-                if (StrainSolverData[i].Hand == Hand.Left)
-                {
-                    //find next left hand
-                    for (var j = i + 1; j < StrainSolverData.Count; j++)
-                    {
-                        if (StrainSolverData[j].Hand == Hand.Left)
-                        {
-                            calculatedDiff += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
-                            break;
-                        }
-                    }
-                }
+                if (data.Hand == Hand.Left)
+                    calculatedDiff += data.TotalStrainValue;
             }
 
             // right hand
-            for (var i = 0; i < StrainSolverData.Count - 1; i++)
+            foreach (var data in StrainSolverData)
             {
-                if (StrainSolverData[i].Hand == Hand.Right)
-                {
-                    //find next left hand
-                    for (var j = i + 1; j < StrainSolverData.Count; j++)
-                    {
-                        if (StrainSolverData[j].Hand == Hand.Right)
-                        {
-                            calculatedDiff += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
-                            break;
-                        }
-                    }
-                }
+                if (data.Hand == Hand.Right)
+                    calculatedDiff += data.TotalStrainValue;
             }
 
             // Calculate overall 4k difficulty
-            calculatedDiff /= 2 * Map.Length / rate;
+            calculatedDiff /= 2;
 
             // Get Overall 4k difficulty
             return calculatedDiff;
         }
 
+        /// <summary>
+        ///     Calculate the general difficulty for a 7k map
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <returns></returns>
         private float CalculateDifficulty7K(float rate)
         {
-            // 7k difficulty calculation is more longer because we have to solve for the ambiguious hand.
-            // to get difficulty, we must calcualte difficulty twice and assigning ambiguious hand is either hand in both calculations.
-            // TODO: logic error. Finger ambiguous hands should count as finger states rather than actions.
-            var ambiguiousHandOnLeftDifficulty = 0f;
-            var ambiguiousHandOnRightDifficulty = 0f;
+            //todo: Implement Ambiguious Hand in calculation
+            float calculatedDiff = 0;
 
-            // Ambiguious hand on left
-            // Left hand
-            for (var i = 0; i < StrainSolverData.Count - 1; i++)
+            // left hand
+            foreach (var data in StrainSolverData)
             {
-                if (StrainSolverData[i].Hand == Hand.Left || StrainSolverData[i].Hand == Hand.Ambiguous)
-                {
-                    // Find next left hand
-                    for (var j = i + 1; j < StrainSolverData.Count; j++)
-                    {
-                        if (StrainSolverData[j].Hand == Hand.Left || StrainSolverData[j].Hand == Hand.Ambiguous)
-                        {
-                            ambiguiousHandOnLeftDifficulty += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
-                            break;
-                        }
-                    }
-                }
+                if (data.Hand == Hand.Left)
+                    calculatedDiff += data.TotalStrainValue;
             }
 
-            // Right hand
-            for (var i = 0; i < StrainSolverData.Count - 1; i++)
+            // right hand
+            foreach (var data in StrainSolverData)
             {
-                if (StrainSolverData[i].Hand == Hand.Right)
-                {
-                    // Find next left hand
-                    for (var j = i + 1; j < StrainSolverData.Count; j++)
-                    {
-                        if (StrainSolverData[j].Hand == Hand.Right)
-                        {
-                            ambiguiousHandOnLeftDifficulty += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
-                            break;
-                        }
-                    }
-                }
+                if (data.Hand == Hand.Right)
+                    calculatedDiff += data.TotalStrainValue;
             }
-
-            ambiguiousHandOnLeftDifficulty /= 2 * Map.Length / rate;
-
-            // Ambiguious hand on right
-            // Left hand
-            for (var i = 0; i < StrainSolverData.Count - 1; i++)
-            {
-                if (StrainSolverData[i].Hand == Hand.Left)
-                {
-                    // Find next left hand
-                    for (var j = i + 1; j < StrainSolverData.Count; j++)
-                    {
-                        if (StrainSolverData[j].Hand == Hand.Left)
-                        {
-                            ambiguiousHandOnRightDifficulty += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            // Right hand
-            for (var i = 0; i < StrainSolverData.Count - 1; i++)
-            {
-                if (StrainSolverData[i].Hand == Hand.Right || StrainSolverData[i].Hand == Hand.Ambiguous)
-                {
-                    // Find next left hand
-                    for (var j = i + 1; j < StrainSolverData.Count; j++)
-                    {
-                        if (StrainSolverData[j].Hand == Hand.Right || StrainSolverData[j].Hand == Hand.Ambiguous)
-                        {
-                            ambiguiousHandOnRightDifficulty += StrainSolverData[i].TotalStrainValue * (StrainSolverData[j].StartTime - StrainSolverData[i].StartTime);
-                            break;
-                        }
-                    }
-                }
-            }
-
-            ambiguiousHandOnRightDifficulty /= 2 * Map.Length / rate;
 
             // Get overall 7k Difficulty
-            return (ambiguiousHandOnLeftDifficulty + ambiguiousHandOnRightDifficulty) / 2f;
+            return calculatedDiff;
         }
 
         /// <summary>
