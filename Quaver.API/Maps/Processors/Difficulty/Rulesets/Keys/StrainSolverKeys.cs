@@ -414,7 +414,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             // Calculate overall 4k difficulty
-            calculatedDiff /= 2;
+            calculatedDiff /= StrainSolverData.Count;
 
             // Get Overall 4k difficulty
             return calculatedDiff;
@@ -445,6 +445,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             // Get overall 7k Difficulty
+            calculatedDiff /= StrainSolverData.Count;
+
+            // Get Overall 7k difficulty
             return calculatedDiff;
         }
 
