@@ -17,55 +17,55 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// <summary>
         ///     Interval at which each difficulty tier starts at
         /// </summary>
-        public static Dictionary<Tier, float> DifficultyTierInterval { get; } = new Dictionary<Tier, float>()
+        public static Dictionary<ColorTier, float> DifficultyTierInterval { get; } = new Dictionary<ColorTier, float>()
         {
-            { Tier.Tier1, 0 },
-            { Tier.Tier2, 10 },
-            { Tier.Tier3, 18 },
-            { Tier.Tier4, 26 },
-            { Tier.Tier5, 34 },
-            { Tier.Tier6, 42 },
-            { Tier.Tier7, 50 }
+            { ColorTier.Tier1, 0 },
+            { ColorTier.Tier2, 10 },
+            { ColorTier.Tier3, 18 },
+            { ColorTier.Tier4, 26 },
+            { ColorTier.Tier5, 34 },
+            { ColorTier.Tier6, 42 },
+            { ColorTier.Tier7, 50 }
         };
 
         /// <summary>
         ///     Colors to represent each difficulty tier
         /// </summary>
-        public static Dictionary<Tier, Color> DifficultyTierColor { get; } = new Dictionary<Tier, Color>
+        public static Dictionary<ColorTier, Color> DifficultyTierColor { get; } = new Dictionary<ColorTier, Color>
         {
-            { Tier. Tier1, Color.FromArgb(255, 126, 111, 90) },
-            { Tier.Tier2, Color.FromArgb(255, 184, 184, 184) },
-            { Tier.Tier3, Color.FromArgb(255, 242, 218, 104) },
-            { Tier.Tier4, Color.FromArgb(255, 146, 255, 172) },
-            { Tier.Tier5, Color.FromArgb(255, 112, 227, 225) },
-            { Tier.Tier6, Color.FromArgb(255, 255, 146, 255) },
-            { Tier.Tier7, Color.FromArgb(255, 255, 97, 119) }
+            { ColorTier.Tier1, Color.FromArgb(255, 126, 111, 90) },
+            { ColorTier.Tier2, Color.FromArgb(255, 184, 184, 184) },
+            { ColorTier.Tier3, Color.FromArgb(255, 242, 218, 104) },
+            { ColorTier.Tier4, Color.FromArgb(255, 146, 255, 172) },
+            { ColorTier.Tier5, Color.FromArgb(255, 112, 227, 225) },
+            { ColorTier.Tier6, Color.FromArgb(255, 255, 146, 255) },
+            { ColorTier.Tier7, Color.FromArgb(255, 255, 97, 119) }
         };
 
         /// <summary>
         ///     Interval at which each note density tier starts at
         /// </summary>
-        public static Dictionary<Tier, float> DensityTierInterval { get; } = new Dictionary<Tier, float>()
+        public static Dictionary<ColorTier, float> DensityTierInterval { get; } = new Dictionary<ColorTier, float>()
         {
-            { Tier.Tier1, 7 },
-            { Tier.Tier2, 14 },
-            { Tier.Tier3, 21 },
-            { Tier.Tier4, 28 },
-            { Tier.Tier5, 35 },
-            { Tier.Tier6, 42 }
+            { ColorTier.Tier1, 7 },
+            { ColorTier.Tier2, 14 },
+            { ColorTier.Tier3, 21 },
+            { ColorTier.Tier4, 28 },
+            { ColorTier.Tier5, 35 },
+            { ColorTier.Tier6, 42 }
         };
 
         /// <summary>
         ///     Colors to represent each note density tier
         /// </summary>
-        public static Dictionary<Tier, Color> DensityTierColor { get; } = new Dictionary<Tier, Color>
+        public static Dictionary<ColorTier, Color> DensityTierColor { get; } = new Dictionary<ColorTier, Color>
         {
-            { Tier.Tier1, Color.FromArgb(255, 25, 25, 204) },
-            { Tier.Tier2, Color.FromArgb(255, 51, 51, 255) },
-            { Tier.Tier3, Color.FromArgb(255, 153, 102, 255) },
-            { Tier.Tier4, Color.FromArgb(255, 255, 102, 51) },
-            { Tier.Tier5, Color.FromArgb(255, 255, 25, 13) },
-            { Tier.Tier6, Color.FromArgb(255, 178, 0, 0) }
+            { ColorTier.Tier1, Color.FromArgb(255, 25, 25, 204) },
+            { ColorTier.Tier2, Color.FromArgb(255, 51, 51, 255) },
+            { ColorTier.Tier3, Color.FromArgb(255, 153, 102, 255) },
+            { ColorTier.Tier4, Color.FromArgb(255, 255, 102, 51) },
+            { ColorTier.Tier5, Color.FromArgb(255, 255, 25, 13) },
+            { ColorTier.Tier6, Color.FromArgb(255, 178, 0, 0) }
         };
 
         /// <summary>
@@ -107,15 +107,15 @@ namespace Quaver.API.Maps.Processors.Difficulty
         public static Color GetStrainRatingColor(float qsr)
         {
             // Tier 0 and negative rating?
-            if (qsr <= DifficultyTierInterval[Tier.Tier1])
-                return DifficultyTierColor[Tier.Tier1];
+            if (qsr <= DifficultyTierInterval[ColorTier.Tier1])
+                return DifficultyTierColor[ColorTier.Tier1];
 
             // Find color for qsr
             for (var i = 0; i < DifficultyTierInterval.Count - 1; i++)
             {
-                var val = qsr - DifficultyTierInterval[(Tier)i];
-                var current = (Tier)i;
-                var next = (Tier)(i+1);
+                var val = qsr - DifficultyTierInterval[(ColorTier)i];
+                var current = (ColorTier)i;
+                var next = (ColorTier)(i+1);
                 var denominator = DifficultyTierInterval[next] - DifficultyTierInterval[current];
 
                 // return proper color if qsr value is between current and next interval
@@ -126,7 +126,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
             }
 
             // qsr exceeds max tier interval for max color
-            return DifficultyTierColor[Tier.Tier7];
+            return DifficultyTierColor[ColorTier.Tier7];
         }
 
         /// <summary>
@@ -137,15 +137,15 @@ namespace Quaver.API.Maps.Processors.Difficulty
         public static Color GetNoteDensityColor(float nps)
         {
             // Tier 0 and negative density?
-            if (nps <= DensityTierInterval[Tier.Tier1])
-                return DensityTierColor[Tier.Tier1];
+            if (nps <= DensityTierInterval[ColorTier.Tier1])
+                return DensityTierColor[ColorTier.Tier1];
 
             // Find color for density
             for (var i = 0; i < DensityTierInterval.Count - 1; i++)
             {
-                var val = nps - DensityTierInterval[(Tier)i];
-                var current = (Tier)i;
-                var next = (Tier)(i + 1);
+                var val = nps - DensityTierInterval[(ColorTier)i];
+                var current = (ColorTier)i;
+                var next = (ColorTier)(i + 1);
                 var denominator = DensityTierInterval[next] - DensityTierInterval[current];
 
                 // return proper color if qsr value is between current and next interval
@@ -156,7 +156,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
             }
 
             // density exceeds max tier interval for max color
-            return DensityTierColor[Tier.Tier6];
+            return DensityTierColor[ColorTier.Tier6];
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace Quaver.API.Enums
     /// <summary>
     ///     Used for colors and value intervals
     /// </summary>
-    public enum Tier
+    public enum ColorTier
     {
         Tier1,
         Tier2,
