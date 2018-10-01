@@ -52,7 +52,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The MD5 Hash of the replay.
         /// </summary>
-        public string Md5 { get; set; }
+        public string Md5 { get; }
 
         /// <summary>
         ///     The md5 hash of the map.
@@ -187,16 +187,14 @@ namespace Quaver.API.Replays
         /// </summary>
         public void Write(string path)
         {
-            using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(FramesToString())))
+            var frames = FramesToString();
+
+            using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(frames)))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
             {
-                Md5 = CryptoHelper.StringToMd5($"{QuaverVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
-                                               $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
-                                               $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{replayDataStream}");
-
                 bw.Write(QuaverVersion);
                 bw.Write(MapMd5);
-                bw.Write(Md5);
+                bw.Write(GetMd5(frames));
                 bw.Write(PlayerName);
                 bw.Write(DateTime.Now.ToString(CultureInfo.InvariantCulture));
                 bw.Write(TimePlayed);
@@ -412,6 +410,17 @@ namespace Quaver.API.Replays
             }
 
             return keyPresses;
+        }
+
+        /// <summary>
+        ///     Gets the md5 hash of the replay.
+        /// </summary>
+        /// <returns></returns>
+        public string GetMd5(string frames)
+        {
+            return CryptoHelper.StringToMd5($"{QuaverVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
+                                     $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
+                                     $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{frames}");
         }
     }
 }
