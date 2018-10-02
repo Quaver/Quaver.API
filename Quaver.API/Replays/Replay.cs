@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -130,7 +130,8 @@ namespace Quaver.API.Replays
         ///     Ctor - Read replay.
         /// </summary>
         /// <param name="path"></param>
-        public Replay(string path)
+        /// <param name="readHeaderless"></param>
+        public Replay(string path, bool readHeaderless = false)
         {
             if (!File.Exists(path))
                 throw new FileNotFoundException();
@@ -139,30 +140,46 @@ namespace Quaver.API.Replays
             using (var fs = new FileStream(path, FileMode.Open))
             using (var br = new BinaryReader(fs))
             {
-                QuaverVersion = br.ReadString();
-                MapMd5 = br.ReadString();
-                Md5 = br.ReadString();
-                PlayerName = br.ReadString();
-                Date = Convert.ToDateTime(br.ReadString());
-                TimePlayed = br.ReadInt64();
-                Mode = (GameMode)br.ReadInt32();
-                Mods = (ModIdentifier)br.ReadInt32();
-                Score = br.ReadInt32();
-                Accuracy = br.ReadSingle();
-                MaxCombo = br.ReadInt32();
-                CountMarv = br.ReadInt32();
-                CountPerf = br.ReadInt32();
-                CountGreat = br.ReadInt32();
-                CountGood = br.ReadInt32();
-                CountOkay = br.ReadInt32();
-                CountMiss = br.ReadInt32();
-                PauseCount = br.ReadInt32();
+                if (!readHeaderless)
+                {
+                    QuaverVersion = br.ReadString();
+                    MapMd5 = br.ReadString();
+                    Md5 = br.ReadString();
+                    PlayerName = br.ReadString();
+                    Date = Convert.ToDateTime(br.ReadString());
+                    TimePlayed = br.ReadInt64();
+                    Mode = (GameMode)br.ReadInt32();
+                    Mods = (ModIdentifier)br.ReadInt32();
+                    Score = br.ReadInt32();
+                    Accuracy = br.ReadSingle();
+                    MaxCombo = br.ReadInt32();
+                    CountMarv = br.ReadInt32();
+                    CountPerf = br.ReadInt32();
+                    CountGreat = br.ReadInt32();
+                    CountGood = br.ReadInt32();
+                    CountOkay = br.ReadInt32();
+                    CountMiss = br.ReadInt32();
+                    PauseCount = br.ReadInt32();
+                }
+                else
+                {
+                    
+                }
 
                 // Create the new list of replay frames.
                 Frames = new List<ReplayFrame>();
 
                 // Split the frames up by commas
-                var frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.BaseStream).ToArray()).Split(',');
+                var frames = new List<string>();
+
+                if (!readHeaderless)
+                {
+                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.BaseStream).ToArray()).Split(',').ToList();
+                }
+                else
+                {
+                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.ReadBytes((int) fs.Length))).Split(',').ToList();
+                }
 
                 // Add all the replay frames to the object
                 foreach (var frame in frames)
