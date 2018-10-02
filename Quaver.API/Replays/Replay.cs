@@ -178,7 +178,7 @@ namespace Quaver.API.Replays
                 }
                 else
                 {
-                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.ReadBytes((int) fs.Length))).Split(',').ToList();
+                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.ReadBytes((int) br.BaseStream.Length))).Split(',').ToList();
                 }
 
                 // Add all the replay frames to the object
