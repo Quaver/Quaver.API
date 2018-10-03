@@ -73,7 +73,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Is an index value of this hand's finger state. (Determined by every finger's state)
         /// </summary>
-        public int HandChordState { get; private set; } = 0;
+        public FingerState FingerState { get; private set; } = FingerState.None;
 
         /// <summary>
         ///     Data used to represent a point in time and other variables that influence difficulty.
@@ -105,8 +105,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 
         public void SolveFingerState()
         {
-            HandChordState = 0;
-            foreach (var hitOb in HitObjects) HandChordState += (int)hitOb.FingerState;
+            foreach (var hitOb in HitObjects)
+                FingerState |= hitOb.FingerState;
         }
     }
 }
