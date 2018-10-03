@@ -1,3 +1,4 @@
+using Quaver.API.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,6 @@ namespace Quaver.API.Maps.Processors.Difficulty
         ///     Constructor
         /// </summary>
         /// <param name="map"></param>
-        public StrainSolver(Qua map, float rate = 1) => Map = map;
+        public StrainSolver(Qua map, ModIdentifier mods = ModIdentifier.None) => Map = map;
     }
 }

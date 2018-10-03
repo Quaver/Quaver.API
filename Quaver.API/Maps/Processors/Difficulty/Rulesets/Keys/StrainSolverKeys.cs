@@ -1,4 +1,5 @@
 using Quaver.API.Enums;
+using Quaver.API.Helpers;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures;
 using System;
@@ -115,30 +116,34 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     const
         /// </summary>
         /// <param name="qua"></param>
-        public StrainSolverKeys(Qua map, float rate = 1) : base(map, rate)
+        public StrainSolverKeys(Qua map, ModIdentifier mods = ModIdentifier.None) : base(map, mods)
         {
             // Don't bother calculating map difficulty if there's less than 2 hit objects
             if (map.HitObjects.Count < 2) return;
 
             // Solve for difficulty
-            CalculateDifficulty(rate);
+            CalculateDifficulty(mods);
         }
 
         /// <summary>
         ///     Calculate difficulty of a map with given rate
         /// </summary>
         /// <param name="rate"></param>
-        public void CalculateDifficulty(float rate = 1)
+        public void CalculateDifficulty(ModIdentifier mods)
         {
             // If map does not exist, ignore calculation.
             if (Map == null) return;
 
+            // Get song rate from selected mods
+            var rate = ModHelper.GetRateFromMods(mods);
+
+            // Compute for overall difficulty
             ComputeNoteDensityData(rate);
             ComputeBaseStrainStates(rate);
             ComputeForChords();
             ComputeFingerActions();
             ComputeActionPatterns();
-            CalculateOverallDifficulty(rate);
+            CalculateOverallDifficulty();
         }
 
         /// <summary>
@@ -351,7 +356,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Calculates the general difficulty of a map
         /// </summary>
         /// <param name="qssData"></param>
-        private void CalculateOverallDifficulty(float rate)
+        private void CalculateOverallDifficulty()
         {
             // Calculate the strain value for every data point
             foreach (var data in StrainSolverData)
@@ -373,11 +378,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             switch (Map.Mode)
             {
                 case Enums.GameMode.Keys4:
-                    OverallDifficulty = CalculateDifficulty4K(rate);
+                    OverallDifficulty = CalculateDifficulty4K();
                     break;
 
                 case Enums.GameMode.Keys7:
-                    OverallDifficulty = CalculateDifficulty7K(rate);
+                    OverallDifficulty = CalculateDifficulty7K();
                     break;
             }
 
@@ -387,7 +392,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // 100 seconds = 1.0x multiplier
             // 1000 seconds = 1.1x multiplier
             // 10000 seconds = 1.2x multiplier, ect.
-            OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length / rate) / 10);
+            //OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length / rate) / 10);
         }
 
         /// <summary>
@@ -395,7 +400,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="rate"></param>
         /// <returns></returns>
-        private float CalculateDifficulty4K(float rate)
+        private float CalculateDifficulty4K()
         {
             float calculatedDiff = 0;
 
@@ -425,7 +430,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="rate"></param>
         /// <returns></returns>
-        private float CalculateDifficulty7K(float rate)
+        private float CalculateDifficulty7K()
         {
             //todo: Implement Ambiguious Hand in calculation
             float calculatedDiff = 0;
