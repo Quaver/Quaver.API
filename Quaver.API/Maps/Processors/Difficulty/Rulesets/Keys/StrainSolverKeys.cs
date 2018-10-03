@@ -323,7 +323,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 240, 56, 1.02f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 240, 91, 1.02f); // todo: temp. Apply actual constants later
                             SJack++;
                         }
 
@@ -331,7 +331,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionJackFound)
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 240, 59, 0.99f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 240, 94, 0.99f); // todo: temp. Apply actual constants later
                             TJack++;
                         }
 
