@@ -209,27 +209,33 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         // Target hitobject's LN ends after current hitobject's LN end.
                         if (nextHitOb.EndTime > curHitOb.EndTime)
+                        {
                             foreach (var k in curHitOb.HitObjects)
                             {
                                 k.LnLayerType = LnLayerType.OutsideRelease;
                                 k.LnStrainMultiplier = 1.5f; //TEMP STRAIN MULTIPLIER. use constant later.
                             }
+                        }
 
                         // Target hitobject's LN ends before current hitobject's LN end
                         else if (nextHitOb.EndTime > 0)
+                        {
                             foreach (var k in curHitOb.HitObjects)
                             {
                                 k.LnLayerType = LnLayerType.InsideRelease;
                                 k.LnStrainMultiplier = 1.2f; //TEMP STRAIN MULTIPLIER. use constant later.
                             }
+                        }
 
                         // Target hitobject is not an LN
                         else
+                        {
                             foreach (var k in curHitOb.HitObjects)
                             {
                                 k.LnLayerType = LnLayerType.InsideTap;
                                 k.LnStrainMultiplier = 1.05f; //TEMP STRAIN MULTIPLIER. use constant later.
                             }
+                        }
                     }
                 }
             }
