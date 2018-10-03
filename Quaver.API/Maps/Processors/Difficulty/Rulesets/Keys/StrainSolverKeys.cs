@@ -119,7 +119,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public StrainSolverKeys(Qua map, ModIdentifier mods = ModIdentifier.None) : base(map, mods)
         {
             // Don't bother calculating map difficulty if there's less than 2 hit objects
-            if (map.HitObjects.Count < 2) return;
+            if (map.HitObjects.Count < 2)
+                return;
 
             // Solve for difficulty
             CalculateDifficulty(mods);
@@ -464,7 +465,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // todo: temp. Linear for now
             // todo: apply cosine curve
             const float lowestDifficulty = 1;
-            return lowestDifficulty + (strainMax - lowestDifficulty) * (float)Math.Pow(1 - Math.Min(1, Math.Max(0, (duration - xMin) / (xMax - xMin))), exp);
+
+            // calculate ratio between min and max value
+            var ratio = Math.Max(0, (duration - xMin) / (xMax - xMin));
+                ratio = 1 - Math.Min(1, ratio);
+
+            // compute for difficulty
+            return lowestDifficulty + (strainMax - lowestDifficulty) * (float)Math.Pow(ratio, exp);
         }
     }
 }
