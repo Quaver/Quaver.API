@@ -253,19 +253,20 @@ namespace Quaver.API.Maps
             // Only one timing point, so we can assume that it goes to the end of the map.
             return Length - point.StartTime;
         }
-        
+
         /// <summary>
         ///     Solves the difficulty of the map and returns the data for it.
         /// </summary>
+        /// <param name="mods"></param>
         /// <returns></returns>
-        public StrainSolver SolveDifficulty(float rate = 1)
+        public StrainSolver SolveDifficulty(ModIdentifier mods = ModIdentifier.None)
         {
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    return new StrainSolverKeys(this, rate);
+                    return new StrainSolverKeys(this, mods);
                 case GameMode.Keys7:
-                    return new StrainSolverKeys(this, rate);
+                    return new StrainSolverKeys(this, mods);
                 default:
                     throw new InvalidEnumArgumentException();
             }
