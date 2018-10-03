@@ -315,7 +315,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         if (!actionChordFound && !actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 160, 59, 1.04f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 160, 58, 1.08f); // todo: temp. Apply actual constants later
                             Roll++;
                         }
 
@@ -339,7 +339,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 160, 61, 1.04f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 160, 60, 1.08f); // todo: temp. Apply actual constants later
                             Bracket++;
                         }
 
