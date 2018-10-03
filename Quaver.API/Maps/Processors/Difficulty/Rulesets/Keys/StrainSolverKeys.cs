@@ -308,7 +308,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         if (!actionChordFound && !actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 270, 57, 0.88f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 120, 57, 0.93f); // todo: temp. Apply actual constants later
                             Roll++;
                         }
 
@@ -316,7 +316,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 370, 55, 1.19f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 240, 56, 1.02f); // todo: temp. Apply actual constants later
                             SJack++;
                         }
 
@@ -324,7 +324,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionJackFound)
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 50, 380, 59, 1.21f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 240, 59, 0.99f); // todo: temp. Apply actual constants later
                             TJack++;
                         }
 
@@ -332,7 +332,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 270, 60, 0.92f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 120, 59, 0.93f); // todo: temp. Apply actual constants later
                             Bracket++;
                         }
 
