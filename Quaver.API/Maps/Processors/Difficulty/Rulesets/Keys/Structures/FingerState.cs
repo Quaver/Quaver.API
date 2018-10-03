@@ -9,6 +9,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
     /// <summary>
     ///     Is determined by the finger state of a hand at a given moment
     /// </summary>
+    [Flags]
     public enum FingerState
     {
         Index = 1 << 0,
