@@ -27,6 +27,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         public override float OverallDifficulty { get; internal set; } = 0;
 
+        public StrainConstantsKeys StrainConstantsKeys = new StrainConstantsKeys();
+
         /// <summary>
         ///     Constants used for solving
         /// </summary>
@@ -321,7 +323,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         if (!actionChordFound && !actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 160, 54, 0.97f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
+                                StrainConstantsKeys.RollLowerBoundaryMs,
+                                StrainConstantsKeys.RollUpperBoundaryMs,
+                                StrainConstantsKeys.RollMaxStrainValue,
+                                StrainConstantsKeys.RollCurveExponential);
                             Roll++;
                         }
 
@@ -329,7 +335,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 30, 280, 91, 1.09f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
+                                StrainConstantsKeys.SJackLowerBoundaryMs,
+                                StrainConstantsKeys.SJackUpperBoundaryMs,
+                                StrainConstantsKeys.SJackMaxStrainValue,
+                                StrainConstantsKeys.SJackCurveExponential);
                             SJack++;
                         }
 
@@ -337,7 +347,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else if (actionJackFound)
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 20, 280, 94, 1.06f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
+                                StrainConstantsKeys.TJackLowerBoundaryMs,
+                                StrainConstantsKeys.TJackUpperBoundaryMs,
+                                StrainConstantsKeys.TJackMaxStrainValue,
+                                StrainConstantsKeys.TJackCurveExponential);
                             TJack++;
                         }
 
@@ -345,7 +359,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         else
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration, 40, 160, 56, 0.97f); // todo: temp. Apply actual constants later
+                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
+                                StrainConstantsKeys.BracketLowerBoundaryMs,
+                                StrainConstantsKeys.BracketUpperBoundaryMs,
+                                StrainConstantsKeys.BracketMaxStrainValue,
+                                StrainConstantsKeys.BracketCurveExponential);
                             Bracket++;
                         }
 

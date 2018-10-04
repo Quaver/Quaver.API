@@ -18,7 +18,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public float TJackCurveExponential { get; private set; }
 
         public float RollLowerBoundaryMs { get; private set; }
-        public float RollkUpperBoundaryMs { get; private set; }
+        public float RollUpperBoundaryMs { get; private set; }
         public float RollMaxStrainValue { get; private set; }
         public float RollCurveExponential { get; private set; }
 
@@ -46,7 +46,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             TJackCurveExponential = NewConstant("TJackCurveExponential", 1.05f);
 
             RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 40);
-            RollkUpperBoundaryMs = NewConstant("RollkUpperBoundaryMs", 180);
+            RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 180);
             RollMaxStrainValue = NewConstant("RollMaxStrainValue", 54);
             RollCurveExponential = NewConstant("RollCurveExponential", 0.95f);
 
