@@ -7,12 +7,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
     /// <summary>
     ///     Constant Variables for any specific Gamemode that the Strain Solver can use to solve.
     /// </summary>
-    public class StrainConstants
+    public virtual class StrainConstants
     {
         /// <summary>
         ///     List of Constant Variables for the current Solver.
         /// </summary>
-        public List<ConstantVariable> ConstantVariables { get; set; }
+        public virtual List<ConstantVariable> ConstantVariables { get; set; }
 
         /// <summary>
         ///     Create a new constant variable for difficulty calculation and optimization.
@@ -20,21 +20,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public ConstantVariable NewConstant(string name, float value)
+        public virtual float NewConstant(string name, float value)
         {
             // Create new constant variable
             var constVar = new ConstantVariable(name, value);
             ConstantVariables.Add(constVar);
 
             // return
-            return constVar;
+            return value;
         }
 
         /// <summary>
         ///     Returns a string of Constant Variable info mainly used for debugging and optimization 
         /// </summary>
         /// <returns></returns>
-        public string GetInfoFromVariables()
+        public virtual string GetInfoFromVariables()
         {
             // Generate output
             var output = "";
