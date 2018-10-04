@@ -179,7 +179,10 @@ namespace Quaver.API.Maps.Processors.Scoring
 
             Stats.ForEach(x =>
             {
-                breakdown += x.HitDifference;
+                if (x.HitDifference != int.MinValue)
+                    breakdown += x.HitDifference;
+                else
+                    breakdown += 0;
 
                 switch (x.KeyPressType)
                 {
