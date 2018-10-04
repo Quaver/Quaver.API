@@ -12,7 +12,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <summary>
         ///     List of Constant Variables for the current Solver.
         /// </summary>
-        public List<ConstantVariable> ConstantVariables = new List<ConstantVariable>();
+        public List<ConstantVariable> ConstantVariables { get; set; }
 
         /// <summary>
         ///     Create a new constant variable for difficulty calculation and optimization.
@@ -43,6 +43,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
 
             // return
             return output;
+        }
+
+        /// <summary>
+        ///     Constructor
+        /// </summary>
+        /// <param name="constVariables"></param>
+        public StrainConstants(List<ConstantVariable> constVariables = null)
+        {
+            if (constVariables == null)
+                ConstantVariables = new List<ConstantVariable>();
+
+            else
+            ConstantVariables = constVariables;
         }
     }
 }
