@@ -1,4 +1,5 @@
 using Quaver.API.Enums;
+using Quaver.API.Maps.Processors.Difficulty.Optimization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,11 @@ namespace Quaver.API.Maps.Processors.Difficulty
         ///     Overall Difficulty of a map
         /// </summary>
         public abstract float OverallDifficulty { get; internal set; }
+
+        /// <summary>
+        ///     Constants used for solving
+        /// </summary>
+        public abstract StrainConstants StrainConstants { get; internal set; }
 
         /// <summary>
         ///     Constructor

@@ -1,6 +1,7 @@
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
 using Quaver.API.Maps;
+using Quaver.API.Maps.Processors.Difficulty.Optimization;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Overall difficulty of the map
         /// </summary>
         public override float OverallDifficulty { get; internal set; } = 0;
+
+        /// <summary>
+        ///     Constants used for solving
+        /// </summary>
+        public override StrainConstants StrainConstants { get; internal set; } = new StrainConstants();
 
         /// <summary>
         /// TODO: remove this later. TEMPORARY.
