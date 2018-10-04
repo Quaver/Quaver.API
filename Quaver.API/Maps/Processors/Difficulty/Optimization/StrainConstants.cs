@@ -7,7 +7,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
     /// <summary>
     ///     Constant Variables for any specific Gamemode that the Strain Solver can use to solve.
     /// </summary>
-    public virtual class StrainConstants
+    public class StrainConstants
     {
         /// <summary>
         ///     List of Constant Variables for the current Solver.

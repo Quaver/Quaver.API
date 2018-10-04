@@ -30,7 +30,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Constants used for solving
         /// </summary>
-        public override StrainConstants StrainConstants { get; internal set; } = new StrainConstants();
+        public override StrainConstants StrainConstants { get; internal set; } = new StrainConstantsKeys();
 
         /// <summary>
         /// TODO: remove this later. TEMPORARY.
