@@ -462,9 +462,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         //          88.2ms = 170bpm 1/4 vibro
                         //          93.7ms = 160bpm 1/4 vibro
 
-                        // 20f = 20ms tolerance before hitting vibro point (88.2ms, 170bpm vibro)
-                        var durationValue = Math.Min(1,Math.Max(0,1 - ((88.2f + 20f) - data.FingerActionDurationMs) / 20));
-                        var durationMultiplier = 1 - durationValue * 0.7f;
+                        // 35f = 35ms tolerance before hitting vibro point (88.2ms, 170bpm vibro)
+                        var durationValue = Math.Min(1,Math.Max(0,1 - ((88.2f + 35f) - data.FingerActionDurationMs) / 35f));
+                        var durationMultiplier = 1 - (durationValue * 0.25f);
                         var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / jackManipulationCheckSize, 0.8f)) * 0.4f;
                         data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
                     }
