@@ -411,9 +411,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                 // todo: catch possible arithmetic error (division by 0)
                                 // todo: implement constants
                                 var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
-                                var multiplier = 1 / (1 + ((durationRatio - 1) / 3f));
+                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) / 3f));
                                 var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.8f)) * 0.4f;
-                                data.RollManipulationStrainMultiplier = multiplier * manipulationFoundRatio;
+                                data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
                             }
                         }
                     }
@@ -463,8 +463,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         //          93.7ms = 160bpm 1/4 vibro
 
                         // 20f = 20ms tolerance before hitting vibro point (88.2ms, 170bpm vibro)
-                        var durationRatio = Math.Min(1,Math.Max(0,1 - ((88.2f + 20f) - data.FingerActionDurationMs) / 20));
-                        var durationMultiplier = 1 - durationRatio * 0.7f;
+                        var durationValue = Math.Min(1,Math.Max(0,1 - ((88.2f + 20f) - data.FingerActionDurationMs) / 20));
+                        var durationMultiplier = 1 - durationValue * 0.7f;
                         var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / jackManipulationCheckSize, 0.8f)) * 0.4f;
                         data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
                     }
