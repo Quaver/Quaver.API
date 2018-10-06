@@ -9,21 +9,25 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
     {
         /// <summary>
         ///     When Long Notes start/end after this threshold, it will be considered for a specific multiplier.
+        ///     Non-Dyanmic Constant. Do not use for optimization.
         /// </summary>
         public float LnEndThresholdMs { get; set; } = 42;
 
         /// <summary>
         ///     When seperate notes are under this threshold, it will count as a chord.
+        ///     Non-Dyanmic Constant. Do not use for optimization.
         /// </summary>
         public float ChordClumpToleranceMs { get; set; } = 8;
 
         /// <summary>
         ///     Size of each graph partition in miliseconds.
+        ///     Non-Dyanmic Constant. Do not use for optimization.
         /// </summary>
         public int GraphIntervalSizeMs { get; set; } = 500;
 
         /// <summary>
         ///     Offset between each graph partition in miliseconds.
+        ///     Non-Dyanmic Constant. Do not use for optimization.
         /// </summary>
         public int GraphIntervalOffsetMs { get; set; } = 100;
 
@@ -58,22 +62,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 30);
             SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 280);
-            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 88);
+            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 79);
             SJackCurveExponential = NewConstant("SJackCurveExponential", 1.09f);
 
             TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 20);
             TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 280);
-            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 90);
+            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 81);
             TJackCurveExponential = NewConstant("TJackCurveExponential", 1.05f);
 
             RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 40);
             RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 180);
-            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 54);
-            RollCurveExponential = NewConstant("RollCurveExponential", 0.95f);
+            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 48);
+            RollCurveExponential = NewConstant("RollCurveExponential", 0.93f);
 
             BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 40);
             BracketUpperBoundaryMs = NewConstant("BracketUpperBoundaryMs", 180);
-            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 56);
+            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 49);
             BracketCurveExponential = NewConstant("BracketCurveExponential", 0.95f);
     }
     }
