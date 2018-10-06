@@ -55,30 +55,50 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public float BracketMaxStrainValue { get; private set; }
         public float BracketCurveExponential { get; private set; }
 
+        // LN
+        public float LnBaseMultiplier { get; private set; }
+        public float LnLayerToleranceMs { get; private set; }
+        public float LnLayerThresholdMs { get; private set; }
+        public float LnReleaseAfterMultiplier { get; private set; }
+        public float LnReleaseBeforeMultiplier { get; private set; }
+        public float LnTapMultiplier { get; private set; }
+
         /// <summary>
         ///     Constructor. Create default strain constant values.
         /// </summary>
         public StrainConstantsKeys()
         {
+            // Simple Jack
             SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 30);
             SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 280);
             SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 79);
             SJackCurveExponential = NewConstant("SJackCurveExponential", 1.09f);
 
+            // Tech Jack
             TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 20);
             TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 280);
             TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 81);
             TJackCurveExponential = NewConstant("TJackCurveExponential", 1.05f);
 
+            // Roll/Trill
             RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 40);
             RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 180);
             RollMaxStrainValue = NewConstant("RollMaxStrainValue", 48);
             RollCurveExponential = NewConstant("RollCurveExponential", 0.93f);
 
+            // Bracket
             BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 40);
             BracketUpperBoundaryMs = NewConstant("BracketUpperBoundaryMs", 180);
             BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 49);
             BracketCurveExponential = NewConstant("BracketCurveExponential", 0.95f);
-    }
+
+            // LN
+            LnBaseMultiplier = NewConstant("LnBaseMultiplier", 0.5f);
+            LnLayerToleranceMs = NewConstant("LnLayerToleranceMs", 40f);
+            LnLayerThresholdMs = NewConstant("LnLayerThresholdMs", 93.7f);
+            LnReleaseAfterMultiplier = NewConstant("LnReleaseAfterMultiplier", 2.25f);
+            LnReleaseBeforeMultiplier = NewConstant("LnReleaseBeforeMultiplier", 1.35f);
+            LnTapMultiplier = NewConstant("LnTapMultiplier", 1.05f);
+        }
     }
 }

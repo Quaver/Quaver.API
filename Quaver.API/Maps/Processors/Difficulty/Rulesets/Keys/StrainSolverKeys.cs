@@ -438,14 +438,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // Check if data is LN
                 if (data.EndTime > data.StartTime)
                 {
-                    // Apply base multiplier for LN object
-                    // short LNs are nerfed and weighted as much as regular taps
-                    // todo: implement constants
-                    // note:    83.3ms = 180bpm 1/4 vibro
-                    //          88.2ms = 170bpm 1/4 vibro
-                    //          93.7ms = 160bpm 1/4 vibro
-                    var durationValue = 1 - Math.Min(1, Math.Max(0, (93.7 + 40) - (data.EndTime - data.StartTime)));
-                    var baseMultiplier = 1 + (float)((1 - durationValue) * 0.5f);
+                    var durationValue = 1 - Math.Min(1, Math.Max(0, ((StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs) - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
+                    var baseMultiplier = 1 + (float)((1 - durationValue) * StrainConstants.LnBaseMultiplier);
                     foreach (var k in data.HitObjects)
                         k.LnStrainMultiplier = baseMultiplier;
 
@@ -455,15 +449,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                     // Check to see if the target hitobject is layered inside the current LN
                     if (next.StartTime < data.EndTime - StrainConstants.LnEndThresholdMs)
-                    if (next.StartTime >= data.StartTime + StrainConstants.ChordClumpToleranceMs)
+                    if (next.StartTime >= data.StartTime + StrainConstants.LnEndThresholdMs)
 
                     // Target hitobject's LN ends after current hitobject's LN end.
-                    if (next.EndTime > data.EndTime + StrainConstants.ChordClumpToleranceMs)
+                    if (next.EndTime > data.EndTime + StrainConstants.LnEndThresholdMs)
                     {
                         foreach (var k in data.HitObjects)
                         {
                             k.LnLayerType = LnLayerType.OutsideRelease;
-                            k.LnStrainMultiplier *= 2.25f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            k.LnStrainMultiplier *= StrainConstants.LnReleaseAfterMultiplier;
                         }
                     }
 
@@ -473,7 +467,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         foreach (var k in data.HitObjects)
                         {
                             k.LnLayerType = LnLayerType.InsideRelease;
-                            k.LnStrainMultiplier *= 1.35f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            k.LnStrainMultiplier *= StrainConstants.LnReleaseBeforeMultiplier;
                         }
                     }
 
@@ -483,7 +477,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         foreach (var k in data.HitObjects)
                         {
                             k.LnLayerType = LnLayerType.InsideTap;
-                            k.LnStrainMultiplier *= 1.05f; //TEMP STRAIN MULTIPLIER. use constant later.
+                            k.LnStrainMultiplier *= StrainConstants.LnTapMultiplier;
                         }
                     }
                 }
