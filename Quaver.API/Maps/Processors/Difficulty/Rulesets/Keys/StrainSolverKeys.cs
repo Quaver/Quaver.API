@@ -364,8 +364,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                 // todo: catch possible arithmetic error (division by 0)
                                 // todo: implement constants
                                 var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
-                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) / 4f));
-                                var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.8f)) * 0.3f;
+                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) / 6f));
+                                var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.8f)) * 0.6f;
                                 data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
                             }
                         }
