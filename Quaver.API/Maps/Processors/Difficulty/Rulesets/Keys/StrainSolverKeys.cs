@@ -132,8 +132,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             ComputeNoteDensityData(rate);
             ComputeBaseStrainStates(rate);
             ComputeForChords();
-            ComputeFingerActions();
-            ComputeActionPatterns(); // todo: not implemented yet
+            ComputeForFingerActions();
+            ComputeForActionPatterns(); // todo: not implemented yet
             ComputeForRollManipulation();
             ComputeForJackManipulation();
             CalculateOverallDifficulty();
@@ -184,6 +184,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 StrainSolverData.Add(curStrainData);
             }
 
+            /*
             // Solve LN
             // todo: put this in its own method maybe?
             for (var i = 0; i < StrainSolverData.Count - 1; i++)
@@ -230,7 +231,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
                 }
-            }
+            }*/
         }
 
         /// <summary>
@@ -275,7 +276,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Action-Strain multiplier is applied in computation.
         /// </summary>
         /// <param name="qssData"></param>
-        private void ComputeFingerActions()
+        private void ComputeForFingerActions()
         {
             // Solve for Finger Action
             for (var i = 0; i < StrainSolverData.Count - 1; i++)
@@ -366,7 +367,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Pattern manipulation, and inflated patterns are factored into calculation.
         /// </summary>
         /// <param name="qssData"></param>
-        private void ComputeActionPatterns()
+        private void ComputeForActionPatterns()
         {
             
         }
@@ -473,6 +474,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // Set prev array of found manipulation to current one.
                 Array.Copy(curManipulationFound, prevManipulationFound, jackManipulationCheckSize);
             }
+        }
+
+        /// <summary>
+        ///     Scans for LN layering and applies a multiplier
+        /// </summary>
+        private void ComputeForLnMultiplier()
+        {
+
         }
 
         /// <summary>
