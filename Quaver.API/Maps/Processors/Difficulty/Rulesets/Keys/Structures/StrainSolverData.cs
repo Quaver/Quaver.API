@@ -42,7 +42,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Multiplier that gets added to any pattern that could be manipulated
         ///     Note: Manipulation in this case means being able to "chord/hand spam multiple keys"
         /// </summary>
-        public float ManipulationStrainMultiplier { get; set; } = 1;
+        public float RollManipulationStrainMultiplier { get; set; } = 1;
+
+        public float JackManipulationStrainMultiplier { get; set; } = 1;
 
         /// <summary>
         ///     Total strain value for this data point
@@ -95,7 +97,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             // Calculate the strain value of each individual object and add to total
             foreach (var hitOb in HitObjects)
             {
-                hitOb.StrainValue = ActionStrainCoefficient * PatternStrainMultiplier * ManipulationStrainMultiplier * hitOb.LnStrainMultiplier;
+                hitOb.StrainValue = ActionStrainCoefficient * PatternStrainMultiplier * RollManipulationStrainMultiplier * JackManipulationStrainMultiplier * hitOb.LnStrainMultiplier;
                 TotalStrainValue += hitOb.StrainValue;
             }
 
