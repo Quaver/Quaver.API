@@ -380,7 +380,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 curManipulationFound[0] = false;
 
                 // if the last index of the array is true, decrease count.
-                if (prevManipulationFound[rollManipulationCheckSize])
+                if (prevManipulationFound[rollManipulationCheckSize - 1])
                     totalManipulationFound--;
 
                 // Check to see if the current data point has two other following points
