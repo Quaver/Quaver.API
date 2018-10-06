@@ -10,22 +10,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     When Long Notes start/end after this threshold, it will be considered for a specific multiplier.
         /// </summary>
-        public const float THRESHOLD_LN_END_MS = 42;
+        public float LnEndThresholdMs { get; set; } = 42;
 
         /// <summary>
         ///     When seperate notes are under this threshold, it will count as a chord.
         /// </summary>
-        public const float THRESHOLD_CHORD_CHECK_MS = 8;
+        public float ChordClumpToleranceMs { get; set; } = 8;
 
         /// <summary>
         ///     Size of each graph partition in miliseconds.
         /// </summary>
-        public const int GRAPH_INTERVAL_SIZE_MS = 500;
+        public int GraphIntervalSizeMs { get; set; } = 500;
 
         /// <summary>
         ///     Offset between each graph partition in miliseconds.
         /// </summary>
-        public const int GRAPH_INTERVAL_OFFSET_MS = 100;
+        public int GraphIntervalOffsetMs { get; set; } = 100;
 
         // Simple Jacks
         public float SJackLowerBoundaryMs { get; private set; }

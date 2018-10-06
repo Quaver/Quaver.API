@@ -191,11 +191,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 {
                     // If the target hit object is way outside the current LN end, don't bother iterating through the rest.
                     var nextHitOb = StrainSolverData[j];
-                    if (nextHitOb.StartTime > curHitOb.EndTime + THRESHOLD_LN_END_MS)
+                    if (nextHitOb.StartTime > curHitOb.EndTime + StrainConstants.LnEndThresholdMs)
                         break;
 
                     // Check to see if the target hitobject is layered inside the current LN
-                    if (nextHitOb.Hand == curHitOb.Hand && nextHitOb.StartTime >= curHitOb.StartTime + THRESHOLD_CHORD_CHECK_MS)
+                    if (nextHitOb.Hand == curHitOb.Hand && nextHitOb.StartTime >= curHitOb.StartTime + StrainConstants.ChordClumpToleranceMs)
                     {
                         // Target hitobject's LN ends after current hitobject's LN end.
                         if (nextHitOb.EndTime > curHitOb.EndTime)
@@ -243,10 +243,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 {
                     var msDiff = StrainSolverData[j].StartTime - StrainSolverData[i].StartTime;
 
-                    if (msDiff > THRESHOLD_CHORD_CHECK_MS)
+                    if (msDiff > StrainConstants.ChordClumpToleranceMs)
                         break;
 
-                    if (Math.Abs(msDiff) <= THRESHOLD_CHORD_CHECK_MS)
+                    if (Math.Abs(msDiff) <= StrainConstants.ChordClumpToleranceMs)
                     {
                         if (StrainSolverData[i].Hand == StrainSolverData[j].Hand)
                         {
