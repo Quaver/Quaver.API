@@ -368,6 +368,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="qssData"></param>
         private void ComputeActionPatterns()
         {
+            
+        }
+
+        /// <summary>
+        ///     Scans for roll manipulation. "Roll Manipulation" is definced as notes in sequence "A -> B -> A" with one action at least twice as long as the other.
+        /// </summary>
+        private void ComputeForRollManipulation()
+        {
             const int rollManipulationCheckSize = 10;
             var curManipulationFound = new bool[rollManipulationCheckSize];
             var prevManipulationFound = new bool[rollManipulationCheckSize];
@@ -417,19 +425,47 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        ///     Scans for roll manipulation. "Roll Manipulation" is definced as notes in sequence "A -> B -> A" with one action at least twice as long as the other.
-        /// </summary>
-        private void ComputeForRollManipulation()
-        {
-
-        }
-
-        /// <summary>
         ///     Scans for jack manipulation. "Jack Manipulation" is defined as a succession of simple jacks. ("A -> A -> A")
         /// </summary>
         private void ComputeForJackManipulation()
         {
+            const int jackManipulationCheckSize = 10;
+            var curManipulationFound = new bool[jackManipulationCheckSize];
+            var prevManipulationFound = new bool[jackManipulationCheckSize];
+            var totalManipulationFound = 0;
 
+            foreach (var data in StrainSolverData)
+            {
+                // Shift the array of found manipulation by 1.
+                Array.Copy(prevManipulationFound, 0, curManipulationFound, 1, jackManipulationCheckSize - 1);
+                curManipulationFound[0] = false;
+
+                // if the last index of the array is true, decrease count.
+                if (prevManipulationFound[jackManipulationCheckSize - 1])
+                    totalManipulationFound--;
+
+                // Check to see if the current data point has a following data point
+                if (data.NextStrainSolverDataOnCurrentHand != null )
+                {
+                    var next = data.NextStrainSolverDataOnCurrentHand;
+
+                    if (data.FingerAction == FingerAction.SimpleJack && next.FingerAction == FingerAction.SimpleJack)
+                    {
+                        // Count manipulation
+                        curManipulationFound[0] = true;
+                        totalManipulationFound++;
+
+                        // Apply multiplier
+                        // todo: catch possible arithmetic error (division by 0)
+                        // todo: implement constants
+                        var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / jackManipulationCheckSize, 0.8f)) * 0.4f;
+                        data.RollManipulationStrainMultiplier = manipulationFoundRatio;
+                    }
+                }
+
+                // Set prev array of found manipulation to current one.
+                Array.Copy(curManipulationFound, prevManipulationFound, jackManipulationCheckSize);
+            }
         }
 
         /// <summary>
