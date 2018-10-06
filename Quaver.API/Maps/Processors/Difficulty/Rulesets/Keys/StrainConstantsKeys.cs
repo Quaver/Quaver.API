@@ -69,27 +69,27 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public StrainConstantsKeys()
         {
             // Simple Jack
-            SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 40);
+            SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 20);
             SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 330);
-            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 77);
+            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 73);
             SJackCurveExponential = NewConstant("SJackCurveExponential", 1.10f);
 
             // Tech Jack
-            TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 40);
+            TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 20);
             TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 340);
-            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 80);
+            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 75);
             TJackCurveExponential = NewConstant("TJackCurveExponential", 1.06f);
 
             // Roll/Trill
-            RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 40);
+            RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 20);
             RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 185);
-            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 48);
+            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 46);
             RollCurveExponential = NewConstant("RollCurveExponential", 0.93f);
 
             // Bracket
-            BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 40);
+            BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 20);
             BracketUpperBoundaryMs = NewConstant("BracketUpperBoundaryMs", 180);
-            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 49);
+            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 47);
             BracketCurveExponential = NewConstant("BracketCurveExponential", 0.95f);
 
             // LN
