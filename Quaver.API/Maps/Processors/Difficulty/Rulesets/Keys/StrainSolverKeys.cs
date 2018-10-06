@@ -437,6 +437,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             {
                 var next = data.NextStrainSolverDataOnCurrentHand;
 
+                // Check if next data point exists on current hand
+                if (next != null)
+
                 // Check to see if the target hitobject is layered inside the current LN
                 if (next.StartTime < data.EndTime - StrainConstants.LnEndThresholdMs)
                 if (next.StartTime >= data.StartTime + StrainConstants.ChordClumpToleranceMs)
