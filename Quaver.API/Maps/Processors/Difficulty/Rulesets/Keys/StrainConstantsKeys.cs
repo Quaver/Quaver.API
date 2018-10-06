@@ -71,26 +71,26 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // Simple Jack
             SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 20);
             SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 330);
-            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 73);
-            SJackCurveExponential = NewConstant("SJackCurveExponential", 1.10f);
+            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 83);
+            SJackCurveExponential = NewConstant("SJackCurveExponential", 1.20f);
 
             // Tech Jack
             TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 20);
             TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 340);
-            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 75);
-            TJackCurveExponential = NewConstant("TJackCurveExponential", 1.06f);
+            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 85);
+            TJackCurveExponential = NewConstant("TJackCurveExponential", 1.16f);
 
             // Roll/Trill
             RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 20);
             RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 185);
-            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 46);
-            RollCurveExponential = NewConstant("RollCurveExponential", 0.93f);
+            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 56);
+            RollCurveExponential = NewConstant("RollCurveExponential", 1.03f);
 
             // Bracket
             BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 20);
             BracketUpperBoundaryMs = NewConstant("BracketUpperBoundaryMs", 180);
-            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 47);
-            BracketCurveExponential = NewConstant("BracketCurveExponential", 0.95f);
+            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 57);
+            BracketCurveExponential = NewConstant("BracketCurveExponential", 1.05f);
 
             // LN
             LnBaseMultiplier = NewConstant("LnBaseMultiplier", 0.5f);
