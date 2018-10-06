@@ -19,6 +19,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public List<StrainSolverHitObject> HitObjects { get; set; } = new List<StrainSolverHitObject>();
 
         /// <summary>
+        ///     Is determined by the following StrainSolverData object on the current hand.
+        ///     It should be defined externally from this class.
+        /// </summary>
+        public StrainSolverData NextStrainSolverDataOnCurrentHand { get; set; }
+
+        /// <summary>
         ///     When the current action/pattern starts
         /// </summary>
         public float StartTime { get; set; }
@@ -39,11 +45,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public float PatternStrainMultiplier { get; set; } = 1;
 
         /// <summary>
-        ///     Multiplier that gets added to any pattern that could be manipulated
-        ///     Note: Manipulation in this case means being able to "chord/hand spam multiple keys"
+        ///     Multiplier that gets added to any pattern that could be manipulated via rolls.
         /// </summary>
         public float RollManipulationStrainMultiplier { get; set; } = 1;
 
+        /// <summary>
+        ///     Multiplier that gets applied to any pattern that could be manipulated via long jacks.
+        /// </summary>
         public float JackManipulationStrainMultiplier { get; set; } = 1;
 
         /// <summary>
@@ -60,6 +68,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Finger Action that this data point represents
         /// </summary>
         public FingerAction FingerAction { get; set; }
+
+        /// <summary>
+        ///     Duration of FingerAaction in ms
+        /// </summary>
+        public float FingerActionDurationMs { get; set; }
 
         /// <summary>
         ///     Pattern that this data point represents.

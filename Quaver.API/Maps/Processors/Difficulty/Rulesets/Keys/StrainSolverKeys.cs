@@ -133,7 +133,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             ComputeBaseStrainStates(rate);
             ComputeForChords();
             ComputeFingerActions();
-            ComputeActionPatterns();
+            ComputeActionPatterns(); // todo: not implemented yet
+            ComputeForRollManipulation();
+            ComputeForJackManipulation();
             CalculateOverallDifficulty();
         }
 
@@ -298,6 +300,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         // Determined by how long the current finger action is
                         var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
 
+                        // Apply the "NextStrainSolverDataOnCurrentHand" value on the current hit object and also apply action duration.
+                        curHitOb.NextStrainSolverDataOnCurrentHand = nextHitOb;
+                        curHitOb.FingerActionDurationMs = actionDuration;
+
                         //todo: REMOVE. this is for debuggin.
                         //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + actionDuration + "\n");
 
@@ -361,6 +367,64 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="qssData"></param>
         private void ComputeActionPatterns()
+        {
+            const int rollManipulationCheckSize = 10;
+            var curManipulationFound = new bool[rollManipulationCheckSize];
+            var prevManipulationFound = new bool[rollManipulationCheckSize];
+            var totalManipulationFound = 0;
+
+            foreach (var data in StrainSolverData)
+            {
+                // Shift the array of found manipulation by 1.
+                Array.Copy(prevManipulationFound, 0, curManipulationFound, 1, rollManipulationCheckSize);
+                curManipulationFound[0] = false;
+
+                // if the last index of the array is true, decrease count.
+                if (prevManipulationFound[rollManipulationCheckSize])
+                    totalManipulationFound--;
+
+                // Check to see if the current data point has two other following points
+                if (data.NextStrainSolverDataOnCurrentHand != null && data.NextStrainSolverDataOnCurrentHand.NextStrainSolverDataOnCurrentHand != null)
+                {
+                    var middle = data.NextStrainSolverDataOnCurrentHand;
+                    var last = data.NextStrainSolverDataOnCurrentHand.NextStrainSolverDataOnCurrentHand;
+
+                    if (data.FingerAction == FingerAction.Roll && middle.FingerAction == FingerAction.Roll)
+                    {
+                        if (data.FingerState == last.FingerState)
+                        {
+                            if (data.FingerActionDurationMs > middle.FingerActionDurationMs)
+                            {
+                                // Count manipulation
+                                curManipulationFound[0] = true;
+                                totalManipulationFound++;
+
+                                // Apply multiplier
+                                // todo: catch possible arithmetic error (division by 0)
+                                // todo: implement constants
+                                var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
+                                var multiplier = 1 + (durationRatio - 1) / 2f;
+                                var manipulationFoundRatio = (float)(1 + Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.9f));
+                                data.RollManipulationStrainMultiplier = multiplier * manipulationFoundRatio;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Scans for roll manipulation. "Roll Manipulation" is definced as notes in sequence "A -> B -> A" with one action at least twice as long as the other.
+        /// </summary>
+        private void ComputeForRollManipulation()
+        {
+
+        }
+
+        /// <summary>
+        ///     Scans for jack manipulation. "Jack Manipulation" is defined as a succession of simple jacks. ("A -> A -> A")
+        /// </summary>
+        private void ComputeForJackManipulation()
         {
 
         }
