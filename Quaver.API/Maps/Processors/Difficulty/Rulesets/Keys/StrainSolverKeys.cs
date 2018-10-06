@@ -134,7 +134,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             ComputeForChords();
             ComputeForFingerActions();
             ComputeForActionPatterns(); // todo: not implemented yet
-            ComputeForRollManipulation();
+            //ComputeForRollManipulation();
             ComputeForJackManipulation();
             ComputeForLnMultiplier();
             CalculateOverallDifficulty();
