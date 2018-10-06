@@ -376,7 +376,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             foreach (var data in StrainSolverData)
             {
                 // Shift the array of found manipulation by 1.
-                Array.Copy(prevManipulationFound, 0, curManipulationFound, 1, rollManipulationCheckSize);
+                Array.Copy(prevManipulationFound, 0, curManipulationFound, 1, rollManipulationCheckSize - 1);
                 curManipulationFound[0] = false;
 
                 // if the last index of the array is true, decrease count.
@@ -410,6 +410,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
                 }
+
+                // Set prev array of found manipulation to current one.
+                Array.Copy(curManipulationFound, prevManipulationFound, rollManipulationCheckSize);
             }
         }
 
