@@ -404,7 +404,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                 // todo: implement constants
                                 var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
                                 var multiplier = 1 / (1 + ((durationRatio - 1) / 2f));
-                                var manipulationFoundRatio = (float)(1 - Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.9f));
+                                var manipulationFoundRatio = (float)(1 - Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.9f)) * 0.6f;
                                 data.RollManipulationStrainMultiplier = multiplier * manipulationFoundRatio;
                             }
                         }
