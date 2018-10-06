@@ -69,20 +69,20 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public StrainConstantsKeys()
         {
             // Simple Jack
-            SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 30);
-            SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 280);
-            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 79);
-            SJackCurveExponential = NewConstant("SJackCurveExponential", 1.09f);
+            SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 40);
+            SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 330);
+            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 77);
+            SJackCurveExponential = NewConstant("SJackCurveExponential", 1.10f);
 
             // Tech Jack
-            TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 20);
-            TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 280);
-            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 81);
-            TJackCurveExponential = NewConstant("TJackCurveExponential", 1.05f);
+            TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 40);
+            TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 340);
+            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 80);
+            TJackCurveExponential = NewConstant("TJackCurveExponential", 1.06f);
 
             // Roll/Trill
             RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 40);
-            RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 180);
+            RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 185);
             RollMaxStrainValue = NewConstant("RollMaxStrainValue", 48);
             RollCurveExponential = NewConstant("RollCurveExponential", 0.93f);
 
