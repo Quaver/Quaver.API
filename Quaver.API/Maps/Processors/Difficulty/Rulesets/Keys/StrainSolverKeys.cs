@@ -435,9 +435,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             foreach (var data in StrainSolverData)
             {
-                var next = data.NextStrainSolverDataOnCurrentHand;
+                // Apply base multiplier for LN object
+                // short LNs are nerfed and weighted as much as regular taps
+                // todo: implement constants
+                // note:    83.3ms = 180bpm 1/4 vibro
+                //          88.2ms = 170bpm 1/4 vibro
+                //          93.7ms = 160bpm 1/4 vibro
+                var durationValue = 1 - Math.Min(1, Math.Max(0, (93.7 + 40) - (data.EndTime - data.StartTime)));
+                var baseMultiplier = 1 + (float)((1 - durationValue) * 0.5f);
+                foreach (var k in data.HitObjects)
+                    k.LnStrainMultiplier = baseMultiplier; 
 
                 // Check if next data point exists on current hand
+                var next = data.NextStrainSolverDataOnCurrentHand;
                 if (next != null)
 
                 // Check to see if the target hitobject is layered inside the current LN
@@ -450,7 +460,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     foreach (var k in data.HitObjects)
                     {
                         k.LnLayerType = LnLayerType.OutsideRelease;
-                        k.LnStrainMultiplier = 1.8f; //TEMP STRAIN MULTIPLIER. use constant later.
+                        k.LnStrainMultiplier *= 2.25f; //TEMP STRAIN MULTIPLIER. use constant later.
                     }
                 }
 
@@ -460,7 +470,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     foreach (var k in data.HitObjects)
                     {
                         k.LnLayerType = LnLayerType.InsideRelease;
-                        k.LnStrainMultiplier = 1.25f; //TEMP STRAIN MULTIPLIER. use constant later.
+                        k.LnStrainMultiplier *= 1.35f; //TEMP STRAIN MULTIPLIER. use constant later.
                     }
                 }
 
@@ -470,7 +480,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     foreach (var k in data.HitObjects)
                     {
                         k.LnLayerType = LnLayerType.InsideTap;
-                        k.LnStrainMultiplier = 1.05f; //TEMP STRAIN MULTIPLIER. use constant later.
+                        k.LnStrainMultiplier *= 1.05f; //TEMP STRAIN MULTIPLIER. use constant later.
                     }
                 }
             }
