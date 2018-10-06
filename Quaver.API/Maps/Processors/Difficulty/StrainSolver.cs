@@ -24,14 +24,14 @@ namespace Quaver.API.Maps.Processors.Difficulty
         public abstract float OverallDifficulty { get; internal set; }
 
         /// <summary>
-        ///     Constants used for solving
+        ///     Total ammount of milliseconds in a second.
         /// </summary>
-        public abstract StrainConstants StrainConstants { get; internal set; }
+        public const float SECONDS_TO_MILLISECONDS = 1000;
 
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="map"></param>
-        public StrainSolver(Qua map, ModIdentifier mods = ModIdentifier.None) => Map = map;
+        public StrainSolver(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None) => Map = map;
     }
 }

@@ -12,7 +12,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <summary>
         ///     List of Constant Variables for the current Solver.
         /// </summary>
-        public virtual List<ConstantVariable> ConstantVariables { get; set; }
+        public List<ConstantVariable> ConstantVariables { get; set; }
 
         /// <summary>
         ///     Create a new constant variable for difficulty calculation and optimization.
@@ -20,7 +20,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public virtual float NewConstant(string name, float value)
+        public float NewConstant(string name, float value)
         {
             // Create new constant variable
             var constVar = new ConstantVariable(name, value);
@@ -34,7 +34,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         ///     Returns a string of Constant Variable info mainly used for debugging and optimization 
         /// </summary>
         /// <returns></returns>
-        public virtual string GetInfoFromVariables()
+        public string GetInfoFromVariables()
         {
             // Generate output
             var output = "";

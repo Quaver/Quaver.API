@@ -27,38 +27,17 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         public override float OverallDifficulty { get; internal set; } = 0;
 
-        public StrainConstantsKeys StrainConstantsKeys = new StrainConstantsKeys();
+        //public StrainConstantsKeys StrainConstantsKeys = new StrainConstantsKeys();
 
         /// <summary>
         ///     Constants used for solving
         /// </summary>
-        public override StrainConstants StrainConstants { get; internal set; } = new StrainConstantsKeys();
+        public StrainConstantsKeys StrainConstants { get; private set; }
 
         /// <summary>
         /// TODO: remove this later. TEMPORARY.
         /// </summary>
         public string DebugString { get; private set; } = "";
-
-        /// <summary>
-        ///     Size of each graph partition in miliseconds
-        /// </summary>
-        public const int GRAPH_INTERVAL_SIZE_MS = 500;
-
-        /// <summary>
-        ///     Offset between each graph partition in miliseconds
-        /// </summary>
-        public const int GRAPH_INTERVAL_OFFSET_MS = 100;
-
-        //todo: document. Might change names/logic later
-        // threshold on when to ignore LN layering if startTime/endTime between 2 hit objects are too close to eachother
-        private const float THRESHOLD_LN_END_MS = 42;
-        // threshold on when to ignore notes when merging multiple hit objects into chords
-        private const float THRESHOLD_CHORD_CHECK_MS = 8;
-
-        /// <summary>
-        ///     Total ammount of milliseconds in a second.
-        /// </summary>
-        public const float SECONDS_TO_MILLISECONDS = 1000;
 
         /// <summary>
         ///     Average note density of the map
@@ -124,8 +103,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     const
         /// </summary>
         /// <param name="qua"></param>
-        public StrainSolverKeys(Qua map, ModIdentifier mods = ModIdentifier.None) : base(map, mods)
+        public StrainSolverKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None) : base(map, constants, mods)
         {
+            // Cast the current Strain Constants Property to the correct type.
+            StrainConstants = (StrainConstantsKeys)constants;
+
             // Don't bother calculating map difficulty if there's less than 2 hit objects
             if (map.HitObjects.Count < 2)
                 return;
@@ -324,10 +306,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
                             curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
-                                StrainConstantsKeys.RollLowerBoundaryMs,
-                                StrainConstantsKeys.RollUpperBoundaryMs,
-                                StrainConstantsKeys.RollMaxStrainValue,
-                                StrainConstantsKeys.RollCurveExponential);
+                                StrainConstants.RollLowerBoundaryMs,
+                                StrainConstants.RollUpperBoundaryMs,
+                                StrainConstants.RollMaxStrainValue,
+                                StrainConstants.RollCurveExponential);
                             Roll++;
                         }
 
@@ -336,10 +318,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
                             curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
-                                StrainConstantsKeys.SJackLowerBoundaryMs,
-                                StrainConstantsKeys.SJackUpperBoundaryMs,
-                                StrainConstantsKeys.SJackMaxStrainValue,
-                                StrainConstantsKeys.SJackCurveExponential);
+                                StrainConstants.SJackLowerBoundaryMs,
+                                StrainConstants.SJackUpperBoundaryMs,
+                                StrainConstants.SJackMaxStrainValue,
+                                StrainConstants.SJackCurveExponential);
                             SJack++;
                         }
 
@@ -348,10 +330,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
                             curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
-                                StrainConstantsKeys.TJackLowerBoundaryMs,
-                                StrainConstantsKeys.TJackUpperBoundaryMs,
-                                StrainConstantsKeys.TJackMaxStrainValue,
-                                StrainConstantsKeys.TJackCurveExponential);
+                                StrainConstants.TJackLowerBoundaryMs,
+                                StrainConstants.TJackUpperBoundaryMs,
+                                StrainConstants.TJackMaxStrainValue,
+                                StrainConstants.TJackCurveExponential);
                             TJack++;
                         }
 
@@ -360,10 +342,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
                             curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
-                                StrainConstantsKeys.BracketLowerBoundaryMs,
-                                StrainConstantsKeys.BracketUpperBoundaryMs,
-                                StrainConstantsKeys.BracketMaxStrainValue,
-                                StrainConstantsKeys.BracketCurveExponential);
+                                StrainConstants.BracketLowerBoundaryMs,
+                                StrainConstants.BracketUpperBoundaryMs,
+                                StrainConstants.BracketMaxStrainValue,
+                                StrainConstants.BracketCurveExponential);
                             Bracket++;
                         }
 

@@ -7,32 +7,53 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 {
     public class StrainConstantsKeys : StrainConstants
     {
+        /// <summary>
+        ///     When Long Notes start/end after this threshold, it will be considered for a specific multiplier.
+        /// </summary>
+        public const float THRESHOLD_LN_END_MS = 42;
+
+        /// <summary>
+        ///     When seperate notes are under this threshold, it will count as a chord.
+        /// </summary>
+        public const float THRESHOLD_CHORD_CHECK_MS = 8;
+
+        /// <summary>
+        ///     Size of each graph partition in miliseconds.
+        /// </summary>
+        public const int GRAPH_INTERVAL_SIZE_MS = 500;
+
+        /// <summary>
+        ///     Offset between each graph partition in miliseconds.
+        /// </summary>
+        public const int GRAPH_INTERVAL_OFFSET_MS = 100;
+
+        // Simple Jacks
         public float SJackLowerBoundaryMs { get; private set; }
         public float SJackUpperBoundaryMs { get; private set; }
         public float SJackMaxStrainValue { get; private set; }
         public float SJackCurveExponential { get; private set; }
 
+        // Tech Jacks
         public float TJackLowerBoundaryMs { get; private set; }
         public float TJackUpperBoundaryMs { get; private set; }
         public float TJackMaxStrainValue { get; private set; }
         public float TJackCurveExponential { get; private set; }
 
+        // Rolls
         public float RollLowerBoundaryMs { get; private set; }
         public float RollUpperBoundaryMs { get; private set; }
         public float RollMaxStrainValue { get; private set; }
         public float RollCurveExponential { get; private set; }
 
+        // Brackets
         public float BracketLowerBoundaryMs { get; private set; }
         public float BracketUpperBoundaryMs { get; private set; }
         public float BracketMaxStrainValue { get; private set; }
         public float BracketCurveExponential { get; private set; }
 
-        public override List<ConstantVariable> ConstantVariables { get; set; }
-
-        public override string GetInfoFromVariables() => base.GetInfoFromVariables();
-
-        public override float NewConstant(string name, float value) => base.NewConstant(name, value);
-
+        /// <summary>
+        ///     Constructor. Create default strain constant values.
+        /// </summary>
         public StrainConstantsKeys()
         {
             SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 30);
