@@ -329,7 +329,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForRollManipulation()
         {
-            const int rollManipulationCheckSize = 10;
+            const int rollManipulationCheckSize = 15;
             var curManipulationFound = new bool[rollManipulationCheckSize];
             var prevManipulationFound = new bool[rollManipulationCheckSize];
             var totalManipulationFound = 0;
@@ -365,7 +365,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                 // todo: implement constants
                                 var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
                                 var durationMultiplier = 1 / (1 + ((durationRatio - 1) / 6f));
-                                var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.6f)) * 0.6f;
+                                var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.5f)) * 0.75f;
                                 data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
                             }
                         }
