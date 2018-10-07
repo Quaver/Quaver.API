@@ -141,7 +141,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     ComputeForRollManipulation();
                     ComputeForJackManipulation();
                     ComputeForLnMultiplier();
-                    CalculateOverallDifficulty4K();
+                    OverallDifficulty = CalculateOverallDifficulty4K();
                     break;
                 case (GameMode.Keys7):
                     ComputeNoteDensityData(rate);
@@ -152,7 +152,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     ComputeForRollManipulation();
                     ComputeForJackManipulation();
                     ComputeForLnMultiplier();
-                    CalculateOverallDifficulty7K();
+                    // todo: use CalculateOverallDifficulty7K();
                     OverallDifficulty = 1;
                     break;
             }
