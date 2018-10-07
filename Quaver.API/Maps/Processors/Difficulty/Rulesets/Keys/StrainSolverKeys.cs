@@ -501,6 +501,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             float calculatedDiff = 0;
 
+            // Solve strain value of every data point
+            foreach (var data in StrainSolverData)
+                data.CalculateStrainValue();
+
             // left hand
             foreach (var data in StrainSolverData)
             {
@@ -531,6 +535,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             //todo: Implement Ambiguious Hand in calculation
             float calculatedDiff = 0;
+
+            // Solve strain value of every data point
+            foreach (var data in StrainSolverData)
+                data.CalculateStrainValue();
 
             // left hand
             foreach (var data in StrainSolverData)
