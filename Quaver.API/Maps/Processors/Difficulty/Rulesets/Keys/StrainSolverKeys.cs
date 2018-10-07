@@ -365,20 +365,25 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (data.FingerState == last.FingerState)
                         {
-                            if (data.FingerActionDurationMs > middle.FingerActionDurationMs)
+                            if (data.FingerActionDurationMs > middle.FingerActionDurationMs * 1.5 ||  )
                             {
-                                // Count manipulation
-                                manipulationFound = true;
-                                if (totalManipulationFound < rollManipulationCheckSize)
-                                    totalManipulationFound++;
-
-                                // Apply multiplier
-                                // todo: catch possible arithmetic error (division by 0)
-                                // todo: implement constants
+                                // Get action duration ratio from both actions
                                 var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
-                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) / 4f));
-                                var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 1.2f)) * 0.65f;
-                                data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
+
+                                if (durationRatio >= 2)
+                                {
+                                    // Count manipulation
+                                    manipulationFound = true;
+                                    if (totalManipulationFound < rollManipulationCheckSize)
+                                        totalManipulationFound++;
+
+                                    // Apply multiplier
+                                    // todo: catch possible arithmetic error (division by 0)
+                                    // todo: implement constants
+                                    var durationMultiplier = 1 / (1 + ((durationRatio - 1) / 4f));
+                                    var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 1.2f)) * 0.65f;
+                                    data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
+                                }
                             }
                         }
                     }
