@@ -15,7 +15,7 @@ namespace Quaver.API.Test
                                     $"'-qua <file path.qua>' - Get information about a .qua file\n" +
                                     $"'-osu <file path.osu> <output.qua>' - Convert an osu! (.osu) beatmap to .qua\n" +
                                     $"'-qss <file path.qua>' - Get qss data from a .qua file\n" +
-                                    $"'-qssbatch <file path>' - Get multiple qss data from a folder\n");
+                                    $"'-qssbatch <directory path>' - Get multiple qss data from a folder\n");
                 return;
             }
 

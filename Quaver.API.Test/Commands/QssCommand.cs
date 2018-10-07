@@ -1,5 +1,6 @@
 using System;
 using Newtonsoft.Json.Linq;
+using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 
@@ -10,10 +11,10 @@ namespace Quaver.API.Test.Commands
         public Qua Map { get; }
 
         public QssCommand(string[] args) : base(args) => Map = Qua.Parse(args[1]);
-        
+
         public override void Execute()
         {
-            var qss = new StrainSolverKeys(Map);
+            var qss = new StrainSolverKeys(Map, new StrainConstantsKeys());
 
             Console.WriteLine(JObject.FromObject(new
             {
