@@ -16,12 +16,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
     /// </summary>
     public class StrainSolverKeys : StrainSolver
     {
-        //todo: remove this later. TEMP
-        public int Roll { get; set; } = 0;
-        public int SJack { get; set; } = 0;
-        public int TJack { get; set; } = 0;
-        public int Bracket { get; set; } = 0;
-
         /// <summary>
         ///     Overall difficulty of the map
         /// </summary>
@@ -33,11 +27,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Constants used for solving
         /// </summary>
         public StrainConstantsKeys StrainConstants { get; private set; }
-
-        /// <summary>
-        /// TODO: remove this later. TEMPORARY.
-        /// </summary>
-        public string DebugString { get; private set; } = "";
 
         /// <summary>
         ///     Average note density of the map
@@ -287,7 +276,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                 StrainConstants.RollUpperBoundaryMs,
                                 StrainConstants.RollMaxStrainValue,
                                 StrainConstants.RollCurveExponential);
-                            Roll++;
                         }
 
                         // Simple Jack
@@ -299,7 +287,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                 StrainConstants.SJackUpperBoundaryMs,
                                 StrainConstants.SJackMaxStrainValue,
                                 StrainConstants.SJackCurveExponential);
-                            SJack++;
                         }
 
                         // Tech Jack
@@ -311,7 +298,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                 StrainConstants.TJackUpperBoundaryMs,
                                 StrainConstants.TJackMaxStrainValue,
                                 StrainConstants.TJackCurveExponential);
-                            TJack++;
                         }
 
                         // Bracket
@@ -323,7 +309,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                 StrainConstants.BracketUpperBoundaryMs,
                                 StrainConstants.BracketMaxStrainValue,
                                 StrainConstants.BracketCurveExponential);
-                            Bracket++;
                         }
 
                         break;
