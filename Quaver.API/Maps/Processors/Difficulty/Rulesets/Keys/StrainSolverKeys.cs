@@ -125,6 +125,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             switch (Map.Mode)
             {
                 case (GameMode.Keys4):
+                    // Compute for difficulty
                     ComputeNoteDensityData(rate);
                     ComputeBaseStrainStates(rate);
                     ComputeForChords();
@@ -134,8 +135,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     ComputeForJackManipulation();
                     ComputeForLnMultiplier();
                     OverallDifficulty = CalculateOverallDifficulty4K();
+
+                    // Compute for flags
+                    ComputeForWarningFlags();
                     break;
                 case (GameMode.Keys7):
+                    // Compute for difficulty
                     ComputeNoteDensityData(rate);
                     ComputeBaseStrainStates(rate);
                     ComputeForChords();
@@ -146,6 +151,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     ComputeForLnMultiplier();
                     // todo: use CalculateOverallDifficulty7K();
                     OverallDifficulty = 1;
+
+                    // Compute for flags
+                    ComputeForWarningFlags();
                     break;
             }
         }
@@ -358,6 +366,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                             {
                                 // Count manipulation
                                 manipulationFound = true;
+                                RollInaccuracyConfidence++;
                                 if (totalManipulationFound < rollManipulationCheckSize)
                                     totalManipulationFound++;
 
@@ -400,6 +409,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         // Count manipulation
                         manipulationFound = true;
+                        VibroInaccuracyConfidence++;
                         if (totalManipulationFound < jackManipulationCheckSize)
                             totalManipulationFound++;
 
@@ -478,6 +488,20 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     }
                 }
             }
+        }
+
+        /// <summary>
+        ///     Checks to see if the map rating is inacurrate due to vibro/rolls
+        /// </summary>
+        private void ComputeForWarningFlags()
+        {
+            // If 10% or more of the map has longjack manip, flag it as vibro map
+            if (VibroInaccuracyConfidence / StrainSolverData.Count > 0.10)
+                QssWarningFlags |= QssWarningFlags.VibroOverload;
+
+            // If 15% or more of the map has roll manip, flag it as roll map
+            if (RollInaccuracyConfidence / StrainSolverData.Count > 0.15)
+                QssWarningFlags |= QssWarningFlags.RollsOverload;
         }
 
         /// <summary>
