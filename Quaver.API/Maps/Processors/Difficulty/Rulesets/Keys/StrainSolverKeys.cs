@@ -329,20 +329,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForRollManipulation()
         {
-            const int rollManipulationCheckSize = 15;
-            var curManipulationFound = new bool[rollManipulationCheckSize];
-            var prevManipulationFound = new bool[rollManipulationCheckSize];
+            const int rollManipulationCheckSize = 12;
             var totalManipulationFound = 0;
 
             foreach (var data in StrainSolverData)
             {
-                // Shift the array of found manipulation by 1.
-                Array.Copy(prevManipulationFound, 0, curManipulationFound, 1, rollManipulationCheckSize - 1);
-                curManipulationFound[0] = false;
-
-                // if the last index of the array is true, decrease count.
-                if (prevManipulationFound[rollManipulationCheckSize - 1])
-                    totalManipulationFound--;
+                // Reset manipulation found
+                var manipulationFound = false;
 
                 // Check to see if the current data point has two other following points
                 if (data.NextStrainSolverDataOnCurrentHand != null && data.NextStrainSolverDataOnCurrentHand.NextStrainSolverDataOnCurrentHand != null)
@@ -357,23 +350,25 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                             if (data.FingerActionDurationMs > middle.FingerActionDurationMs)
                             {
                                 // Count manipulation
-                                curManipulationFound[0] = true;
-                                totalManipulationFound++;
+                                manipulationFound = true;
+                                if (totalManipulationFound < rollManipulationCheckSize)
+                                    totalManipulationFound++;
 
                                 // Apply multiplier
                                 // todo: catch possible arithmetic error (division by 0)
                                 // todo: implement constants
                                 var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
                                 var durationMultiplier = 1 / (1 + ((durationRatio - 1) / 4f));
-                                var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 0.8f)) * 0.65f;
+                                var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 1.2f)) * 0.65f;
                                 data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
                             }
                         }
                     }
                 }
 
-                // Set prev array of found manipulation to current one.
-                Array.Copy(curManipulationFound, prevManipulationFound, rollManipulationCheckSize);
+                // Reset manipulation count if manipulation was not found
+                if (!manipulationFound)
+                    totalManipulationFound = 0;
             }
         }
 
