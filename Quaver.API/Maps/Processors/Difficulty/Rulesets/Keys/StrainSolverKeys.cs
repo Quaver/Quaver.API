@@ -129,15 +129,32 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var rate = ModHelper.GetRateFromMods(mods);
 
             // Compute for overall difficulty
-            ComputeNoteDensityData(rate);
-            ComputeBaseStrainStates(rate);
-            ComputeForChords();
-            ComputeForFingerActions();
-            ComputeForActionPatterns(); // todo: not implemented yet
-            //ComputeForRollManipulation();
-            ComputeForJackManipulation();
-            ComputeForLnMultiplier();
-            CalculateOverallDifficulty();
+
+            switch (Map.Mode)
+            {
+                case (GameMode.Keys4):
+                    ComputeNoteDensityData(rate);
+                    ComputeBaseStrainStates(rate);
+                    ComputeForChords();
+                    ComputeForFingerActions();
+                    ComputeForActionPatterns(); // todo: not implemented yet
+                    ComputeForRollManipulation();
+                    ComputeForJackManipulation();
+                    ComputeForLnMultiplier();
+                    CalculateOverallDifficulty4K();
+                    break;
+                case (GameMode.Keys7):
+                    ComputeNoteDensityData(rate);
+                    ComputeBaseStrainStates(rate);
+                    ComputeForChords();
+                    ComputeForFingerActions();
+                    ComputeForActionPatterns(); // todo: not implemented yet
+                    ComputeForRollManipulation();
+                    ComputeForJackManipulation();
+                    ComputeForLnMultiplier();
+                    CalculateOverallDifficulty7K();
+                    break;
+            }
         }
 
         /// <summary>
@@ -475,54 +492,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        ///     Calculates the general difficulty of a map
-        /// </summary>
-        /// <param name="qssData"></param>
-        private void CalculateOverallDifficulty()
-        {
-            // Calculate the strain value for every data point
-            foreach (var data in StrainSolverData)
-            {
-                data.CalculateStrainValue();
-            }
-
-            // Solve for difficulty (temporary)
-            // Difficulty is determined by how long each action is and how difficult they are.
-            //  - longer actions have more weight due to it taking up more of the maps' length.
-            //  - generally shorter actions are harder, but a bunch of hard actions are obviously more difficulty than a single hard action
-
-            // overall difficulty = sum of all actions:(difficulty * action length) / map length
-            // todo: action length is currently manually calculated.
-            // todo: maybe store action length in StrainSolverData because it already gets calculated earlier?
-
-
-            // todo: make this look better
-            switch (Map.Mode)
-            {
-                case Enums.GameMode.Keys4:
-                    OverallDifficulty = CalculateDifficulty4K();
-                    break;
-
-                case Enums.GameMode.Keys7:
-                    OverallDifficulty = CalculateDifficulty7K();
-                    break;
-            }
-
-            // calculate stamina (temp solution)
-            // it just uses the map's length.
-            // 10 seconds = 0.9x multiplier
-            // 100 seconds = 1.0x multiplier
-            // 1000 seconds = 1.1x multiplier
-            // 10000 seconds = 1.2x multiplier, ect.
-            //OverallDifficulty *= (float)(0.5 + Math.Log10(Map.Length / rate) / 10);
-        }
-
-        /// <summary>
         ///     Calculate the general difficulty for a 4K map
         /// </summary>
         /// <param name="rate"></param>
         /// <returns></returns>
-        private float CalculateDifficulty4K()
+        private float CalculateOverallDifficulty4K()
         {
             float calculatedDiff = 0;
 
@@ -552,7 +526,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="rate"></param>
         /// <returns></returns>
-        private float CalculateDifficulty7K()
+        private float CalculateOverallDifficulty7K()
         {
             //todo: Implement Ambiguious Hand in calculation
             float calculatedDiff = 0;

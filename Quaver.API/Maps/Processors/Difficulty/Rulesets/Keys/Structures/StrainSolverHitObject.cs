@@ -34,7 +34,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 
         /// <summary>
         ///     Current Strain Value for this hit object.
-        ///     Note: This is not used for QSS calculation. It is for display/ui purposes.
         /// </summary>
         public float StrainValue { get; set; }
 
