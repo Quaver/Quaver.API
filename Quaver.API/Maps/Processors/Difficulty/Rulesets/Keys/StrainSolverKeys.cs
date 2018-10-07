@@ -382,20 +382,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForJackManipulation()
         {
-            const int jackManipulationCheckSize = 10;
-            var curManipulationFound = new bool[jackManipulationCheckSize];
-            var prevManipulationFound = new bool[jackManipulationCheckSize];
+            const int jackManipulationCheckSize = 6;
             var totalManipulationFound = 0;
 
             foreach (var data in StrainSolverData)
             {
-                // Shift the array of found manipulation by 1.
-                Array.Copy(prevManipulationFound, 0, curManipulationFound, 1, jackManipulationCheckSize - 1);
-                curManipulationFound[0] = false;
-
-                // if the last index of the array is true, decrease count.
-                if (prevManipulationFound[jackManipulationCheckSize - 1])
-                    totalManipulationFound--;
+                // Reset manipulation found
+                var manipulationFound = false;
 
                 // Check to see if the current data point has a following data point
                 if (data.NextStrainSolverDataOnCurrentHand != null )
@@ -405,8 +398,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (data.FingerAction == FingerAction.SimpleJack && next.FingerAction == FingerAction.SimpleJack)
                     {
                         // Count manipulation
-                        curManipulationFound[0] = true;
-                        totalManipulationFound++;
+                        manipulationFound = true;
+                        if (totalManipulationFound < jackManipulationCheckSize)
+                            totalManipulationFound++;
 
                         // Apply multiplier
                         // todo: catch possible arithmetic error (division by 0)
@@ -423,8 +417,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     }
                 }
 
-                // Set prev array of found manipulation to current one.
-                Array.Copy(curManipulationFound, prevManipulationFound, jackManipulationCheckSize);
+                // Reset manipulation count if manipulation was not found
+                if (!manipulationFound)
+                    totalManipulationFound = 0;
             }
         }
 
