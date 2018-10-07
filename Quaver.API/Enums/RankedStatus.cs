@@ -3,6 +3,7 @@
     public enum RankedStatus
     {
         NotSubmitted,
+        Unranked,
         Ranked,
         DanCourse
     }
