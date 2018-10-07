@@ -153,6 +153,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     ComputeForJackManipulation();
                     ComputeForLnMultiplier();
                     CalculateOverallDifficulty7K();
+                    OverallDifficulty = 1;
                     break;
             }
         }
