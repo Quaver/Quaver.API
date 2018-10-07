@@ -21,7 +21,17 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// <summary>
         ///     Overall Difficulty of a map
         /// </summary>
-        public abstract float OverallDifficulty { get; internal set; }
+        public float OverallDifficulty { get; set; }
+
+        /// <summary>
+        ///     Used to display prominent patterns of a map in the client
+        /// </summary>
+        public QssPatternFlags QssPatternFlags { get; set; }
+
+        /// <summary>
+        ///     Used to warn players about calculation inaccuracies due to controversial patterns of a map in client
+        /// </summary>
+        public QssWarningFlags QssWarningFlags { get; set; }
 
         /// <summary>
         ///     Total ammount of milliseconds in a second.

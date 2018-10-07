@@ -17,13 +17,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
     public class StrainSolverKeys : StrainSolver
     {
         /// <summary>
-        ///     Overall difficulty of the map
-        /// </summary>
-        public override float OverallDifficulty { get; internal set; } = 0;
-
-        //public StrainConstantsKeys StrainConstantsKeys = new StrainConstantsKeys();
-
-        /// <summary>
         ///     Constants used for solving
         /// </summary>
         public StrainConstantsKeys StrainConstants { get; private set; }
@@ -87,6 +80,16 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             { 6, FingerState.Middle },
             { 7, FingerState.Ring }
         };
+
+        /// <summary>
+        ///     Value of confidence that there's vibro manipulation in the calculated map.
+        /// </summary>
+        private float VibroInaccuracyConfidence { get; set; }
+
+        /// <summary>
+        ///     Value of confidence that there's roll manipulation in the calculated map.
+        /// </summary>
+        private float RollInaccuracyConfidence { get; set; }
 
         /// <summary>
         ///     const
@@ -263,9 +266,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         // Apply the "NextStrainSolverDataOnCurrentHand" value on the current hit object and also apply action duration.
                         curHitOb.NextStrainSolverDataOnCurrentHand = nextHitOb;
                         curHitOb.FingerActionDurationMs = actionDuration;
-
-                        //todo: REMOVE. this is for debuggin.
-                        //DebugString += (i + " | jack: " + actionJackFound + ", chord: " + actionChordFound + ", samestate: " + actionSameState + ", c-index: " + curHitOb.HandChordState + ", h-diff: " + actionDuration + "\n");
 
                         // Trill/Roll
                         if (!actionChordFound && !actionSameState)
