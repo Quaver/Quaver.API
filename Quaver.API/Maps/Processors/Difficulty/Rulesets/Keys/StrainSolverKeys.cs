@@ -344,7 +344,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForRollManipulation()
         {
-            const int rollManipulationCheckSize = 12;
             var totalManipulationFound = 0;
 
             foreach (var data in StrainSolverData)
@@ -366,19 +365,18 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                             var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
 
                             // If the ratio is above this threshold, count it as a roll manipulation
-                            if (durationRatio >= 2)
+                            if (durationRatio >= StrainConstants.RollRatioToleranceMs)
                             {
                                 // Count manipulation
                                 manipulationFound = true;
                                 RollInaccuracyConfidence++;
-                                if (totalManipulationFound < rollManipulationCheckSize)
+                                if (totalManipulationFound < StrainConstants.RollMaxLength)
                                     totalManipulationFound++;
 
                                 // Apply multiplier
                                 // todo: catch possible arithmetic error (division by 0)
-                                // todo: implement constants
-                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) / 4f));
-                                var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / rollManipulationCheckSize, 1.2f)) * 0.6f;
+                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) * StrainConstants.RollDurationMultiplier));
+                                var manipulationFoundRatio = 1 - (totalManipulationFound / StrainConstants.RollMaxLength) * StrainConstants.RollLengthMultiplier;
                                 data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
                             }
                         }
@@ -396,7 +394,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForJackManipulation()
         {
-            const int jackManipulationCheckSize = 6;
             var totalManipulationFound = 0;
 
             foreach (var data in StrainSolverData)
@@ -419,13 +416,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         // 35f = 35ms tolerance before hitting vibro point (88.2ms, 170bpm vibro)
                         var durationValue = Math.Min(1, Math.Max(0, ((StrainConstants.VibroActionDurationMs + StrainConstants.VibroActionToleranceMs) - data.FingerActionDurationMs) / StrainConstants.VibroActionToleranceMs));
                         var durationMultiplier = 1 - (durationValue * (1 - StrainConstants.VibroMultiplier));
-                        var manipulationFoundRatio = 1 - ((totalManipulationFound / jackManipulationCheckSize) * (1 - StrainConstants.VibroLengthMultiplier));
+                        var manipulationFoundRatio = 1 - ((totalManipulationFound / StrainConstants.VibroMaxLength) * (1 - StrainConstants.VibroLengthMultiplier));
                         data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
 
                         // Count manipulation
                         manipulationFound = true;
                         VibroInaccuracyConfidence++;
-                        if (totalManipulationFound < jackManipulationCheckSize)
+                        if (totalManipulationFound < StrainConstants.VibroMaxLength)
                             totalManipulationFound++;
                     }
                 }

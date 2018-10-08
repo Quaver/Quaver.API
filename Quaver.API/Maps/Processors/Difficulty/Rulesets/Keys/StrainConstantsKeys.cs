@@ -68,6 +68,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public float VibroActionToleranceMs { get; set; }
         public float VibroMultiplier { get; set; }
         public float VibroLengthMultiplier { get; set; }
+        public float VibroMaxLength { get; set; }
+
+        // Roll Manipulation
+        public float RollRatioToleranceMs { get; set; }
+        public float RollDurationMultiplier { get; set; }
+        public float RollLengthMultiplier { get; set; }
+        public float RollMaxLength { get; set; }
 
         /// <summary>
         ///     Constructor. Create default strain constant values.
@@ -111,7 +118,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             VibroActionToleranceMs = NewConstant("VibroActionToleranceMs", 22f);
             VibroMultiplier = NewConstant("VibroMultiplier", 0.48f);
             VibroLengthMultiplier = NewConstant("VibroLengthMultiplier", 0.3f);
+            VibroMaxLength = NewConstant("VibroMaxLength", 6);
 
+            // Roll Manipulation
+            RollRatioToleranceMs = NewConstant("RollRatioToleranceMs", 2);
+            RollDurationMultiplier = NewConstant("RollDurationMultiplier", 0.25f);
+            RollLengthMultiplier = NewConstant("RollLengthMultiplier", 0.6f);
+            RollMaxLength = NewConstant("RollMaxLength", 10);
         }
     }
 }
