@@ -141,18 +141,35 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     ComputeForRollManipulation();
                     ComputeForJackManipulation();
                     ComputeForLnMultiplier();
-                    OverallDifficulty = CalculateOverallDifficulty4K();
+                    OverallDifficulty = CalculateOverallDifficulty();
                     break;
                 case (GameMode.Keys7):
-                    ComputeBaseStrainStates(rate);
+                    // Temporary diff value
+                    var currentDifficulty = 0f;
+
+                    // Left Hand
+                    ComputeBaseStrainStates(rate, Hand.Left);
                     ComputeForChords();
                     ComputeForFingerActions();
                     // todo: use ComputeForActionPatterns();
                     ComputeForRollManipulation();
                     ComputeForJackManipulation();
                     ComputeForLnMultiplier();
-                    // todo: use CalculateOverallDifficulty7K();
-                    OverallDifficulty = 1;
+                    currentDifficulty += CalculateOverallDifficulty();
+
+                    // Right Hand
+                    ComputeBaseStrainStates(rate, Hand.Right);
+                    ComputeForChords();
+                    ComputeForFingerActions();
+                    // todo: use ComputeForActionPatterns();
+                    ComputeForRollManipulation();
+                    ComputeForJackManipulation();
+                    ComputeForLnMultiplier();
+                    currentDifficulty += CalculateOverallDifficulty();
+
+                    // Calculate diff value
+                    currentDifficulty /= 2;
+                    OverallDifficulty = currentDifficulty;
                     break;
             }
         }
@@ -177,7 +194,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
-        private void ComputeBaseStrainStates(float rate)
+        /// <param name="assumeHand"></param>
+        private void ComputeBaseStrainStates(float rate, Hand assumeHand = Hand.Right)
         {
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Map.HitObjects.Count; i++)
@@ -194,7 +212,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         break;
                     case GameMode.Keys7:
                         curHitOb.FingerState = LaneToFinger7K[Map.HitObjects[i].Lane];
-                        curStrainData.Hand = LaneToHand7K[Map.HitObjects[i].Lane];
+                        curStrainData.Hand = LaneToHand7K[Map.HitObjects[i].Lane] == Hand.Ambiguous ? assumeHand : LaneToHand7K[Map.HitObjects[i].Lane];
                         break;
                 }
 
@@ -519,11 +537,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        ///     Calculate the general difficulty for a 4K map
+        ///     Calculate the general difficulty of the given map
         /// </summary>
         /// <param name="rate"></param>
         /// <returns></returns>
-        private float CalculateOverallDifficulty4K()
+        private float CalculateOverallDifficulty()
         {
             float calculatedDiff = 0;
 
@@ -549,41 +567,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             calculatedDiff /= StrainSolverData.Count;
 
             // Get Overall 4k difficulty
-            return calculatedDiff;
-        }
-
-        /// <summary>
-        ///     Calculate the general difficulty for a 7k map
-        /// </summary>
-        /// <param name="rate"></param>
-        /// <returns></returns>
-        private float CalculateOverallDifficulty7K()
-        {
-            //todo: Implement Ambiguious Hand in calculation
-            float calculatedDiff = 0;
-
-            // Solve strain value of every data point
-            foreach (var data in StrainSolverData)
-                data.CalculateStrainValue();
-
-            // left hand
-            foreach (var data in StrainSolverData)
-            {
-                if (data.Hand == Hand.Left)
-                    calculatedDiff += data.TotalStrainValue;
-            }
-
-            // right hand
-            foreach (var data in StrainSolverData)
-            {
-                if (data.Hand == Hand.Right)
-                    calculatedDiff += data.TotalStrainValue;
-            }
-
-            // Get overall 7k Difficulty
-            calculatedDiff /= StrainSolverData.Count;
-
-            // Get Overall 7k difficulty
             return calculatedDiff;
         }
 
