@@ -110,7 +110,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // Solve for difficulty
             CalculateDifficulty(mods);
 
-            // If detailed solving is enabled, expand upon calculation
+            // If detailed solving is enabled, expand calculation
             if (detailedSolve)
             {
                 // ComputeNoteDensityData();
@@ -134,44 +134,30 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             switch (Map.Mode)
             {
                 case (GameMode.Keys4):
-                    ComputeBaseStrainStates(rate);
-                    ComputeForChords();
-                    ComputeForFingerActions();
-                    // todo: use ComputeForActionPatterns();
-                    ComputeForRollManipulation();
-                    ComputeForJackManipulation();
-                    ComputeForLnMultiplier();
-                    OverallDifficulty = CalculateOverallDifficulty();
+                    OverallDifficulty = ComputeForOverallDifficulty(rate);
                     break;
                 case (GameMode.Keys7):
-                    // Temporary diff value
-                    var currentDifficulty = 0f;
-
-                    // Left Hand
-                    ComputeBaseStrainStates(rate, Hand.Left);
-                    ComputeForChords();
-                    ComputeForFingerActions();
-                    // todo: use ComputeForActionPatterns();
-                    ComputeForRollManipulation();
-                    ComputeForJackManipulation();
-                    ComputeForLnMultiplier();
-                    currentDifficulty += CalculateOverallDifficulty();
-
-                    // Right Hand
-                    ComputeBaseStrainStates(rate, Hand.Right);
-                    ComputeForChords();
-                    ComputeForFingerActions();
-                    // todo: use ComputeForActionPatterns();
-                    ComputeForRollManipulation();
-                    ComputeForJackManipulation();
-                    ComputeForLnMultiplier();
-                    currentDifficulty += CalculateOverallDifficulty();
-
-                    // Calculate diff value
-                    currentDifficulty /= 2;
-                    OverallDifficulty = currentDifficulty;
+                    OverallDifficulty = (ComputeForOverallDifficulty(rate, Hand.Left) + ComputeForOverallDifficulty(rate, Hand.Right))/2;
                     break;
             }
+        }
+
+        /// <summary>
+        ///     Calculate overall difficulty of a map. "AssumeHand" is used for odd-numbered keymodes.
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <param name="assumeHand"></param>
+        /// <returns></returns>
+        private float ComputeForOverallDifficulty(float rate, Hand assumeHand = Hand.Right)
+        {
+            ComputeBaseStrainStates(rate, assumeHand);
+            ComputeForChords();
+            ComputeForFingerActions();
+            // todo: use ComputeForActionPatterns();
+            ComputeForRollManipulation();
+            ComputeForJackManipulation();
+            ComputeForLnMultiplier();
+            return CalculateOverallDifficulty();
         }
 
         /// <summary>
@@ -181,7 +167,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
         /// <param name="assumeHand"></param>
-        private void ComputeBaseStrainStates(float rate, Hand assumeHand = Hand.Right)
+        private void ComputeBaseStrainStates(float rate, Hand assumeHand)
         {
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Map.HitObjects.Count; i++)
