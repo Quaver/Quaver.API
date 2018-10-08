@@ -29,11 +29,6 @@ namespace Quaver.API.Maps.Processors.Difficulty
         public QssPatternFlags QssPatternFlags { get; set; }
 
         /// <summary>
-        ///     Used to warn players about calculation inaccuracies due to controversial patterns of a map in client
-        /// </summary>
-        public QssWarningFlags QssWarningFlags { get; set; }
-
-        /// <summary>
         ///     Total ammount of milliseconds in a second.
         /// </summary>
         public const float SECONDS_TO_MILLISECONDS = 1000;

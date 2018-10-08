@@ -16,14 +16,17 @@ namespace Quaver.API.Enums
         KoreaJack = 1 << 2,
         LongJack = 1 << 3,
         QuadJack = 1 << 4,
-        LightStream = 1 << 5,
-        JumpStream = 1 << 6,
-        HandStream = 1 << 7,
-        QuadStream = 1 << 8,
-        InverseLN = 1 << 9,
-        ReleaseLN = 1 << 10,
-        Polyrhythm = 1 << 11,
-        JumpTrill = 1 << 12,
-        SplitTrill = 1 << 13
+        Rolls = 1 << 5,
+        LightStream = 1 << 6,
+        JumpStream = 1 << 7,
+        HandStream = 1 << 8,
+        QuadStream = 1 << 9,
+        InverseLN = 1 << 10,
+        ReleaseLN = 1 << 11,
+        Polyrhythm = 1 << 12,
+        JumpTrill = 1 << 13,
+        SplitTrill = 1 << 14,
+        SimpleVibro = 1 << 15,
+        ControlVibro = 1 << 16
     }
 }

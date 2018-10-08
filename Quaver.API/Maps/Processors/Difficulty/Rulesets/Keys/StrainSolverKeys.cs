@@ -92,9 +92,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         private float RollInaccuracyConfidence { get; set; }
 
         /// <summary>
-        ///     const
+        ///     Solves the difficulty of a .qua file
         /// </summary>
-        /// <param name="qua"></param>
+        /// <param name="map"></param>
+        /// <param name="constants"></param>
+        /// <param name="mods"></param>
+        /// <param name="detailedSolve"></param>
         public StrainSolverKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
         {
             // Cast the current Strain Constants Property to the correct type.
@@ -111,7 +114,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             if (detailedSolve)
             {
                 // ComputeNoteDensityData();
-                ComputeForWarningFlags();
+                ComputeForPatternFlags();
             }
         }
 
@@ -490,15 +493,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Checks to see if the map rating is inacurrate due to vibro/rolls
         /// </summary>
-        private void ComputeForWarningFlags()
+        private void ComputeForPatternFlags()
         {
             // If 10% or more of the map has longjack manip, flag it as vibro map
             if (VibroInaccuracyConfidence / StrainSolverData.Count > 0.10)
-                QssWarningFlags |= QssWarningFlags.VibroOverload;
+                QssPatternFlags |= QssPatternFlags.SimpleVibro;
 
             // If 15% or more of the map has roll manip, flag it as roll map
             if (RollInaccuracyConfidence / StrainSolverData.Count > 0.15)
-                QssWarningFlags |= QssWarningFlags.RollsOverload;
+                QssPatternFlags |= QssPatternFlags.Rolls;
         }
 
         /// <summary>
