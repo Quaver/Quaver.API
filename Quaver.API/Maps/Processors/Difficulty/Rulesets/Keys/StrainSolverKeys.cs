@@ -367,17 +367,17 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                             // If the ratio is above this threshold, count it as a roll manipulation
                             if (durationRatio >= StrainConstants.RollRatioToleranceMs)
                             {
-                                // Count manipulation
-                                manipulationFound = true;
-                                RollInaccuracyConfidence++;
-                                if (totalManipulationFound < StrainConstants.RollMaxLength)
-                                    totalManipulationFound++;
-
                                 // Apply multiplier
                                 // todo: catch possible arithmetic error (division by 0)
                                 var durationMultiplier = 1 / (1 + ((durationRatio - 1) * StrainConstants.RollRatioMultiplier));
                                 var manipulationFoundRatio = 1 - ((totalManipulationFound / StrainConstants.RollMaxLength) * (1 - StrainConstants.RollLengthMultiplier));
                                 data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
+
+                                // Count manipulation
+                                manipulationFound = true;
+                                RollInaccuracyConfidence++;
+                                if (totalManipulationFound < StrainConstants.RollMaxLength)
+                                    totalManipulationFound++;
                             }
                         }
                     }
