@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,7 @@ namespace Quaver.API.Enums
     [Flags]
     public enum ModIdentifier
     {
-        None = -1,
+        None = 0,
         NoSliderVelocity = 1 << 0, // No Slider Velocity
         Speed05X = 1 << 1, // Speed 0.5x,
         Speed06X = 1 << 2, // Speed 0.6x

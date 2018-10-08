@@ -12,7 +12,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
     [Flags]
     public enum FingerState
     {
-        None = 1 << -1,
+        None = 0,
         Index = 1 << 0,
         Middle = 1 << 1,
         Ring = 1 << 2,

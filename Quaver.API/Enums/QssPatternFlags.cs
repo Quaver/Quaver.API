@@ -10,7 +10,7 @@ namespace Quaver.API.Enums
     [Flags]
     public enum QssPatternFlags
     {
-        Unknown = 1 << -1,
+        Unknown = 0,
         MiniJack = 1 << 0,
         ChordJack = 1 << 1,
         KoreaJack = 1 << 2,
