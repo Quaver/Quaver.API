@@ -69,34 +69,34 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public StrainConstantsKeys()
         {
             // Simple Jack
-            SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 20);
+            SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 40);
             SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 330);
             SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 83);
-            SJackCurveExponential = NewConstant("SJackCurveExponential", 1.20f);
+            SJackCurveExponential = NewConstant("SJackCurveExponential", 1.17f);
 
             // Tech Jack
-            TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 20);
+            TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 40);
             TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 340);
             TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 85);
-            TJackCurveExponential = NewConstant("TJackCurveExponential", 1.16f);
+            TJackCurveExponential = NewConstant("TJackCurveExponential", 1.14f);
 
             // Roll/Trill
-            RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 20);
-            RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 185);
+            RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 30);
+            RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 230);
             RollMaxStrainValue = NewConstant("RollMaxStrainValue", 56);
-            RollCurveExponential = NewConstant("RollCurveExponential", 1.03f);
+            RollCurveExponential = NewConstant("RollCurveExponential", 1.07f);
 
             // Bracket
-            BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 20);
-            BracketUpperBoundaryMs = NewConstant("BracketUpperBoundaryMs", 180);
+            BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 30);
+            BracketUpperBoundaryMs = NewConstant("BracketUpperBoundaryMs", 230);
             BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 57);
-            BracketCurveExponential = NewConstant("BracketCurveExponential", 1.05f);
+            BracketCurveExponential = NewConstant("BracketCurveExponential", 1.07f);
 
             // LN
-            LnBaseMultiplier = NewConstant("LnBaseMultiplier", 0.5f);
+            LnBaseMultiplier = NewConstant("LnBaseMultiplier", 0.6f);
             LnLayerToleranceMs = NewConstant("LnLayerToleranceMs", 40f);
             LnLayerThresholdMs = NewConstant("LnLayerThresholdMs", 93.7f);
-            LnReleaseAfterMultiplier = NewConstant("LnReleaseAfterMultiplier", 2.25f);
+            LnReleaseAfterMultiplier = NewConstant("LnReleaseAfterMultiplier", 1.75f);
             LnReleaseBeforeMultiplier = NewConstant("LnReleaseBeforeMultiplier", 1.35f);
             LnTapMultiplier = NewConstant("LnTapMultiplier", 1.05f);
         }
