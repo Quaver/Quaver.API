@@ -109,7 +109,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // LongJack Manipulation
             VibroActionDurationMs = NewConstant("VibroActionDurationMs", 88.2f);
             VibroActionToleranceMs = NewConstant("VibroActionToleranceMs", 22f);
-            VibroMultiplier = NewConstant("VibroMultiplier", 0.7f);
+            VibroMultiplier = NewConstant("VibroMultiplier", 0.48f);
             VibroLengthMultiplier = NewConstant("VibroLengthMultiplier", 0.3f);
 
         }
