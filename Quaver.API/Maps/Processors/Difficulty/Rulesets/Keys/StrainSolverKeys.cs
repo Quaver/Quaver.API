@@ -95,7 +95,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     const
         /// </summary>
         /// <param name="qua"></param>
-        public StrainSolverKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None) : base(map, constants, mods)
+        public StrainSolverKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
         {
             // Cast the current Strain Constants Property to the correct type.
             StrainConstants = (StrainConstantsKeys)constants;
@@ -106,6 +106,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // Solve for difficulty
             CalculateDifficulty(mods);
+
+            // If detailed solving is enabled, expand upon calculation
+            if (detailedSolve)
+            {
+                // ComputeNoteDensityData();
+                ComputeForWarningFlags();
+            }
         }
 
         /// <summary>
@@ -125,35 +132,25 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             switch (Map.Mode)
             {
                 case (GameMode.Keys4):
-                    // Compute for difficulty
-                    ComputeNoteDensityData(rate);
                     ComputeBaseStrainStates(rate);
                     ComputeForChords();
                     ComputeForFingerActions();
-                    ComputeForActionPatterns(); // todo: not implemented yet
+                    // todo: use ComputeForActionPatterns();
                     ComputeForRollManipulation();
                     ComputeForJackManipulation();
                     ComputeForLnMultiplier();
                     OverallDifficulty = CalculateOverallDifficulty4K();
-
-                    // Compute for flags
-                    ComputeForWarningFlags();
                     break;
                 case (GameMode.Keys7):
-                    // Compute for difficulty
-                    ComputeNoteDensityData(rate);
                     ComputeBaseStrainStates(rate);
                     ComputeForChords();
                     ComputeForFingerActions();
-                    ComputeForActionPatterns(); // todo: not implemented yet
+                    // todo: use ComputeForActionPatterns();
                     ComputeForRollManipulation();
                     ComputeForJackManipulation();
                     ComputeForLnMultiplier();
                     // todo: use CalculateOverallDifficulty7K();
                     OverallDifficulty = 1;
-
-                    // Compute for flags
-                    ComputeForWarningFlags();
                     break;
             }
         }
