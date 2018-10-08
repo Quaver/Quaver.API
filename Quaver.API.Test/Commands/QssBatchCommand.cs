@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Quaver.API.Helpers;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
@@ -25,6 +26,8 @@ namespace Quaver.API.Test.Commands
             var files = Directory.GetFiles(BaseFolder, "*.qua", SearchOption.AllDirectories).ToList();
             files.AddRange(Directory.GetFiles(BaseFolder, "*.osu", SearchOption.AllDirectories));
 
+            var text = "";
+
             foreach (var file in files)
             {
                 try
@@ -41,10 +44,15 @@ namespace Quaver.API.Test.Commands
 
                     var diffCalc = map.SolveDifficulty();
                     Console.WriteLine($"{map.ToString()} - {diffCalc.OverallDifficulty}");
+
+                    var curLine = $"{map.ToString()} \t {diffCalc.OverallDifficulty}";
+                    text += curLine + "\n";
                 }
                 catch (Exception e)
                 {
+
                 }
+                System.IO.File.WriteAllText(@"QssData.txt", text);
             }
         }
     }

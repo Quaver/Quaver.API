@@ -29,11 +29,7 @@ namespace Quaver.API.Test.Commands
                 Difficulty = new
                 {
                     qss.OverallDifficulty,
-                    qss.AverageNoteDensity,
-                    qss.Bracket,
-                    qss.Roll,
-                    qss.SJack,
-                    qss.TJack
+                    qss.AverageNoteDensity
                 }
             }));
         }

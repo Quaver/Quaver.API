@@ -106,6 +106,10 @@ namespace Quaver.API.Helpers
             // The rate of the audio.
             var rate = 1.0f;
 
+            // todo: fix: ModIdentifier.None returns 0.5 rate
+            if (mods == ModIdentifier.None)
+                return rate;
+
             // Map mods to rate.
             if (mods.HasFlag(ModIdentifier.Speed05X))
                 rate = 0.5f;
