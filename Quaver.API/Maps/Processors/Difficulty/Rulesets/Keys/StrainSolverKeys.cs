@@ -131,7 +131,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var rate = ModHelper.GetRateFromMods(mods);
 
             // Compute for overall difficulty
-
             switch (Map.Mode)
             {
                 case (GameMode.Keys4):
@@ -223,11 +222,25 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (StrainSolverData[i].Hand == StrainSolverData[j].Hand)
                         {
-                            // There should really only be one hit object for 4k, but maybe more than for 7k
+                            // Search through every hit object for chords
                             foreach (var k in StrainSolverData[j].HitObjects)
-                                StrainSolverData[i].HitObjects.Add(k);
+                            {
+                                // Check if the current data point will have duplicate finger state to prevent stacked notes
+                                var sameStateFound = false;
+                                foreach (var l in StrainSolverData[i].HitObjects)
+                                {
+                                    if (l.FingerState == k.FingerState)
+                                    {
+                                        sameStateFound = true;
+                                    }
+                                }
 
-                            // Remove chorded object
+                                // Add hit object to chord list if its not stacked
+                                if (!sameStateFound)
+                                    StrainSolverData[i].HitObjects.Add(k);
+                            }
+
+                            // Remove un-needed data point because it has been merged with the current point
                             StrainSolverData.RemoveAt(j);
                         }
                     }
