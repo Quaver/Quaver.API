@@ -11,6 +11,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
     /// </summary>
     public enum FingerAction
     {
+        None,
         SimpleJack,
         TechnicalJack,
         Roll,

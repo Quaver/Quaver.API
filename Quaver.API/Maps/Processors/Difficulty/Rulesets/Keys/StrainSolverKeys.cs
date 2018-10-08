@@ -175,20 +175,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        ///     Compute and generate Note Density Data.
-        /// </summary>
-        /// <param name="qssData"></param>
-        /// <param name="qua"></param>
-        private void ComputeNoteDensityData(float rate)
-        {
-            //MapLength = Qua.Length;
-            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * rate);
-
-            //todo: solve note density graph
-            // put stuff here
-        }
-
-        /// <summary>
         ///     Get Note Data, and compute the base strain weights
         ///     The base strain weights are affected by LN layering
         /// </summary>
@@ -568,6 +554,20 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // Get Overall 4k difficulty
             return calculatedDiff;
+        }
+
+        /// <summary>
+        ///     Compute and generate Note Density Data.
+        /// </summary>
+        /// <param name="qssData"></param>
+        /// <param name="qua"></param>
+        private void ComputeNoteDensityData(float rate)
+        {
+            //MapLength = Qua.Length;
+            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * rate);
+
+            //todo: solve note density graph
+            // put stuff here
         }
 
         /// <summary>

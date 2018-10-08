@@ -67,7 +67,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Finger Action that this data point represents
         /// </summary>
-        public FingerAction FingerAction { get; set; }
+        public FingerAction FingerAction { get; set; } = FingerAction.None;
 
         /// <summary>
         ///     Duration of FingerAaction in ms

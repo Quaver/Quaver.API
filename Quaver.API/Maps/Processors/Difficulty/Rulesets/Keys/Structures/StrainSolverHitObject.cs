@@ -20,7 +20,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Current Finger State of the hit object
         /// </summary>
-        public FingerState FingerState { get; set; }
+        public FingerState FingerState { get; set; } = FingerState.None;
 
         /// <summary>
         ///     Current type of layering relating to LN
