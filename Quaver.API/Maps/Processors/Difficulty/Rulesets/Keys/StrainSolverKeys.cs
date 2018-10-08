@@ -213,11 +213,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             {
                 for (var j = i + 1; j < StrainSolverData.Count; j++)
                 {
+                    // Check if next hit object is way past the tolerance
                     var msDiff = StrainSolverData[j].StartTime - StrainSolverData[i].StartTime;
-
                     if (msDiff > StrainConstants.ChordClumpToleranceMs)
                         break;
 
+                    // Check if the next and current hit objects are chord-able
                     if (Math.Abs(msDiff) <= StrainConstants.ChordClumpToleranceMs)
                     {
                         if (StrainSolverData[i].Hand == StrainSolverData[j].Hand)
