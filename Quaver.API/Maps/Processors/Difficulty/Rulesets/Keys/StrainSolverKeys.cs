@@ -408,27 +408,25 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 if (data.NextStrainSolverDataOnCurrentHand != null )
                 {
                     var next = data.NextStrainSolverDataOnCurrentHand;
-
                     if (data.FingerAction == FingerAction.SimpleJack && next.FingerAction == FingerAction.SimpleJack)
                     {
-                        // Count manipulation
-                        manipulationFound = true;
-                        VibroInaccuracyConfidence++;
-                        if (totalManipulationFound < jackManipulationCheckSize)
-                            totalManipulationFound++;
-
                         // Apply multiplier
                         // todo: catch possible arithmetic error (division by 0)
-                        // todo: implement constants
                         // note:    83.3ms = 180bpm 1/4 vibro
                         //          88.2ms = 170bpm 1/4 vibro
                         //          93.7ms = 160bpm 1/4 vibro
 
                         // 35f = 35ms tolerance before hitting vibro point (88.2ms, 170bpm vibro)
-                        var durationValue = Math.Min(1, Math.Max(0, ((88.2f + 35f) - data.FingerActionDurationMs) / 35f));
-                        var durationMultiplier = 1 - (durationValue * 0.6f);
-                        var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / jackManipulationCheckSize, 0.8f)) * 0.35f;
+                        var durationValue = Math.Min(1, Math.Max(0, ((StrainConstants.VibroActionDurationMs + StrainConstants.VibroActionToleranceMs) - data.FingerActionDurationMs) / StrainConstants.VibroActionToleranceMs));
+                        var durationMultiplier = 1 - (durationValue * (1 - StrainConstants.VibroMultiplier));
+                        var manipulationFoundRatio = 1 - (float)(Math.Pow(totalManipulationFound / jackManipulationCheckSize, 0.8f)) * (1 - StrainConstants.VibroLengthMultiplier);
                         data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
+
+                        // Count manipulation
+                        manipulationFound = true;
+                        VibroInaccuracyConfidence++;
+                        if (totalManipulationFound < jackManipulationCheckSize)
+                            totalManipulationFound++;
                     }
                 }
 

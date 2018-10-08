@@ -63,6 +63,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public float LnReleaseBeforeMultiplier { get; private set; }
         public float LnTapMultiplier { get; private set; }
 
+        // LongJack Manipulation
+        public float VibroActionDurationMs { get; set; }
+        public float VibroActionToleranceMs { get; set; }
+        public float VibroMultiplier { get; set; }
+        public float VibroLengthMultiplier { get; set; }
+
         /// <summary>
         ///     Constructor. Create default strain constant values.
         /// </summary>
@@ -99,6 +105,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             LnReleaseAfterMultiplier = NewConstant("LnReleaseAfterMultiplier", 1.75f);
             LnReleaseBeforeMultiplier = NewConstant("LnReleaseBeforeMultiplier", 1.35f);
             LnTapMultiplier = NewConstant("LnTapMultiplier", 1.05f);
+
+            // LongJack Manipulation
+            VibroActionDurationMs = NewConstant("VibroActionDurationMs", 88.2f);
+            VibroActionToleranceMs = NewConstant("VibroActionToleranceMs", 22f);
+            VibroMultiplier = NewConstant("VibroMultiplier", 0.7f);
+            VibroLengthMultiplier = NewConstant("VibroLengthMultiplier", 0.3f);
+
         }
     }
 }
