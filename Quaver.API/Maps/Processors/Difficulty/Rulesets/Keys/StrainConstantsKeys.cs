@@ -83,13 +83,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // Roll/Trill
             RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 30);
             RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 230);
-            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 56);
+            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 64);
             RollCurveExponential = NewConstant("RollCurveExponential", 1.07f);
 
             // Bracket
             BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 30);
             BracketUpperBoundaryMs = NewConstant("BracketUpperBoundaryMs", 230);
-            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 57);
+            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 66);
             BracketCurveExponential = NewConstant("BracketCurveExponential", 1.07f);
 
             // LN
