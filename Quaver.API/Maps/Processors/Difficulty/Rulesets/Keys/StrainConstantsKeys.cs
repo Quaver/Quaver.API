@@ -72,7 +72,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         // Roll Manipulation
         public float RollRatioToleranceMs { get; set; }
-        public float RollDurationMultiplier { get; set; }
+        public float RollRatioMultiplier { get; set; }
         public float RollLengthMultiplier { get; set; }
         public float RollMaxLength { get; set; }
 
@@ -122,9 +122,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // Roll Manipulation
             RollRatioToleranceMs = NewConstant("RollRatioToleranceMs", 2);
-            RollDurationMultiplier = NewConstant("RollDurationMultiplier", 0.25f);
+            RollRatioMultiplier = NewConstant("RollRatioMultiplier", 0.25f);
             RollLengthMultiplier = NewConstant("RollLengthMultiplier", 0.6f);
-            RollMaxLength = NewConstant("RollMaxLength", 10);
+            RollMaxLength = NewConstant("RollMaxLength", 14);
         }
     }
 }

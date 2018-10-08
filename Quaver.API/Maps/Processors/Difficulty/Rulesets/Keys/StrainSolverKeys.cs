@@ -375,8 +375,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                                 // Apply multiplier
                                 // todo: catch possible arithmetic error (division by 0)
-                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) * StrainConstants.RollDurationMultiplier));
-                                var manipulationFoundRatio = 1 - (totalManipulationFound / StrainConstants.RollMaxLength) * StrainConstants.RollLengthMultiplier;
+                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) * StrainConstants.RollRatioMultiplier));
+                                var manipulationFoundRatio = 1 - ((totalManipulationFound / StrainConstants.RollMaxLength) * (1 - StrainConstants.RollLengthMultiplier));
                                 data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
                             }
                         }
