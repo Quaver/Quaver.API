@@ -1,23 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Resources\names.txt" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Resources\**\*" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="HoLLy.osu.DatabaseReader" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="YamlDotNet" Version="5.1.0" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="ResourceStore.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -25,12 +20,10 @@
       <DependentUpon>ResourceStore.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Update="ResourceStore.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceStore.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-
 </Project>
