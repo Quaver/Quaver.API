@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -6,6 +6,7 @@ using System.Linq;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty;
+using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 using Quaver.API.Maps.Structures;
 using YamlDotNet.Serialization;
 
@@ -252,26 +253,23 @@ namespace Quaver.API.Maps
             // Only one timing point, so we can assume that it goes to the end of the map.
             return Length - point.StartTime;
         }
-        
+
         /// <summary>
-        ///     Calculates the difficulty of the map.
+        ///     Solves the difficulty of the map and returns the data for it.
         /// </summary>
+        /// <param name="mods"></param>
         /// <returns></returns>
-        public double CalculateDifficulty()
+        public StrainSolver SolveDifficulty(ModIdentifier mods = ModIdentifier.None)
         {
-            DifficultyCalculator diffCalc;
-            
             switch (Mode)
             {
                 case GameMode.Keys4:
+                    return new StrainSolverKeys(this, new StrainConstantsKeys(), mods);
                 case GameMode.Keys7:
-                    diffCalc = new DifficultyCalculatorKeys(this);
-                    break;
+                    return new StrainSolverKeys(this, new StrainConstantsKeys(), mods);
                 default:
                     throw new InvalidEnumArgumentException();
             }
-
-            return diffCalc.CalculateDifficulty();
         }
 
         public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";
