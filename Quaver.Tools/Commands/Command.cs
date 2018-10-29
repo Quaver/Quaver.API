@@ -1,4 +1,4 @@
-﻿namespace Quaver.API.Test.Commands
+namespace Quaver.Tools.Commands
 {
     public abstract class Command
     {
