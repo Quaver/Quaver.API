@@ -569,7 +569,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // TODO: This method is incredibly inefficient. Either generate a curve procedurally or find better looping method
             for (var i = 0; i < reference.Count; i++)
             {
-                if (reference.Keys.ElementAt(i) < bpm)
+                if (reference.Keys.ElementAt(i) >= bpm)
                 {
                     if (i == 0)
                         break;
