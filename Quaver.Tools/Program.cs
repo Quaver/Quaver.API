@@ -7,6 +7,8 @@ namespace Quaver.Tools
     {
         internal static void Main(string[] args)
         {
+            args = new string[] {"-calcfolder", "c:/users/admin/desktop/qss/testmaps", "None" };
+
             if (args.Length == 0)
             {
                 Console.WriteLine($"Welcome to the Quaver.API test bench.\n" +
