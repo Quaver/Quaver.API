@@ -40,7 +40,6 @@ namespace Quaver.Tools.Commands
             files.AddRange(Directory.GetFiles(BaseFolder, "*.osu", SearchOption.AllDirectories));
 
             var calculatedMaps = new List<Tuple<int, string, string>>();
-            var output = "";
 
             for (var i = 0; i < files.Count; i++)
             {
@@ -61,7 +60,6 @@ namespace Quaver.Tools.Commands
                     var diffCalc = map.SolveDifficulty();
 
                     Console.WriteLine($"[{i}] | {map} | {diffCalc.OverallDifficulty}");
-                    output += $"{map.Artist} - {map.Title} [{map.DifficultyName}]\t{diffCalc.OverallDifficulty}\n";
                     calculatedMaps.Add(Tuple.Create(i, map.ToString(), diffCalc.OverallDifficulty.ToString(CultureInfo.InvariantCulture)));
                 }
                 catch (Exception e)
@@ -69,10 +67,11 @@ namespace Quaver.Tools.Commands
                     continue;
                 }
             }
-            var table = calculatedMaps.ToStringTable(new[] {"Id", "Map", "Difficulty"}, a => a.Item1, a => a.Item2, a => a.Item3);
 
-            File.WriteAllText($"{BaseFolder}./diff-table.txt", table);
-            File.WriteAllText($"{BaseFolder}./diff-sheet.txt", output);
+            var table = calculatedMaps.ToStringTable(new[] {"Id", "Map", "Difficulty"}, a => a.Item1, a => a.Item2, a => a.Item3);
+            Console.WriteLine(table);
+
+            File.WriteAllText("./diff-calc.txt", table);
         }
     }
 }
