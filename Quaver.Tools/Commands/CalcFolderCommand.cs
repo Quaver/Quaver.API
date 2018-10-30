@@ -21,7 +21,7 @@ namespace Quaver.Tools.Commands
         /// <summary>
         ///     
         /// </summary>
-        public ModIdentifier Mods { get; } 
+        public ModIdentifier Mods { get; }
 
         /// <summary>
         /// </summary>
@@ -68,7 +68,7 @@ namespace Quaver.Tools.Commands
                 }
             }
 
-            var table = calculatedMaps.ToStringTable(new[] {"Id", "Map", "Difficulty"}, a => a.Item1, a => a.Item2, a => a.Item3);
+            var table = calculatedMaps.ToStringTable(new[] { "Id", "Map", "Difficulty" }, a => a.Item1, a => a.Item2, a => a.Item3);
             Console.WriteLine(table);
 
             File.WriteAllText("./diff-calc.txt", table);

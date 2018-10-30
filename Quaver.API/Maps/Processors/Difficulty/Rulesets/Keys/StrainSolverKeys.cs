@@ -137,7 +137,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     OverallDifficulty = ComputeForOverallDifficulty(rate);
                     break;
                 case (GameMode.Keys7):
-                    OverallDifficulty = (ComputeForOverallDifficulty(rate, Hand.Left) + ComputeForOverallDifficulty(rate, Hand.Right))/2;
+                    OverallDifficulty = (ComputeForOverallDifficulty(rate, Hand.Left) + ComputeForOverallDifficulty(rate, Hand.Right)) / 2;
                     break;
             }
         }
@@ -274,6 +274,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                         // Determined by how long the current finger action is
                         var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
+                        var actionBpmEquivalent = 15000 / actionDuration; // NOTE: 15000 value = 60 miliseconds divided by 4
 
                         // Apply the "NextStrainSolverDataOnCurrentHand" value on the current hit object and also apply action duration.
                         curHitOb.NextStrainSolverDataOnCurrentHand = nextHitOb;
@@ -283,44 +284,44 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         if (!actionChordFound && !actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
-                                StrainConstants.RollLowerBoundaryMs,
-                                StrainConstants.RollUpperBoundaryMs,
-                                StrainConstants.RollMaxStrainValue,
-                                StrainConstants.RollCurveExponential);
+                            curHitOb.ActionStrainCoefficient = InterpolateBpmToDifficulty
+                                (
+                                    actionBpmEquivalent,
+                                    StrainConstants.RollBpmToDifficulty
+                                );
                         }
 
                         // Simple Jack
                         else if (actionSameState)
                         {
                             curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
-                                StrainConstants.SJackLowerBoundaryMs,
-                                StrainConstants.SJackUpperBoundaryMs,
-                                StrainConstants.SJackMaxStrainValue,
-                                StrainConstants.SJackCurveExponential);
+                            curHitOb.ActionStrainCoefficient = InterpolateBpmToDifficulty
+                                (
+                                    actionBpmEquivalent,
+                                    StrainConstants.SJackBpmToDifficulty
+                                );
                         }
 
                         // Tech Jack
                         else if (actionJackFound)
                         {
                             curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
-                                StrainConstants.TJackLowerBoundaryMs,
-                                StrainConstants.TJackUpperBoundaryMs,
-                                StrainConstants.TJackMaxStrainValue,
-                                StrainConstants.TJackCurveExponential);
+                            curHitOb.ActionStrainCoefficient = InterpolateBpmToDifficulty
+                                (
+                                    actionBpmEquivalent,
+                                    StrainConstants.TJackBpmToDifficulty
+                                );
                         }
 
                         // Bracket
                         else
                         {
                             curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = GetCoefficientValue(actionDuration,
-                                StrainConstants.BracketLowerBoundaryMs,
-                                StrainConstants.BracketUpperBoundaryMs,
-                                StrainConstants.BracketMaxStrainValue,
-                                StrainConstants.BracketCurveExponential);
+                            curHitOb.ActionStrainCoefficient = InterpolateBpmToDifficulty
+                                (
+                                    actionBpmEquivalent,
+                                    StrainConstants.BracketBpmToDifficulty
+                                );
                         }
 
                         break;
@@ -336,7 +337,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="qssData"></param>
         private void ComputeForActionPatterns()
         {
-            
+
         }
 
         /// <summary>
@@ -402,7 +403,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 var manipulationFound = false;
 
                 // Check to see if the current data point has a following data point
-                if (data.NextStrainSolverDataOnCurrentHand != null )
+                if (data.NextStrainSolverDataOnCurrentHand != null)
                 {
                     var next = data.NextStrainSolverDataOnCurrentHand;
                     if (data.FingerAction == FingerAction.SimpleJack && next.FingerAction == FingerAction.SimpleJack)
@@ -452,39 +453,39 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     var next = data.NextStrainSolverDataOnCurrentHand;
                     if (next != null)
 
-                    // Check to see if the target hitobject is layered inside the current LN
-                    if (next.StartTime < data.EndTime - StrainConstants.LnEndThresholdMs)
-                    if (next.StartTime >= data.StartTime + StrainConstants.LnEndThresholdMs)
+                        // Check to see if the target hitobject is layered inside the current LN
+                        if (next.StartTime < data.EndTime - StrainConstants.LnEndThresholdMs)
+                            if (next.StartTime >= data.StartTime + StrainConstants.LnEndThresholdMs)
 
-                    // Target hitobject's LN ends after current hitobject's LN end.
-                    if (next.EndTime > data.EndTime + StrainConstants.LnEndThresholdMs)
-                    {
-                        foreach (var k in data.HitObjects)
-                        {
-                            k.LnLayerType = LnLayerType.OutsideRelease;
-                            k.LnStrainMultiplier *= StrainConstants.LnReleaseAfterMultiplier;
-                        }
-                    }
+                                // Target hitobject's LN ends after current hitobject's LN end.
+                                if (next.EndTime > data.EndTime + StrainConstants.LnEndThresholdMs)
+                                {
+                                    foreach (var k in data.HitObjects)
+                                    {
+                                        k.LnLayerType = LnLayerType.OutsideRelease;
+                                        k.LnStrainMultiplier *= StrainConstants.LnReleaseAfterMultiplier;
+                                    }
+                                }
 
-                    // Target hitobject's LN ends before current hitobject's LN end
-                    else if (next.EndTime > 0)
-                    {
-                        foreach (var k in data.HitObjects)
-                        {
-                            k.LnLayerType = LnLayerType.InsideRelease;
-                            k.LnStrainMultiplier *= StrainConstants.LnReleaseBeforeMultiplier;
-                        }
-                    }
+                                // Target hitobject's LN ends before current hitobject's LN end
+                                else if (next.EndTime > 0)
+                                {
+                                    foreach (var k in data.HitObjects)
+                                    {
+                                        k.LnLayerType = LnLayerType.InsideRelease;
+                                        k.LnStrainMultiplier *= StrainConstants.LnReleaseBeforeMultiplier;
+                                    }
+                                }
 
-                    // Target hitobject is not an LN
-                    else
-                    {
-                        foreach (var k in data.HitObjects)
-                        {
-                            k.LnLayerType = LnLayerType.InsideTap;
-                            k.LnStrainMultiplier *= StrainConstants.LnTapMultiplier;
-                        }
-                    }
+                                // Target hitobject is not an LN
+                                else
+                                {
+                                    foreach (var k in data.HitObjects)
+                                    {
+                                        k.LnLayerType = LnLayerType.InsideTap;
+                                        k.LnStrainMultiplier *= StrainConstants.LnTapMultiplier;
+                                    }
+                                }
                 }
             }
         }
@@ -494,6 +495,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForPatternFlags()
         {
+            // TODO: this method returns very arbitrary results. It will be adjusted later.
             // If 10% or more of the map has longjack manip, flag it as vibro map
             if (VibroInaccuracyConfidence / StrainSolverData.Count > 0.10)
                 QssPatternFlags |= QssPatternFlags.SimpleVibro;
@@ -552,20 +554,37 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        ///     Used to calculate Coefficient for Strain Difficulty
+        ///     This method will interpolate Bpm to Strain Difficulty using a reference Dictionary.
         /// </summary>
-        private float GetCoefficientValue(float duration, float xMin, float xMax, float strainMax, float exp)
+        /// <param name="bpm"></param>
+        /// <param name="reference"></param>
+        /// <returns></returns>
+        private static float InterpolateBpmToDifficulty(float bpm, Dictionary<float, float> reference)
         {
-            // todo: temp. Linear for now
-            // todo: apply cosine curve
-            const float lowestDifficulty = 1;
+            // Return highest difficulty possible if bpm is greater than the last index's bpm.
+            if (bpm >= reference.Keys.Last())
+                return reference.Values.Last();
 
-            // calculate ratio between min and max value
-            var ratio = Math.Max(0, (duration - xMin) / (xMax - xMin));
-                ratio = 1 - Math.Min(1, ratio);
+            // Interpolate between two bpm points and return difficulty
+            // TODO: This method is incredibly inefficient. Either generate a curve procedurally or find better looping method
+            for (var i = 0; i < reference.Count; i++)
+            {
+                if (reference.Keys.ElementAt(i) < bpm)
+                {
+                    if (i == 0)
+                        break;
 
-            // compute for difficulty
-            return lowestDifficulty + (strainMax - lowestDifficulty) * (float)Math.Pow(ratio, exp);
+                    var nextBpm = reference.Keys.ElementAt(i);
+                    var nextDiff = reference.Values.ElementAt(i);
+                    var prevBpm = reference.Keys.ElementAt(i - 1);
+                    var prevDiff = reference.Values.ElementAt(i - 1);
+
+                    return (((bpm - prevBpm) / (nextBpm - prevBpm)) * (nextDiff - prevDiff)) + prevDiff;
+                }
+            }
+
+            // Return first value if bpm is less than the lowest Key.
+            return reference.Values.First();
         }
     }
 }

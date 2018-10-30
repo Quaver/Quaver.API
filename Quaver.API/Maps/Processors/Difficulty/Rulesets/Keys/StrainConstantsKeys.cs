@@ -31,30 +31,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         public int GraphIntervalOffsetMs { get; set; } = 100;
 
-        // Simple Jacks
-        public float SJackLowerBoundaryMs { get; private set; }
-        public float SJackUpperBoundaryMs { get; private set; }
-        public float SJackMaxStrainValue { get; private set; }
-        public float SJackCurveExponential { get; private set; }
-
-        // Tech Jacks
-        public float TJackLowerBoundaryMs { get; private set; }
-        public float TJackUpperBoundaryMs { get; private set; }
-        public float TJackMaxStrainValue { get; private set; }
-        public float TJackCurveExponential { get; private set; }
-
-        // Rolls
-        public float RollLowerBoundaryMs { get; private set; }
-        public float RollUpperBoundaryMs { get; private set; }
-        public float RollMaxStrainValue { get; private set; }
-        public float RollCurveExponential { get; private set; }
-
-        // Brackets
-        public float BracketLowerBoundaryMs { get; private set; }
-        public float BracketUpperBoundaryMs { get; private set; }
-        public float BracketMaxStrainValue { get; private set; }
-        public float BracketCurveExponential { get; private set; }
-
         // LN
         public float LnBaseMultiplier { get; private set; }
         public float LnLayerToleranceMs { get; private set; }
@@ -77,33 +53,126 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public float RollMaxLength { get; set; }
 
         /// <summary>
+        ///     Is used to interpolate S.Jack Bpm to Difficulty
+        /// </summary>
+        public Dictionary<float, float> SJackBpmToDifficulty { get; } = new Dictionary<float, float>
+        {
+            { 50, 1 },
+            { 75, 10 },
+            { 85, 20 },
+            { 90, 22 },
+            { 95, 23 },
+            { 100, 24 },
+            { 105, 25 },
+            { 110, 26 },
+            { 115, 28 },
+            { 120, 29 },
+            { 125, 30 },
+            { 130, 31 },
+            { 135, 32 },
+            { 140, 34 },
+            { 145, 35 },
+            { 150, 36 },
+            { 160, 37 },
+            { 170, 39 },
+            { 180, 40 },
+            { 190, 42 },
+            { 200, 44 },
+            { 220, 46 },
+            { 240, 48 },
+            { 300, 54 }
+        };
+
+        /// <summary>
+        ///     Is used to interpolate T.Jack Bpm to Difficulty
+        /// </summary>
+        public Dictionary<float, float> TJackBpmToDifficulty { get; } = new Dictionary<float, float>
+        {
+            { 50, 1 },
+            { 75, 10 },
+            { 85, 20 },
+            { 90, 22 },
+            { 95, 23 },
+            { 100, 24 },
+            { 105, 25 },
+            { 110, 26 },
+            { 115, 28 },
+            { 120, 29 },
+            { 125, 30 },
+            { 130, 31 },
+            { 135, 32 },
+            { 140, 34 },
+            { 145, 35 },
+            { 150, 36 },
+            { 160, 37 },
+            { 170, 39 },
+            { 180, 40 },
+            { 190, 42 },
+            { 200, 44 },
+            { 220, 46 },
+            { 240, 48 },
+            { 300, 54 }
+        };
+
+        /// <summary>
+        ///     Is used to interpolate Roll Bpm to Difficulty
+        /// </summary>
+        public Dictionary<float, float> RollBpmToDifficulty { get; } = new Dictionary<float, float>
+        {
+            { 100, 1 },
+            { 150, 10 },
+            { 170, 20 },
+            { 180, 22 },
+            { 190, 23 },
+            { 200, 24 },
+            { 210, 25 },
+            { 220, 26 },
+            { 230, 28 },
+            { 240, 29 },
+            { 250, 30 },
+            { 260, 32 },
+            { 270, 34 },
+            { 280, 36 },
+            { 300, 38 },
+            { 310, 39 },
+            { 320, 41 },
+            { 340, 43 },
+            { 360, 45 },
+        };
+
+        /// <summary>
+        ///     Is used to interpolate Bracket Bpm to Difficulty
+        /// </summary>
+        public Dictionary<float, float> BracketBpmToDifficulty { get; } = new Dictionary<float, float>
+        {
+            { 100, 1 },
+            { 150, 10 },
+            { 170, 20 },
+            { 180, 22 },
+            { 190, 23 },
+            { 200, 24 },
+            { 210, 25 },
+            { 220, 26 },
+            { 230, 28 },
+            { 240, 29 },
+            { 250, 30 },
+            { 260, 32 },
+            { 270, 34 },
+            { 280, 36 },
+            { 300, 38 },
+            { 310, 39 },
+            { 320, 41 },
+            { 340, 43 },
+            { 360, 45 },
+        };
+
+        /// <summary>
         ///     Constructor. Create default strain constant values.
         /// </summary>
         public StrainConstantsKeys()
         {
-            // Simple Jack
-            SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 40);
-            SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 330);
-            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 81);
-            SJackCurveExponential = NewConstant("SJackCurveExponential", 1.17f);
-
-            // Tech Jack
-            TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 40);
-            TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 340);
-            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 83);
-            TJackCurveExponential = NewConstant("TJackCurveExponential", 1.14f);
-
-            // Roll/Trill
-            RollLowerBoundaryMs = NewConstant("RollLowerBoundaryMs", 30);
-            RollUpperBoundaryMs = NewConstant("RollUpperBoundaryMs", 230);
-            RollMaxStrainValue = NewConstant("RollMaxStrainValue", 55);
-            RollCurveExponential = NewConstant("RollCurveExponential", 1.13f);
-
-            // Bracket
-            BracketLowerBoundaryMs = NewConstant("BracketLowerBoundaryMs", 30);
-            BracketUpperBoundaryMs = NewConstant("BracketUpperBoundaryMs", 230);
-            BracketMaxStrainValue = NewConstant("BracketMaxStrainValue", 56);
-            BracketCurveExponential = NewConstant("BracketCurveExponential", 1.13f);
+            // TODO: I don't think we need this class. It was originally for optimization,
+            // but everything can actually be set manually since the logic is pretty simple
 
             // LN
             LnBaseMultiplier = NewConstant("LnBaseMultiplier", 0.6f);
