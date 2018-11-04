@@ -31,5 +31,6 @@ namespace Quaver.API.Enums
         NoPause = 1 << 18, // Disallows pausing.
         Autoplay = 1 << 19, // The game automatically plays it.
         Paused = 1 << 20, // The user paused during gameplay.
+        NoFail = 1 << 21 // Unable to fail during gameplay.
     }
 }
