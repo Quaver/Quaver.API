@@ -53,9 +53,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public float RollMaxLength { get; set; }
 
         /// <summary>
-        ///     Is used to interpolate S.Jack Bpm to Difficulty
+        /// TODO: reference ms length instead of bpm
         /// </summary>
-        public Dictionary<float, float> SJackBpmToDifficulty { get; } = new Dictionary<float, float>
+        public Dictionary<float, float> ActionLengthToDifficulty { get; set; } = new Dictionary<float, float>()
         {
             { 50, 1 },
             { 75, 10 },
@@ -75,85 +75,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             { 220, 54 },
             { 240, 56 },
             { 300, 60 }
-        };
-
-        /// <summary>
-        ///     Is used to interpolate T.Jack Bpm to Difficulty
-        /// </summary>
-        public Dictionary<float, float> TJackBpmToDifficulty { get; } = new Dictionary<float, float>
-        {
-            { 50, 1 },
-            { 75, 10 },
-            { 85, 20 },
-            { 90, 25 },
-            { 100, 29 },
-            { 110, 33 },
-            { 120, 35 },
-            { 130, 37 },
-            { 140, 39 },
-            { 150, 41 },
-            { 160, 43 },
-            { 170, 45 },
-            { 180, 47 },
-            { 190, 49 },
-            { 200, 52 },
-            { 220, 54 },
-            { 240, 56 },
-            { 300, 60 }
-        };
-
-        /// <summary>
-        ///     Is used to interpolate Roll Bpm to Difficulty
-        /// </summary>
-        public Dictionary<float, float> RollBpmToDifficulty { get; } = new Dictionary<float, float>
-        {
-            { 90, 1 },
-            { 140, 10 },
-            { 170, 20 },
-            { 180, 24 },
-            { 190, 26 },
-            { 200, 28 },
-            { 210, 30 },
-            { 220, 32 },
-            { 230, 34 },
-            { 240, 36 },
-            { 250, 38 },
-            { 260, 40 },
-            { 270, 42 },
-            { 280, 44 },
-            { 300, 46 },
-            { 330, 48 },
-            { 350, 50 },
-            { 400, 52 },
-            { 500, 56 },
-            { 600, 60 }
-        };
-
-        /// <summary>
-        ///     Is used to interpolate Bracket Bpm to Difficulty
-        /// </summary>
-        public Dictionary<float, float> BracketBpmToDifficulty { get; } = new Dictionary<float, float>
-        {
-            { 90, 1 },
-            { 140, 10 },
-            { 170, 20 },
-            { 180, 24 },
-            { 190, 26 },
-            { 200, 28 },
-            { 210, 30 },
-            { 220, 32 },
-            { 230, 34 },
-            { 240, 36 },
-            { 250, 38 },
-            { 260, 40 },
-            { 270, 42 },
-            { 280, 44 },
-            { 300, 46 },
-            { 330, 48 },
-            { 350, 50 },
-            { 400, 52 },
-            { 500, 56 },
-            { 600, 60 }
         };
 
         /// <summary>

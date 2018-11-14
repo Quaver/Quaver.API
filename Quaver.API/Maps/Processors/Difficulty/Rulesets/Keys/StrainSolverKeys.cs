@@ -280,6 +280,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         curHitOb.NextStrainSolverDataOnCurrentHand = nextHitOb;
                         curHitOb.FingerActionDurationMs = actionDuration;
 
+                        curHitOb.ActionStrainCoefficient = 1;
+
+                        /*
                         // Trill/Roll
                         if (!actionChordFound && !actionSameState)
                         {
@@ -322,7 +325,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                     actionBpmEquivalent,
                                     StrainConstants.BracketBpmToDifficulty
                                 );
-                        }
+                        }*/
 
                         break;
                     }
