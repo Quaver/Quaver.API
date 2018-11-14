@@ -17,7 +17,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The game mode this replay is for.
         /// </summary>
-        public GameMode Mode { get; }
+        public GameMode Mode { get; set; }
 
         /// <summary>
         ///     All of the replay frames.
@@ -27,12 +27,12 @@ namespace Quaver.API.Replays
         /// <summary>
         ///    The version of Quaver the play was done on.
         /// </summary>
-        public string QuaverVersion { get; private set; } = "None";
+        public string QuaverVersion { get; set; } = "None";
 
         /// <summary>
         ///    The name of the player.
         /// </summary>
-        public string PlayerName { get; }
+        public string PlayerName { get; set; }
 
         /// <summary>
         ///     The activated mods on this replay.
@@ -57,7 +57,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The md5 hash of the map.
         /// </summary>
-        public string MapMd5 { get; }
+        public string MapMd5 { get; set; }
 
         /// <summary>
         ///     The score achieved
@@ -163,7 +163,7 @@ namespace Quaver.API.Replays
                 }
                 else
                 {
-                    
+
                 }
 
                 // Create the new list of replay frames.
