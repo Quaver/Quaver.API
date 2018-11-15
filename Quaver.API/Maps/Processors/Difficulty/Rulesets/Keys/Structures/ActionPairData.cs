@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
-    public class ActionData
+    public class ActionPairData
     {
         /// <summary>
         ///     HitObjects that this data set references
