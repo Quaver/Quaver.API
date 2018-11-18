@@ -17,6 +17,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public ChordType ChordType { get; private set; }
 
         /// <summary>
+        ///     Determined by how close the hitobjects are to becoming a chord
+        /// </summary>
+        public float ChordProximity { get; private set; }
+
+        /// <summary>
         /// 
         /// </summary>
         public List<StrainSolverHitObject> HitObjects { get; private set; }
