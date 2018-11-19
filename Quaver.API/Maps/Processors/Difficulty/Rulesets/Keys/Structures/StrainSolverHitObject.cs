@@ -33,6 +33,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public float LnStrainMultiplier { get; set; } = 1;
 
         /// <summary>
+        ///     Strain Multiplier affected by chorded HitObjects
+        /// </summary>
+        public float ChordMultiplier { get; set; } = 1;
+
+        /// <summary>
         ///     Current Strain Value for this hit object.
         /// </summary>
         public float StrainValue { get; set; }

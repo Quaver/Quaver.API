@@ -34,7 +34,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
         /// </summary>
-        private Dictionary<int, Hand> LaneToHand4K { get; set; } = new Dictionary<int, Hand>()
+        public static Dictionary<int, Hand> LaneToHand4K { get;} = new Dictionary<int, Hand>()
         {
             { 1, Hand.Left },
             { 2, Hand.Left },
@@ -45,7 +45,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
         /// </summary>
-        private Dictionary<int, Hand> LaneToHand7K { get; set; } = new Dictionary<int, Hand>()
+        public static Dictionary<int, Hand> LaneToHand7K { get; } = new Dictionary<int, Hand>()
         {
             { 1, Hand.Left },
             { 2, Hand.Left },
@@ -59,7 +59,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Assumes that the assigned finger will be the one to press that key.
         /// </summary>
-        private Dictionary<int, FingerState> LaneToFinger4K { get; set; } = new Dictionary<int, FingerState>()
+        public static Dictionary<int, FingerState> LaneToFinger4K { get; } = new Dictionary<int, FingerState>()
         {
             { 1, FingerState.Middle },
             { 2, FingerState.Index },
@@ -70,7 +70,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Assumes that the assigned finger will be the one to press that key.
         /// </summary>
-        private Dictionary<int, FingerState> LaneToFinger7K { get; set; } = new Dictionary<int, FingerState>()
+        public static Dictionary<int, FingerState> LaneToFinger7K { get; } = new Dictionary<int, FingerState>()
         {
             { 1, FingerState.Ring },
             { 2, FingerState.Middle },
@@ -150,8 +150,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float ComputeForOverallDifficulty(float rate, Hand assumeHand = Hand.Right)
         {
-            ComputeBaseStrainStates(rate, assumeHand);
-            ComputeForChords();
+            ConvertToStrainHitObjects(rate, assumeHand);
+            ComputeHandStateData();
             ComputeForFingerActions();
             // todo: use ComputeForActionPatterns();
             //ComputeForRollManipulation();
@@ -167,7 +167,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="qssData"></param>
         /// <param name="qua"></param>
         /// <param name="assumeHand"></param>
-        private void ComputeBaseStrainStates(float rate, Hand assumeHand)
+        private void ConvertToStrainHitObjects(float rate, Hand assumeHand)
         {
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Map.HitObjects.Count; i++)
@@ -196,7 +196,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Iterate through the HitObject list and merges the chords together into one data point
         /// </summary>
-        private void ComputeForChords()
+        private void ComputeForChordsOLD()
         {
             // Search through whole hit object list and find chords
             for (var i = 0; i < StrainSolverData.Count - 1; i++)
@@ -243,6 +243,43 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             {
                 StrainSolverData[i].SolveFingerState();
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ComputeHandStateData()
+        {
+
+        }
+
+        private void ComputeHandStateChords()
+        {
+            // Go backwards in list and find chords
+            /*
+            for (var i = StrainSolverData.Count - 1; i > 0; i--)
+            {
+                var current = StrainSolverData[i];
+                var chord = new List<HandStateData>();
+                chord.Add(current);
+                for (var j = i - 1; j > 0; j--)
+                {
+                    var next = StrainSolverData[j];
+
+                    if (next.StartTime < current.StartTime - HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
+                    {
+                        break;
+                    }
+                    else if (current.Hand == next.Hand && Math.Abs(next.StartTime - current.StartTime) < HandStateData.CHORD_THRESHOLD_SAMEHAND_MS)
+                    {
+                        chord.Add(next);
+                    }
+                    else if (current.Hand != next.Hand && Math.Abs(next.StartTime - current.StartTime) < HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
+                    {
+                        chord.Add(next);
+                    }
+                }
+            */
         }
 
         /// <summary>
@@ -554,6 +591,24 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             //todo: solve note density graph
             // put stuff here
+        }
+
+        /// <summary>
+        ///     Insert HitObject. Used for dynamic difficulty calc when editing maps.
+        /// </summary>
+        /// <param name="hitObject"></param>
+        private void InsertHitObject(StrainSolverHitObject hitObject)
+        {
+            // ReEvaluateDifficulty() for each hit object
+        }
+
+        /// <summary>
+        ///     Remove HitObject. Used for dynamic difficulty calc when editing maps.
+        /// </summary>
+        /// <param name="hitObject"></param>
+        private void RemoveHitObject(StrainSolverHitObject hitObject)
+        {
+            // ReEvaluateDifficulty() for each hit object
         }
 
         /// <summary>

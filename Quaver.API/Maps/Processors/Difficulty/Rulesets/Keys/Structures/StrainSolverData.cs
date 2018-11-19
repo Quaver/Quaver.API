@@ -118,6 +118,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             TotalStrainValue /= HitObjects.Count;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void SolveFingerState()
         {
             foreach (var hitOb in HitObjects)
