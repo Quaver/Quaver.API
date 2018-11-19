@@ -9,6 +9,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
     /// </summary>
     public enum ChordType
     {
+        None,
         SingleTap,
         JumpChord,
         HandChord,
