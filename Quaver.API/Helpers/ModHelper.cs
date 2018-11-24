@@ -110,7 +110,9 @@ namespace Quaver.API.Helpers
             var rate = 1.0f;
 
             // Map mods to rate.
-            if (mods.HasFlag(ModIdentifier.Speed05X))
+            if (mods.HasFlag(ModIdentifier.None))
+                rate = 1.0f;
+            else if (mods.HasFlag(ModIdentifier.Speed05X))
                 rate = 0.5f;
             else if (mods.HasFlag(ModIdentifier.Speed06X))
                 rate = 0.6f;

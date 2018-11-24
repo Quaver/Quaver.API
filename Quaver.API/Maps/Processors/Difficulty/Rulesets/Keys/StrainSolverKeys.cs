@@ -336,7 +336,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="qssData"></param>
         private void ComputeForActionPatterns()
         {
-            
+
         }
 
         /// <summary>
