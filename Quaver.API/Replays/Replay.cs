@@ -146,8 +146,13 @@ namespace Quaver.API.Replays
                     MapMd5 = br.ReadString();
                     Md5 = br.ReadString();
                     PlayerName = br.ReadString();
-                    Date = Convert.ToDateTime(br.ReadString());
+                    Date = Convert.ToDateTime(br.ReadString(), CultureInfo.InvariantCulture);
                     TimePlayed = br.ReadInt64();
+
+                    // The dates are serialized incorrectly in older replays, so to keep compatability,
+                    // use the time played.
+                    Date = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(TimePlayed);
+
                     Mode = (GameMode)br.ReadInt32();
                     Mods = (ModIdentifier)br.ReadInt32();
                     Score = br.ReadInt32();
