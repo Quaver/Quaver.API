@@ -57,8 +57,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// 
         /// </summary>
         /// <param name="hitObjects"></param>
-        public HandStateData(List<StrainSolverHitObject> hitObjects)
+        public HandStateData(StrainSolverHitObject hitObjects)
         {
+            /*
             if (hitObjects.Count == 0)
             {
                 throw new Exception("HitObject List for HandStateData has no HitObjects");
@@ -106,7 +107,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                 default:
                     ChordType = ChordType.NChord;
                     return;
-            }
+            }*/
+        }
+
+        public void AddHitObjectToChord(StrainSolverHitObject hitObjects)
+        {
+
         }
 
         /// <summary>

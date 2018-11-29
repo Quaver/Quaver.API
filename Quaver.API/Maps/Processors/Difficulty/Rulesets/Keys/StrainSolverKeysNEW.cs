@@ -3,6 +3,7 @@ using Quaver.API.Helpers;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Processors.Difficulty.Optimization;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures;
+using Quaver.API.Maps.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Average note density of the map
         /// </summary>
         public float AverageNoteDensity { get; private set; } = 0;
-
-        /// <summary>
-        ///     Hit objects in the map used for solving difficulty
-        /// </summary>
-        public List<StrainSolverData> StrainSolverData { get; private set; } = new List<StrainSolverData>();
 
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
@@ -150,15 +146,48 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float ComputeForOverallDifficulty(float rate, Hand assumeHand = Hand.Right)
         {
-            //ConvertToStrainHitObjects(rate, assumeHand);
-            //ComputeHandStateData();
-            //ComputeForFingerActions();
-            // todo: use ComputeForActionPatterns();
-            //ComputeForRollManipulation();
-            //ComputeForJackManipulation();
-            //ComputeForLnMultiplier();
-            //return CalculateOverallDifficulty();
+            // Convert to hitobjects
+            var hitObjects = ConvertToStrainHitObject(assumeHand);
+            var leftHandData = new List<HandStateData>();
+            var rightHandData = new List<HandStateData>();
+
+            // Get handstates
+            // Iterate through hit objects backwards
+            hitObjects.Reverse();
+            for (var i = 0; i < hitObjects.Count; i++)
+            {
+                switch (Map.Mode)
+                {
+                    case GameMode.Keys4:
+                        if (LaneToHand4K[hitObjects[i].HitObject.Lane] == Hand.Left)
+                        {
+                            leftHandData.Add(new HandStateData(hitObjects[i]));
+                        }
+                        break;
+                    case GameMode.Keys7:
+                        break;
+                }
+            }
+
+            // Reverse hit objects back to order
+            hitObjects.Reverse();
             return 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assumeHand"></param>
+        /// <returns></returns>
+        private List<StrainSolverHitObject> ConvertToStrainHitObject(Hand assumeHand)
+        {
+            var hitObjects = new List<StrainSolverHitObject>();
+            foreach (var ho in Map.HitObjects)
+            {
+                hitObjects.Add(new StrainSolverHitObject(ho));
+                // todo: implement assume hand
+            }
+            return hitObjects;
         }
 
         /*
