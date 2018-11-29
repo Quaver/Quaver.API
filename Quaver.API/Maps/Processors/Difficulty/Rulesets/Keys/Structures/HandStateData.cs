@@ -110,7 +110,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             }*/
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hitObjects"></param>
         public void AddHitObjectToChord(StrainSolverHitObject hitObjects)
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void EvaluateChord()
         {
 
         }
@@ -118,7 +130,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Evaluate Difficulty of each HitObject
         /// </summary>
-        public void EvaluateHitObjectDifficulty()
+        public void CalculateDifficulty()
         {
             foreach(var ob in HitObjects)
             {

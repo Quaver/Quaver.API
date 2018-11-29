@@ -151,26 +151,66 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var leftHandData = new List<HandStateData>();
             var rightHandData = new List<HandStateData>();
 
-            // Get handstates
-            // Iterate through hit objects backwards
+            // Get Initial Handstates
+            // - Iterate through hit objects backwards
             hitObjects.Reverse();
+            var refHandDataList = leftHandData;
             for (var i = 0; i < hitObjects.Count; i++)
             {
+                // Determine Reference Hand
                 switch (Map.Mode)
                 {
                     case GameMode.Keys4:
                         if (LaneToHand4K[hitObjects[i].HitObject.Lane] == Hand.Left)
-                        {
-                            leftHandData.Add(new HandStateData(hitObjects[i]));
-                        }
+                            refHandDataList = leftHandData;
+                        else
+                            refHandDataList = rightHandData;
                         break;
                     case GameMode.Keys7:
+                        var hand = LaneToHand7K[hitObjects[i].HitObject.Lane];
+                        if (hand == Hand.Left || (hand == Hand.Ambiguous && assumeHand == Hand.Left))
+                            refHandDataList = leftHandData;
+                        else
+                            refHandDataList = rightHandData;
                         break;
+                    default:
+                        throw new Exception("Unknown GameMode");
                 }
+
+                // Iterate through established handstates for chords
+                var chordFound = false;
+                for (var j = 0; j < refHandDataList.Count; j++)
+                {
+                    // Break loop after leaving threshold
+                    if (refHandDataList[j].HitObjects[0].HitObject.StartTime > hitObjects[i].HitObject.StartTime + HandStateData.CHORD_THRESHOLD_SAMEHAND_MS)
+                        break;
+
+                    // Check for finger overlap
+                    chordFound = true;
+                    for (var k = 0; k < refHandDataList[j].HitObjects.Count; k++)
+                    {
+                        if (refHandDataList[j].HitObjects[k].HitObject.Lane == hitObjects[i].HitObject.Lane)
+                        {
+                            chordFound = false;
+                            break;
+                        }
+                    }
+
+                    // Add HitObject to Chord if no fingers overlap
+                    if (chordFound)
+                    {
+                        refHandDataList[j].AddHitObjectToChord(hitObjects[i]);
+                        break;
+                    }
+                }
+
+                // Add new HandStateData to list if no chords are found
+                if (!chordFound)
+                    refHandDataList.Add(new HandStateData(hitObjects[i]));
             }
 
-            // Reverse hit objects back to order
-            hitObjects.Reverse();
+            // Compute for wrist action
+
             return 0;
         }
 
