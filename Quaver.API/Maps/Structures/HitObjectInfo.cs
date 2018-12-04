@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Quaver.API.Enums;
 using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
 {
-    
+
     /// <summary>
     ///     HitObjects section of the .qua
     /// </summary>
@@ -36,5 +38,27 @@ namespace Quaver.API.Maps.Structures
         /// </summary>
         [YamlIgnore]
         public bool IsLongNote => EndTime > 0;
+
+        /// <summary>
+        ///     Gets the timing point this object is in range of.
+        /// </summary>
+        /// <returns></returns>
+        public TimingPointInfo GetTimingPoint(List<TimingPointInfo> timingPoints)
+        {
+            // If the object's time is greater than the time of the last timing point, return the last point
+            if (StartTime >= timingPoints.Last().StartTime)
+                return timingPoints.Last();
+
+            // Search through the entire list for the correct point
+            for (var i = 0; i < timingPoints.Count - 1; i++)
+            {
+                if (StartTime < timingPoints.Last().StartTime)
+                    return timingPoints[i];
+            }
+
+            // Otherwise just return first point if we can't find it.
+            // Qua file won't be considered valid if it doesn't have at least one timing point.
+            return timingPoints.First();
+        }
     }
 }
