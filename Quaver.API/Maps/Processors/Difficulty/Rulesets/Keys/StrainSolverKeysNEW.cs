@@ -212,6 +212,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 //Console.WriteLine(chordFound);
             }
 
+            // TEST
+            var count = 0;
+            var total = 0;
+            refHandData = leftHandData;
+            for (var i = 0; i < refHandData.Count - 2; i++)
+            {
+                if ((refHandData[i].HitObjects[0].HitObject.StartTime
+                    - refHandData[i + 2].HitObjects[0].HitObject.StartTime) != 0)
+                {
+                    count++;
+                    total
+                        += 1500 / (refHandData[i].HitObjects[0].HitObject.StartTime
+                        - refHandData[i + 2].HitObjects[0].HitObject.StartTime);
+                } 
+            }
+
             // Compute for wrist action
             // maybe solve this first?
             foreach (var ob in hitObjects)
@@ -219,7 +235,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // solve for wrist
             }
 
-            return 0;
+            if (count == 0) return 0;
+            return 2 * total / (float) count;
         }
 
         /// <summary>
