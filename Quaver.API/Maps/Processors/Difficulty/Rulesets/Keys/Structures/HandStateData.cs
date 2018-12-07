@@ -32,11 +32,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public FingerState FingerState { get; private set; }
 
         /// <summary>
-        ///     Assumes wrist state for optimization and visualization
-        /// </summary>
-        public WristState WristState { get; private set; }
-
-        /// <summary>
         ///     Determined by how many HitObjects are in this current state.
         /// </summary>
         public ChordType ChordType { get; private set; }

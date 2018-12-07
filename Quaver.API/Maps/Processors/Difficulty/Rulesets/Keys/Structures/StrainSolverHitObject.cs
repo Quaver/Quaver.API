@@ -18,6 +18,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public HitObjectInfo HitObject { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public WristState WristState { get; set; }
+
+        /// <summary>
         ///     Current Finger State of the hit object
         /// </summary>
         public FingerState FingerState { get; set; } = FingerState.None;

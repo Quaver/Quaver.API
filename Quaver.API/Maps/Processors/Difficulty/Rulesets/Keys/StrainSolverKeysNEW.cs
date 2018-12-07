@@ -150,6 +150,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var hitObjects = ConvertToStrainHitObject(assumeHand);
             var leftHandData = new List<HandStateData>();
             var rightHandData = new List<HandStateData>();
+            var wristStateData = new List<WristState>();
 
             // Get Initial Handstates
             // - Iterate through hit objects backwards
@@ -212,7 +213,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 //Console.WriteLine(chordFound);
             }
 
-            // TEST
+            // TEST CALC
             var count = 0;
             var total = 0;
             refHandData = leftHandData;
@@ -230,11 +231,28 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // Compute for wrist action
             // maybe solve this first?
-            foreach (var ob in hitObjects)
+            for (var i = 0; i < hitObjects.Count; i++)
             {
-                // solve for wrist
+                if (hitObjects[i].WristState == null)
+                {
+                    var state = hitObjects[i].FingerState;
+                    var wrist = new WristState();
+                    for (var j = i + 1; j < hitObjects.Count; j++)
+                    {
+                        if (((int)hitObjects[j].FingerState & (1 << (int)state - 1)) != 0)
+                        {
+                            break;
+                        }
+
+                        state |= hitObjects[j].FingerState;
+                        hitObjects[j].WristState = wrist;
+                    }
+
+                    wrist.WristPair = state;
+                }
             }
 
+            // temp diff
             if (count == 0) return 0;
             return 2 * total / (float) count;
         }
