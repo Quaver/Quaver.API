@@ -57,9 +57,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// 
         /// </summary>
         /// <param name="hitObjects"></param>
-        public HandStateData(StrainSolverHitObject hitObjects)
+        public HandStateData(StrainSolverHitObject hitObject)
         {
-            HitObjects.Add(hitObjects);
+            AddHitObjectToChord(hitObject);
             /*
             if (hitObjects.Count == 0)
             {
@@ -115,9 +115,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// 
         /// </summary>
         /// <param name="hitObjects"></param>
-        public void AddHitObjectToChord(StrainSolverHitObject hitObjects)
+        public void AddHitObjectToChord(StrainSolverHitObject hitObject)
         {
-
+            HitObjects.Add(hitObject);
         }
 
         /// <summary>

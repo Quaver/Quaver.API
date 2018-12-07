@@ -4,12 +4,27 @@ using System.Text;
 
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
-    public enum WristState
+    internal class WristState
     {
-        None,
-        AssumeUp,
-        JackUp,
-        AssumeDown,
-        JackDown
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ForceDown { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public FingerState WristPair { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pair"></param>
+        /// <param name="wristDown"></param>
+        public WristState(FingerState pair, bool wristDown)
+        {
+            WristPair = pair;
+            ForceDown = wristDown;
+        }
     }
 }
