@@ -1,3 +1,4 @@
+using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,33 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Constructor
         /// </summary>
         /// <param name="hitOb"></param>
-        public StrainSolverHitObject(HitObjectInfo hitOb) => HitObject = hitOb;
+        public StrainSolverHitObject(HitObjectInfo hitOb, GameMode mode)
+        {
+            switch (mode)
+            {
+                case GameMode.Keys4:
+                    FingerState = StrainSolverKeys.LaneToFinger4K[hitOb.Lane];
+                    break;
+                case GameMode.Keys7:
+                    FingerState = StrainSolverKeys.LaneToFinger7K[hitOb.Lane];
+                    break;
+                default:
+                    throw new Exception("Invalid GameMode used to create StrainSolverHitObject");
+                    break;
+            }
+            HitObject = hitOb;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void EvaluateDifficulty()
+        {
+            StrainValue = 1;
+            if (WristState == null)
+            {
+                StrainValue = 100000000;
+            }
+        }
     }
 }

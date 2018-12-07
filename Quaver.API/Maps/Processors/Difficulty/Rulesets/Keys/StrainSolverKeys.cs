@@ -172,7 +172,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Map.HitObjects.Count; i++)
             {
-                var curHitOb = new StrainSolverHitObject(Map.HitObjects[i]);
+                var curHitOb = new StrainSolverHitObject(Map.HitObjects[i], Map.Mode);
                 var curStrainData = new StrainSolverData(curHitOb, rate);
 
                 // Assign Finger and Hand States

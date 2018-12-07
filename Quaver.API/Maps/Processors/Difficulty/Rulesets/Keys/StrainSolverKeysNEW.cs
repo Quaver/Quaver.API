@@ -213,22 +213,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 //Console.WriteLine(chordFound);
             }
 
-            // TEST CALC
-            var count = 0;
-            var total = 0;
-            refHandData = leftHandData;
-            for (var i = 0; i < refHandData.Count - 2; i++)
-            {
-                if ((refHandData[i].HitObjects[0].HitObject.StartTime
-                    - refHandData[i + 2].HitObjects[0].HitObject.StartTime) != 0)
-                {
-                    count++;
-                    total
-                        += 1500 / (refHandData[i].HitObjects[0].HitObject.StartTime
-                        - refHandData[i + 2].HitObjects[0].HitObject.StartTime);
-                } 
-            }
-
             // Compute for wrist action
             // maybe solve this first?
             for (var i = 0; i < hitObjects.Count; i++)
@@ -249,12 +233,49 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     }
 
                     wrist.WristPair = state;
+
+                    if (state != hitObjects[i].FingerState)
+                    {
+                        hitObjects[i].WristState = wrist;
+                    }
+                }
+                //Console.WriteLine(hitObjects[i].WristState == null);
+            }
+
+            // TEST CALC
+            var count = 0;
+            float total = 0;
+            refHandData = leftHandData;
+            for (var i = 0; i < refHandData.Count - 2; i++)
+            {
+                refHandData[i].EvaluateDifficulty();
+                if ((refHandData[i].HitObjects[0].HitObject.StartTime
+                    - refHandData[i + 2].HitObjects[0].HitObject.StartTime) != 0)
+                {
+                    count++;
+                    total
+                        += refHandData[i].StateDifficulty * 1500 / (refHandData[i].HitObjects[0].HitObject.StartTime
+                        - refHandData[i + 2].HitObjects[0].HitObject.StartTime);
+                }
+            }
+
+            refHandData = rightHandData;
+            for (var i = 0; i < refHandData.Count - 2; i++)
+            {
+                refHandData[i].EvaluateDifficulty();
+                if ((refHandData[i].HitObjects[0].HitObject.StartTime
+                    - refHandData[i + 2].HitObjects[0].HitObject.StartTime) != 0)
+                {
+                    count++;
+                    total
+                        += refHandData[i].StateDifficulty * 1500 / (refHandData[i].HitObjects[0].HitObject.StartTime
+                        - refHandData[i + 2].HitObjects[0].HitObject.StartTime);
                 }
             }
 
             // temp diff
             if (count == 0) return 0;
-            return 2 * total / (float) count;
+            return 2 * total / count;
         }
 
         /// <summary>
@@ -267,7 +288,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var hitObjects = new List<StrainSolverHitObject>();
             foreach (var ho in Map.HitObjects)
             {
-                hitObjects.Add(new StrainSolverHitObject(ho));
+                hitObjects.Add(new StrainSolverHitObject(ho, Map.Mode));
                 // todo: implement assume hand
             }
             return hitObjects;

@@ -44,6 +44,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public float ChordProximity { get; private set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public float StateDifficulty { get; private set; }
+
+        /// <summary>
         ///     All HitObjects referenced for this Hand State
         /// </summary>
         public List<StrainSolverHitObject> HitObjects { get; private set; } = new List<StrainSolverHitObject>();
@@ -118,9 +123,20 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public void EvaluateChord()
+        public void EvaluateDifficulty()
         {
+            StateDifficulty = 0;
+            FingerState = FingerState.None;
+            HitObjects.ForEach(
+                x =>
+                {
+                    FingerState |= x.FingerState;
+                    x.EvaluateDifficulty();
+                    StateDifficulty += x.StrainValue;
+                }
+            );
 
+            StateDifficulty /= HitObjects.Count;
         }
 
         /// <summary>
