@@ -51,7 +51,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     All HitObjects referenced for this Hand State
         /// </summary>
-        public List<StrainSolverHitObject> HitObjects { get; private set; }
+        public List<StrainSolverHitObject> HitObjects { get; private set; } = new List<StrainSolverHitObject>();
 
         /// <summary>
         /// 
@@ -59,6 +59,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <param name="hitObjects"></param>
         public HandStateData(StrainSolverHitObject hitObjects)
         {
+            HitObjects.Add(hitObjects);
             /*
             if (hitObjects.Count == 0)
             {

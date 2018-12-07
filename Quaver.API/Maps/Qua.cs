@@ -264,9 +264,9 @@ namespace Quaver.API.Maps
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    return new StrainSolverKeys(this, new StrainConstantsKeys(), mods);
+                    return new StrainSolverKeysNEW(this, new StrainConstantsKeys(), mods);
                 case GameMode.Keys7:
-                    return new StrainSolverKeys(this, new StrainConstantsKeys(), mods);
+                    return new StrainSolverKeysNEW(this, new StrainConstantsKeys(), mods);
                 default:
                     throw new InvalidEnumArgumentException();
             }

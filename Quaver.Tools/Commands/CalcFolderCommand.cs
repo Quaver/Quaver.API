@@ -46,8 +46,8 @@ namespace Quaver.Tools.Commands
             {
                 var file = files[i];
 
-                try
-                {
+                //try
+                //{
                     Qua map = null;
 
                     if (file.EndsWith(".qua"))
@@ -63,11 +63,11 @@ namespace Quaver.Tools.Commands
                     Console.WriteLine($"[{i}] | {map} | {diffCalc.OverallDifficulty}");
                     output += $"{map.Artist} - {map.Title} [{map.DifficultyName}]\t{diffCalc.OverallDifficulty}\n";
                     calculatedMaps.Add(Tuple.Create(i, map.ToString(), diffCalc.OverallDifficulty.ToString(CultureInfo.InvariantCulture)));
-                }
-                catch (Exception e)
-                {
+                //}
+                //catch (Exception e)
+                //{
                     continue;
-                }
+                //}
             }
 
             var table = calculatedMaps.ToStringTable(new[] { "Id", "Map", "Difficulty" }, a => a.Item1, a => a.Item2, a => a.Item3);
