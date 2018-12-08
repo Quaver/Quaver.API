@@ -9,11 +9,32 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public bool ForceDown { get; set; }
+        public float WristDifficulty { get; set; } = 1;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public WristAction WristAction { get; set; } = WristAction.None;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public float Time { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public FingerState WristPair { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public WristState NextState { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="next"></param>
+        public WristState(WristState next) => NextState = next;
     }
 }
