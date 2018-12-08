@@ -284,8 +284,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 {
                     count++;
                     total
-                        += refHandData[i].StateDifficulty * 3000 / (refHandData[i].HitObjects[0].StartTime
-                        - refHandData[i + 2].HitObjects[0].StartTime);
+                        += Math.Max(1, refHandData[i].StateDifficulty
+                        * 4.2f
+                        * (float)Math.Sqrt(30000 / (
+                            refHandData[i].HitObjects[0].StartTime
+                            - refHandData[i + 2].HitObjects[0].StartTime)
+                        )
+                        - 22f);
                 }
             }
 
@@ -298,14 +303,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 {
                     count++;
                     total
-                        += refHandData[i].StateDifficulty * 3000 / (refHandData[i].HitObjects[0].StartTime
-                        - refHandData[i + 2].HitObjects[0].StartTime);
+                        += Math.Max(1, refHandData[i].StateDifficulty
+                        * 4.2f
+                        * (float)Math.Sqrt(30000 / (
+                            refHandData[i].HitObjects[0].StartTime
+                            - refHandData[i + 2].HitObjects[0].StartTime)
+                        )
+                        - 22f);
                 }
             }
 
             // temp diff
             if (count == 0) return 0;
-            return 2 * total / count;
+            return total / count;
         }
 
         /// <summary>
