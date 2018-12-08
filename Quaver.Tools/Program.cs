@@ -8,9 +8,18 @@ namespace Quaver.Tools
         internal static void Main(string[] args)
         {
             // TODO: temp
-            //args = new string[] { "-calcfolder", "c:/users/denys/desktop/testmaps", "None" };
-            args = new string[] { "-calcfolder", "c:/users/admin/desktop/qss/testmaps", "None" };
-            if (args.Length == 0)
+            var user = "denys";
+            var test = new string[][] {
+            new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/tech", "None" },
+            new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/speed", "None" },
+            new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/jack", "None" },
+            new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/stamina", "None" },
+            new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-reform", "None" },
+            new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-old", "None" },
+            new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/", "None" }
+        };
+            //args = new string[] { "-calcfolder", "c:/users/admin/desktop/qss/testmaps", "None" };
+            if (test.Length == 0)
             {
                 Console.WriteLine($"Welcome to the Quaver.API test bench.\n" +
                                   $"Here you can run a bunch of things to test the API.\n\n" +
@@ -22,19 +31,20 @@ namespace Quaver.Tools
                 return;
             }
 
-            switch (args[0])
+            for (var i = 0; i < test.Length; i++)
+            switch (test[i][0])
             {
                 case "-calcdiff":
-                    new CalcDiffCommand(args).Execute();
+                    new CalcDiffCommand(test[i]).Execute();
                     break;
                 case "-calcfolder":
-                    new CalcFolderCommand(args).Execute();
+                    new CalcFolderCommand(test[i]).Execute();
                     break;
                 case "-replay":
-                    new ReplayCommand(args).Execute();
+                    new ReplayCommand(test[i]).Execute();
                     break;
                 case "-virtualreplay":
-                    new VirtualReplayPlayerCommand(args).Execute();
+                    new VirtualReplayPlayerCommand(test[i]).Execute();
                     break;
                 default:
                     throw new ArgumentException();
