@@ -88,7 +88,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainValue = 1;
             if (WristState == null)
             {
-                StrainValue = 1.25f;
+                StrainValue = 1.2f;
             }
             else if (WristState.NextState != null)
             {
@@ -96,16 +96,18 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                 {
                     if (WristState.NextState.Time - WristState.Time < 94)
                     {
-                        StrainValue = 0.25f;
+                        WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.5f;
+                        //Console.WriteLine(WristState.NextState.Time - WristState.Time);
                     }
                     else if (WristState.NextState.Time - WristState.Time < 100)
                     {
-                        StrainValue = 0.5f;
+                        WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.95f;
                     }
                     else
                     {
-                        StrainValue = 1;
+                        WristState.WristDifficulty = (1 + WristState.NextState.WristDifficulty)/2;
                     }
+                    StrainValue = WristState.WristDifficulty;
                     //WristState.WristDifficulty = 0;
                     //WristState.WristDifficulty = 1 - (float)(0.75*Math.Pow(Math.Max(95 - (WristState.NextState.Time - WristState.Time), 0) / 95, 0.25f));
                     //StrainValue = WristState.WristDifficulty;

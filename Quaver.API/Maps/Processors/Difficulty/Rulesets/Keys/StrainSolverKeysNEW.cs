@@ -215,32 +215,45 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // Compute for wrist action
             // maybe solve this first?
-            WristState laterState = null;
+            WristState laterStateLeft = null;
+            WristState laterStateRight = null;
+            WristState wrist;
+            FingerState state;
             for (var i = 0; i < hitObjects.Count; i++)
             {
                 if (hitObjects[i].WristState == null)
                 {
-                    var state = hitObjects[i].FingerState;
-                    var wrist = new WristState(laterState);
-                    laterState = wrist;
+                    if (hitObjects[i].Hand == Hand.Left)
+                    {
+                        wrist = new WristState(laterStateLeft);
+                        state = hitObjects[i].FingerState;
+                        laterStateLeft = wrist;
+                    }
+                    else
+                    {
+                        wrist = new WristState(laterStateRight);
+                        state = hitObjects[i].FingerState;
+                        laterStateRight = wrist;
+                    }
 
                     for (var j = i + 1; j < hitObjects.Count; j++)
                     {
-                        if (hitObjects[j].Hand == hitObjects[i].Hand )
+                        if (hitObjects[j].Hand == hitObjects[i].Hand)
+                        {
+                            //Console.WriteLine($"poo{(int)hitObjects[j].FingerState}, {(int)state} | {hitObjects[j].StartTime}");
+                            state |= hitObjects[j].FingerState;
+                            hitObjects[j].WristState = wrist;
+                        }
                         if (((int)state & (1 << (int)hitObjects[j].FingerState - 1)) != 0)
                         {
                             break;
                         }
-
-                        //Console.WriteLine($"poo{(int)hitObjects[j].FingerState}, {(int)state} | {hitObjects[j].StartTime}");
-                        state |= hitObjects[j].FingerState;
-                        hitObjects[j].WristState = wrist;
                     }
 
                     wrist.WristPair = state;
                     wrist.Time = hitObjects[i].StartTime;
 
-                    if (state != hitObjects[i].FingerState)
+                    if (!state.Equals(hitObjects[i].FingerState))
                     {
                         wrist.WristAction = WristAction.Up;
                         hitObjects[i].WristState = wrist;
@@ -250,6 +263,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         wrist.WristAction = WristAction.Up;
                         hitObjects[i].WristState = wrist;
+                    }
+                    else
+                    {
+                        wrist = null;
                     }
                 }
                 //Console.WriteLine(hitObjects[i].WristState == null);
