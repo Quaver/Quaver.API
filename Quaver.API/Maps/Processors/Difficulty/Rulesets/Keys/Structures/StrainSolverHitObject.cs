@@ -96,6 +96,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                 {
                     if (WristState.NextState.NextState != null && Math.Abs(WristState.NextStateDelta - WristState.NextState.NextStateDelta) < WristState.WRIST_DELTA_THRESHOLD_MS)
                     {
+                        // todo: use gradient from 102ms and below.
+                        // - >100ms = 0.95x
+                        // - 100ms = 0.92x
+                        // - 94ms = 0.95x
                         if (WristState.NextStateDelta < 94)
                         {
                             WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.89f;

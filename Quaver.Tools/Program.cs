@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Quaver.Tools.Commands;
 
 namespace Quaver.Tools
@@ -19,6 +20,9 @@ namespace Quaver.Tools
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/", "None" }
         };
             //args = new string[] { "-calcfolder", "c:/users/admin/desktop/qss/testmaps", "None" };
+            var sw = new Stopwatch();
+
+            sw.Start();
             if (test.Length == 0)
             {
                 Console.WriteLine($"Welcome to the Quaver.API test bench.\n" +
@@ -49,6 +53,9 @@ namespace Quaver.Tools
                 default:
                     throw new ArgumentException();
             }
+            sw.Stop();
+
+            Console.WriteLine($"TIME ELAPSED: {sw.Elapsed}");
         }
     }
 }

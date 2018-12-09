@@ -298,46 +298,121 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 //Console.WriteLine(hitObjects[i].WristState == null);
             }
 
-            // TEST CALC
+            // temp calc variables
+            var tempCalc = new List<float[]>[]{ new List<float[]>(), new List<float[]>()};
             var count = 0;
             float total = 0;
-            refHandData = leftHandData;
-            for (var i = 0; i < refHandData.Count - 2; i++)
+
+            // TEST CALC (OLD)
+            for (var z = 0; z <= 1; z++)
             {
-                refHandData[i].EvaluateDifficulty();
-                if ((refHandData[i].HitObjects[0].StartTime
-                    - refHandData[i + 2].HitObjects[0].StartTime) != 0)
+                if (z == 0)
                 {
-                    count++;
-                    total
-                        += Math.Max(1, refHandData[i].StateDifficulty
-                        * 4.2f
-                        * (float)Math.Sqrt(30000 / (
-                            refHandData[i].HitObjects[0].StartTime
-                            - refHandData[i + 2].HitObjects[0].StartTime)
-                        )
-                        - 22f);
+                    refHandData = leftHandData;
+                }
+                else
+                {
+                    refHandData = rightHandData;
+                }
+
+                for (var i = 0; i < refHandData.Count - 2; i++)
+                {
+                    var curIndex = Math.Floor(refHandData[i].HitObjects[0].StartTime / 1000);
+                    refHandData[i].EvaluateDifficulty();
+                    if ((refHandData[i].HitObjects[0].StartTime
+                        - refHandData[i + 2].HitObjects[0].StartTime) != 0)
+                    {
+                        count++;
+                        total
+                            += Math.Max(1, refHandData[i].StateDifficulty
+                            * 4.2f
+                            * (float)Math.Sqrt(30000 / (
+                                refHandData[i].HitObjects[0].StartTime
+                                - refHandData[i + 2].HitObjects[0].StartTime)
+                            )
+                            - 22f);
+                    }
                 }
             }
 
-            refHandData = rightHandData;
-            for (var i = 0; i < refHandData.Count - 2; i++)
+            // TEST CALC (NEW)
+            // do not use this, it sucks
+            /*
+            for (var z=0; z<=1; z++)
             {
-                refHandData[i].EvaluateDifficulty();
-                if ((refHandData[i].HitObjects[0].StartTime
-                    - refHandData[i + 2].HitObjects[0].StartTime) != 0)
+                if (z == 0)
                 {
-                    count++;
-                    total
-                        += Math.Max(1, refHandData[i].StateDifficulty
-                        * 4.2f
-                        * (float)Math.Sqrt(30000 / (
-                            refHandData[i].HitObjects[0].StartTime
-                            - refHandData[i + 2].HitObjects[0].StartTime)
-                        )
-                        - 22f);
+                    refHandData = leftHandData;
+                }
+                else
+                {
+                    refHandData = rightHandData;
+                }
+
+                var index = -1;
+                total = 0;
+                count = 0;
+                for (var i = 0; i < refHandData.Count - 2; i++)
+                {
+                    var curIndex = (int)Math.Floor(refHandData[i].HitObjects[0].StartTime/5000f);
+                    if (index == -1)
+                    {
+                        index = curIndex;
+                    }
+                    refHandData[i].EvaluateDifficulty();
+                    if ((refHandData[i].HitObjects[0].StartTime
+                        - refHandData[i + 2].HitObjects[0].StartTime) != 0)
+                    {
+                        count++;
+                        total
+                            += Math.Max(1, refHandData[i].StateDifficulty
+                            * 4.2f
+                            * (float)Math.Sqrt(30000 / (
+                                refHandData[i].HitObjects[0].StartTime
+                                - refHandData[i + 2].HitObjects[0].StartTime)
+                            )
+                            - 22f);
+                    }
+                    if (curIndex < index)
+                    {
+                        index = curIndex;
+                        tempCalc[z].Add(new float[]{ index, total / count });
+                    }
                 }
             }
+
+            foreach(var dp in tempCalc[0])
+            {
+                for (var i=0; i< tempCalc[1].Count; i++)
+                {
+                    if (tempCalc[1][i][0] == dp[0])
+                    {
+                        if (tempCalc[1][i][1] > dp[1])
+                        {
+                            dp[1] = tempCalc[1][i][1];
+                        }
+                        else
+                        {
+                            tempCalc[1][i][1] = dp[1];
+                        }
+                    }
+                    else if (tempCalc[1][i][0] < dp[0]) break;
+                }
+            }
+
+            count = 0;
+            total = 0;
+            foreach (var dp in tempCalc[0])
+            {
+                total += dp[1];
+                count++;
+            }
+            foreach (var dp in tempCalc[1])
+            {
+                total += dp[1];
+                count++;
+            }
+            */
 
             // temp diff
             if (count == 0) return 0;
