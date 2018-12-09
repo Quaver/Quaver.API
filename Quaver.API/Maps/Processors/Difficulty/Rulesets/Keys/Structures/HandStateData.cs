@@ -14,12 +14,17 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Determines if the HitObject on the other hand of this HitObject will be counted as an object chorded with this HitObject.
         /// </summary>
-        public const float CHORD_THRESHOLD_OTHERHAND_MS = 32f;
+        public const float CHORD_THRESHOLD_OTHERHAND_MS = 16f;
 
         /// <summary>
         ///     Multiplier that will be applied to chords if other hand is involved.
         /// </summary>
         public const float CHORD_MULTIPLIER = 0.88f;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public HandStateData ChordedHand { get; set; }
 
         /// <summary>
         ///     Determined by the hand this data point focuses on.
@@ -59,6 +64,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <param name="hitObjects"></param>
         public HandStateData(StrainSolverHitObject hitObject)
         {
+            Hand = hitObject.Hand;
             AddHitObjectToChord(hitObject);
             /*
             if (hitObjects.Count == 0)
@@ -137,6 +143,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             );
 
             StateDifficulty /= HitObjects.Count;
+
+            if (ChordedHand != null)
+            {
+                StateDifficulty *= 0.92f;
+            }
         }
 
         /// <summary>

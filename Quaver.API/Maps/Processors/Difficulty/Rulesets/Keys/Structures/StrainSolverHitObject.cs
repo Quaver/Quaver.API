@@ -88,33 +88,38 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainValue = 1;
             if (WristState == null)
             {
-                StrainValue = 1.2f;
+                StrainValue = 1.4f;
             }
             else if (WristState.NextState != null)
             {
                 if (WristState.NextState.WristPair.Equals(WristState.WristPair))
                 {
-                    if (WristState.NextState.Time - WristState.Time < 94)
+                    if (WristState.NextState.NextState != null && Math.Abs(WristState.NextStateDelta - WristState.NextState.NextStateDelta) < WristState.WRIST_DELTA_THRESHOLD_MS)
                     {
-                        WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.5f;
-                        //Console.WriteLine(WristState.NextState.Time - WristState.Time);
-                    }
-                    else if (WristState.NextState.Time - WristState.Time < 100)
-                    {
-                        WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.95f;
+                        if (WristState.NextStateDelta < 94)
+                        {
+                            WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.89f;
+                            //Console.WriteLine(WristState.NextState.Time - WristState.Time);
+                        }
+                        else if (WristState.NextStateDelta < 100)
+                        {
+                            WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.92f;
+                        }
+                        else
+                        {
+                            WristState.WristDifficulty = (0.95f + WristState.NextState.WristDifficulty) / 2;
+                        }
+                        StrainValue = WristState.WristDifficulty;
                     }
                     else
                     {
-                        WristState.WristDifficulty = (1 + WristState.NextState.WristDifficulty)/2;
+                        WristState.WristDifficulty = 1;
+                        StrainValue = 1;
                     }
-                    StrainValue = WristState.WristDifficulty;
-                    //WristState.WristDifficulty = 0;
-                    //WristState.WristDifficulty = 1 - (float)(0.75*Math.Pow(Math.Max(95 - (WristState.NextState.Time - WristState.Time), 0) / 95, 0.25f));
-                    //StrainValue = WristState.WristDifficulty;
                 }
                 else
                 {
-                    StrainValue = 1.1f;
+                    StrainValue = 1.12f;
                 }
             }
         }

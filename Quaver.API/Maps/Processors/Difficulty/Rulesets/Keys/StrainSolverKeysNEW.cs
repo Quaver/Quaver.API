@@ -150,6 +150,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var hitObjects = ConvertToStrainHitObject(assumeHand);
             var leftHandData = new List<HandStateData>();
             var rightHandData = new List<HandStateData>();
+            var allHandData = new List<HandStateData>();
             var wristStateData = new List<WristState>();
 
             // Get Initial Handstates
@@ -208,9 +209,34 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                 // Add new HandStateData to list if no chords are found
                 if (!chordFound)
+                {
                     refHandData.Add(new HandStateData(hitObjects[i]));
+                    allHandData.Add(refHandData.Last());
+                }
 
                 //Console.WriteLine(chordFound);
+            }
+
+            // Compute for chorded pairs
+            for (var i=0; i<allHandData.Count; i++)
+            {
+                for (var j=i+1; j<allHandData.Count; j++)
+                {
+                    if (allHandData[i].HitObjects[0].StartTime - allHandData[j].HitObjects[0].StartTime > HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
+                    {
+                        break;
+                    }
+
+                    if (allHandData[j].ChordedHand == null)
+                    {
+                        if (!allHandData[i].Hand.Equals(allHandData[j].Hand) && !allHandData[j].Hand.Equals(Hand.Ambiguous))
+                        {
+                            allHandData[j].ChordedHand = allHandData[i];
+                            allHandData[i].ChordedHand = allHandData[j];
+                            break;
+                        }
+                    }
+                }
             }
 
             // Compute for wrist action
