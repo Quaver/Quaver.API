@@ -324,11 +324,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     refHandData[i].EvaluateDifficulty();
                     if (refHandData[i].StateDifficulty < currentDiff)
                     {
-                        currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.220f;
+                        currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.70f;
                     }
                     else
                     {
-                        currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.0092f;
+                        currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.4f;
                     }
                     if ((refHandData[i].Time
                         - refHandData[i + 2].Time) != 0)
