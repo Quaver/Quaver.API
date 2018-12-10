@@ -19,7 +19,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Multiplier that will be applied to chords if other hand is involved.
         /// </summary>
-        public const float CHORD_MULTIPLIER = 0.88f;
+        public const float CHORD_MULTIPLIER = 0.91f;
 
         /// <summary>
         /// 
@@ -146,21 +146,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 
             if (ChordedHand != null)
             {
-                StateDifficulty *= 0.92f;
-            }
-        }
-
-        /// <summary>
-        ///     Evaluate Difficulty of each HitObject
-        /// </summary>
-        public void CalculateDifficulty()
-        {
-            foreach(var ob in HitObjects)
-            {
-                ob.ChordMultiplier = CHORD_MULTIPLIER + (ChordProximity * (1 - CHORD_MULTIPLIER));
-                ob.LnStrainMultiplier = 1; // TODO: temporary
-                ob.StrainValue = ob.ChordMultiplier * ob.LnStrainMultiplier;
-                //ob.StrainValue = 
+                StateDifficulty *= CHORD_MULTIPLIER;
             }
         }
     }

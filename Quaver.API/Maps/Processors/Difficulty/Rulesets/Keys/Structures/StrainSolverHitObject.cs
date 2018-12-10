@@ -94,36 +94,64 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             {
                 if (WristState.NextState.WristPair.Equals(WristState.WristPair))
                 {
-                    if (WristState.NextState.NextState != null && Math.Abs(WristState.NextStateDelta - WristState.NextState.NextStateDelta) < WristState.WRIST_DELTA_THRESHOLD_MS)
+                    if (WristState.NextState.NextState != null)
                     {
-                        // todo: use gradient from 102ms and below.
-                        // - >100ms = 0.95x
-                        // - 100ms = 0.92x
-                        // - 94ms = 0.95x
-                        if (WristState.NextStateDelta < 94)
+                        if (Math.Abs(WristState.NextState.NextStateDelta - WristState.NextStateDelta) < WristState.WRIST_DELTA_THRESHOLD_MS)
                         {
-                            WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.89f;
-                            //Console.WriteLine(WristState.NextState.Time - WristState.Time);
-                        }
-                        else if (WristState.NextStateDelta < 100)
-                        {
-                            WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.92f;
+                            // todo: use gradient from 102ms and below.
+                            // - >100ms = 0.95x
+                            // - 100ms = 0.92x
+                            // - 94ms = 0.95x
+                            if (WristState.NextStateDelta < 94)
+                            {
+                                //WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.89f;
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.9f;
+                                //Console.WriteLine(WristState.NextState.Time - WristState.Time);
+                            }
+                            else if (WristState.NextStateDelta < 100)
+                            {
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.95f;
+                            }
+                            else
+                            {
+                                //WristState.WristDifficulty = 1;
+                                WristState.WristDifficulty = (0.975f + WristState.NextState.WristDifficulty) / 2;
+                            }
                         }
                         else
                         {
-                            WristState.WristDifficulty = (0.95f + WristState.NextState.WristDifficulty) / 2;
+                            WristState.WristDifficulty = 1.1f;
                         }
-                        StrainValue = WristState.WristDifficulty;
                     }
-                    else
+
+                    var count = 0;
+                    var curCheck = WristState.NextState;
+                    while (count < 30)
                     {
-                        WristState.WristDifficulty = 1;
-                        StrainValue = 1;
+                        count++;
+                        curCheck = curCheck.NextState;
+
+                        if (curCheck == null)
+                        {
+                            break;
+                        }
+                        else if (!curCheck.WristPair.Equals(WristState.WristPair))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            WristState.WristDifficulty *= 0.996f;
+                            //Console.WriteLine(WristState.WristDifficulty);
+                        }
+
                     }
+
+                    StrainValue = WristState.WristDifficulty;
                 }
                 else
                 {
-                    StrainValue = 1.12f;
+                    StrainValue = 1;
                 }
             }
         }

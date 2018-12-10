@@ -249,16 +249,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             {
                 if (hitObjects[i].WristState == null)
                 {
+                    state = hitObjects[i].FingerState;
                     if (hitObjects[i].Hand == Hand.Left)
                     {
                         wrist = new WristState(laterStateLeft);
-                        state = hitObjects[i].FingerState;
                         laterStateLeft = wrist;
                     }
                     else
                     {
                         wrist = new WristState(laterStateRight);
-                        state = hitObjects[i].FingerState;
                         laterStateRight = wrist;
                     }
 
@@ -266,25 +265,29 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (hitObjects[j].Hand == hitObjects[i].Hand)
                         {
-                            //Console.WriteLine($"poo{(int)hitObjects[j].FingerState}, {(int)state} | {hitObjects[j].StartTime}");
-                            state |= hitObjects[j].FingerState;
-                            hitObjects[j].WristState = wrist;
-                        }
-                        if (((int)state & (1 << (int)hitObjects[j].FingerState - 1)) != 0)
-                        {
-                            break;
+                            if (((int)state & (1 << (int)hitObjects[j].FingerState - 1)) != 0)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                state |= hitObjects[j].FingerState;
+                                hitObjects[j].WristState = wrist;
+                            }
                         }
                     }
 
                     wrist.WristPair = state;
                     wrist.Time = hitObjects[i].StartTime;
 
+                    // check if wrist state is the same
                     if (!state.Equals(hitObjects[i].FingerState))
                     {
                         wrist.WristAction = WristAction.Up;
                         hitObjects[i].WristState = wrist;
                         //Console.WriteLine($"asd{state}_ {hitObjects[i].FingerState} | {Map.Length}, {hitObjects[i].StartTime}");
                     }
+                    // same state jack
                     else if (wrist.NextState != null && wrist.NextState.WristPair.Equals(state))
                     {
                         wrist.WristAction = WristAction.Up;
@@ -299,7 +302,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             // temp calc variables
-            var tempCalc = new List<float[]>[]{ new List<float[]>(), new List<float[]>()};
             var count = 0;
             float total = 0;
 
@@ -317,7 +319,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                 for (var i = 0; i < refHandData.Count - 2; i++)
                 {
-                    var curIndex = Math.Floor(refHandData[i].HitObjects[0].StartTime / 1000);
                     refHandData[i].EvaluateDifficulty();
                     if ((refHandData[i].HitObjects[0].StartTime
                         - refHandData[i + 2].HitObjects[0].StartTime) != 0)
@@ -325,19 +326,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         count++;
                         total
                             += Math.Max(1, refHandData[i].StateDifficulty
-                            * 4.2f
+                            * 3.7f
                             * (float)Math.Sqrt(30000 / (
                                 refHandData[i].HitObjects[0].StartTime
                                 - refHandData[i + 2].HitObjects[0].StartTime)
                             )
-                            - 22f);
+                            - 18f);
                     }
                 }
             }
 
+            // STAMINA TEST
+
             // TEST CALC (NEW)
             // do not use this, it sucks
             /*
+             * var tempCalc = new List<float[]>[]{ new List<float[]>(), new List<float[]>()};
             for (var z=0; z<=1; z++)
             {
                 if (z == 0)
