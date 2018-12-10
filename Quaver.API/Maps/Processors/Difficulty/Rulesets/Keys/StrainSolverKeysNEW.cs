@@ -318,6 +318,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     refHandData = rightHandData;
                 }
 
+                currentDiff = 0;
                 for (var i = 0; i < refHandData.Count - 2; i++)
                 {
                     refHandData[i].EvaluateDifficulty();
