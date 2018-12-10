@@ -184,7 +184,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 for (var j = 0; j < refHandData.Count; j++)
                 {
                     // Break loop after leaving threshold
-                    if (refHandData[j].HitObjects[0].StartTime
+                    if (refHandData[j].Time
                         > hitObjects[i].StartTime + HandStateData.CHORD_THRESHOLD_SAMEHAND_MS)
                         break;
 
@@ -222,7 +222,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             {
                 for (var j=i+1; j<allHandData.Count; j++)
                 {
-                    if (allHandData[i].HitObjects[0].StartTime - allHandData[j].HitObjects[0].StartTime > HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
+                    if (allHandData[i].Time - allHandData[j].Time > HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
                     {
                         break;
                     }
@@ -303,6 +303,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // temp calc variables
             var count = 0;
+            float currentDiff = 0;
             float total = 0;
 
             // TEST CALC (OLD)
@@ -320,16 +321,24 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 for (var i = 0; i < refHandData.Count - 2; i++)
                 {
                     refHandData[i].EvaluateDifficulty();
-                    if ((refHandData[i].HitObjects[0].StartTime
-                        - refHandData[i + 2].HitObjects[0].StartTime) != 0)
+                    if (refHandData[i].StateDifficulty < currentDiff)
+                    {
+                        currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.220f;
+                    }
+                    else
+                    {
+                        currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.0092f;
+                    }
+                    if ((refHandData[i].Time
+                        - refHandData[i + 2].Time) != 0)
                     {
                         count++;
                         total
-                            += Math.Max(1, refHandData[i].StateDifficulty
-                            * 3.7f
+                            += Math.Max(1, currentDiff
+                            * 4.5f
                             * (float)Math.Sqrt(30000 / (
-                                refHandData[i].HitObjects[0].StartTime
-                                - refHandData[i + 2].HitObjects[0].StartTime)
+                                refHandData[i].Time
+                                - refHandData[i + 2].Time)
                             )
                             - 18f);
                     }

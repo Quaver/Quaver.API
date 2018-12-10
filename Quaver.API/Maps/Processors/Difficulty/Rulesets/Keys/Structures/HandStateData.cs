@@ -27,6 +27,16 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public HandStateData ChordedHand { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public HandStateData NextState { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public float Time => HitObjects[0].StartTime;
+
+        /// <summary>
         ///     Determined by the hand this data point focuses on.
         /// </summary>
         public Hand Hand { get; private set; }
@@ -148,6 +158,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             {
                 StateDifficulty *= CHORD_MULTIPLIER;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currentDifficulty"></param>
+        public void EvaluateStamina(float currentDifficulty)
+        {
+            //StateDifficulty += (currentDifficulty - StateDifficulty) / 2f;
         }
     }
 }

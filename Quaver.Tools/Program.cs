@@ -17,10 +17,11 @@ namespace Quaver.Tools
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/stamina", "None" },
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-reform", "None" },
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-old", "None" },
-            //new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps", "None" },
+            //new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps", "None" }
             new string[] { "-calcfolder", $"c:/Users/{user}/desktop/oss", "None" }
         };
             //args = new string[] { "-calcfolder", "c:/users/admin/desktop/qss/testmaps", "None" };
+            Console.WriteLine("Calculating Difficulties...");
             var sw = new Stopwatch();
 
             sw.Start();
