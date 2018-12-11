@@ -88,7 +88,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainValue = 1;
             if (WristState == null)
             {
-                StrainValue = 1.4f;
+                StrainValue = 1.65f;
             }
             else if (WristState.NextState != null)
             {
@@ -104,9 +104,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                             // - 94ms = 0.95x
                             if (WristState.NextStateDelta < 94)
                             {
-                                //WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.89f;
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.9f;
-                                //Console.WriteLine(WristState.NextState.Time - WristState.Time);
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.89f;
                             }
                             else if (WristState.NextStateDelta < 100)
                             {
@@ -115,7 +113,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                             else
                             {
                                 //WristState.WristDifficulty = 1;
-                                WristState.WristDifficulty = (0.975f + WristState.NextState.WristDifficulty) / 2;
+                                WristState.WristDifficulty = (0.982f + WristState.NextState.WristDifficulty) / 2;
                             }
                         }
                         else
@@ -141,7 +139,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                         }
                         else
                         {
-                            WristState.WristDifficulty *= 0.996f;
+                            WristState.WristDifficulty *= 0.992f;
                             //Console.WriteLine(WristState.WristDifficulty);
                         }
 

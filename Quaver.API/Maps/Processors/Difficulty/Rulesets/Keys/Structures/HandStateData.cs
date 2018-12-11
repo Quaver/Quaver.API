@@ -19,7 +19,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Multiplier that will be applied to chords if other hand is involved.
         /// </summary>
-        public const float CHORD_MULTIPLIER = 0.91f;
+        public const float CHORD_MULTIPLIER = 0.88f;
 
         /// <summary>
         /// 

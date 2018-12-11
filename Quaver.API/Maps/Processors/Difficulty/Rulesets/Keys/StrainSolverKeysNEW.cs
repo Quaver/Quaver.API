@@ -322,7 +322,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 for (var i = 0; i < refHandData.Count - 2; i++)
                 {
                     refHandData[i].EvaluateDifficulty();
-                    if (refHandData[i].StateDifficulty < currentDiff)
+                    // lean towards more diff sections if its within a certain time range
+                    if (refHandData[i].StateDifficulty < currentDiff
+                        || refHandData[i].Time - refHandData[i+2].Time > 800)
                     {
                         currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.8f;
                     }
@@ -336,12 +338,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         count++;
                         total
                             += Math.Max(1, currentDiff
-                            * 4.5f
+                            * 4.6f
                             * (float)Math.Sqrt(30000 / (
                                 refHandData[i].Time
                                 - refHandData[i + 2].Time)
                             )
-                            - 18f);
+                            - 23f);
                     }
                 }
             }
@@ -429,8 +431,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             */
 
             // temp diff
+            var stam = (float)Math.Log10(total) / 9.4f + 0.5f;
             if (count == 0) return 0;
-            return total / count;
+            return stam * total / count;
         }
 
         /// <summary>
