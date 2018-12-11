@@ -88,7 +88,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainValue = 1;
             if (WristState == null)
             {
-                StrainValue = 1.65f;
+                StrainValue = 1.35f;
             }
             else if (WristState.NextState != null)
             {
@@ -104,21 +104,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                             // - 94ms = 0.95x
                             if (WristState.NextStateDelta < 94)
                             {
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.89f;
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.88f;
                             }
                             else if (WristState.NextStateDelta < 100)
                             {
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.95f;
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.94f;
                             }
                             else
                             {
                                 //WristState.WristDifficulty = 1;
-                                WristState.WristDifficulty = (0.982f + WristState.NextState.WristDifficulty) / 2;
+                                WristState.WristDifficulty = (0.971f + WristState.NextState.WristDifficulty) / 2;
                             }
                         }
                         else
                         {
-                            WristState.WristDifficulty = 1.1f;
+                            WristState.WristDifficulty = 1f;
                         }
                     }
 
