@@ -17,6 +17,11 @@ namespace Quaver.API.Maps.Processors.Scoring
     public class ScoreProcessorKeys : ScoreProcessor
     {
         /// <summary>
+        ///     The version of the processor.
+        /// </summary>
+        public static string Version { get; } = "0.0.1";
+
+        /// <summary>
         ///     The maximum amount of judgements.
         ///
         ///     Each normal object counts as 1.

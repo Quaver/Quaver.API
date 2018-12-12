@@ -5,6 +5,11 @@ namespace Quaver.API.Maps.Processors.Rating
 {
     public class RatingProcessorKeys : RatingProcessor
     {
+        /// <summary>
+        ///     The version of the processor.
+        /// </summary>
+        public static string Version { get; } = "0.0.1";
+
         public RatingProcessorKeys(double difficultyRating) : base(difficultyRating)
         {
         }
