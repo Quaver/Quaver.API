@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -10,7 +10,7 @@ using Quaver.Tools.Commands;
 
 namespace Quaver.Tools
 {
-    internal class Program
+    internal static class Program
     {
         internal static void Main(string[] args)
         {
@@ -23,7 +23,8 @@ namespace Quaver.Tools
                                   $"-calcfolder <folder_path> <mods> `Calculate the difficulty of an entire folder`\n" +
                                   $"-replay <file_path.qr> (-headerless) `Read a replay file and retrieve information about it.`\n" +
                                   $"-virtualreplay <a.qr> <b.qua> <mods (int)> <-hl (optional to read headerless)> `Simulate a replay and retrieve its score outcome.`\n" +
-                                  $"-buildreplay <replay_path> <output_path> <quaver_version> <map_md5> <username> <timestamp> <mode> <mods> <score> <accuracy> <max_combo> <count_marv> <count_perf> <count_great> <count_good> <count_okay> <count_miss> <pause_count>");
+                                  $"-buildreplay <replay_path> <output_path> <quaver_version> <map_md5> <username> <timestamp> <mode> <mods> <score> <accuracy> <max_combo> <count_marv> <count_perf> <count_great> <count_good> <count_okay> <count_miss> <pause_count>\n" +
+                                  $"-calcrating <difficulty_rating> <accuracy>");
                 return;
             }
 
@@ -43,6 +44,9 @@ namespace Quaver.Tools
                     break;
                 case "-buildreplay":
                     new ReplayBuildCommand(args).Execute();
+                    break;
+                case "-calcrating":
+                    new CalcRatingCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
