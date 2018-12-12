@@ -21,7 +21,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
     /// <summary>
     ///     Will be used to solve Strain Rating.
     /// </summary>
-    public class StrainSolverKeys : StrainSolver
+    public class DifficultyProcessorKeys : DifficultyProcessor
     {
         /// <summary>
         ///     Constants used for solving
@@ -105,7 +105,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="constants"></param>
         /// <param name="mods"></param>
         /// <param name="detailedSolve"></param>
-        public StrainSolverKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
+        public DifficultyProcessorKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
         {
             // Cast the current Strain Constants Property to the correct type.
             StrainConstants = (StrainConstantsKeys)constants;

@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -180,32 +180,10 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Gets the judgement breakdown from hit data.
         /// </summary>
         /// <returns></returns>
-        public string GetHitBreakdown()
+        public string GetJudgementBreakdown()
         {
             var breakdown = "";
-
-            Stats.ForEach(x =>
-            {
-                if (x.HitDifference != int.MinValue)
-                    breakdown += x.HitDifference;
-                else
-                    breakdown += 0;
-
-                switch (x.KeyPressType)
-                {
-                    case KeyPressType.None:
-                        breakdown += "N";
-                        break;
-                    case KeyPressType.Press:
-                        breakdown += "P";
-                        break;
-                    case KeyPressType.Release:
-                        breakdown += "R";
-                        break;
-                }
-
-                breakdown += ",";
-            });
+            Stats.ForEach(x => breakdown += (int) x.Judgement);
 
             return breakdown;
         }

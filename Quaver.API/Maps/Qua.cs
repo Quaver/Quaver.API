@@ -266,14 +266,14 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="mods"></param>
         /// <returns></returns>
-        public StrainSolver SolveDifficulty(ModIdentifier mods = ModIdentifier.None)
+        public DifficultyProcessor SolveDifficulty(ModIdentifier mods = ModIdentifier.None)
         {
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    return new StrainSolverKeys(this, new StrainConstantsKeys(), mods);
+                    return new DifficultyProcessorKeys(this, new StrainConstantsKeys(), mods);
                 case GameMode.Keys7:
-                    return new StrainSolverKeys(this, new StrainConstantsKeys(), mods);
+                    return new DifficultyProcessorKeys(this, new StrainConstantsKeys(), mods);
                 default:
                     throw new InvalidEnumArgumentException();
             }
