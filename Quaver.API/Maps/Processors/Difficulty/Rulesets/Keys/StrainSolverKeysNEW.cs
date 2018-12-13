@@ -339,12 +339,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         count++;
                         total
                             += Math.Max(1, currentDiff
-                            * 4.6f
+                            * 4.75f
                             * (float)Math.Sqrt(30000 / (
                                 refHandData[i].Time
                                 - refHandData[i + 2].Time)
                             )
-                            - 23f);
+                            - 22f);
                     }
                 }
             }
