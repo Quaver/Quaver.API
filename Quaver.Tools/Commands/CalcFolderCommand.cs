@@ -38,6 +38,7 @@ namespace Quaver.Tools.Commands
         {
             var files = Directory.GetFiles(BaseFolder, "*.qua", SearchOption.AllDirectories).ToList();
             var output = "";
+            var error = "";
             files.AddRange(Directory.GetFiles(BaseFolder, "*.osu", SearchOption.AllDirectories));
 
             var calculatedMaps = new List<Tuple<int, string, string>>();
@@ -70,11 +71,9 @@ namespace Quaver.Tools.Commands
                 }
             }
 
-            var table = calculatedMaps.ToStringTable(new[] { "Id", "Map", "Difficulty" }, a => a.Item1, a => a.Item2, a => a.Item3);
             //Console.WriteLine(table);
 
-            File.WriteAllText($"{BaseFolder}/diff-sheet.txt", output);
-            File.WriteAllText($"{BaseFolder}/diff-table.txt", table);
+            File.WriteAllText($"{BaseFolder}/__diff-sheet.txt", output);
         }
     }
 }

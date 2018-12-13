@@ -303,7 +303,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // temp calc variables
             var count = 0;
-            float currentDiff = 0;
+            float currentDiff = 1;
             float total = 0;
 
             // TEST CALC (OLD)
@@ -326,12 +326,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (refHandData[i].StateDifficulty < currentDiff)
                     {
                         currentDiff += (refHandData[i].StateDifficulty - currentDiff)
-                            * 0.15f * (float)Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / 1000f, 1);
+                            * 0.75f * (float)Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / 1000f, 1);
                     }
                     else
                     {
                         currentDiff += (refHandData[i].StateDifficulty - currentDiff)
-                            * 0.03f * (float)Math.Min((refHandData[i].Time - refHandData[i + 2].Time / 1000f), 1);
+                            * 0.025f * (float)Math.Min((refHandData[i].Time - refHandData[i + 2].Time / 1000f), 1);
                     }
                     if ((refHandData[i].Time
                         - refHandData[i + 2].Time) != 0)
@@ -350,7 +350,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             // temp diff
-            var stam = (float)Math.Log10(total) / 9.8f + 0.55f;
+            var stam = (float)(Math.Log10(count) / 25 + 0.9);
             if (count == 0) return 0;
             return stam * total / count;
         }
