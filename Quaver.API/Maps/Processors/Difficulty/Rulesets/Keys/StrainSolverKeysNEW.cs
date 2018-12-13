@@ -323,14 +323,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 {
                     refHandData[i].EvaluateDifficulty();
                     // lean towards more diff sections if its within a certain time range
-                    if (refHandData[i].StateDifficulty < currentDiff
-                        || refHandData[i].Time - refHandData[i+2].Time > 800)
+                    if (refHandData[i].StateDifficulty < currentDiff)
                     {
-                        currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.8f;
+                        currentDiff += (refHandData[i].StateDifficulty - currentDiff)
+                            * 0.15f * (float)Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / 1000f, 1);
                     }
                     else
                     {
-                        currentDiff += (refHandData[i].StateDifficulty - currentDiff) * 0.55f;
+                        currentDiff += (refHandData[i].StateDifficulty - currentDiff)
+                            * 0.03f * (float)Math.Min((refHandData[i].Time - refHandData[i + 2].Time / 1000f), 1);
                     }
                     if ((refHandData[i].Time
                         - refHandData[i + 2].Time) != 0)
