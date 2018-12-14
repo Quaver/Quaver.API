@@ -108,6 +108,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         public abstract SortedDictionary<Judgement, float> WindowReleaseMultiplier { get; }
 
         /// <summary>
+        ///     Determined by if the player has obtained a full combo in the score.
+        ///     This value can be applicable during real-time gameplay.
+        /// </summary>
+        public bool FullCombo => MaxCombo == TotalJudgementCount;
+
+        /// <summary>
         ///     The total amount of judgements that the user has gotten in this play session.
         /// </summary>
         public virtual int TotalJudgementCount
