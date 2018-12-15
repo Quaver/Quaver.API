@@ -28,7 +28,7 @@ namespace Quaver.Tools.Commands
         /// <summary>
         ///     Optimization will stop after this amount of iteration
         /// </summary>
-        private int Limit { get; } = 100;
+        private int Limit { get; } = 500;
 
         /// <summary>
         ///     Current iteration count
@@ -79,7 +79,6 @@ namespace Quaver.Tools.Commands
             var files = Directory.GetFiles(baseFolder, "*.qua", SearchOption.AllDirectories).ToList();
             files.AddRange(Directory.GetFiles(baseFolder, "*.osu", SearchOption.AllDirectories));
             var diffs = new double[files.Count];
-            Console.Write("X");
             for (var i = 0; i < files.Count; i++)
             {
                 var file = files[i];
