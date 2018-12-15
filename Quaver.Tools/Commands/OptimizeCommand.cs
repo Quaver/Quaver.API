@@ -17,7 +17,7 @@ namespace Quaver.Tools.Commands
             //var iterations = 100;
             var target = new double[] { 1, 1 };
             Func<double[], double> fx = OptimizeVariables;
-            var solution = new NelderMead(target.Length + 1, fx);
+            var solution = new NelderMead(target.Length, fx);
 
             for (var i = 0; i < target.Length; i++)
             {

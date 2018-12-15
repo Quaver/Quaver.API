@@ -1,6 +1,6 @@
+using Quaver.Tools.Commands;
 using System;
 using System.Diagnostics;
-using Quaver.Tools.Commands;
 
 namespace Quaver.Tools
 {
@@ -10,22 +10,23 @@ namespace Quaver.Tools
         {
             // TODO: temp
             var user = "denys";
-            var test = new string[][] {
-            new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/tech", "None" },
+            var commands = new string[][] {
+                new string[] { "-optimize" }, 
+            /*new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/tech", "None" },
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/speed", "None" },
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/jack", "None" },
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/stamina", "None" },
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-reform", "None" },
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-old", "None" },
             new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps", "None" },
-            new string[] { "-calcfolder", $"c:/Users/{user}/desktop/oss", "None" }
-        };
+            new string[] { "-calcfolder", $"c:/Users/{user}/desktop/oss", "None"*/
+            };
             //args = new string[] { "-calcfolder", "c:/users/admin/desktop/qss/testmaps", "None" };
             Console.WriteLine("Calculating Difficulties...");
             var sw = new Stopwatch();
 
             sw.Start();
-            if (test.Length == 0)
+            if (commands.Length == 0)
             {
                 Console.WriteLine($"Welcome to the Quaver.API test bench.\n" +
                                   $"Here you can run a bunch of things to test the API.\n\n" +
@@ -37,20 +38,23 @@ namespace Quaver.Tools
                 return;
             }
 
-            for (var i = 0; i < test.Length; i++)
-            switch (test[i][0])
+            for (var i = 0; i < commands.Length; i++)
+            switch (commands[i][0])
             {
+                case "-optimize":
+                    new OptimizeCommand(commands[i]).Execute();
+                    break;
                 case "-calcdiff":
-                    new CalcDiffCommand(test[i]).Execute();
+                    new CalcDiffCommand(commands[i]).Execute();
                     break;
                 case "-calcfolder":
-                    new CalcFolderCommand(test[i]).Execute();
+                    new CalcFolderCommand(commands[i]).Execute();
                     break;
                 case "-replay":
-                    new ReplayCommand(test[i]).Execute();
+                    new ReplayCommand(commands[i]).Execute();
                     break;
                 case "-virtualreplay":
-                    new VirtualReplayPlayerCommand(test[i]).Execute();
+                    new VirtualReplayPlayerCommand(commands[i]).Execute();
                     break;
                 default:
                     throw new ArgumentException();
