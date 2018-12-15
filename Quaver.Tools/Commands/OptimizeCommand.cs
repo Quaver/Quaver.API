@@ -31,6 +31,16 @@ namespace Quaver.Tools.Commands
         private int Limit { get; } = 500;
 
         /// <summary>
+        ///     Reference Directory for map files.
+        /// </summary>
+        private string BaseFolder { get; } = "c:/users/denys/desktop/testmaps/dan/full-reform";
+
+        /// <summary>
+        ///     Reference Map Files. The optimizer will assume that all files are sorted alphabetically, are in difficulty order, and have a fixed difficulty interval.
+        /// </summary>
+        private List<string> Files { get; }
+
+        /// <summary>
         ///     Current iteration count
         /// </summary>
         private int N { get; set; } = 0;
@@ -39,6 +49,8 @@ namespace Quaver.Tools.Commands
         {
             Constants = new StrainConstantsKeys();
             GeneralConvergence = new GeneralConvergence(Constants.ConstantVariables.Count);
+            Files = Directory.GetFiles(BaseFolder, "*.qua", SearchOption.AllDirectories).ToList();
+            Files.AddRange(Directory.GetFiles(BaseFolder, "*.osu", SearchOption.AllDirectories));
         }
 
         public override void Execute()
@@ -74,24 +86,17 @@ namespace Quaver.Tools.Commands
             double sigma = 0;
 
             // Compute for overall difficulties
-            var user = "denys";
-            var baseFolder = $"c:/users/{user}/desktop/testmaps/dan/full-reform";
-            var files = Directory.GetFiles(baseFolder, "*.qua", SearchOption.AllDirectories).ToList();
-            files.AddRange(Directory.GetFiles(baseFolder, "*.osu", SearchOption.AllDirectories));
-            var diffs = new double[files.Count];
-            for (var i = 0; i < files.Count; i++)
+            var diffs = new double[Files.Count];
+            for (var i = 0; i < Files.Count; i++)
             {
-                var file = files[i];
                 Qua map = null;
 
-                if (file.EndsWith(".qua"))
-                    map = Qua.Parse(file);
-                else if (file.EndsWith(".osu"))
-                    map = new OsuBeatmap(file).ToQua();
+                if (Files[i].EndsWith(".qua"))
+                    map = Qua.Parse(Files[i]);
+                else if (Files[i].EndsWith(".osu"))
+                    map = new OsuBeatmap(Files[i]).ToQua();
 
-                var solver = map.SolveDifficulty(Constants);
-                var diff = solver.OverallDifficulty;
-                diffs[i] = diff;
+                diffs[i] = map.SolveDifficulty(Constants).OverallDifficulty;
             }
 
             // Compute for mean
