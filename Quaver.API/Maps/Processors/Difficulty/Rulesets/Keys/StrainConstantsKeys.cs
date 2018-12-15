@@ -15,19 +15,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         public float VibroActionThreshold { get; } = 100;
 
-        public float StaminaIncrementalMultiplier { get; set; }
+        public ConstantVariable StaminaIncrementalMultiplier { get; set; }
 
-        public float StaminaDecrementalMultiplier { get; set; }
+        public ConstantVariable StaminaDecrementalMultiplier { get; set; }
 
-        public float WristRepetitionMultiplier { get; set; }
+        public ConstantVariable WristRepetitionMultiplier { get; set; }
 
-        public float WristTechMultiplier { get; set; }
+        public ConstantVariable WristTechMultiplier { get; set; }
 
-        public float WristGapMultiplier { get; set; }
+        public ConstantVariable WristGapMultiplier { get; set; }
 
-        public float WristVibroMultiplier { get; set; }
+        public ConstantVariable WristVibroMultiplier { get; set; }
 
-        public float WristSimpleJackMultiplier { get; set; }
+        public ConstantVariable WristSimpleJackMultiplier { get; set; }
 
         /// <summary>
         ///     Constructor. Create default strain constant values.
@@ -35,7 +35,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public StrainConstantsKeys()
         {
             StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.75f);
-            StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.25f);
+            StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.025f);
             WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.992f);
             WristTechMultiplier = NewConstant("WristTechMultiplier", 1.35f);
             WristGapMultiplier = NewConstant("WristGapMultiplier", 1f);

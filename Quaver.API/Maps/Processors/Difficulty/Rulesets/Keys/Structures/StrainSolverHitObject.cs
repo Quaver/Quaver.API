@@ -88,7 +88,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainValue = 1;
             if (WristState == null)
             {
-                StrainValue = constants.WristTechMultiplier;
+                StrainValue = (float)constants.WristTechMultiplier.Value;
             }
             else if (WristState.NextState != null)
             {
@@ -104,20 +104,20 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                             // - 94ms = 0.95x
                             if (WristState.NextStateDelta < constants.VibroActionTolerance)
                             {
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * constants.WristVibroMultiplier;
+                                WristState.WristDifficulty = (float)(WristState.NextState.WristDifficulty * constants.WristVibroMultiplier.Value);
                             }
-                            else if (WristState.NextStateDelta < constants.VibroActionThreshold)
-                            {
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * (constants.WristSimpleJackMultiplier + (1 - constants.WristSimpleJackMultiplier) / 2);
-                            }
+                            //else if (WristState.NextStateDelta < constants.VibroActionThreshold)
+                            //{
+                            //    WristState.WristDifficulty = WristState.NextState.WristDifficulty * (constants.WristSimpleJackMultiplier + (1 - constants.WristSimpleJackMultiplier) / 2);
+                            //}
                             else
                             {
-                                WristState.WristDifficulty = (constants.WristSimpleJackMultiplier + WristState.NextState.WristDifficulty) / 2;
+                                WristState.WristDifficulty = (float)(constants.WristSimpleJackMultiplier.Value + WristState.NextState.WristDifficulty) / 2;
                             }
                         }
                         else
                         {
-                            WristState.WristDifficulty = constants.WristGapMultiplier;
+                            WristState.WristDifficulty = (float)constants.WristGapMultiplier.Value;
                         }
                     }
 
@@ -138,7 +138,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                         }
                         else
                         {
-                            WristState.WristDifficulty *= constants.WristRepetitionMultiplier;
+                            WristState.WristDifficulty *= (float)constants.WristRepetitionMultiplier.Value;
                         }
 
                     }

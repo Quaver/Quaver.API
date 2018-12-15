@@ -18,14 +18,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <summary>
         ///     Value of this constant
         /// </summary>
-        public float Value { get; set; }
+        public double Value { get; set; }
 
         /// <summary>
         ///     Const
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public ConstantVariable(string name, float value)
+        public ConstantVariable(string name, double value)
         {
             Name = name;
             Value = value;

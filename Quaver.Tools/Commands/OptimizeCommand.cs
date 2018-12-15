@@ -1,48 +1,63 @@
 using Accord.Math.Optimization;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using Accord.Math.Convergence;
+using Accord.Statistics;
+using Quaver.API.Enums;
+using Quaver.API.Maps;
+using Quaver.API.Maps.Parsers;
+using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 
 namespace Quaver.Tools.Commands
 {
     internal class OptimizeCommand : Command
     {
+        /// <summary>
+        ///     Reference Constants
+        /// </summary>
+        private StrainConstantsKeys Constants { get; }
+
+        /// <summary>
+        ///     Used to terminate the Optimization Loop
+        /// </summary>
+        private GeneralConvergence GeneralConvergence { get; set; }
+
+        /// <summary>
+        ///     Optimization will stop after this amount of iteration
+        /// </summary>
+        private int Limit { get; } = 100;
+
+        /// <summary>
+        ///     Current iteration count
+        /// </summary>
+        private int N { get; set; } = 0;
+
         public OptimizeCommand(string[] args) : base(args)
         {
-            //initialize stuff
+            Constants = new StrainConstantsKeys();
+            GeneralConvergence = new GeneralConvergence(Constants.ConstantVariables.Count);
         }
 
         public override void Execute()
         {
             // Initialize Variables
-            var limit = 100;
-            var n = 0;
-            var target = new double[] { 0.2222f, 0.000011f, 0.00000002f, 0.111f, 0.5555555f };
+            var target = Constants.ConstantsToArray();
             Func<double[], double> fx = OptimizeVariables;
             var solution = new NelderMead(target.Length, fx)
             {
-                MaximumValue = -1e6
+                MaximumValue = -1e6,
+                Convergence = GeneralConvergence
             };
 
-            // Optimize Variables
-            while (n < limit)
-            {
-                for (var i = 0; i < target.Length; i++)
-                {
-                    solution.LowerBounds[i] = target[i] + 2;
-                    solution.UpperBounds[i] = target[i] - 2;
-                }
-                solution.Minimize(target);
-                n++;
-                Console.WriteLine($"n = {n}, f(x) = {solution.Value}");
-            }
+            // Optimize
+            solution.Minimize(target);
 
             // Write Results
             Console.WriteLine("----------- RESULTS -----------");
-            foreach (var num in target)
-            {
-                Console.WriteLine($"num: {num}");
-            }
+            Console.WriteLine(Constants.GetInfoFromVariables());
         }
 
         /// <summary>
@@ -53,13 +68,52 @@ namespace Quaver.Tools.Commands
         /// <returns></returns>
         private double OptimizeVariables(double[] input)
         {
-            double average = 0;
-            foreach (var num in input)
+            N++;
+            Constants.UpdateConstants(input);
+            double xbar = 0;
+            double sigma = 0;
+
+            // Compute for overall difficulties
+            var user = "denys";
+            var baseFolder = $"c:/users/{user}/desktop/testmaps/dan/full-reform";
+            var files = Directory.GetFiles(baseFolder, "*.qua", SearchOption.AllDirectories).ToList();
+            files.AddRange(Directory.GetFiles(baseFolder, "*.osu", SearchOption.AllDirectories));
+            var diffs = new double[files.Count];
+            Console.Write("X");
+            for (var i = 0; i < files.Count; i++)
             {
-                average += num;
+                var file = files[i];
+                Qua map = null;
+
+                if (file.EndsWith(".qua"))
+                    map = Qua.Parse(file);
+                else if (file.EndsWith(".osu"))
+                    map = new OsuBeatmap(file).ToQua();
+
+                var solver = map.SolveDifficulty(Constants);
+                var diff = solver.OverallDifficulty;
+                diffs[i] = diff;
             }
 
-            return 1 / (Math.Pow(average / (input.Length + 1), 2) + 1) + Math.Pow(input[2],2);
+            // Compute for mean
+            for (var i = 0; i < diffs.Length - 1; i++)
+            {
+                xbar += diffs[i + 1] - diffs[i];
+            }
+            xbar /= ( diffs.Length - 2 );
+
+            // Compute for deviation
+            for (var i = 0; i < diffs.Length - 1; i++)
+            {
+                sigma += Math.Pow((diffs[i + 1] - diffs[i]) - xbar, 2);
+            }
+            sigma /= ( diffs.Length - 2 );
+
+
+            // Log and terminate optimization if necessary
+            Console.WriteLine($"n = {N}, f(x) = {sigma}");
+            if (N >= Limit) GeneralConvergence.Cancel = true;
+            return sigma;
         }
     }
 }

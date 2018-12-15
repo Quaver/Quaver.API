@@ -7,6 +7,7 @@ using System.Text;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Parsers;
+using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 using Quaver.Tools.Helpers;
 
 namespace Quaver.Tools.Commands
@@ -59,7 +60,7 @@ namespace Quaver.Tools.Commands
                     if (map == null)
                         continue;
 
-                    var diffCalc = map.SolveDifficulty();
+                    var diffCalc = map.SolveDifficulty(new StrainConstantsKeys());
 
                     Console.WriteLine($"[{i}/{files.Count}] | {map} | {diffCalc.OverallDifficulty}");
                     output += $"{map.Artist} - {map.Title} [{map.DifficultyName}]\t{diffCalc.OverallDifficulty}\n";

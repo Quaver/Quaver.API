@@ -20,14 +20,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public float NewConstant(string name, float value)
+        public ConstantVariable NewConstant(string name, float value)
         {
             // Create new constant variable
             var constVar = new ConstantVariable(name, value);
             ConstantVariables.Add(constVar);
 
             // return
-            return value;
+            return constVar;
         }
 
         /// <summary>
@@ -55,7 +55,35 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
                 ConstantVariables = new List<ConstantVariable>();
 
             else
-            ConstantVariables = constVariables;
+                ConstantVariables = constVariables;
+        }
+
+        /// <summary>
+        ///     Returns an array of the Constant Variables
+        /// </summary>
+        /// <returns></returns>
+        public double[] ConstantsToArray()
+        {
+            var result = new double[ConstantVariables.Count];
+            for (var i = 0; i < ConstantVariables.Count; i++)
+            {
+                result[i] = ConstantVariables[i].Value;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        ///     Update current constants
+        /// </summary>
+        /// <param name="updated"></param>
+        public void UpdateConstants(double[] updated)
+        {
+            for (var i = 0; i < updated.Length; i++)
+            {
+                ConstantVariables[i].Value = updated[i];
+                //ConstantVariables[i] = new ConstantVariable(ConstantVariables[i].Name, updated[i]);
+            }
         }
     }
 }

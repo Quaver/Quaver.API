@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Parsers;
+using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 
 namespace Quaver.Tools.Commands
 {
@@ -39,7 +40,7 @@ namespace Quaver.Tools.Commands
         /// </summary>
         public override void Execute()
         {
-            var difficulty = Map.SolveDifficulty(Mods);
+            var difficulty = Map.SolveDifficulty(new StrainConstantsKeys(), Mods);
 
             Console.WriteLine(JObject.FromObject(new
             {
