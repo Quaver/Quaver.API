@@ -33,7 +33,7 @@ namespace Quaver.Tools.Commands
         /// <summary>
         ///     Reference Directory for map files.
         /// </summary>
-        private string BaseFolder { get; } = "c:/users/denys/desktop/testmaps/dan/jack"; //full-reform
+        private string BaseFolder { get; } = "c:/users/admin/desktop/testmaps/dan/jack"; //full-reform
 
         /// <summary>
         ///     Reference Map Files. The optimizer will assume that all files are sorted alphabetically, are in difficulty order, and have a fixed difficulty interval.
@@ -81,7 +81,7 @@ namespace Quaver.Tools.Commands
         private double OptimizeVariables(double[] input)
         {
             N++;
-            Constants.UpdateConstants(input);
+            //Constants.UpdateConstants(input);
             double xbar = 0;
             double sigma = 0;
 

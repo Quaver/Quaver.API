@@ -81,8 +81,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         {
             for (var i = 0; i < updated.Length; i++)
             {
-                ConstantVariables[i].Value = updated[i];
-                //ConstantVariables[i] = new ConstantVariable(ConstantVariables[i].Name, updated[i]);
+                ConstantVariables[i].Value = (float)updated[i];
             }
         }
     }

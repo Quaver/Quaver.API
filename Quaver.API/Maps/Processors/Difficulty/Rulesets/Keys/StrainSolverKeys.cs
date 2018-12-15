@@ -326,12 +326,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (refHandData[i].StateDifficulty < currentDiff)
                     {
                         currentDiff += (refHandData[i].StateDifficulty - currentDiff)
-                            * (float)StrainConstants.StaminaDecrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / 1000f, 1);
+                            * StrainConstants.StaminaDecrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / 1000f, 1);
                     }
                     else
                     {
                         currentDiff += (refHandData[i].StateDifficulty - currentDiff)
-                            * (float)StrainConstants.StaminaIncrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time / 1000f), 1);
+                            * StrainConstants.StaminaIncrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time / 1000f), 1);
                     }
                     // todo: create method to interpolate bpm?
                     if ((refHandData[i].Time

@@ -18,7 +18,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <summary>
         ///     Value of this constant
         /// </summary>
-        public double Value { get; set; }
+        public float Value { get; set; }
 
         /// <summary>
         ///     Const
