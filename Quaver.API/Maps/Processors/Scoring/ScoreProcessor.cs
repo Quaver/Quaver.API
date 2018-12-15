@@ -29,12 +29,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The total score the user has.
         /// </summary>
-        public int Score { get; protected set; }
+        public int Score { get; set; }
 
         /// <summary>
         ///     The accuracy the user has.
         /// </summary>
-        public float Accuracy { get; protected set; }
+        public float Accuracy { get; set; }
 
         /// <summary>
         ///     The current health.
@@ -49,7 +49,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The max combo achieved for this play session.
         /// </summary>
-        public int MaxCombo { get; protected set; }
+        public int MaxCombo { get; set; }
 
         /// <summary>
         ///     If the score is currently failed.
