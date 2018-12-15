@@ -14,19 +14,32 @@ namespace Quaver.Tools.Commands
 
         public override void Execute()
         {
-            //var iterations = 100;
-            var target = new double[] { 1, 1 };
+            var limit = 100;
+            var n = 0;
+            var target = new double[] { 0.2222f, 0.000011f, 0.00000002f, 0.111f, 0.5555555f };
             Func<double[], double> fx = OptimizeVariables;
-            var solution = new NelderMead(target.Length, fx);
-
-            for (var i = 0; i < target.Length; i++)
+            var solution = new NelderMead(target.Length, fx)
             {
-                solution.LowerBounds[i] = target[i];
-                solution.UpperBounds[i] = target[i];
+                MaximumValue = -1e6
+            };
+            while (n < limit)
+            {
+                for (var i = 0; i < target.Length; i++)
+                {
+                    solution.LowerBounds[i] = target[i] + 2;
+                    solution.UpperBounds[i] = target[i] - 2;
+                }
+                var success = solution.Minimize(target);
+
+                Console.WriteLine(solution.Value);
+                n++;
             }
 
-            solution.MaximumValue = -1e6;
-            var success = solution.Minimize(target);
+            Console.WriteLine("----------- RESULTS -----------");
+            foreach (var num in target)
+            {
+                Console.WriteLine($"num: {num}");
+            }
         }
 
         /// <summary>
@@ -37,7 +50,13 @@ namespace Quaver.Tools.Commands
         /// <returns></returns>
         private double OptimizeVariables(double[] input)
         {
-            return 1;
+            double average = 0;
+            foreach (var num in input)
+            {
+                average += num;
+            }
+
+            return 1 / (Math.Pow(average / (input.Length + 1), 2) + 1) + Math.Pow(input[2],2);
         }
     }
 }
