@@ -5,11 +5,39 @@ using System.Text;
 
 namespace Quaver.Tools.Commands
 {
-    public class OptimizeCommand
+    internal class OptimizeCommand : Command
     {
-        public OptimizeCommand()
+        public OptimizeCommand(string[] args) : base(args)
         {
-            var asd = new NelderMead(3);
+            //initialize stuff
+        }
+
+        public override void Execute()
+        {
+            //var iterations = 100;
+            var target = new double[] { 1, 1 };
+            Func<double[], double> fx = OptimizeVariables;
+            var solution = new NelderMead(target.Length + 1, fx);
+
+            for (var i = 0; i < target.Length; i++)
+            {
+                solution.LowerBounds[i] = target[i];
+                solution.UpperBounds[i] = target[i];
+            }
+
+            solution.MaximumValue = -1e6;
+            var success = solution.Minimize(target);
+        }
+
+        /// <summary>
+        ///     Calculate specific map files for optimization.
+        ///     TODO: reference files from somewhere in the solution?
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private double OptimizeVariables(double[] input)
+        {
+            return 1;
         }
     }
 }
