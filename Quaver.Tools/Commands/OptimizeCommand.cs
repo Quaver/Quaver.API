@@ -14,6 +14,7 @@ namespace Quaver.Tools.Commands
 
         public override void Execute()
         {
+            // Initialize Variables
             var limit = 100;
             var n = 0;
             var target = new double[] { 0.2222f, 0.000011f, 0.00000002f, 0.111f, 0.5555555f };
@@ -22,6 +23,8 @@ namespace Quaver.Tools.Commands
             {
                 MaximumValue = -1e6
             };
+
+            // Optimize Variables
             while (n < limit)
             {
                 for (var i = 0; i < target.Length; i++)
@@ -29,12 +32,12 @@ namespace Quaver.Tools.Commands
                     solution.LowerBounds[i] = target[i] + 2;
                     solution.UpperBounds[i] = target[i] - 2;
                 }
-                var success = solution.Minimize(target);
-
-                Console.WriteLine(solution.Value);
+                solution.Minimize(target);
                 n++;
+                Console.WriteLine($"n = {n}, f(x) = {solution.Value}");
             }
 
+            // Write Results
             Console.WriteLine("----------- RESULTS -----------");
             foreach (var num in target)
             {

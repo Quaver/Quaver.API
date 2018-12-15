@@ -3,6 +3,7 @@ using Quaver.API.Helpers;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Processors.Difficulty.Optimization;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures;
+using Quaver.API.Maps.Structures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Average note density of the map
         /// </summary>
         public float AverageNoteDensity { get; private set; } = 0;
-
-        /// <summary>
-        ///     Hit objects in the map used for solving difficulty
-        /// </summary>
-        public List<StrainSolverData> StrainSolverData { get; private set; } = new List<StrainSolverData>();
 
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
@@ -114,7 +110,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             if (detailedSolve)
             {
                 // ComputeNoteDensityData();
-                ComputeForPatternFlags();
+                //ComputeForPatternFlags();
             }
         }
 
@@ -150,16 +146,229 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float ComputeForOverallDifficulty(float rate, Hand assumeHand = Hand.Right)
         {
-            ConvertToStrainHitObjects(rate, assumeHand);
-            ComputeHandStateData();
-            ComputeForFingerActions();
-            // todo: use ComputeForActionPatterns();
-            //ComputeForRollManipulation();
-            //ComputeForJackManipulation();
-            //ComputeForLnMultiplier();
-            return CalculateOverallDifficulty();
+            // Convert to hitobjects
+            var hitObjects = ConvertToStrainHitObject(assumeHand);
+            var leftHandData = new List<HandStateData>();
+            var rightHandData = new List<HandStateData>();
+            var allHandData = new List<HandStateData>();
+            var wristStateData = new List<WristState>();
+
+            // Get Initial Handstates
+            // - Iterate through hit objects backwards
+            hitObjects.Reverse();
+            List<HandStateData> refHandData;
+            for (var i = 0; i < hitObjects.Count; i++)
+            {
+                // Determine Reference Hand
+                switch (Map.Mode)
+                {
+                    case GameMode.Keys4:
+                        if (LaneToHand4K[hitObjects[i].HitObject.Lane] == Hand.Left)
+                            refHandData = leftHandData;
+                        else
+                            refHandData = rightHandData;
+                        break;
+                    case GameMode.Keys7:
+                        var hand = LaneToHand7K[hitObjects[i].HitObject.Lane];
+                        if (hand.Equals(Hand.Left) || (hand.Equals(Hand.Ambiguous) && assumeHand.Equals(Hand.Left)))
+                            refHandData = leftHandData;
+                        else
+                            refHandData = rightHandData;
+                        break;
+                    default:
+                        throw new Exception("Unknown GameMode");
+                }
+
+                // Iterate through established handstates for chords
+                var chordFound = false;
+                for (var j = 0; j < refHandData.Count; j++)
+                {
+                    // Break loop after leaving threshold
+                    if (refHandData[j].Time
+                        > hitObjects[i].StartTime + HandStateData.CHORD_THRESHOLD_SAMEHAND_MS)
+                        break;
+
+                    // Check for finger overlap
+                    chordFound = true;
+                    for (var k = 0; k < refHandData[j].HitObjects.Count; k++)
+                    {
+                        if (refHandData[j].HitObjects[k].HitObject.Lane == hitObjects[i].HitObject.Lane)
+                        {
+                            chordFound = false;
+                            break;
+                        }
+                    }
+
+                    // Add HitObject to Chord if no fingers overlap
+                    if (chordFound)
+                    {
+                        refHandData[j].AddHitObjectToChord(hitObjects[i]);
+                        break;
+                    }
+                }
+
+                // Add new HandStateData to list if no chords are found
+                if (!chordFound)
+                {
+                    refHandData.Add(new HandStateData(hitObjects[i]));
+                    allHandData.Add(refHandData.Last());
+                }
+
+                //Console.WriteLine(chordFound);
+            }
+
+            // Compute for chorded pairs
+            for (var i=0; i<allHandData.Count; i++)
+            {
+                for (var j=i+1; j<allHandData.Count; j++)
+                {
+                    if (allHandData[i].Time - allHandData[j].Time > HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
+                    {
+                        break;
+                    }
+
+                    if (allHandData[j].ChordedHand == null)
+                    {
+                        if (!allHandData[i].Hand.Equals(allHandData[j].Hand) && !allHandData[j].Hand.Equals(Hand.Ambiguous))
+                        {
+                            allHandData[j].ChordedHand = allHandData[i];
+                            allHandData[i].ChordedHand = allHandData[j];
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Compute for wrist action
+            // maybe solve this first?
+            WristState laterStateLeft = null;
+            WristState laterStateRight = null;
+            WristState wrist;
+            FingerState state;
+            for (var i = 0; i < hitObjects.Count; i++)
+            {
+                if (hitObjects[i].WristState == null)
+                {
+                    state = hitObjects[i].FingerState;
+                    if (hitObjects[i].Hand == Hand.Left)
+                    {
+                        wrist = new WristState(laterStateLeft);
+                        laterStateLeft = wrist;
+                    }
+                    else
+                    {
+                        wrist = new WristState(laterStateRight);
+                        laterStateRight = wrist;
+                    }
+
+                    for (var j = i + 1; j < hitObjects.Count; j++)
+                    {
+                        if (hitObjects[j].Hand == hitObjects[i].Hand)
+                        {
+                            if (((int)state & (1 << (int)hitObjects[j].FingerState - 1)) != 0)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                state |= hitObjects[j].FingerState;
+                                hitObjects[j].WristState = wrist;
+                            }
+                        }
+                    }
+
+                    wrist.WristPair = state;
+                    wrist.Time = hitObjects[i].StartTime;
+
+                    // check if wrist state is the same
+                    if (!state.Equals(hitObjects[i].FingerState))
+                    {
+                        wrist.WristAction = WristAction.Up;
+                        hitObjects[i].WristState = wrist;
+                        //Console.WriteLine($"asd{state}_ {hitObjects[i].FingerState} | {Map.Length}, {hitObjects[i].StartTime}");
+                    }
+                    // same state jack
+                    else if (wrist.NextState != null && wrist.NextState.WristPair.Equals(state))
+                    {
+                        wrist.WristAction = WristAction.Up;
+                        hitObjects[i].WristState = wrist;
+                    }
+                    else
+                    {
+                        wrist = null;
+                    }
+                }
+                //Console.WriteLine(hitObjects[i].WristState == null);
+            }
+
+            // temp calc variables
+            var count = 0;
+            float currentDiff = 1;
+            float total = 0;
+
+            // TEST CALC (OLD)
+            for (var z = 0; z <= 1; z++)
+            {
+                if (z == 0)
+                {
+                    refHandData = leftHandData;
+                }
+                else
+                {
+                    refHandData = rightHandData;
+                }
+
+                currentDiff = 0;
+                for (var i = 0; i < refHandData.Count - 2; i++)
+                {
+                    refHandData[i].EvaluateDifficulty(StrainConstants);
+                    // lean towards more diff sections if its within a certain time range
+                    if (refHandData[i].StateDifficulty < currentDiff)
+                    {
+                        currentDiff += (refHandData[i].StateDifficulty - currentDiff)
+                            * StrainConstants.StaminaDecrementalMultiplier * Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / 1000f, 1);
+                    }
+                    else
+                    {
+                        currentDiff += (refHandData[i].StateDifficulty - currentDiff)
+                            * StrainConstants.StaminaIncrementalMultiplier * Math.Min((refHandData[i].Time - refHandData[i + 2].Time / 1000f), 1);
+                    }
+                    // todo: create method to interpolate bpm?
+                    if ((refHandData[i].Time
+                        - refHandData[i + 2].Time) != 0)
+                    {
+                        count++;
+                        total
+                            += Math.Max(1, currentDiff
+                            * StrainConstants.DifficultyMultiplier
+                            * (float)Math.Sqrt(30000 / (refHandData[i].Time - refHandData[i + 2].Time)) + StrainConstants.DifficultyOffset);
+                    }
+                }
+            }
+
+            // temp diff
+            var stam = (float)(Math.Log10(count) / 25 + 0.9);
+            if (count == 0) return 0;
+            return stam * total / count;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assumeHand"></param>
+        /// <returns></returns>
+        private List<StrainSolverHitObject> ConvertToStrainHitObject(Hand assumeHand)
+        {
+            var hitObjects = new List<StrainSolverHitObject>();
+            foreach (var ho in Map.HitObjects)
+            {
+                hitObjects.Add(new StrainSolverHitObject(ho, Map.Mode));
+                // todo: implement assume hand
+            }
+            return hitObjects;
+        }
+
+        /*
         /// <summary>
         ///     Get Note Data, and compute the base strain weights
         ///     The base strain weights are affected by LN layering
@@ -172,7 +381,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Map.HitObjects.Count; i++)
             {
-                var curHitOb = new StrainSolverHitObject(Map.HitObjects[i], Map.Mode);
+                var curHitOb = new StrainSolverHitObject(Map.HitObjects[i]);
                 var curStrainData = new StrainSolverData(curHitOb, rate);
 
                 // Assign Finger and Hand States
@@ -191,458 +400,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // Add Strain Solver Data to list
                 StrainSolverData.Add(curStrainData);
             }
-        }
-
-        /// <summary>
-        ///     Iterate through the HitObject list and merges the chords together into one data point
-        /// </summary>
-        private void ComputeForChordsOLD()
-        {
-            // Search through whole hit object list and find chords
-            for (var i = 0; i < StrainSolverData.Count - 1; i++)
-            {
-                for (var j = i + 1; j < StrainSolverData.Count; j++)
-                {
-                    // Check if next hit object is way past the tolerance
-                    var msDiff = StrainSolverData[j].StartTime - StrainSolverData[i].StartTime;
-                    if (msDiff > StrainConstants.ChordClumpToleranceMs)
-                        break;
-
-                    // Check if the next and current hit objects are chord-able
-                    if (Math.Abs(msDiff) <= StrainConstants.ChordClumpToleranceMs)
-                    {
-                        if (StrainSolverData[i].Hand == StrainSolverData[j].Hand)
-                        {
-                            // Search through every hit object for chords
-                            foreach (var k in StrainSolverData[j].HitObjects)
-                            {
-                                // Check if the current data point will have duplicate finger state to prevent stacked notes
-                                var sameStateFound = false;
-                                foreach (var l in StrainSolverData[i].HitObjects)
-                                {
-                                    if (l.FingerState == k.FingerState)
-                                    {
-                                        sameStateFound = true;
-                                    }
-                                }
-
-                                // Add hit object to chord list if its not stacked
-                                if (!sameStateFound)
-                                    StrainSolverData[i].HitObjects.Add(k);
-                            }
-
-                            // Remove un-needed data point because it has been merged with the current point
-                            StrainSolverData.RemoveAt(j);
-                        }
-                    }
-                }
-            }
-
-            // Solve finger state of every object once chords have been found and applied.
-            for (var i = 0; i < StrainSolverData.Count; i++)
-            {
-                StrainSolverData[i].SolveFingerState();
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void ComputeHandStateData()
-        {
-
-        }
-
-        private void ComputeHandStateChords()
-        {
-            // Go backwards in list and find chords
-            /*
-            for (var i = StrainSolverData.Count - 1; i > 0; i--)
-            {
-                var current = StrainSolverData[i];
-                var chord = new List<HandStateData>();
-                chord.Add(current);
-                for (var j = i - 1; j > 0; j--)
-                {
-                    var next = StrainSolverData[j];
-
-                    if (next.StartTime < current.StartTime - HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
-                    {
-                        break;
-                    }
-                    else if (current.Hand == next.Hand && Math.Abs(next.StartTime - current.StartTime) < HandStateData.CHORD_THRESHOLD_SAMEHAND_MS)
-                    {
-                        chord.Add(next);
-                    }
-                    else if (current.Hand != next.Hand && Math.Abs(next.StartTime - current.StartTime) < HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
-                    {
-                        chord.Add(next);
-                    }
-                }
-            */
-        }
-
-        /// <summary>
-        ///     Scans every finger state, and determines its action (JACK/TRILL/TECH, ect).
-        ///     Action-Strain multiplier is applied in computation.
-        /// </summary>
-        /// <param name="qssData"></param>
-        private void ComputeForFingerActions()
-        {
-            // Solve for Finger Action
-            for (var i = 0; i < StrainSolverData.Count - 1; i++)
-            {
-                var curHitOb = StrainSolverData[i];
-
-                // Find the next Hit Object in the current Hit Object's Hand
-                for (var j = i + 1; j < StrainSolverData.Count; j++)
-                {
-                    var nextHitOb = StrainSolverData[j];
-                    if (curHitOb.Hand == nextHitOb.Hand && nextHitOb.StartTime > curHitOb.StartTime)
-                    {
-                        // Determined by if there's a minijack within 2 set of chords/single notes
-                        var actionJackFound = ((int)nextHitOb.FingerState & (1 << (int)curHitOb.FingerState - 1)) != 0;
-
-                        // Determined by if a chord is found in either finger state
-                        var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
-
-                        // Determined by if both fingerstates are exactly the same
-                        var actionSameState = curHitOb.FingerState == nextHitOb.FingerState;
-
-                        // Determined by how long the current finger action is
-                        var actionDuration = nextHitOb.StartTime - curHitOb.StartTime;
-                        var actionBpmEquivalent = 15000 / actionDuration; // NOTE: 15000 value = 60 miliseconds divided by 4
-
-                        // Apply the "NextStrainSolverDataOnCurrentHand" value on the current hit object and also apply action duration.
-                        curHitOb.NextStrainSolverDataOnCurrentHand = nextHitOb;
-                        curHitOb.FingerActionDurationMs = actionDuration;
-
-                        curHitOb.ActionStrainCoefficient = 1;
-
-                        /*
-                        // Trill/Roll
-                        if (!actionChordFound && !actionSameState)
-                        {
-                            curHitOb.FingerAction = FingerAction.Roll;
-                            curHitOb.ActionStrainCoefficient = InterpolateBpmToDifficulty
-                                (
-                                    actionBpmEquivalent,
-                                    StrainConstants.RollBpmToDifficulty
-                                );
-                        }
-
-                        // Simple Jack
-                        else if (actionSameState)
-                        {
-                            curHitOb.FingerAction = FingerAction.SimpleJack;
-                            curHitOb.ActionStrainCoefficient = InterpolateBpmToDifficulty
-                                (
-                                    actionBpmEquivalent,
-                                    StrainConstants.SJackBpmToDifficulty
-                                );
-                        }
-
-                        // Tech Jack
-                        else if (actionJackFound)
-                        {
-                            curHitOb.FingerAction = FingerAction.TechnicalJack;
-                            curHitOb.ActionStrainCoefficient = InterpolateBpmToDifficulty
-                                (
-                                    actionBpmEquivalent,
-                                    StrainConstants.TJackBpmToDifficulty
-                                );
-                        }
-
-                        // Bracket
-                        else
-                        {
-                            curHitOb.FingerAction = FingerAction.Bracket;
-                            curHitOb.ActionStrainCoefficient = InterpolateBpmToDifficulty
-                                (
-                                    actionBpmEquivalent,
-                                    StrainConstants.BracketBpmToDifficulty
-                                );
-                        }*/
-
-                        break;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Scans every finger action and compute a pattern multiplier.
-        ///     Pattern manipulation, and inflated patterns are factored into calculation.
-        /// </summary>
-        /// <param name="qssData"></param>
-        private void ComputeForActionPatterns()
-        {
-
-        }
-
-        /// <summary>
-        ///     Scans for roll manipulation. "Roll Manipulation" is definced as notes in sequence "A -> B -> A" with one action at least twice as long as the other.
-        /// </summary>
-        private void ComputeForRollManipulation()
-        {
-            var manipulationIndex = 0;
-
-            foreach (var data in StrainSolverData)
-            {
-                // Reset manipulation found
-                var manipulationFound = false;
-
-                // Check to see if the current data point has two other following points
-                if (data.NextStrainSolverDataOnCurrentHand != null && data.NextStrainSolverDataOnCurrentHand.NextStrainSolverDataOnCurrentHand != null)
-                {
-                    var middle = data.NextStrainSolverDataOnCurrentHand;
-                    var last = data.NextStrainSolverDataOnCurrentHand.NextStrainSolverDataOnCurrentHand;
-
-                    if (data.FingerAction == FingerAction.Roll && middle.FingerAction == FingerAction.Roll)
-                    {
-                        if (data.FingerState == last.FingerState)
-                        {
-                            // Get action duration ratio from both actions
-                            var durationRatio = Math.Max(data.FingerActionDurationMs / middle.FingerActionDurationMs, middle.FingerActionDurationMs / data.FingerActionDurationMs);
-
-                            // If the ratio is above this threshold, count it as a roll manipulation
-                            if (durationRatio >= StrainConstants.RollRatioToleranceMs)
-                            {
-                                // Apply multiplier
-                                // todo: catch possible arithmetic error (division by 0)
-                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) * StrainConstants.RollRatioMultiplier));
-                                var manipulationFoundRatio = 1 - ((manipulationIndex / StrainConstants.RollMaxLength) * (1 - StrainConstants.RollLengthMultiplier));
-                                data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
-
-                                // Count manipulation
-                                manipulationFound = true;
-                                RollInaccuracyConfidence++;
-                                if (manipulationIndex < StrainConstants.RollMaxLength)
-                                    manipulationIndex++;
-                            }
-                        }
-                    }
-                }
-
-                // subtract manipulation index if manipulation was not found
-                if (!manipulationFound && manipulationIndex > 0)
-                    manipulationIndex--;
-            }
-        }
-
-        /// <summary>
-        ///     Scans for jack manipulation. "Jack Manipulation" is defined as a succession of simple jacks. ("A -> A -> A")
-        /// </summary>
-        private void ComputeForJackManipulation()
-        {
-            var longJackSize = 0;
-
-            foreach (var data in StrainSolverData)
-            {
-                // Reset manipulation found
-                var manipulationFound = false;
-
-                // Check to see if the current data point has a following data point
-                if (data.NextStrainSolverDataOnCurrentHand != null)
-                {
-                    var next = data.NextStrainSolverDataOnCurrentHand;
-                    if (data.FingerAction == FingerAction.SimpleJack && next.FingerAction == FingerAction.SimpleJack)
-                    {
-                        // Apply multiplier
-                        // todo: catch possible arithmetic error (division by 0)
-                        // note:    83.3ms = 180bpm 1/4 vibro
-                        //          88.2ms = 170bpm 1/4 vibro
-                        //          93.7ms = 160bpm 1/4 vibro
-
-                        // 35f = 35ms tolerance before hitting vibro point (88.2ms, 170bpm vibro)
-                        var durationValue = Math.Min(1, Math.Max(0, ((StrainConstants.VibroActionDurationMs + StrainConstants.VibroActionToleranceMs) - data.FingerActionDurationMs) / StrainConstants.VibroActionToleranceMs));
-                        var durationMultiplier = 1 - (durationValue * (1 - StrainConstants.VibroMultiplier));
-                        var manipulationFoundRatio = 1 - ((longJackSize / StrainConstants.VibroMaxLength) * (1 - StrainConstants.VibroLengthMultiplier));
-                        data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
-
-                        // Count manipulation
-                        manipulationFound = true;
-                        VibroInaccuracyConfidence++;
-                        if (longJackSize < StrainConstants.VibroMaxLength)
-                            longJackSize++;
-                    }
-                }
-
-                // Reset manipulation count if manipulation was not found
-                if (!manipulationFound)
-                    longJackSize = 0;
-            }
-        }
-
-        /// <summary>
-        ///     Scans for LN layering and applies a multiplier
-        /// </summary>
-        private void ComputeForLnMultiplier()
-        {
-            foreach (var data in StrainSolverData)
-            {
-                // Check if data is LN
-                if (data.EndTime > data.StartTime)
-                {
-                    var durationValue = 1 - Math.Min(1, Math.Max(0, ((StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs) - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
-                    var baseMultiplier = 1 + (float)((1 - durationValue) * StrainConstants.LnBaseMultiplier);
-                    foreach (var k in data.HitObjects)
-                        k.LnStrainMultiplier = baseMultiplier;
-
-                    // Check if next data point exists on current hand
-                    var next = data.NextStrainSolverDataOnCurrentHand;
-                    if (next != null)
-
-                        // Check to see if the target hitobject is layered inside the current LN
-                        if (next.StartTime < data.EndTime - StrainConstants.LnEndThresholdMs)
-                            if (next.StartTime >= data.StartTime + StrainConstants.LnEndThresholdMs)
-
-                                // Target hitobject's LN ends after current hitobject's LN end.
-                                if (next.EndTime > data.EndTime + StrainConstants.LnEndThresholdMs)
-                                {
-                                    foreach (var k in data.HitObjects)
-                                    {
-                                        k.LnLayerType = LnLayerType.OutsideRelease;
-                                        k.LnStrainMultiplier *= StrainConstants.LnReleaseAfterMultiplier;
-                                    }
-                                }
-
-                                // Target hitobject's LN ends before current hitobject's LN end
-                                else if (next.EndTime > 0)
-                                {
-                                    foreach (var k in data.HitObjects)
-                                    {
-                                        k.LnLayerType = LnLayerType.InsideRelease;
-                                        k.LnStrainMultiplier *= StrainConstants.LnReleaseBeforeMultiplier;
-                                    }
-                                }
-
-                                // Target hitobject is not an LN
-                                else
-                                {
-                                    foreach (var k in data.HitObjects)
-                                    {
-                                        k.LnLayerType = LnLayerType.InsideTap;
-                                        k.LnStrainMultiplier *= StrainConstants.LnTapMultiplier;
-                                    }
-                                }
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Checks to see if the map rating is inacurrate due to vibro/rolls
-        /// </summary>
-        private void ComputeForPatternFlags()
-        {
-            // TODO: this method returns very arbitrary results. It will be adjusted later.
-            // If 10% or more of the map has longjack manip, flag it as vibro map
-            if (VibroInaccuracyConfidence / StrainSolverData.Count > 0.10)
-                QssPatternFlags |= QssPatternFlags.SimpleVibro;
-
-            // If 15% or more of the map has roll manip, flag it as roll map
-            if (RollInaccuracyConfidence / StrainSolverData.Count > 0.15)
-                QssPatternFlags |= QssPatternFlags.Rolls;
-        }
-
-        /// <summary>
-        ///     Calculate the general difficulty of the given map
-        /// </summary>
-        /// <param name="rate"></param>
-        /// <returns></returns>
-        private float CalculateOverallDifficulty()
-        {
-            float calculatedDiff = 0;
-
-            // Solve strain value of every data point
-            foreach (var data in StrainSolverData)
-                data.CalculateStrainValue();
-
-            // left hand
-            foreach (var data in StrainSolverData)
-            {
-                if (data.Hand == Hand.Left)
-                    calculatedDiff += data.TotalStrainValue;
-            }
-
-            // right hand
-            foreach (var data in StrainSolverData)
-            {
-                if (data.Hand == Hand.Right)
-                    calculatedDiff += data.TotalStrainValue;
-            }
-
-            // Calculate overall 4k difficulty
-            calculatedDiff /= StrainSolverData.Count;
-
-            // Get Overall 4k difficulty
-            return calculatedDiff;
-        }
-
-        /// <summary>
-        ///     Compute and generate Note Density Data.
-        /// </summary>
-        /// <param name="qssData"></param>
-        /// <param name="qua"></param>
-        private void ComputeNoteDensityData(float rate)
-        {
-            //MapLength = Qua.Length;
-            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * rate);
-
-            //todo: solve note density graph
-            // put stuff here
-        }
-
-        /// <summary>
-        ///     Insert HitObject. Used for dynamic difficulty calc when editing maps.
-        /// </summary>
-        /// <param name="hitObject"></param>
-        private void InsertHitObject(StrainSolverHitObject hitObject)
-        {
-            // ReEvaluateDifficulty() for each hit object
-        }
-
-        /// <summary>
-        ///     Remove HitObject. Used for dynamic difficulty calc when editing maps.
-        /// </summary>
-        /// <param name="hitObject"></param>
-        private void RemoveHitObject(StrainSolverHitObject hitObject)
-        {
-            // ReEvaluateDifficulty() for each hit object
-        }
-
-        /// <summary>
-        ///     This method will interpolate Bpm to Strain Difficulty using a reference Dictionary.
-        /// </summary>
-        /// <param name="bpm"></param>
-        /// <param name="reference"></param>
-        /// <returns></returns>
-        private static float InterpolateBpmToDifficulty(float bpm, Dictionary<float, float> reference)
-        {
-            // Return highest difficulty possible if bpm is greater than the last index's bpm.
-            if (bpm >= reference.Keys.Last())
-                return reference.Values.Last();
-
-            // Interpolate between two bpm points and return difficulty
-            // TODO: This method is incredibly inefficient. Either generate a curve procedurally or find better looping method
-            for (var i = 0; i < reference.Count; i++)
-            {
-                if (reference.Keys.ElementAt(i) >= bpm)
-                {
-                    if (i == 0)
-                        break;
-
-                    var nextBpm = reference.Keys.ElementAt(i);
-                    var nextDiff = reference.Values.ElementAt(i);
-                    var prevBpm = reference.Keys.ElementAt(i - 1);
-                    var prevDiff = reference.Values.ElementAt(i - 1);
-
-                    return (((bpm - prevBpm) / (nextBpm - prevBpm)) * (nextDiff - prevDiff)) + prevDiff;
-                }
-            }
-
-            // Return first value if bpm is less than the lowest Key.
-            return reference.Values.First();
-        }
+        }*/
     }
 }

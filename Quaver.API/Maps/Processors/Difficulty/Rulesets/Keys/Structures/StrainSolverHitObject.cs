@@ -83,7 +83,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public void EvaluateDifficulty()
+        public void EvaluateDifficulty(StrainConstantsKeys constants)
         {
             StrainValue = 1;
             if (WristState == null)
@@ -112,7 +112,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                             }
                             else
                             {
-                                //WristState.WristDifficulty = 1;
                                 WristState.WristDifficulty = (0.971f + WristState.NextState.WristDifficulty) / 2;
                             }
                         }
@@ -139,8 +138,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                         }
                         else
                         {
-                            WristState.WristDifficulty *= 0.992f;
-                            //Console.WriteLine(WristState.WristDifficulty);
+                            WristState.WristDifficulty *= constants.WristRepetitionMultiplier;
                         }
 
                     }

@@ -139,7 +139,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public void EvaluateDifficulty()
+        public void EvaluateDifficulty(StrainConstantsKeys constants)
         {
             StateDifficulty = 0;
             FingerState = FingerState.None;
@@ -147,7 +147,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                 x =>
                 {
                     FingerState |= x.FingerState;
-                    x.EvaluateDifficulty();
+                    x.EvaluateDifficulty(constants);
                     StateDifficulty += x.StrainValue;
                 }
             );
