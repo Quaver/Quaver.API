@@ -88,7 +88,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainValue = 1;
             if (WristState == null)
             {
-                StrainValue = 1.35f;
+                StrainValue = constants.WristTechMultiplier;
             }
             else if (WristState.NextState != null)
             {
@@ -102,22 +102,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                             // - >100ms = 0.95x
                             // - 100ms = 0.92x
                             // - 94ms = 0.95x
-                            if (WristState.NextStateDelta < 94)
+                            if (WristState.NextStateDelta < constants.VibroActionTolerance)
                             {
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.88f;
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * constants.WristVibroMultiplier;
                             }
-                            else if (WristState.NextStateDelta < 100)
+                            else if (WristState.NextStateDelta < constants.VibroActionThreshold)
                             {
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * 0.94f;
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * (constants.WristSimpleJackMultiplier + (1 - constants.WristSimpleJackMultiplier) / 2);
                             }
                             else
                             {
-                                WristState.WristDifficulty = (0.971f + WristState.NextState.WristDifficulty) / 2;
+                                WristState.WristDifficulty = (constants.WristSimpleJackMultiplier + WristState.NextState.WristDifficulty) / 2;
                             }
                         }
                         else
                         {
-                            WristState.WristDifficulty = 1f;
+                            WristState.WristDifficulty = constants.WristGapMultiplier;
                         }
                     }
 
