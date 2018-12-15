@@ -7,7 +7,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 {
     public class StrainConstantsKeys : StrainConstants
     {
-        public float DifficultyMultiplier { get; } = 4.75f;
+        public float DifficultyMultiplier { get; } = 3.95f;
 
         public float DifficultyOffset { get; } = -22f;
 
@@ -34,13 +34,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         public StrainConstantsKeys()
         {
-            StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.75f);
-            StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.025f);
-            WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.992f);
-            WristTechMultiplier = NewConstant("WristTechMultiplier", 1.35f);
-            WristGapMultiplier = NewConstant("WristGapMultiplier", 1f);
-            WristVibroMultiplier = NewConstant("WristVibroMultiplier", 0.88f);
-            WristSimpleJackMultiplier = NewConstant("WristSimpleJackMultiplier", 0.97f);
+            StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.55321f);
+            StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.20773f);
+            WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.98159f);
+            WristTechMultiplier = NewConstant("WristTechMultiplier", 1.16128f);
+            WristGapMultiplier = NewConstant("WristGapMultiplier", 1.12814f);
+            WristVibroMultiplier = NewConstant("WristVibroMultiplier", 0.95883f);
+            WristSimpleJackMultiplier = NewConstant("WristSimpleJackMultiplier", 1.06153f);
         }
     }
 }

@@ -106,10 +106,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                             {
                                 WristState.WristDifficulty = (float)(WristState.NextState.WristDifficulty * constants.WristVibroMultiplier.Value);
                             }
-                            //else if (WristState.NextStateDelta < constants.VibroActionThreshold)
-                            //{
-                            //    WristState.WristDifficulty = WristState.NextState.WristDifficulty * (constants.WristSimpleJackMultiplier + (1 - constants.WristSimpleJackMultiplier) / 2);
-                            //}
+                            else if (WristState.NextStateDelta < constants.VibroActionThreshold)
+                            {
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * (float)(constants.WristVibroMultiplier.Value + (constants.WristSimpleJackMultiplier.Value - constants.WristVibroMultiplier.Value) / 2);
+                            }
                             else
                             {
                                 WristState.WristDifficulty = (float)(constants.WristSimpleJackMultiplier.Value + WristState.NextState.WristDifficulty) / 2;
