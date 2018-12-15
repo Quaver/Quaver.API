@@ -33,7 +33,7 @@ namespace Quaver.Tools.Commands
         {
             // Everything @ index 18 and over are considered the username.
             var username = args.ToList();
-            username.RemoveRange(0, 17);
+            username.RemoveRange(0, 18);
 
             Replay = new Replay(args[1], true)
             {
