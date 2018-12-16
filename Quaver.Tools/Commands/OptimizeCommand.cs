@@ -231,14 +231,17 @@ namespace Quaver.Tools.Commands
             {
                 xbar += diffs[i + 1] - diffs[i];
             }
-            xbar /= ( diffs.Length - 2 );
+            xbar /= ( diffs.Length - 1 );
 
             // Compute for deviation
             for (var i = 0; i < diffs.Length - 1; i++)
             {
-                delta += Math.Pow((diffs[i + 1] - diffs[i]) - xbar, 2);
+                // heavily weight difficulties that are out of order and get delta sum
+                var difference = diffs[i + 1] - diffs[i];
+                difference = difference < 1 ? 5 * (1 + Math.Pow(difference, 2)) : difference;
+                delta += Math.Pow(difference - xbar, 2);
             }
-            delta /= ( diffs.Length - 2 );
+            delta /= ( diffs.Length - 1 );
 
 
             // Log and terminate optimization if necessary

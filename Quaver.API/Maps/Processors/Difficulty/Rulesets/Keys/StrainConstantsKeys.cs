@@ -34,13 +34,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         public StrainConstantsKeys()
         {
-            StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.55321f);
-            StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.20773f);
-            WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.97859f);
-            WristTechMultiplier = NewConstant("WristTechMultiplier", 1.16128f);
-            WristGapMultiplier = NewConstant("WristGapMultiplier", 1.12814f);
-            WristVibroMultiplier = NewConstant("WristVibroMultiplier", 0.95883f);
-            WristSimpleJackMultiplier = NewConstant("WristSimpleJackMultiplier", 1.06153f);
+            StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.5818259f);
+            StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.3847841f);
+            WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.9904839f);
+            WristTechMultiplier = NewConstant("WristTechMultiplier", 1.179059f);
+            WristGapMultiplier = NewConstant("WristGapMultiplier", 1.103457f);
+            WristVibroMultiplier = NewConstant("WristVibroMultiplier", 0.9440251f);
+            WristSimpleJackMultiplier = NewConstant("WristSimpleJackMultiplier", 1.05868f);
         }
     }
 }
