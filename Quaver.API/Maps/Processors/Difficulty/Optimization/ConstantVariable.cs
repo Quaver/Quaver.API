@@ -25,7 +25,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public ConstantVariable(string name, double value)
+        public ConstantVariable(string name, float value)
         {
             Name = name;
             Value = value;
@@ -35,6 +35,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         ///     Returns string "(name) = (value)". Mainly used for debugging and optimizing.
         /// </summary>
         /// <returns></returns>
-        public string GetVariableInfo() => Name + " " + Value;
+        public string GetVariableInfo() => $"{Name} = {Value}";
     }
 }

@@ -318,6 +318,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     refHandData = rightHandData;
                 }
 
+                //todo: this is a temp const variable for graph
                 currentDiff = 0;
                 for (var i = 0; i < refHandData.Count - 2; i++)
                 {
@@ -339,7 +340,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         count++;
                         total
-                            += Math.Max(1, currentDiff
+                            += Math.Max(1, refHandData[i].StateDifficulty
                             * StrainConstants.DifficultyMultiplier
                             * (float)Math.Sqrt(30000 / (refHandData[i].Time - refHandData[i + 2].Time)) + StrainConstants.DifficultyOffset);
                     }

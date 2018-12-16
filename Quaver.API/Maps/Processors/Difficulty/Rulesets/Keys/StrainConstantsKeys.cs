@@ -7,7 +7,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 {
     public class StrainConstantsKeys : StrainConstants
     {
-        public float DifficultyMultiplier { get; } = 3.95f;
+        public float DifficultyMultiplier { get; } = 4.5f;
 
         public float DifficultyOffset { get; } = -22f;
 

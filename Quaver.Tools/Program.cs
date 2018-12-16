@@ -11,16 +11,16 @@ namespace Quaver.Tools
             // TODO: temp
             var user = "admin";
             var commands = new string[][] {
-                new string[] { "-optimize" }
+                //new string[] { "-optimize" }
                 
-                /*new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/tech", "None" },
+                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/tech", "None" },
                 new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/speed", "None" },
                 new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/jack", "None" },
                 new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/stamina", "None" },
                 new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-reform", "None" },
                 new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-old", "None" },
-                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps", "None" },
-                new string[] { "-calcfolder", $"c:/Users/{user}/desktop/oss", "None" }*/
+                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps", "None" }
+                //new string[] { "-calcfolder", $"c:/Users/{user}/desktop/oss", "None" }
                 
             };
             //args = new string[] { "-calcfolder", "c:/users/admin/desktop/qss/testmaps", "None" };
