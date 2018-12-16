@@ -36,7 +36,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.55321f);
             StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.20773f);
-            WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.98159f);
+            WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.97859f);
             WristTechMultiplier = NewConstant("WristTechMultiplier", 1.16128f);
             WristGapMultiplier = NewConstant("WristGapMultiplier", 1.12814f);
             WristVibroMultiplier = NewConstant("WristVibroMultiplier", 0.95883f);
