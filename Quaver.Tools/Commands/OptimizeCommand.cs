@@ -25,10 +25,7 @@ namespace Quaver.Tools.Commands
         /// </summary>
         private int Limit { get; } = 500;
 
-        /// <summary>
-        ///     Reference Directory for map files.
-        /// </summary>
-        private static string BaseFolder { get; } = "c:/users/denys/desktop/testmaps/dan/full-reform"; //full-reform
+        private static string FullDanDirectory { get; } = "c:/users/denys/desktop/testmaps/dan/full-reform";
 
         private static string JackDirectory { get; } = "C:/Users/denys/Desktop/testmaps/dan/jack";
 
@@ -38,7 +35,28 @@ namespace Quaver.Tools.Commands
 
         private static string StaminaDirectory { get; } = "C:/Users/denys/Desktop/testmaps/dan/stamina";
 
-        private List<List<string>> DanCalcTest { get; } = new List<List<string>>()
+        private List<string> FullDanCalcTest { get; } = new List<string>()
+        {
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 1st Pack (DDMythical) [~ 0INTRO-1st ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 1st Pack (DDMythical) [~ 0INTRO-2nd ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 1st Pack (DDMythical) [~ 0INTRO-3rd ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 1st Pack (DDMythical) [~ 1st ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 1st Pack (DDMythical) [~ 2nd ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 1st Pack (DDMythical) [~ 3rd ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 1st Pack (DDMythical) [~ 4th ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 1st Pack (DDMythical) [~ 5th ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ 6th ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ 7th ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ 8th ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ 9th ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ EXTRA-ALPHA ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ EXTRA-BETA ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ EXTRA-cGAMMA ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ EXTRA-DELTA ~ (Marathon)].osu",
+            $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ EXTRA-EPSILON ~ (Marathon)].osu"
+        };
+
+        private List<List<string>> SkillsetCalcTest { get; } = new List<List<string>>()
         {
             new List<string>()
             {
@@ -103,13 +121,6 @@ namespace Quaver.Tools.Commands
                 $"{StaminaDirectory}/9Various Artists - Dan ~ REFORM ~ StaminaMap Pack (DDMythical) [Firmament Castle Velier ~ 9th ~ (Marathon)].osu",
                 $"{TechDirectory}/9Various Artists - Dan ~ REFORM ~ TechMap Pack (DDMythical) [Cicadidae ~ 9th ~ (Marathon)].osu",
             },
-            /*
-            new List<string>()
-            {
-                $"{JackDirectory}/9zYST - The Lost Dedicated (Zyph) [4K].osu",
-                $"{StaminaDirectory}/9zVarious Artists - Dan ~ REFORM ~ StaminaMap Pack (DDMythical) [Chandelier ~ 10th ~ (Marathon)].osu",
-                $"{TechDirectory}/9zVarious Artists - Dan ~ REFORM ~ TechMap Pack (DDMythical) [Rave 7.7 ~ 10th ~ (Marathon)].osu",
-            },*/
             new List<string>()
             {
                 $"{JackDirectory}/aVarious Artists - Dan ~ REFORM ~ JackMap Pack (DDMythical) [Toraburu Kuroneko 1.15x ~ Alpha ~ (Marathon)].osu",
@@ -191,7 +202,7 @@ namespace Quaver.Tools.Commands
         {
             N++;
             Constants.UpdateConstants(input);
-            var fx = GetSkillsetAverageDelta() * GetSkillsetAverageSigma();
+            var fx = GetSkillsetAverageDelta() * GetSkillsetAverageSigma() * GetFullDanAverageDelta();
             Console.WriteLine($"n = {N}, f(x) = {fx}");
             return fx;
         }
@@ -202,22 +213,22 @@ namespace Quaver.Tools.Commands
         /// <returns></returns>
         private double GetSkillsetAverageDelta()
         {
-            var diffs = new double[DanCalcTest.Count];
+            var diffs = new double[SkillsetCalcTest.Count];
             double sigma = 0;
-            for (var i = 0; i < DanCalcTest.Count; i++)
+            for (var i = 0; i < SkillsetCalcTest.Count; i++)
             {
                 // Get Average of every Sample
-                var sample = new double[DanCalcTest[i].Count];
-                for (var j = 0; j < DanCalcTest[i].Count; j++)
+                var sample = new double[SkillsetCalcTest[i].Count];
+                for (var j = 0; j < SkillsetCalcTest[i].Count; j++)
                 {
-                    sample[j] = new OsuBeatmap(DanCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+                    sample[j] = new OsuBeatmap(SkillsetCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
                     diffs[i] += sample[j];
                 }
-                diffs[i] /= DanCalcTest[i].Count;
+                diffs[i] /= SkillsetCalcTest[i].Count;
 
                 // Compute for average
                 double xbar = 0;
-                for (var j = 0; j < DanCalcTest[i].Count; j++)
+                for (var j = 0; j < SkillsetCalcTest[i].Count; j++)
                     xbar += Math.Pow(sample[j] - diffs[i], 2);
 
                 // Get Sigma
@@ -225,7 +236,7 @@ namespace Quaver.Tools.Commands
                 sigma += xbar;
             }
 
-            sigma /= DanCalcTest.Count;
+            sigma /= SkillsetCalcTest.Count;
             return sigma + 1;
         }
 
@@ -236,17 +247,17 @@ namespace Quaver.Tools.Commands
         private double GetSkillsetAverageSigma()
         {
             // Get Average of every Sample
-            var diffs = new double[DanCalcTest.Count];
+            var diffs = new double[SkillsetCalcTest.Count];
             double sigma = 0;
-            for (var i = 0; i < DanCalcTest.Count; i++)
+            for (var i = 0; i < SkillsetCalcTest.Count; i++)
             {
-                var sample = new double[DanCalcTest[i].Count];
-                for (var j = 0; j < DanCalcTest[i].Count; j++)
+                var sample = new double[SkillsetCalcTest[i].Count];
+                for (var j = 0; j < SkillsetCalcTest[i].Count; j++)
                 {
-                    sample[j] = new OsuBeatmap(DanCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+                    sample[j] = new OsuBeatmap(SkillsetCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
                     diffs[i] += sample[j];
                 }
-                diffs[i] /= DanCalcTest[i].Count;
+                diffs[i] /= SkillsetCalcTest[i].Count;
             }
 
             // Get Standard Deviation of each Difficulty Interval
@@ -255,7 +266,6 @@ namespace Quaver.Tools.Commands
                 sigma += diffs[i + 1] - diffs[i];
             }
             sigma /= (diffs.Length - 2);
-
             return sigma + 1;
         }
 
@@ -265,7 +275,20 @@ namespace Quaver.Tools.Commands
         /// <returns></returns>
         private double GetFullDanAverageDelta()
         {
-            return 0;
+            // Get Difficulty from Samples
+            double sigma = 0;
+            var sample = new double[FullDanCalcTest.Count];
+            for (var i = 0; i < FullDanCalcTest.Count; i++)
+            {
+                sample[i] = new OsuBeatmap(FullDanCalcTest[i]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+            }
+
+            // Calculate Standard Deviation
+            for (var i = 0; i < FullDanCalcTest.Count - 1; i++)
+                sigma += Math.Pow(sample[i + 1] - sample[i], 2);
+
+            sigma /= FullDanCalcTest.Count;
+            return sigma + 1;
         }
     }
 }
