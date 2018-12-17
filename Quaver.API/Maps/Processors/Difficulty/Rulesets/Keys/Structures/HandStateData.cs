@@ -27,6 +27,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public HandStateData NextState { get; set; }
 
         /// <summary>
+        ///     All HitObjects referenced for this Hand State
+        /// </summary>
+        public List<StrainSolverHitObject> HitObjects { get; private set; } = new List<StrainSolverHitObject>();
+
+        /// <summary>
         /// 
         /// </summary>
         public float Time => HitObjects[0].StartTime;
@@ -52,11 +57,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// 
         /// </summary>
         public float StateDifficulty { get; private set; }
-
-        /// <summary>
-        ///     All HitObjects referenced for this Hand State
-        /// </summary>
-        public List<StrainSolverHitObject> HitObjects { get; private set; } = new List<StrainSolverHitObject>();
 
         /// <summary>
         /// 
@@ -101,6 +101,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                 StateDifficulty *= constants.ChordMultiplier.Value;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void CalculateChordProximity()
         {
             // There should not be 0 HitObjects in the Hand State
@@ -110,10 +113,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             // Set Finger State to appropriate value and calculate ChordProximity
             var lead = HitObjects[0];
             StrainSolverHitObject furthest = null;
-            HitObjects = HitObjects;
             foreach (var ob in HitObjects)
             {
-                FingerState |= ob.FingerState;
                 if (StrainSolverKeys.LaneToHand4K[ob.HitObject.Lane] != Hand)
                 {
                     if (furthest == null || ob.HitObject.StartTime > furthest.HitObject.StartTime)

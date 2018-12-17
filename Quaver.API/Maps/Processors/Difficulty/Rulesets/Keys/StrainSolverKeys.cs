@@ -151,7 +151,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var leftHandData = new List<HandStateData>();
             var rightHandData = new List<HandStateData>();
             var allHandData = new List<HandStateData>();
-            var wristStateData = new List<WristState>();
 
             // Get Initial Handstates
             // - Iterate through hit objects backwards
@@ -218,85 +217,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             // Compute for chorded pairs
-            for (var i=0; i<allHandData.Count; i++)
-            {
-                for (var j=i+1; j<allHandData.Count; j++)
-                {
-                    if (allHandData[i].Time - allHandData[j].Time > HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
-                    {
-                        break;
-                    }
-
-                    if (allHandData[j].ChordedHand == null)
-                    {
-                        if (!allHandData[i].Hand.Equals(allHandData[j].Hand) && !allHandData[j].Hand.Equals(Hand.Ambiguous))
-                        {
-                            allHandData[j].ChordedHand = allHandData[i];
-                            allHandData[i].ChordedHand = allHandData[j];
-                            break;
-                        }
-                    }
-                }
-            }
+            ComputeForChordedPairs(allHandData);
 
             // Compute for wrist action
             // maybe solve this first?
-            WristState laterStateLeft = null;
-            WristState laterStateRight = null;
-            WristState wrist;
-            FingerState state;
-            for (var i = 0; i < hitObjects.Count; i++)
-            {
-                if (hitObjects[i].WristState == null)
-                {
-                    state = hitObjects[i].FingerState;
-                    if (hitObjects[i].Hand == Hand.Left)
-                    {
-                        wrist = new WristState(laterStateLeft);
-                        laterStateLeft = wrist;
-                    }
-                    else
-                    {
-                        wrist = new WristState(laterStateRight);
-                        laterStateRight = wrist;
-                    }
-
-                    for (var j = i + 1; j < hitObjects.Count; j++)
-                    {
-                        if (hitObjects[j].Hand == hitObjects[i].Hand)
-                        {
-                            // Break loop upon same finger found
-                            if (((int)state & (1 << (int)hitObjects[j].FingerState - 1)) != 0)
-                                break;
-
-                            state |= hitObjects[j].FingerState;
-                            hitObjects[j].WristState = wrist;
-                        }
-                    }
-
-                    wrist.WristPair = state;
-                    wrist.Time = hitObjects[i].StartTime;
-
-                    // check if wrist state is the same
-                    if (!state.Equals(hitObjects[i].FingerState))
-                    {
-                        wrist.WristAction = WristAction.Up;
-                        hitObjects[i].WristState = wrist;
-                        //Console.WriteLine($"asd{state}_ {hitObjects[i].FingerState} | {Map.Length}, {hitObjects[i].StartTime}");
-                    }
-                    // same state jack
-                    else if (wrist.NextState != null && wrist.NextState.WristPair.Equals(state))
-                    {
-                        wrist.WristAction = WristAction.Up;
-                        hitObjects[i].WristState = wrist;
-                    }
-                    else
-                    {
-                        wrist = null;
-                    }
-                }
-                //Console.WriteLine(hitObjects[i].WristState == null);
-            }
+            ComputeForWristAction(hitObjects);
 
             // temp calc variables
             var count = 0;
@@ -364,38 +289,97 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             return hitObjects;
         }
 
-        /*
         /// <summary>
-        ///     Get Note Data, and compute the base strain weights
-        ///     The base strain weights are affected by LN layering
+        /// 
         /// </summary>
-        /// <param name="qssData"></param>
-        /// <param name="qua"></param>
-        /// <param name="assumeHand"></param>
-        private void ConvertToStrainHitObjects(float rate, Hand assumeHand)
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private void ComputeForChordedPairs(List<HandStateData> data)
         {
-            // Add hit objects from qua map to qssData
-            for (var i = 0; i < Map.HitObjects.Count; i++)
+            for (var i = 0; i < data.Count; i++)
             {
-                var curHitOb = new StrainSolverHitObject(Map.HitObjects[i]);
-                var curStrainData = new StrainSolverData(curHitOb, rate);
-
-                // Assign Finger and Hand States
-                switch (Map.Mode)
+                for (var j = i + 1; j < data.Count; j++)
                 {
-                    case GameMode.Keys4:
-                        curHitOb.FingerState = LaneToFinger4K[Map.HitObjects[i].Lane];
-                        curStrainData.Hand = LaneToHand4K[Map.HitObjects[i].Lane];
+                    if (data[i].Time - data[j].Time > HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
+                    {
                         break;
-                    case GameMode.Keys7:
-                        curHitOb.FingerState = LaneToFinger7K[Map.HitObjects[i].Lane];
-                        curStrainData.Hand = LaneToHand7K[Map.HitObjects[i].Lane] == Hand.Ambiguous ? assumeHand : LaneToHand7K[Map.HitObjects[i].Lane];
-                        break;
-                }
+                    }
 
-                // Add Strain Solver Data to list
-                StrainSolverData.Add(curStrainData);
+                    if (data[j].ChordedHand == null)
+                    {
+                        if (!data[i].Hand.Equals(data[j].Hand) && !data[j].Hand.Equals(Hand.Ambiguous))
+                        {
+                            data[j].ChordedHand = data[i];
+                            data[i].ChordedHand = data[j];
+                            break;
+                        }
+                    }
+                }
             }
-        }*/
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private void ComputeForWristAction(List<StrainSolverHitObject> hitObjects)
+        {
+            WristState laterStateLeft = null;
+            WristState laterStateRight = null;
+            WristState wrist;
+            FingerState state;
+            for (var i = 0; i < hitObjects.Count; i++)
+            {
+                if (hitObjects[i].WristState == null)
+                {
+                    state = hitObjects[i].FingerState;
+                    if (hitObjects[i].Hand == Hand.Left)
+                    {
+                        wrist = new WristState(laterStateLeft);
+                        laterStateLeft = wrist;
+                    }
+                    else
+                    {
+                        wrist = new WristState(laterStateRight);
+                        laterStateRight = wrist;
+                    }
+
+                    for (var j = i + 1; j < hitObjects.Count; j++)
+                    {
+                        if (hitObjects[j].Hand == hitObjects[i].Hand)
+                        {
+                            // Break loop upon same finger found
+                            if (((int)state & (1 << (int)hitObjects[j].FingerState - 1)) != 0)
+                                break;
+
+                            state |= hitObjects[j].FingerState;
+                            hitObjects[j].WristState = wrist;
+                        }
+                    }
+
+                    wrist.WristPair = state;
+                    wrist.Time = hitObjects[i].StartTime;
+
+                    // check if wrist state is the same
+                    if (!state.Equals(hitObjects[i].FingerState))
+                    {
+                        wrist.WristAction = WristAction.Up;
+                        hitObjects[i].WristState = wrist;
+                        //Console.WriteLine($"asd{state}_ {hitObjects[i].FingerState} | {Map.Length}, {hitObjects[i].StartTime}");
+                    }
+                    // same state jack
+                    else if (wrist.NextState != null && wrist.NextState.WristPair.Equals(state))
+                    {
+                        wrist.WristAction = WristAction.Up;
+                        hitObjects[i].WristState = wrist;
+                    }
+                    else
+                    {
+                        wrist = null;
+                    }
+                }
+            }
+        }
     }
 }
