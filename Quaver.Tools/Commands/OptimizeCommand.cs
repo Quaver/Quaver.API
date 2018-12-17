@@ -21,11 +21,6 @@ namespace Quaver.Tools.Commands
         private StrainConstantsKeys Constants { get; }
 
         /// <summary>
-        ///     Used to terminate the Optimization Loop
-        /// </summary>
-        private GeneralConvergence GeneralConvergence { get; set; }
-
-        /// <summary>
         ///     Optimization will stop after this amount of iteration
         /// </summary>
         private int Limit { get; } = 500;
@@ -108,12 +103,13 @@ namespace Quaver.Tools.Commands
                 $"{StaminaDirectory}/9Various Artists - Dan ~ REFORM ~ StaminaMap Pack (DDMythical) [Firmament Castle Velier ~ 9th ~ (Marathon)].osu",
                 $"{TechDirectory}/9Various Artists - Dan ~ REFORM ~ TechMap Pack (DDMythical) [Cicadidae ~ 9th ~ (Marathon)].osu",
             },
+            /*
             new List<string>()
             {
                 $"{JackDirectory}/9zYST - The Lost Dedicated (Zyph) [4K].osu",
                 $"{StaminaDirectory}/9zVarious Artists - Dan ~ REFORM ~ StaminaMap Pack (DDMythical) [Chandelier ~ 10th ~ (Marathon)].osu",
                 $"{TechDirectory}/9zVarious Artists - Dan ~ REFORM ~ TechMap Pack (DDMythical) [Rave 7.7 ~ 10th ~ (Marathon)].osu",
-            },
+            },*/
             new List<string>()
             {
                 $"{JackDirectory}/aVarious Artists - Dan ~ REFORM ~ JackMap Pack (DDMythical) [Toraburu Kuroneko 1.15x ~ Alpha ~ (Marathon)].osu",
@@ -157,17 +153,11 @@ namespace Quaver.Tools.Commands
         private List<string> Files { get; }
 
         /// <summary>
-        ///     Current iteration count
+        ///     Used to count total iterations
         /// </summary>
-        private int N { get; set; } = 0;
+        private int N { get; set; }
 
-        public OptimizeCommand(string[] args) : base(args)
-        {
-            Constants = new StrainConstantsKeys();
-            GeneralConvergence = new GeneralConvergence(Constants.ConstantVariables.Count);
-            //Files = Directory.GetFiles(BaseFolder, "*.qua", SearchOption.AllDirectories).ToList();
-            //Files.AddRange(Directory.GetFiles(BaseFolder, "*.osu", SearchOption.AllDirectories));
-        }
+        public OptimizeCommand(string[] args) : base(args) => Constants = new StrainConstantsKeys();
 
         public override void Execute()
         {
@@ -177,7 +167,10 @@ namespace Quaver.Tools.Commands
             var solution = new NelderMead(target.Length, fx)
             {
                 MaximumValue = -1e6,
-                Convergence = GeneralConvergence
+                Convergence = new GeneralConvergence(Constants.ConstantVariables.Count)
+                {
+                    MaximumEvaluations = Limit
+                }
             };
 
             // Optimize
@@ -198,54 +191,81 @@ namespace Quaver.Tools.Commands
         {
             N++;
             Constants.UpdateConstants(input);
-            double xbar = 0;
-            double delta = 0;
-            double sigma = 0;
+            var fx = GetSkillsetAverageDelta() * GetSkillsetAverageSigma();
+            Console.WriteLine($"n = {N}, f(x) = {fx}");
+            return fx;
+        }
 
-            // Compute for overall difficulties
+        /// <summary>
+        ///     Returns Standard Deviation of Delta between each the average of each Skillset Map Difficulty.
+        /// </summary>
+        /// <returns></returns>
+        private double GetSkillsetAverageDelta()
+        {
             var diffs = new double[DanCalcTest.Count];
+            double sigma = 0;
             for (var i = 0; i < DanCalcTest.Count; i++)
             {
-                // Get Difficulty Average for current Dan
-                var alpha = new double[DanCalcTest[i].Count];
+                // Get Average of every Sample
+                var sample = new double[DanCalcTest[i].Count];
                 for (var j = 0; j < DanCalcTest[i].Count; j++)
                 {
-                    alpha[j] = new OsuBeatmap(DanCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
-                    diffs[i] += alpha[j];
+                    sample[j] = new OsuBeatmap(DanCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+                    diffs[i] += sample[j];
                 }
                 diffs[i] /= DanCalcTest[i].Count;
 
-                // Compute for Sigma
-                double diff = 0;
+                // Compute for average
+                double xbar = 0;
+                for (var j = 0; j < DanCalcTest[i].Count; j++)
+                    xbar += Math.Pow(sample[j] - diffs[i], 2);
+
+                // Get Sigma
+                xbar /= sample.Length;
+                sigma += xbar;
+            }
+
+            sigma /= DanCalcTest.Count;
+            return sigma;
+        }
+
+        /// <summary>
+        ///     Returns Average Standard Deviation for every Skillset Map in each Difficulty.
+        /// </summary>
+        /// <returns></returns>
+        private double GetSkillsetAverageSigma()
+        {
+            // Get Average of every Sample
+            var diffs = new double[DanCalcTest.Count];
+            double sigma = 0;
+            for (var i = 0; i < DanCalcTest.Count; i++)
+            {
+                var sample = new double[DanCalcTest[i].Count];
                 for (var j = 0; j < DanCalcTest[i].Count; j++)
                 {
-                    diff += Math.Pow(alpha[j] - diffs[i], 2);
+                    sample[j] = new OsuBeatmap(DanCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+                    diffs[i] += sample[j];
                 }
-                diff /= alpha.Length;
-                sigma += diff;
+                diffs[i] /= DanCalcTest[i].Count;
             }
-            sigma /= DanCalcTest.Count;
 
-            // Compute for mean
+            // Get Standard Deviation of each Difficulty Interval
             for (var i = 0; i < diffs.Length - 1; i++)
             {
-                xbar += diffs[i + 1] - diffs[i];
+                sigma += diffs[i + 1] - diffs[i];
             }
-            xbar /= ( diffs.Length - 2 );
+            sigma /= (diffs.Length - 2);
 
-            // Compute for deviation
-            for (var i = 0; i < diffs.Length - 1; i++)
-            {
-                delta += diffs[i + 1] - diffs[i] < 1 ? 2 + Math.Pow(1 - diffs[i],2) * 5 : Math.Pow((diffs[i + 1] - diffs[i]) - xbar, 2);
-            }
-            delta /= ( diffs.Length - 2 );
+            return sigma / DanCalcTest.Count;
+        }
 
-
-            // Log and terminate optimization if necessary
-            var fx = delta * sigma;
-            Console.WriteLine($"n = {N}, f(x) = {fx}");
-            if (N >= Limit) GeneralConvergence.Cancel = true;
-            return fx;
+        /// <summary>
+        ///     Returns Standard Deviation of Delta between each Full-Length Dan Difficulty.
+        /// </summary>
+        /// <returns></returns>
+        private double GetFullDanAverageDelta()
+        {
+            return 0;
         }
     }
 }

@@ -35,6 +35,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         ///     Returns string "(name) = (value)". Mainly used for debugging and optimizing.
         /// </summary>
         /// <returns></returns>
-        public string GetVariableInfo() => $"{Name} = {Value}";
+        public string GetVariableInfo() => $"{Name} = NewConstant(\"{Name}\", {Value}f);";
     }
 }
