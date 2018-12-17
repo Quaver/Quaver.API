@@ -32,6 +32,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public DynamicVariable WristSimpleJackMultiplier { get; set; }
 
         /// <summary>
+        ///     Chord Multiplier if Chorded Hit Object is found in the other hand.
+        /// </summary>
+        public DynamicVariable ChordMultiplier { get; set; }
+
+        /// <summary>
         ///     Constructor. Create default strain constant values.
         /// </summary>
         public StrainConstantsKeys()
@@ -43,6 +48,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             WristGapMultiplier = NewConstant("WristGapMultiplier", 1f);
             WristVibroMultiplier = NewConstant("WristVibroMultiplier", 0.91f);
             WristSimpleJackMultiplier = NewConstant("WristSimpleJackMultiplier", 0.98f);
+            ChordMultiplier = NewConstant("ChordMultiplier", 0.94f);
         }
     }
 }

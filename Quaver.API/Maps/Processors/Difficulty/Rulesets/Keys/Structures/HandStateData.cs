@@ -17,11 +17,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public const float CHORD_THRESHOLD_OTHERHAND_MS = 16f;
 
         /// <summary>
-        ///     Multiplier that will be applied to chords if other hand is involved.
-        /// </summary>
-        public const float CHORD_MULTIPLIER = 0.88f;
-
-        /// <summary>
         /// 
         /// </summary>
         public HandStateData ChordedHand { get; set; }
@@ -87,10 +82,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// </summary>
         public void EvaluateDifficulty(StrainConstantsKeys constants)
         {
-            EvaluateChord();
             StateDifficulty = 0;
             FingerState = FingerState.None;
-            HitObjects.ForEach(
+            HitObjects.ForEach
+            (
                 x =>
                 {
                     FingerState |= x.FingerState;
@@ -101,10 +96,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 
             StateDifficulty /= HitObjects.Count;
 
+            // Apply Chord Multiplier if Other Hand is chorded with this hand.
             if (ChordedHand != null)
-            {
-                StateDifficulty *= CHORD_MULTIPLIER;
-            }
+                StateDifficulty *= constants.ChordMultiplier.Value;
         }
 
         private void CalculateChordProximity()

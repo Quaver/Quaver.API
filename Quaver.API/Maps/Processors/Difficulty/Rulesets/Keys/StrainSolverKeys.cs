@@ -265,15 +265,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     {
                         if (hitObjects[j].Hand == hitObjects[i].Hand)
                         {
+                            // Break loop upon same finger found
                             if (((int)state & (1 << (int)hitObjects[j].FingerState - 1)) != 0)
-                            {
                                 break;
-                            }
-                            else
-                            {
-                                state |= hitObjects[j].FingerState;
-                                hitObjects[j].WristState = wrist;
-                            }
+
+                            state |= hitObjects[j].FingerState;
+                            hitObjects[j].WristState = wrist;
                         }
                     }
 
