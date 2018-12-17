@@ -12,7 +12,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <summary>
         ///     List of Constant Variables for the current Solver.
         /// </summary>
-        public List<ConstantVariable> ConstantVariables { get; set; }
+        public List<DynamicVariable> ConstantVariables { get; set; }
 
         /// <summary>
         ///     Create a new constant variable for difficulty calculation and optimization.
@@ -20,10 +20,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public ConstantVariable NewConstant(string name, float value)
+        public DynamicVariable NewConstant(string name, float value)
         {
             // Create new constant variable
-            var constVar = new ConstantVariable(name, value);
+            var constVar = new DynamicVariable(name, value);
             ConstantVariables.Add(constVar);
 
             // return
@@ -49,10 +49,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         ///     Constructor
         /// </summary>
         /// <param name="constVariables"></param>
-        public StrainConstants(List<ConstantVariable> constVariables = null)
+        public StrainConstants(List<DynamicVariable> constVariables = null)
         {
             if (constVariables == null)
-                ConstantVariables = new List<ConstantVariable>();
+                ConstantVariables = new List<DynamicVariable>();
 
             else
                 ConstantVariables = constVariables;

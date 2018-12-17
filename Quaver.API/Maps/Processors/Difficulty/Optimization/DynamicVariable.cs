@@ -8,7 +8,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
     ///     This class is used to represent a constant variable for difficutly calculation.
     ///     It is also used for optimization. 
     /// </summary>
-    public class ConstantVariable
+    public class DynamicVariable
     {
         /// <summary>
         ///     Name of this constant
@@ -25,7 +25,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public ConstantVariable(string name, float value)
+        public DynamicVariable(string name, float value)
         {
             Name = name;
             Value = value;

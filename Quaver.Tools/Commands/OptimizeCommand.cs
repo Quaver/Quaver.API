@@ -33,15 +33,15 @@ namespace Quaver.Tools.Commands
         /// <summary>
         ///     Reference Directory for map files.
         /// </summary>
-        private static string BaseFolder { get; } = "c:/users/admin/desktop/testmaps/dan/full-reform"; //full-reform
+        private static string BaseFolder { get; } = "c:/users/denys/desktop/testmaps/dan/full-reform"; //full-reform
 
-        private static string JackDirectory { get; } = "C:/Users/admin/Desktop/testmaps/dan/jack";
+        private static string JackDirectory { get; } = "C:/Users/denys/Desktop/testmaps/dan/jack";
 
-        private static string SpeedDirectory { get; } = "C:/Users/admin/Desktop/testmaps/dan/speed";
+        private static string SpeedDirectory { get; } = "C:/Users/denys/Desktop/testmaps/dan/speed";
 
-        private static string TechDirectory { get; } = "C:/Users/admin/Desktop/testmaps/dan/tech";
+        private static string TechDirectory { get; } = "C:/Users/denys/Desktop/testmaps/dan/tech";
 
-        private static string StaminaDirectory { get; } = "C:/Users/admin/Desktop/testmaps/dan/stamina";
+        private static string StaminaDirectory { get; } = "C:/Users/denys/Desktop/testmaps/dan/stamina";
 
         private List<List<string>> DanCalcTest { get; } = new List<List<string>>()
         {
@@ -236,7 +236,7 @@ namespace Quaver.Tools.Commands
             // Compute for deviation
             for (var i = 0; i < diffs.Length - 1; i++)
             {
-                delta += Math.Pow((diffs[i + 1] - diffs[i]) - xbar, 2);
+                delta += diffs[i + 1] - diffs[i] < 1 ? 2 + Math.Pow(1 - diffs[i],2) * 5 : Math.Pow((diffs[i + 1] - diffs[i]) - xbar, 2);
             }
             delta /= ( diffs.Length - 2 );
 
