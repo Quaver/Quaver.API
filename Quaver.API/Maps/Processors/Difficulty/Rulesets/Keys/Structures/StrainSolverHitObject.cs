@@ -31,7 +31,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public Hand Hand { get; set; } = Hand.Ambiguous; //todo: implement differently
+        public Hand Hand { get; set; }
 
         /// <summary>
         ///     Current type of layering relating to LN
@@ -49,6 +49,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public float ChordMultiplier { get; set; } = 1;
 
         /// <summary>
+        ///     Determined by how repetitive the jack action is (if a jack follows up.)
+        /// </summary>
+        public float RepetitionMultiplier { get; set; } = 1;
+
+        /// <summary>
         ///     Current Strain Value for this hit object.
         /// </summary>
         public float StrainValue { get; set; }
@@ -62,8 +67,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Constructor
         /// </summary>
         /// <param name="hitOb"></param>
-        public StrainSolverHitObject(HitObjectInfo hitOb, GameMode mode)
+        public StrainSolverHitObject(HitObjectInfo hitOb, GameMode mode, Hand assumeHand)
         {
+            HitObject = hitOb;
+
+            // Determine Hand of this hit object
             switch (mode)
             {
                 case GameMode.Keys4:
@@ -72,12 +80,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                     break;
                 case GameMode.Keys7:
                     FingerState = StrainSolverKeys.LaneToFinger7K[hitOb.Lane];
-                    Hand = StrainSolverKeys.LaneToHand7K[hitOb.Lane];
+                    Hand = StrainSolverKeys.LaneToHand7K[hitOb.Lane].Equals(Hand.Ambiguous) ? assumeHand : StrainSolverKeys.LaneToHand7K[hitOb.Lane];
                     break;
                 default:
                     throw new Exception("Invalid GameMode used to create StrainSolverHitObject");
             }
-            HitObject = hitOb;
         }
 
         /// <summary>
@@ -88,7 +95,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainValue = 1;
             if (WristState == null)
             {
-                StrainValue = (float)constants.WristTechMultiplier.Value;
+                StrainValue = constants.WristTechMultiplier.Value;
             }
             else if (WristState.NextState != null)
             {
@@ -96,23 +103,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                 {
                     if (WristState.NextState.NextState != null)
                     {
-                        if (Math.Abs(WristState.NextState.NextStateDelta - WristState.NextStateDelta) < WristState.WRIST_DELTA_THRESHOLD_MS)
+                        var delta = Math.Abs(WristState.NextState.NextStateDelta - WristState.NextStateDelta);
+                        if (delta < WristState.WRIST_DELTA_THRESHOLD_MS)
                         {
-                            // todo: use gradient from 102ms and below.
-                            // - >100ms = 0.95x
-                            // - 100ms = 0.92x
-                            // - 94ms = 0.95x
                             if (WristState.NextStateDelta < constants.VibroActionTolerance)
                             {
-                                WristState.WristDifficulty = (WristState.NextState.WristDifficulty * constants.WristVibroMultiplier.Value);
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * constants.WristVibroMultiplier.Value;
                             }
-                            else if (WristState.NextStateDelta < constants.VibroActionThreshold)
+                            else if (WristState.NextStateDelta >= constants.VibroActionThreshold)
                             {
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * (constants.WristVibroMultiplier.Value + (constants.WristSimpleJackMultiplier.Value - constants.WristVibroMultiplier.Value) / 2);
+                                WristState.WristDifficulty = (constants.WristSimpleJackMultiplier.Value + WristState.NextState.WristDifficulty) / 2;
                             }
                             else
                             {
-                                WristState.WristDifficulty = (constants.WristSimpleJackMultiplier.Value + WristState.NextState.WristDifficulty) / 2;
+                                var diff = constants.WristSimpleJackMultiplier.Value - constants.WristVibroMultiplier.Value;
+                                var interval = constants.VibroActionThreshold - constants.VibroActionTolerance;
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty + diff * (delta - constants.VibroActionTolerance) / interval;
                             }
                         }
                         else
@@ -121,28 +127,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                         }
                     }
 
-                    var count = 0;
-                    var curCheck = WristState.NextState;
-                    while (count < 30)
-                    {
-                        count++;
-                        curCheck = curCheck.NextState;
-
-                        if (curCheck == null)
-                        {
-                            break;
-                        }
-                        else if (!curCheck.WristPair.Equals(WristState.WristPair))
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            WristState.WristDifficulty *= constants.WristRepetitionMultiplier.Value;
-                        }
-
-                    }
-
+                    DetermineRepetition(constants);
                     StrainValue = WristState.WristDifficulty;
                 }
                 else
@@ -150,6 +135,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                     StrainValue = 1;
                 }
             }
+        }
+
+        /// <summary>
+        ///     Determine and Apply Repetition Multiplier to Simple Jacks
+        /// </summary>
+        /// <param name="constants"></param>
+        private void DetermineRepetition(StrainConstantsKeys constants)
+        {
+            if (WristState.NextState != null && WristState.NextState.WristPair.Equals(WristState.WristPair))
+                WristState.RepetitionCount = WristState.NextState.RepetitionCount + 1;
+
+            RepetitionMultiplier = (float)Math.Pow(constants.WristRepetitionMultiplier.Value, Math.Min(WristState.RepetitionCount, constants.MaxSimpleJackRepetition));
+            WristState.WristDifficulty *= RepetitionMultiplier;
         }
     }
 }

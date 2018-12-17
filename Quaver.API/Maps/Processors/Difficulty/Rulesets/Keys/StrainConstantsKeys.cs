@@ -15,6 +15,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         public float VibroActionThreshold { get; } = 100;
 
+        public int MaxSimpleJackRepetition { get; } = 30;
+
         public DynamicVariable StaminaIncrementalMultiplier { get; set; }
 
         public DynamicVariable StaminaDecrementalMultiplier { get; set; }

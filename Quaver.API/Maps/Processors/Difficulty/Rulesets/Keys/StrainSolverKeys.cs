@@ -362,10 +362,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             var hitObjects = new List<StrainSolverHitObject>();
             foreach (var ho in Map.HitObjects)
-            {
-                hitObjects.Add(new StrainSolverHitObject(ho, Map.Mode));
-                // todo: implement assume hand
-            }
+                hitObjects.Add(new StrainSolverHitObject(ho, Map.Mode, assumeHand));
+
             return hitObjects;
         }
 

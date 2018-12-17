@@ -39,17 +39,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Determined by the hand this data point focuses on.
         /// </summary>
-        public Hand Hand { get; private set; }
+        public Hand Hand { get; }
 
         /// <summary>
         ///     Determined by the current state of each finger.
         /// </summary>
         public FingerState FingerState { get; private set; }
-
-        /// <summary>
-        ///     Determined by how many HitObjects are in this current state.
-        /// </summary>
-        public ChordType ChordType { get; private set; }
 
         /// <summary>
         ///     Determined by how close the hitobjects are to becoming a perfect chord.
@@ -76,55 +71,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         {
             Hand = hitObject.Hand;
             AddHitObjectToChord(hitObject);
-            /*
-            if (hitObjects.Count == 0)
-            {
-                throw new Exception("HitObject List for HandStateData has no HitObjects");
-            }
-
-            // Set Finger State to appropriate value and calculate ChordProximity
-            var lead = hitObjects[0];
-            StrainSolverHitObject furthest = null;
-            HitObjects = hitObjects;
-            foreach (var ob in hitObjects)
-            {
-                FingerState |= ob.FingerState;
-                if (StrainSolverKeys.LaneToHand4K[ob.HitObject.Lane] != Hand)
-                {
-                    if (furthest == null || ob.HitObject.StartTime > furthest.HitObject.StartTime)
-                    {
-                        furthest = ob;
-                    }
-                }
-            }
-
-            // Calculate Chord Proximity from furthest chord
-            ChordProximity = furthest == null
-                ? 1
-                : Math.Abs(furthest.HitObject.StartTime - lead.HitObject.StartTime) / CHORD_THRESHOLD_OTHERHAND_MS;
-
-            // Set ChordType to appropriate value
-            switch (hitObjects.Count)
-            {
-                case 0:
-                    ChordType = ChordType.None;
-                    return;
-                case 1:
-                    ChordType = ChordType.SingleTap;
-                    return;
-                case 2:
-                    ChordType = ChordType.JumpChord;
-                    return;
-                case 3:
-                    ChordType = ChordType.HandChord;
-                    return;
-                case 4:
-                    ChordType = ChordType.QuadChord;
-                    return;
-                default:
-                    ChordType = ChordType.NChord;
-                    return;
-            }*/
         }
 
         /// <summary>
@@ -141,6 +87,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// </summary>
         public void EvaluateDifficulty(StrainConstantsKeys constants)
         {
+            EvaluateChord();
             StateDifficulty = 0;
             FingerState = FingerState.None;
             HitObjects.ForEach(
@@ -160,13 +107,54 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="currentDifficulty"></param>
-        public void EvaluateStamina(float currentDifficulty)
+        private void CalculateChordProximity()
         {
-            //StateDifficulty += (currentDifficulty - StateDifficulty) / 2f;
+            // There should not be 0 HitObjects in the Hand State
+            if (HitObjects.Count == 0)
+                throw new Exception("HitObject List for HandStateData has no HitObjects");
+
+            // Set Finger State to appropriate value and calculate ChordProximity
+            var lead = HitObjects[0];
+            StrainSolverHitObject furthest = null;
+            HitObjects = HitObjects;
+            foreach (var ob in HitObjects)
+            {
+                FingerState |= ob.FingerState;
+                if (StrainSolverKeys.LaneToHand4K[ob.HitObject.Lane] != Hand)
+                {
+                    if (furthest == null || ob.HitObject.StartTime > furthest.HitObject.StartTime)
+                    {
+                        furthest = ob;
+                    }
+                }
+            }
+
+            // Calculate Chord Proximity from furthest chord
+            ChordProximity = furthest == null ? 0 : Math.Abs(furthest.HitObject.StartTime - lead.HitObject.StartTime) / CHORD_THRESHOLD_OTHERHAND_MS;
+        }
+
+        /// <summary>
+        ///     Get the chord type of the current hand state.
+        ///     ChordType is determined by the number of HitObjects in this state.
+        /// </summary>
+        private ChordType EvaluateChord()
+        {
+            var otherHand = ChordedHand == null ? 0 : ChordedHand.HitObjects.Count;
+            switch (HitObjects.Count + otherHand)
+            {
+                case 0:
+                    return ChordType.None;
+                case 1:
+                    return ChordType.SingleTap;
+                case 2:
+                    return ChordType.JumpChord;
+                case 3:
+                    return ChordType.HandChord;
+                case 4:
+                    return ChordType.QuadChord;
+                default:
+                    return ChordType.NChord;
+            }
         }
     }
 }

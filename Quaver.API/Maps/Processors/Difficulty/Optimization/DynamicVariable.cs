@@ -11,12 +11,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
     public class DynamicVariable
     {
         /// <summary>
-        ///     Name of this constant
+        ///     Name of this variable
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        ///     Value of this constant
+        ///     Value of this variable
         /// </summary>
         public float Value { get; set; }
 

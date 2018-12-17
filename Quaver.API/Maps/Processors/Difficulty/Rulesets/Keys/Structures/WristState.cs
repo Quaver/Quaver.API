@@ -35,7 +35,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public WristState NextState { get; private set; }
+        public WristState NextState { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int RepetitionCount { get; set; }
 
         /// <summary>
         /// 
