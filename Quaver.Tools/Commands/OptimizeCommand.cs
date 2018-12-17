@@ -226,7 +226,7 @@ namespace Quaver.Tools.Commands
             }
 
             sigma /= DanCalcTest.Count;
-            return sigma;
+            return sigma + 1;
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Quaver.Tools.Commands
             }
             sigma /= (diffs.Length - 2);
 
-            return sigma / DanCalcTest.Count;
+            return sigma + 1;
         }
 
         /// <summary>
