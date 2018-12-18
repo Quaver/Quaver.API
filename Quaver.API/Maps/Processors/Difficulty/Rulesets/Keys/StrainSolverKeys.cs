@@ -155,20 +155,20 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // Get Initial Handstates
             // - Iterate through hit objects backwards
             hitObjects.Reverse();
-            List<HandStateData> refHandData;
-            for (var i = 0; i < hitObjects.Count; i++)
+            foreach (var data in hitObjects)
             {
                 // Determine Reference Hand
+                List<HandStateData> refHandData;
                 switch (Map.Mode)
                 {
                     case GameMode.Keys4:
-                        if (LaneToHand4K[hitObjects[i].HitObject.Lane] == Hand.Left)
+                        if (LaneToHand4K[data.HitObject.Lane] == Hand.Left)
                             refHandData = leftHandData;
                         else
                             refHandData = rightHandData;
                         break;
                     case GameMode.Keys7:
-                        var hand = LaneToHand7K[hitObjects[i].HitObject.Lane];
+                        var hand = LaneToHand7K[data.HitObject.Lane];
                         if (hand.Equals(Hand.Left) || (hand.Equals(Hand.Ambiguous) && assumeHand.Equals(Hand.Left)))
                             refHandData = leftHandData;
                         else
@@ -180,18 +180,18 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                 // Iterate through established handstates for chords
                 var chordFound = false;
-                for (var j = 0; j < refHandData.Count; j++)
+                foreach (var reference in refHandData)
                 {
                     // Break loop after leaving threshold
-                    if (refHandData[j].Time
-                        > hitObjects[i].StartTime + StrainConstants.ChordThresholdSameHandMs)
+                    if (reference.Time
+                        > data.StartTime + StrainConstants.ChordThresholdSameHandMs)
                         break;
 
                     // Check for finger overlap
                     chordFound = true;
-                    for (var k = 0; k < refHandData[j].HitObjects.Count; k++)
+                    foreach (var check in reference.HitObjects)
                     {
-                        if (refHandData[j].HitObjects[k].HitObject.Lane == hitObjects[i].HitObject.Lane)
+                        if (check.HitObject.Lane == data.HitObject.Lane)
                         {
                             chordFound = false;
                             break;
@@ -201,7 +201,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     // Add HitObject to Chord if no fingers overlap
                     if (chordFound)
                     {
-                        refHandData[j].AddHitObjectToChord(hitObjects[i]);
+                        reference.AddHitObjectToChord(data);
                         break;
                     }
                 }
@@ -209,70 +209,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // Add new HandStateData to list if no chords are found
                 if (!chordFound)
                 {
-                    refHandData.Add(new HandStateData(hitObjects[i]));
+                    refHandData.Add(new HandStateData(data));
                     allHandData.Add(refHandData.Last());
                 }
-
-                //Console.WriteLine(chordFound);
             }
 
             // Compute for chorded pairs
             ComputeForChordedPairs(allHandData);
 
             // Compute for wrist action
-            // maybe solve this first?
             ComputeForWristAction(hitObjects);
 
-            // temp calc variables
-            var count = 0;
-            float currentDiff = 1;
-            float total = 0;
-
-            // TEST CALC (OLD)
-            for (var z = 0; z <= 1; z++)
-            {
-                if (z == 0)
-                {
-                    refHandData = leftHandData;
-                }
-                else
-                {
-                    refHandData = rightHandData;
-                }
-
-                //todo: this is a temp const variable for graph
-                currentDiff = 0;
-                for (var i = 0; i < refHandData.Count - 2; i++)
-                {
-                    refHandData[i].EvaluateDifficulty(StrainConstants);
-                    // lean towards more diff sections if its within a certain time range
-                    if (refHandData[i].StateDifficulty < currentDiff)
-                    {
-                        currentDiff += (refHandData[i].StateDifficulty - currentDiff)
-                            * StrainConstants.StaminaDecrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / StrainConstants.MaxStaminaDelta, 1);
-                    }
-                    else
-                    {
-                        currentDiff += (refHandData[i].StateDifficulty - currentDiff)
-                            * StrainConstants.StaminaIncrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time / StrainConstants.MaxStaminaDelta), 1);
-                    }
-                    // todo: create method to interpolate bpm?
-                    if ((refHandData[i].Time
-                        - refHandData[i + 2].Time) != 0)
-                    {
-                        count++;
-                        total
-                            += Math.Max(1, refHandData[i].StateDifficulty
-                            * StrainConstants.DifficultyMultiplier
-                            * (float)Math.Sqrt(30000 / (refHandData[i].Time - refHandData[i + 2].Time)) + StrainConstants.DifficultyOffset);
-                    }
-                }
-            }
-
-            // temp diff
-            var stam = (float)(Math.Log10(count) / 25 + 0.9);
-            if (count == 0) return 0;
-            return stam * total / count;
+            // Compute for Stamina Difficulty
+            return ComputeForStaminaDifficulty(leftHandData, rightHandData);
         }
 
         /// <summary>
@@ -380,6 +329,63 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        private float ComputeForStaminaDifficulty(List<HandStateData> left, List<HandStateData> right)
+        {
+            // temp calc variables
+            var count = 0;
+            float total = 0;
+
+            // TEST CALC (OLD)
+            for (var z = 0; z <= 1; z++)
+            {
+                var reference = z == 0 ? left : right;
+                float currentDiff = 0;
+                for (var i = 0; i < reference.Count - 2; i++)
+                {
+                    // Interpolate Current Difficulty with Stamina
+                    // TODO: put this crap in HandStateData class
+                    reference[i].EvaluateDifficulty(StrainConstants);
+                    if (reference[i].StateDifficulty < currentDiff)
+                    {
+                        currentDiff += (reference[i].StateDifficulty - currentDiff)
+                            * StrainConstants.StaminaDecrementalMultiplier.Value * Math.Min((reference[i].Time - reference[i + 2].Time) / StrainConstants.MaxStaminaDelta, 1);
+                    }
+                    else
+                    {
+                        currentDiff += (reference[i].StateDifficulty - currentDiff)
+                            * StrainConstants.StaminaIncrementalMultiplier.Value * Math.Min((reference[i].Time - reference[i + 2].Time / StrainConstants.MaxStaminaDelta), 1);
+                    }
+
+                    // Calculate Difficulty of Current Section
+                    // TODO: put this crap in HandStateData class
+                    if ((reference[i].Time
+                        - reference[i + 2].Time) > 0)
+                    {
+                        count++;
+                        total
+                            += Math.Max(1, reference[i].StateDifficulty
+                            * StrainConstants.DifficultyMultiplier
+                            * (float)Math.Sqrt(30000 / (reference[i].Time - reference[i + 2].Time)) + StrainConstants.DifficultyOffset);
+                    }
+                    else
+                    {
+                        throw new Exception("HandStateData Action Delta is 0 or negative value.");
+                    }
+                }
+            }
+
+            // temp diff
+            var stam = (float)(Math.Log10(count) / 25 + 0.9);
+            if (count == 0) return 0;
+            return stam * total / count;
         }
     }
 }
