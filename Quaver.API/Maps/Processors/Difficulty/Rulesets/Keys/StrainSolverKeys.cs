@@ -23,11 +23,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public StrainConstantsKeys StrainConstants { get; }
 
         /// <summary>
-        ///     Average note density of the map
-        /// </summary>
-        public float AverageNoteDensity { get; } = 0;
-
-        /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
         /// </summary>
         public static Dictionary<int, Hand> LaneToHand4K { get;} = new Dictionary<int, Hand>()
@@ -76,16 +71,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             { 6, FingerState.Middle },
             { 7, FingerState.Ring }
         };
-
-        /// <summary>
-        ///     Value of confidence that there's vibro manipulation in the calculated map.
-        /// </summary>
-        private float VibroInaccuracyConfidence { get; set; }
-
-        /// <summary>
-        ///     Value of confidence that there's roll manipulation in the calculated map.
-        /// </summary>
-        private float RollInaccuracyConfidence { get; set; }
 
         /// <summary>
         ///     Solves the difficulty of a .qua file
@@ -184,7 +169,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 {
                     // Break loop after leaving threshold
                     if (reference.Time
-                        > data.StartTime + StrainConstants.ChordThresholdSameHandMs)
+                        < data.StartTime + StrainConstants.ChordThresholdSameHandMs)
                         break;
 
                     // Check for finger overlap
@@ -201,6 +186,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     // Add HitObject to Chord if no fingers overlap
                     if (chordFound)
                     {
+                        //Console.WriteLine("chordfound");
                         reference.AddHitObjectToChord(data);
                         break;
                     }
@@ -247,6 +233,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             for (var i = 0; i < data.Count; i++)
             {
+                if (data[i].Hand.Equals(Hand.Ambiguous))
+                    throw new Exception("Ambiguious Hand Found");
+
                 for (var j = i + 1; j < data.Count; j++)
                 {
                     if (data[i].Time - data[j].Time > StrainConstants.ChordThresholdOtherHandMs)
@@ -310,23 +299,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     wrist.WristPair = state;
                     wrist.Time = hitObjects[i].StartTime;
 
-                    // check if wrist state is the same
+                    // Check if Wrist Manipulation is involved. (Example: Rolls)
                     if (!state.Equals(hitObjects[i].FingerState))
                     {
                         wrist.WristAction = WristAction.Up;
                         hitObjects[i].WristState = wrist;
-                        //Console.WriteLine($"asd{state}_ {hitObjects[i].FingerState} | {Map.Length}, {hitObjects[i].StartTime}");
                     }
-                    // same state jack
+                    // Check for Simple Jacks
                     else if (wrist.NextState != null && wrist.NextState.WristPair.Equals(state))
                     {
                         wrist.WristAction = WristAction.Up;
                         hitObjects[i].WristState = wrist;
                     }
+                    // Anchor / Control is involved
                     else
-                    {
                         wrist = null;
-                    }
                 }
             }
         }
@@ -366,18 +353,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                     // Calculate Difficulty of Current Section
                     // TODO: put this crap in HandStateData class
-                    if ((reference[i].Time
-                        - reference[i + 2].Time) > 0)
+                    if (reference[i].Time
+                        - reference[i + 2].Time > 0)
                     {
                         count++;
                         total
                             += Math.Max(1, reference[i].StateDifficulty
                             * StrainConstants.DifficultyMultiplier
-                            * (float)Math.Sqrt(30000 / (reference[i].Time - reference[i + 2].Time)) + StrainConstants.DifficultyOffset);
+                            * (float)Math.Sqrt(StrainConstants.BpmToActionLengthMs / (reference[i].Time - reference[i + 2].Time)) + StrainConstants.DifficultyOffset);
                     }
                     else
                     {
-                        throw new Exception("HandStateData Action Delta is 0 or negative value.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"HandStateData Action Delta is {reference[i].Time- reference[i + 2].Time}");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        //throw new Exception("HandStateData Action Delta is 0 or negative value.");
                     }
                 }
             }

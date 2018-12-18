@@ -8,6 +8,12 @@ namespace Quaver.Tools
     {
         internal static void Main(string[] args)
         {
+            args = new string[]
+            {
+                "-calcfolder",
+                "C:/Users/denys/Desktop/testmaps/",
+                "None"
+            };
             var sw = new Stopwatch();
             sw.Start();
 

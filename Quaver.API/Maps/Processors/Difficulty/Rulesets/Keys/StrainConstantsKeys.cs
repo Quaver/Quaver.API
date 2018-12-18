@@ -10,13 +10,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Base Difficulty Multiplier
         /// </summary>
-        public float DifficultyMultiplier { get; } = 4.3f;
+        public float DifficultyMultiplier { get; } = 7.3f;
 
         /// <summary>
         ///     Base Offset Value. Difficulty will be subtracted by this value.
         ///     - Lowest Difficulty possible in HandState is 1. 
         /// </summary>
-        public float DifficultyOffset { get; } = -22f;
+        public float DifficultyOffset { get; } = -15f;
 
         /// <summary>
         ///     Determines if the HitObject on the same hand of a specific HitObject will be counted as a Chorded Hit Object.
@@ -54,6 +54,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         ///     Max Delta between two objects for stamina calculation.
         /// </summary>
         public float MaxStaminaDelta { get; } = 1000;
+
+        /// <summary>
+        ///     Determines the Multiplier for 1/4th Beat Action Length
+        /// </summary>
+        public float BpmToActionLengthMs { get; } = 15000;
 
         /// <summary>
         ///     Spline Multiplier for Hand States that have higher Difficulty than the previous predecessor 

@@ -92,7 +92,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         }
 
         /// <summary>
-        /// 
+        ///     Will determine the Chord Proximity of this Hand State.
         /// </summary>
         private void CalculateChordProximity(StrainConstantsKeys constants)
         {
