@@ -7,16 +7,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
     public class HandStateData
     {
         /// <summary>
-        ///     Determines if the HitObject on the same hand of this HitObject will be counted as an object chorded with this HitObject.
-        /// </summary>
-        public const float CHORD_THRESHOLD_SAMEHAND_MS = 8f;
-
-        /// <summary>
-        ///     Determines if the HitObject on the other hand of this HitObject will be counted as an object chorded with this HitObject.
-        /// </summary>
-        public const float CHORD_THRESHOLD_OTHERHAND_MS = 16f;
-
-        /// <summary>
         /// 
         /// </summary>
         public HandStateData ChordedHand { get; set; }
@@ -104,7 +94,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        private void CalculateChordProximity()
+        private void CalculateChordProximity(StrainConstantsKeys constants)
         {
             // There should not be 0 HitObjects in the Hand State
             if (HitObjects.Count == 0)
@@ -125,7 +115,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             }
 
             // Calculate Chord Proximity from furthest chord
-            ChordProximity = furthest == null ? 0 : Math.Abs(furthest.HitObject.StartTime - lead.HitObject.StartTime) / CHORD_THRESHOLD_OTHERHAND_MS;
+            ChordProximity = furthest == null ? 0 : Math.Abs(furthest.HitObject.StartTime - lead.HitObject.StartTime) / constants.ChordThresholdOtherHandMs;
         }
 
         /// <summary>

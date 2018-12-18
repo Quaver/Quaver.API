@@ -184,7 +184,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 {
                     // Break loop after leaving threshold
                     if (refHandData[j].Time
-                        > hitObjects[i].StartTime + HandStateData.CHORD_THRESHOLD_SAMEHAND_MS)
+                        > hitObjects[i].StartTime + StrainConstants.ChordThresholdSameHandMs)
                         break;
 
                     // Check for finger overlap
@@ -300,7 +300,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             {
                 for (var j = i + 1; j < data.Count; j++)
                 {
-                    if (data[i].Time - data[j].Time > HandStateData.CHORD_THRESHOLD_OTHERHAND_MS)
+                    if (data[i].Time - data[j].Time > StrainConstants.ChordThresholdOtherHandMs)
                     {
                         break;
                     }

@@ -19,6 +19,16 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public float DifficultyOffset { get; } = -22f;
 
         /// <summary>
+        ///     Determines if the HitObject on the same hand of a specific HitObject will be counted as a Chorded Hit Object.
+        /// </summary>
+        public float ChordThresholdSameHandMs { get; } = 8f;
+
+        /// <summary>
+        ///     Determines if the HitObject on the other hand of this HitObject will be counted as a Chorded Hit Object.
+        /// </summary>
+        public float ChordThresholdOtherHandMs { get; } = 16f;
+
+        /// <summary>
         ///     Any two states with intervals below this value will be considered vibro.
         ///     - a 1/4 170bpm jack has an interval of 88.235ms
         /// </summary>
