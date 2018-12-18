@@ -20,12 +20,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Constants used for solving
         /// </summary>
-        public StrainConstantsKeys StrainConstants { get; private set; }
+        public StrainConstantsKeys StrainConstants { get; }
 
         /// <summary>
         ///     Average note density of the map
         /// </summary>
-        public float AverageNoteDensity { get; private set; } = 0;
+        public float AverageNoteDensity { get; } = 0;
 
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
@@ -249,12 +249,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (refHandData[i].StateDifficulty < currentDiff)
                     {
                         currentDiff += (refHandData[i].StateDifficulty - currentDiff)
-                            * StrainConstants.StaminaDecrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / 1000f, 1);
+                            * StrainConstants.StaminaDecrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time) / StrainConstants.MaxStaminaDelta, 1);
                     }
                     else
                     {
                         currentDiff += (refHandData[i].StateDifficulty - currentDiff)
-                            * StrainConstants.StaminaIncrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time / 1000f), 1);
+                            * StrainConstants.StaminaIncrementalMultiplier.Value * Math.Min((refHandData[i].Time - refHandData[i + 2].Time / StrainConstants.MaxStaminaDelta), 1);
                     }
                     // todo: create method to interpolate bpm?
                     if ((refHandData[i].Time

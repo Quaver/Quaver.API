@@ -10,32 +10,35 @@ using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 namespace Quaver.Tools.Examples
 {
     /// <summary>
-    /// 
+    ///     Practical Example on how to Optimize Samples. This class shows:
+    ///     - How to Parse a specific file in a directory.
+    ///     - How to Get difficulty from a specific file.
+    ///     - How to Optimize Strain Constants.
     /// </summary>
     public class OptimizationExample
     {
         /// <summary>
-        ///     Reference Constants
+        ///     Reference Constants.
         /// </summary>
         private static StrainConstantsKeys Constants { get; set; }
 
         /// <summary>
-        /// 
+        ///     Total amount of times the Optimizer will iterate before terminating.
         /// </summary>
         private static int TotalIterations { get; } = 20;
 
         /// <summary>
-        ///     Used to count total iterations
+        ///     Used to count total iterations.
         /// </summary>
         private static int N { get; set; }
 
         /// <summary>
-        /// 
+        ///     Specific Directory on where the Sample Maps are located.
         /// </summary>
         private static string SampleDirectory { get; } = "c:/users/admin/desktop/test-maps/full-reform";
 
         /// <summary>
-        ///     Sample Files used for Calc
+        ///     Sample Files used for Calc.
         /// </summary>
         private static List<string> OptimizationSamples { get; } = new List<string>()
         {
@@ -59,7 +62,10 @@ namespace Quaver.Tools.Examples
         };
 
         /// <summary>
-        /// 
+        ///     Optimize Method Example. It will Optimize Difficulties from the sample.
+        ///     The goal of the optimizer is to ensure a fixed interval between each succeeding difficulty.
+        ///     - This optimizer does not account for low incremental difficulties.
+        ///     - (Meaning all maps being around the same difficulty is falsely valid)
         /// </summary>
         public static void Optimize()
         {

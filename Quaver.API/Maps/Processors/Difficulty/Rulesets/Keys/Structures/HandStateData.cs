@@ -98,7 +98,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 
             // Apply Chord Multiplier if Other Hand is chorded with this hand.
             if (ChordedHand != null)
-                StateDifficulty *= constants.ChordMultiplier.Value;
+                StateDifficulty *= constants.TwoHandedChordMultiplier.Value;
         }
 
         /// <summary>

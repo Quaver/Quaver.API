@@ -68,13 +68,12 @@ namespace Quaver.Tools.Commands
                 }
                 catch (Exception e)
                 {
-                    continue;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"ERROR: {e.StackTrace}");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
-
-            //Console.WriteLine(table);
-
-            File.WriteAllText($"{BaseFolder}/__diff-sheet.txt", output);
+            File.WriteAllText($"{BaseFolder}/____diff-sheet.txt", output);
         }
     }
 }

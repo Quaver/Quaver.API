@@ -34,11 +34,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public Hand Hand { get; set; }
 
         /// <summary>
-        ///     Strain Multiplier affected by chorded HitObjects
-        /// </summary>
-        public float ChordMultiplier { get; set; } = 1;
-
-        /// <summary>
         ///     Determined by how repetitive the jack action is (if a jack follows up.)
         /// </summary>
         public float RepetitionMultiplier { get; set; } = 1;
@@ -94,21 +89,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                     if (WristState.NextState.NextState != null)
                     {
                         var delta = Math.Abs(WristState.NextState.NextStateDelta - WristState.NextStateDelta);
-                        if (delta < constants.JackSigmaThresholdMs)
+                        if (delta < constants.WristGapDeltaThresholdMs)
                         {
-                            if (WristState.NextStateDelta < constants.VibroActionTolerance)
+                            if (WristState.NextStateDelta < constants.VibroActionToleranceMs)
                             {
                                 WristState.WristDifficulty = WristState.NextState.WristDifficulty * constants.WristVibroMultiplier.Value;
                             }
-                            else if (WristState.NextStateDelta >= constants.VibroActionThreshold)
+                            else if (WristState.NextStateDelta >= constants.VibroActionThresholdMs)
                             {
                                 WristState.WristDifficulty = (constants.WristSimpleJackMultiplier.Value + WristState.NextState.WristDifficulty) / 2;
                             }
                             else
                             {
                                 var diff = constants.WristSimpleJackMultiplier.Value - constants.WristVibroMultiplier.Value;
-                                var interval = constants.VibroActionThreshold - constants.VibroActionTolerance;
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty + diff * (delta - constants.VibroActionTolerance) / interval;
+                                var interval = constants.VibroActionThresholdMs - constants.VibroActionToleranceMs;
+                                WristState.WristDifficulty = WristState.NextState.WristDifficulty + diff * (delta - constants.VibroActionToleranceMs) / interval;
                             }
                         }
                         else
