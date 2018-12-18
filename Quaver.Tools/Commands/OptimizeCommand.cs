@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Accord.Math;
 using Accord.Math.Convergence;
 using Accord.Statistics;
 using Quaver.API.Enums;
@@ -56,7 +57,7 @@ namespace Quaver.Tools.Commands
             $"{FullDanDirectory}/Various Artists - Dan ~ REFORM ~ 2nd Pack (DDMythical) [~ EXTRA-EPSILON ~ (Marathon)].osu"
         };
 
-        private List<List<string>> SkillsetCalcTest { get; } = new List<List<string>>()
+        private List<List<string>> SkillsetCalcSample { get; } = new List<List<string>>()
         {
             new List<string>()
             {
@@ -158,6 +159,16 @@ namespace Quaver.Tools.Commands
             }
         };
 
+        private List<float> FullDanCalcResults => new List<float>()
+        {
+            2f
+        };
+
+        private List<float> FullSkillsetResults => new List<float>()
+        {
+            2f
+        };
+
         /// <summary>
         ///     Reference Map Files. The optimizer will assume that all files are sorted alphabetically, are in difficulty order, and have a fixed difficulty interval.
         /// </summary>
@@ -202,7 +213,7 @@ namespace Quaver.Tools.Commands
         {
             N++;
             Constants.UpdateConstants(input);
-            var fx = GetSkillsetAverageDelta() * GetSkillsetAverageSigma() * GetFullDanAverageDelta();
+            var fx = GetSkillsetAverageSigma(); //GetSkillsetAverageDelta() * GetSkillsetAverageSigma(); // * GetFullDanAverageDelta();
             Console.WriteLine($"n = {N}, f(x) = {fx}");
             return fx;
         }
@@ -213,22 +224,22 @@ namespace Quaver.Tools.Commands
         /// <returns></returns>
         private double GetSkillsetAverageDelta()
         {
-            var diffs = new double[SkillsetCalcTest.Count];
+            var diffs = new double[SkillsetCalcSample.Count];
             double sigma = 0;
-            for (var i = 0; i < SkillsetCalcTest.Count; i++)
+            for (var i = 0; i < SkillsetCalcSample.Count; i++)
             {
                 // Get Average of every Sample
-                var sample = new double[SkillsetCalcTest[i].Count];
-                for (var j = 0; j < SkillsetCalcTest[i].Count; j++)
+                var sample = new double[SkillsetCalcSample[i].Count];
+                for (var j = 0; j < SkillsetCalcSample[i].Count; j++)
                 {
-                    sample[j] = new OsuBeatmap(SkillsetCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+                    sample[j] = new OsuBeatmap(SkillsetCalcSample[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
                     diffs[i] += sample[j];
                 }
-                diffs[i] /= SkillsetCalcTest[i].Count;
+                diffs[i] /= SkillsetCalcSample[i].Count;
 
                 // Compute for average
                 double xbar = 0;
-                for (var j = 0; j < SkillsetCalcTest[i].Count; j++)
+                for (var j = 0; j < SkillsetCalcSample[i].Count; j++)
                     xbar += Math.Pow(sample[j] - diffs[i], 2);
 
                 // Get Sigma
@@ -236,7 +247,7 @@ namespace Quaver.Tools.Commands
                 sigma += xbar;
             }
 
-            sigma /= SkillsetCalcTest.Count;
+            sigma /= SkillsetCalcSample.Count;
             return sigma + 1;
         }
 
@@ -246,27 +257,28 @@ namespace Quaver.Tools.Commands
         /// <returns></returns>
         private double GetSkillsetAverageSigma()
         {
-            // Get Average of every Sample
-            var diffs = new double[SkillsetCalcTest.Count];
+            var diffs = new double[SkillsetCalcSample.Count];
             double sigma = 0;
-            for (var i = 0; i < SkillsetCalcTest.Count; i++)
+            for (var i = 0; i < SkillsetCalcSample.Count; i++)
             {
-                var sample = new double[SkillsetCalcTest[i].Count];
-                for (var j = 0; j < SkillsetCalcTest[i].Count; j++)
+                // Get Mean of each Skillset math
+                var sample = new double[SkillsetCalcSample[i].Count];
+                double xbar = 0;
+                for (var j = 0; j < SkillsetCalcSample[i].Count; j++)
                 {
-                    sample[j] = new OsuBeatmap(SkillsetCalcTest[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
-                    diffs[i] += sample[j];
+                    sample[j] = new OsuBeatmap(SkillsetCalcSample[i][j]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+                    xbar += sample[j];
                 }
-                diffs[i] /= SkillsetCalcTest[i].Count;
+                xbar /= sample.Length;
+
+                // Get Deviation of each Skillset map
+                foreach (var num in sample) diffs[i] += Math.Pow(num - xbar, 2);
+                diffs[i] /= sample.Length;
             }
 
-            // Get Standard Deviation of each Difficulty Interval
-            for (var i = 0; i < diffs.Length - 1; i++)
-            {
-                sigma += diffs[i + 1] - diffs[i];
-            }
-            sigma /= (diffs.Length - 2);
-            return sigma + 1;
+            // Get Average of each Deviation
+            foreach (var num in diffs) sigma += num;
+            return sigma / diffs.Length;
         }
 
         /// <summary>
@@ -277,15 +289,19 @@ namespace Quaver.Tools.Commands
         {
             // Get Difficulty from Samples
             double sigma = 0;
+            double xbar = 0;
             var sample = new double[FullDanCalcTest.Count];
             for (var i = 0; i < FullDanCalcTest.Count; i++)
             {
                 sample[i] = new OsuBeatmap(FullDanCalcTest[i]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+                if (i > 1)
+                xbar += sample[i] - sample[i - 1];
             }
+            xbar /= (sample.Length - 1);
 
             // Calculate Standard Deviation
             for (var i = 0; i < FullDanCalcTest.Count - 1; i++)
-                sigma += Math.Pow(sample[i + 1] - sample[i], 2);
+                sigma += Math.Pow(sample[i + 1] - sample[i] - xbar, 2);
 
             sigma /= FullDanCalcTest.Count;
             return sigma + 1;
