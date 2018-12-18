@@ -34,16 +34,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public Hand Hand { get; set; }
 
         /// <summary>
-        ///     Current type of layering relating to LN
-        /// </summary>
-        public LnLayerType LnLayerType { get; set; } = LnLayerType.None;
-
-        /// <summary>
-        ///     Strain Multiplier calculated by LN difficulty
-        /// </summary>
-        public float LnStrainMultiplier { get; set; } = 1;
-
-        /// <summary>
         ///     Strain Multiplier affected by chorded HitObjects
         /// </summary>
         public float ChordMultiplier { get; set; } = 1;
@@ -104,7 +94,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                     if (WristState.NextState.NextState != null)
                     {
                         var delta = Math.Abs(WristState.NextState.NextStateDelta - WristState.NextStateDelta);
-                        if (delta < WristState.WRIST_DELTA_THRESHOLD_MS)
+                        if (delta < constants.JackSigmaThresholdMs)
                         {
                             if (WristState.NextStateDelta < constants.VibroActionTolerance)
                             {

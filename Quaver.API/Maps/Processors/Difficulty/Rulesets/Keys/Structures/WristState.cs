@@ -6,7 +6,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
     public class WristState
     {
-        public const float WRIST_DELTA_THRESHOLD_MS = 26;
         /// <summary>
         /// 
         /// </summary>
