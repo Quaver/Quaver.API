@@ -8,28 +8,10 @@ namespace Quaver.Tools
     {
         internal static void Main(string[] args)
         {
-            // TODO: temp
-            var user = "denys";
-            var commands = new string[][] {
-                //new string[] { "-optimize" }
-                
-                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/tech", "None" },
-                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/speed", "None" },
-                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/jack", "None" },
-                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/stamina", "None" },
-                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-reform", "None" },
-                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps/dan/full-old", "None" },
-                new string[] { "-calcfolder", $"c:/users/{user}/desktop/testmaps", "None" },
-                
-                new string[] { "-calcfolder", $"c:/Users/{user}/desktop/oss", "None" }
-                
-            };
-            //args = new string[] { "-calcfolder", "c:/users/admin/desktop/qss/testmaps", "None" };
-            Console.WriteLine("Calculating Difficulties...");
             var sw = new Stopwatch();
-
             sw.Start();
-            if (commands.Length == 0)
+
+            if (args.Length == 0)
             {
                 Console.WriteLine($"Welcome to the Quaver.API test bench.\n" +
                                   $"Here you can run a bunch of things to test the API.\n\n" +
@@ -41,30 +23,26 @@ namespace Quaver.Tools
                 return;
             }
 
-            for (var i = 0; i < commands.Length; i++)
-            switch (commands[i][0])
+            switch (args[0])
             {
-                case "-optimize":
-                    new OptimizeCommand(commands[i]).Execute();
-                    break;
                 case "-calcdiff":
-                    new CalcDiffCommand(commands[i]).Execute();
+                    new CalcDiffCommand(args).Execute();
                     break;
                 case "-calcfolder":
-                    new CalcFolderCommand(commands[i]).Execute();
+                    new CalcFolderCommand(args).Execute();
                     break;
                 case "-replay":
-                    new ReplayCommand(commands[i]).Execute();
+                    new ReplayCommand(args).Execute();
                     break;
                 case "-virtualreplay":
-                    new VirtualReplayPlayerCommand(commands[i]).Execute();
+                    new VirtualReplayPlayerCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
             }
             sw.Stop();
 
-            Console.WriteLine($"TIME ELAPSED: {sw.Elapsed}");
+            Console.WriteLine($"Time Elapsed: {sw.Elapsed}");
         }
     }
 }

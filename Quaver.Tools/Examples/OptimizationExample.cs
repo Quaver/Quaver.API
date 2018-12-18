@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Accord.Math.Convergence;
 using Accord.Math.Optimization;
+using Quaver.API.Maps;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 
@@ -21,17 +22,17 @@ namespace Quaver.Tools.Examples
         /// <summary>
         /// 
         /// </summary>
-        private static string SampleDirectory { get; } = "c:/users/denys/desktop/testmaps/dan/full-reform";
-
-        /// <summary>
-        /// 
-        /// </summary>
         private static int TotalIterations { get; } = 20;
 
         /// <summary>
         ///     Used to count total iterations
         /// </summary>
         private static int N { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static string SampleDirectory { get; } = "c:/users/admin/desktop/test-maps/full-reform";
 
         /// <summary>
         ///     Sample Files used for Calc
@@ -99,7 +100,7 @@ namespace Quaver.Tools.Examples
             var sample = new double[OptimizationSamples.Count];
             for (var i = 0; i < OptimizationSamples.Count; i++)
             {
-                sample[i] = new OsuBeatmap(OptimizationSamples[i]).ToQua().SolveDifficulty(Constants).OverallDifficulty;
+                sample[i] = Qua.Parse(OptimizationSamples[i]).SolveDifficulty(Constants).OverallDifficulty;
                 if (i > 0)
                     xbar += sample[i] - sample[i - 1];
             }
