@@ -14,7 +14,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     All HitObjects referenced for this Hand State
         /// </summary>
-        public List<DifficultyProcessorHitObject> HitObjects { get; } = new List<DifficultyProcessorHitObject>();
+        public List<DPHitObject> HitObjects { get; } = new List<DPHitObject>();
 
         /// <summary>
         ///     Reference Timing Position for this State. It will use the StartTime of the first HitObject that initialized this object.
@@ -47,7 +47,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// 
         /// </summary>
         /// <param name="hitObjects"></param>
-        public HandStateData(DifficultyProcessorHitObject hitObject)
+        public HandStateData(DPHitObject hitObject)
         {
             Hand = hitObject.Hand;
             AddHitObjectToChord(hitObject);
@@ -57,7 +57,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Add HitObject as a Chord to this state.
         /// </summary>
         /// <param name="hitObjects"></param>
-        public void AddHitObjectToChord(DifficultyProcessorHitObject hitObject) => HitObjects.Add(hitObject);
+        public void AddHitObjectToChord(DPHitObject hitObject) => HitObjects.Add(hitObject);
 
         /// <summary>
         ///     Evaluate Difficulty for this specific Hand State.
@@ -105,7 +105,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 
             // Set Finger State to appropriate value and calculate ChordProximity
             var lead = HitObjects[0];
-            DifficultyProcessorHitObject furthest = null;
+            DPHitObject furthest = null;
             foreach (var ob in HitObjects)
             {
                 if (DifficultyProcessorKeys.LaneToHand4K[ob.HitObject.Lane] != Hand)
