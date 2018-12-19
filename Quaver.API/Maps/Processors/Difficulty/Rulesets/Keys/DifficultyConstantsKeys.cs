@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 {
-    public class StrainConstantsKeys : StrainConstants
+    public class DifficultyConstantsKeys : DifficultyConstants
     {
         /// <summary>
         ///     Base Difficulty Multiplier
@@ -113,7 +113,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Constructor. Create default strain constant values.
         /// </summary>
-        public StrainConstantsKeys()
+        public DifficultyConstantsKeys()
         {
             StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.1607309f);
             StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.6409109f);

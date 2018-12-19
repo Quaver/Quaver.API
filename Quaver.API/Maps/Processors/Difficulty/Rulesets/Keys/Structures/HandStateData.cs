@@ -64,7 +64,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// </summary>
         /// <param name="constants"></param>
         /// <param name="nextState"></param>
-        public float EvaluateDifficulty(StrainConstantsKeys constants, float actionLength)
+        public float EvaluateDifficulty(DifficultyConstantsKeys constants, float actionLength)
         {
             StateDifficulty = 0;
             FingerState = Finger.None;
@@ -97,7 +97,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Todo: this method is unused for now.
         ///     Todo: Ideally, it'll be used to interpolate between chord/non-chord for Diff-Calc, but it is not efficient.
         /// </summary>
-        private void CalculateChordProximity(StrainConstantsKeys constants)
+        private void CalculateChordProximity(DifficultyConstantsKeys constants)
         {
             // There should not be 0 HitObjects in the Hand State
             if (HitObjects.Count == 0)
@@ -108,7 +108,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainSolverHitObject furthest = null;
             foreach (var ob in HitObjects)
             {
-                if (DifficultyProcessorKeys.LaneToHand4K[ob.HitObject.Lane] != Hand)
+                if (DifficultyProcessorKeysNEW.LaneToHand4K[ob.HitObject.Lane] != Hand)
                 {
                     if (furthest == null || ob.HitObject.StartTime > furthest.HitObject.StartTime)
                         furthest = ob;

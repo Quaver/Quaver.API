@@ -60,7 +60,7 @@ namespace Quaver.API.Gameplay
             Name = GenerateRandomName();
 
             // Create a fake score processor so we can access the judgement values.
-            var scoreProcessor = new ScoreProcessorKeysNEW(new Qua(), 0);
+            var scoreProcessor = new ScoreProcessorKeys(new Qua(), 0);
 
             switch (Level)
             {

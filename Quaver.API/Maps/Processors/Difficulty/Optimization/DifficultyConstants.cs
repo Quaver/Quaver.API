@@ -7,7 +7,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
     /// <summary>
     ///     Constant Variables for any specific Gamemode that the Strain Solver can use to solve.
     /// </summary>
-    public class StrainConstants
+    public class DifficultyConstants
     {
         /// <summary>
         ///     List of Constant Variables for the current Solver.
@@ -49,7 +49,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         ///     Constructor
         /// </summary>
         /// <param name="constVariables"></param>
-        public StrainConstants(List<DynamicVariable> constVariables = null)
+        public DifficultyConstants(List<DynamicVariable> constVariables = null)
         {
             if (constVariables == null)
                 ConstantVariables = new List<DynamicVariable>();

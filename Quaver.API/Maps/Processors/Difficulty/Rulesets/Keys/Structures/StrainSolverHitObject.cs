@@ -60,12 +60,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             switch (mode)
             {
                 case GameMode.Keys4:
-                    FingerState = DifficultyProcessorKeys.LaneToFinger4K[hitOb.Lane];
-                    Hand = DifficultyProcessorKeys.LaneToHand4K[hitOb.Lane];
+                    FingerState = DifficultyProcessorKeysNEW.LaneToFinger4K[hitOb.Lane];
+                    Hand = DifficultyProcessorKeysNEW.LaneToHand4K[hitOb.Lane];
                     break;
                 case GameMode.Keys7:
-                    FingerState = DifficultyProcessorKeys.LaneToFinger7K[hitOb.Lane];
-                    Hand = DifficultyProcessorKeys.LaneToHand7K[hitOb.Lane].Equals(Hand.Ambiguous) ? assumeHand : DifficultyProcessorKeys.LaneToHand7K[hitOb.Lane];
+                    FingerState = DifficultyProcessorKeysNEW.LaneToFinger7K[hitOb.Lane];
+                    Hand = DifficultyProcessorKeysNEW.LaneToHand7K[hitOb.Lane].Equals(Hand.Ambiguous) ? assumeHand : DifficultyProcessorKeysNEW.LaneToHand7K[hitOb.Lane];
                     break;
                 default:
                     throw new Exception("Invalid GameMode used to create StrainSolverHitObject");
@@ -75,7 +75,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public void EvaluateDifficulty(StrainConstantsKeys constants)
+        public void EvaluateDifficulty(DifficultyConstantsKeys constants)
         {
             StrainValue = 1;
 
@@ -133,7 +133,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Determine and Apply Repetition Multiplier to Simple Jacks
         /// </summary>
         /// <param name="constants"></param>
-        private void DetermineRepetition(StrainConstantsKeys constants)
+        private void DetermineRepetition(DifficultyConstantsKeys constants)
         {
             if (WristState.NextState != null && WristState.NextState.WristPair.Equals(WristState.WristPair))
                 WristState.RepetitionCount = WristState.NextState.RepetitionCount + 1;

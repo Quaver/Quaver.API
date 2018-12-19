@@ -24,7 +24,7 @@ namespace Quaver.API.Replays.Virtual
         /// <summary>
         ///     The score processor for the virtual replay.
         /// </summary>
-        public ScoreProcessorKeysNEW ScoreProcessor { get; }
+        public ScoreProcessorKeys ScoreProcessor { get; }
 
         /// <summary>
         ///     All of the HitObjects that are currently active and available.
@@ -70,7 +70,7 @@ namespace Quaver.API.Replays.Virtual
             Replay = replay;
             Map = map;
 
-            ScoreProcessor = new ScoreProcessorKeysNEW(map, Replay.Mods);
+            ScoreProcessor = new ScoreProcessorKeys(map, Replay.Mods);
 
             ActiveHitObjects = new List<HitObjectInfo>();
             ActiveHeldLongNotes = new List<HitObjectInfo>();

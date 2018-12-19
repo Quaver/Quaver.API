@@ -260,14 +260,14 @@ namespace Quaver.API.Maps
         /// <param name="constants"></param>
         /// <param name="mods"></param>
         /// <returns></returns>
-        public DifficultyProcessor SolveDifficulty(StrainConstantsKeys constants, ModIdentifier mods = ModIdentifier.None)
+        public DifficultyProcessor SolveDifficulty(DifficultyConstantsKeys constants, ModIdentifier mods = ModIdentifier.None)
         {
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    return new DifficultyProcessorKeys(this, constants, mods);
+                    return new DifficultyProcessorKeysNEW(this, constants, mods);
                 case GameMode.Keys7:
-                    return new DifficultyProcessorKeys(this, constants, mods);
+                    return new DifficultyProcessorKeysNEW(this, constants, mods);
                 default:
                     throw new InvalidEnumArgumentException();
             }

@@ -20,7 +20,7 @@ namespace Quaver.Tools.Examples
         /// <summary>
         ///     Reference Constants.
         /// </summary>
-        private static StrainConstantsKeys Constants { get; set; }
+        private static DifficultyConstantsKeys Constants { get; set; }
 
         /// <summary>
         ///     Total amount of times the Optimizer will iterate before terminating.
@@ -70,7 +70,7 @@ namespace Quaver.Tools.Examples
         public static void Optimize()
         {
             // Initialize Variables
-            Constants = new StrainConstantsKeys();
+            Constants = new DifficultyConstantsKeys();
             var target = Constants.ConstantsToArray();
             Func<double[], double> fx = GetDeltaDeviation;
             var solution = new NelderMead(target.Length, fx)

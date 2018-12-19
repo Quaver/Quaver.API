@@ -15,12 +15,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
     /// <summary>
     ///     Will be used to solve Strain Rating.
     /// </summary>
-    public class DifficultyProcessorKeys : DifficultyProcessor
+    public class DifficultyProcessorKeysNEW : DifficultyProcessor
     {
         /// <summary>
         ///     Constants used for solving
         /// </summary>
-        public StrainConstantsKeys StrainConstants { get; }
+        public DifficultyConstantsKeys StrainConstants { get; }
 
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
@@ -79,10 +79,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="constants"></param>
         /// <param name="mods"></param>
         /// <param name="detailedSolve"></param>
-        public DifficultyProcessorKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
+        public DifficultyProcessorKeysNEW(Qua map, DifficultyConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
         {
             // Cast the current Strain Constants Property to the correct type.
-            StrainConstants = (StrainConstantsKeys)constants;
+            StrainConstants = (DifficultyConstantsKeys)constants;
 
             // Don't bother calculating map difficulty if there's less than 2 HitObjects
             if (map.HitObjects.Count < 2)

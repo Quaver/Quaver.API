@@ -19,7 +19,7 @@ namespace Quaver.Tools.Commands
         /// <summary>
         ///     Reference Constants
         /// </summary>
-        private StrainConstantsKeys Constants { get; }
+        private DifficultyConstantsKeys Constants { get; }
 
         /// <summary>
         ///     Optimization will stop after this amount of iteration
@@ -179,7 +179,7 @@ namespace Quaver.Tools.Commands
         /// </summary>
         private int N { get; set; }
 
-        public OptimizeCommand(string[] args) : base(args) => Constants = new StrainConstantsKeys();
+        public OptimizeCommand(string[] args) : base(args) => Constants = new DifficultyConstantsKeys();
 
         public override void Execute()
         {

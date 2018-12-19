@@ -39,6 +39,6 @@ namespace Quaver.API.Maps.Processors.Difficulty
         ///     Constructor
         /// </summary>
         /// <param name="map"></param>
-        public DifficultyProcessor(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None) => Map = map;
+        public DifficultyProcessor(Qua map, DifficultyConstants constants, ModIdentifier mods = ModIdentifier.None) => Map = map;
     }
 }
