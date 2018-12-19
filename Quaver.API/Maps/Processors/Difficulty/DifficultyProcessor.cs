@@ -11,12 +11,14 @@ namespace Quaver.API.Maps.Processors.Difficulty
     /// <summary>
     ///     Handles Difficulty Solving + Data
     /// </summary>
-    public abstract class StrainSolver
+    public abstract class DifficultyProcessor
     {
         /// <summary>
         ///     Current map for difficulty calculation
         /// </summary>
         internal Qua Map { get; set; }
+
+        public string Version { get; }
 
         /// <summary>
         ///     Overall Difficulty of a map
@@ -37,6 +39,6 @@ namespace Quaver.API.Maps.Processors.Difficulty
         ///     Constructor
         /// </summary>
         /// <param name="map"></param>
-        public StrainSolver(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None) => Map = map;
+        public DifficultyProcessor(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None) => Map = map;
     }
 }

@@ -11,7 +11,7 @@ namespace Quaver.Tools
             args = new string[]
             {
                 "-calcfolder",
-                "C:/Users/denys/Desktop/testmaps/dan/full-old",
+                "C:/Users/denys/Desktop/testmaps/dan/full-reform",
                 "None"
             };
             var sw = new Stopwatch();
@@ -32,7 +32,7 @@ namespace Quaver.Tools
             switch (args[0])
             {
                 case "-optimize":
-                    new CalcDiffCommand(args).Execute();
+                    new OptimizeCommand(args).Execute();
                     break;
                 case "-calcdiff":
                     new CalcDiffCommand(args).Execute();

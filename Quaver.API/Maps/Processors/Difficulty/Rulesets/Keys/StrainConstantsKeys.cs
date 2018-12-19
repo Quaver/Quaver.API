@@ -10,13 +10,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Base Difficulty Multiplier
         /// </summary>
-        public float DifficultyMultiplier { get; } = 7.7f;
+        public float DifficultyMultiplier { get; } = 11.2f;
 
         /// <summary>
         ///     Base Offset Value. Difficulty will be subtracted by this value.
         ///     - Lowest Difficulty possible in HandState is 1. 
         /// </summary>
-        public float DifficultyOffset { get; } = -17f;
+        public float DifficultyOffset { get; } = -24f;
 
         /// <summary>
         ///     Determines if the HitObject on the same hand of a specific HitObject will be counted as a Chorded Hit Object.
@@ -115,15 +115,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         public StrainConstantsKeys()
         {
-            StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.100968f);
-            StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.7247462f);
-            WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.9933847f);
-            WristAnchorMultiplier = NewConstant("WristAnchorMultiplier", 1.206183f);
-            WristTechMultiplier = NewConstant("WristTechMultiplier", 1.01f);
-            WristGapMultiplier = NewConstant("WristGapMultiplier", 1.097943f);
-            WristVibroMultiplier = NewConstant("WristVibroMultiplier", 0.941835f);
-            WristSimpleJackMultiplier = NewConstant("WristSimpleJackMultiplier", 0.9697318f);
-            TwoHandedChordMultiplier = NewConstant("TwoHandedChordMultiplier", 0.9764541f);
+            StaminaIncrementalMultiplier = NewConstant("StaminaIncrementalMultiplier", 0.1607309f);
+            StaminaDecrementalMultiplier = NewConstant("StaminaDecrementalMultiplier", 0.6409109f);
+            WristRepetitionMultiplier = NewConstant("WristRepetitionMultiplier", 0.9741689f);
+            WristAnchorMultiplier = NewConstant("WristAnchorMultiplier", 1.14635f);
+            WristTechMultiplier = NewConstant("WristTechMultiplier", 1.053561f);
+            WristGapMultiplier = NewConstant("WristGapMultiplier", 1.079208f);
+            WristVibroMultiplier = NewConstant("WristVibroMultiplier", 0.9466178f);
+            WristSimpleJackMultiplier = NewConstant("WristSimpleJackMultiplier", 0.974332f);
+            TwoHandedChordMultiplier = NewConstant("TwoHandedChordMultiplier", 0.949433f);
         }
     }
 }

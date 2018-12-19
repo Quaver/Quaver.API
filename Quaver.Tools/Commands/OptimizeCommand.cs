@@ -24,7 +24,7 @@ namespace Quaver.Tools.Commands
         /// <summary>
         ///     Optimization will stop after this amount of iteration
         /// </summary>
-        private int Limit { get; } = 500;
+        private int Limit { get; } = 150;
 
         private static string FullDanDirectory { get; } = "c:/users/denys/desktop/testmaps/dan/full-reform";
 
@@ -213,7 +213,7 @@ namespace Quaver.Tools.Commands
         {
             N++;
             Constants.UpdateConstants(input);
-            var fx = GetSkillsetAverageDelta() * GetSkillsetAverageSigma() * GetFullDanAverageDelta();
+            var fx = GetSkillsetAverageSigma(); //GetSkillsetAverageDelta() * GetFullDanAverageDelta(); //GetSkillsetAverageSigma()
             Console.WriteLine($"n = {N}, f(x) = {fx}");
             return fx;
         }

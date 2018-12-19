@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
     /// <summary>
-    ///     An expanded version of hit object that is used for QSS implementations in API/editor/calculation
+    ///     An expanded version of HitObject that is used for QSS implementations in API/editor/calculation
     /// </summary>
     public class StrainSolverHitObject
     {
@@ -21,15 +21,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public WristState WristState { get; set; }
+        public WristStateData WristState { get; set; }
 
         /// <summary>
-        ///     Current Finger State of the hit object
+        ///     Current Finger State of the HitObject
         /// </summary>
-        public FingerState FingerState { get; set; } = FingerState.None;
+        public Finger FingerState { get; set; } = Finger.None;
 
         /// <summary>
-        /// 
+        ///     What Hand is used to play this HitObject
         /// </summary>
         public Hand Hand { get; set; }
 
@@ -39,12 +39,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public float RepetitionMultiplier { get; set; } = 1;
 
         /// <summary>
-        ///     Current Strain Value for this hit object.
+        ///     Current Strain Value for this HitObject.
         /// </summary>
         public float StrainValue { get; set; }
 
         /// <summary>
-        ///     When the Hit Object Starts relative to the song in milliseconds.
+        ///     When the HitObject Starts relative to the song in milliseconds.
         /// </summary>
         public float StartTime => HitObject.StartTime;
 
@@ -56,7 +56,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         {
             HitObject = hitOb;
 
-            // Determine Hand of this hit object
+            // Determine Hand of this HitObject
             switch (mode)
             {
                 case GameMode.Keys4:

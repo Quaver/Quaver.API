@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
-    public class WristState
+    public class WristStateData
     {
         /// <summary>
         /// 
@@ -19,7 +19,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public WristAction WristAction { get; set; } = WristAction.None;
+        public WristOrientation WristAction { get; set; } = WristOrientation.None;
 
         /// <summary>
         /// 
@@ -29,12 +29,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public FingerState WristPair { get; set; }
+        public Finger WristPair { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public WristState NextState { get; }
+        public WristStateData NextState { get; }
 
         /// <summary>
         /// 
@@ -45,6 +45,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// 
         /// </summary>
         /// <param name="next"></param>
-        public WristState(WristState next) => NextState = next;
+        public WristStateData(WristStateData next) => NextState = next;
     }
 }

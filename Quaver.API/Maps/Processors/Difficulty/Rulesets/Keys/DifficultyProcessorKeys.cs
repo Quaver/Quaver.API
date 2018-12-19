@@ -15,7 +15,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
     /// <summary>
     ///     Will be used to solve Strain Rating.
     /// </summary>
-    public class StrainSolverKeys : StrainSolver
+    public class DifficultyProcessorKeys : DifficultyProcessor
     {
         /// <summary>
         ///     Constants used for solving
@@ -50,26 +50,26 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Assumes that the assigned finger will be the one to press that key.
         /// </summary>
-        public static Dictionary<int, FingerState> LaneToFinger4K { get; } = new Dictionary<int, FingerState>()
+        public static Dictionary<int, Finger> LaneToFinger4K { get; } = new Dictionary<int, Finger>()
         {
-            { 1, FingerState.Middle },
-            { 2, FingerState.Index },
-            { 3, FingerState.Index },
-            { 4, FingerState.Middle }
+            { 1, Finger.Middle },
+            { 2, Finger.Index },
+            { 3, Finger.Index },
+            { 4, Finger.Middle }
         };
 
         /// <summary>
         ///     Assumes that the assigned finger will be the one to press that key.
         /// </summary>
-        public static Dictionary<int, FingerState> LaneToFinger7K { get; } = new Dictionary<int, FingerState>()
+        public static Dictionary<int, Finger> LaneToFinger7K { get; } = new Dictionary<int, Finger>()
         {
-            { 1, FingerState.Ring },
-            { 2, FingerState.Middle },
-            { 3, FingerState.Index },
-            { 4, FingerState.Thumb },
-            { 5, FingerState.Index },
-            { 6, FingerState.Middle },
-            { 7, FingerState.Ring }
+            { 1, Finger.Ring },
+            { 2, Finger.Middle },
+            { 3, Finger.Index },
+            { 4, Finger.Thumb },
+            { 5, Finger.Index },
+            { 6, Finger.Middle },
+            { 7, Finger.Ring }
         };
 
         /// <summary>
@@ -79,12 +79,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="constants"></param>
         /// <param name="mods"></param>
         /// <param name="detailedSolve"></param>
-        public StrainSolverKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
+        public DifficultyProcessorKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
         {
             // Cast the current Strain Constants Property to the correct type.
             StrainConstants = (StrainConstantsKeys)constants;
 
-            // Don't bother calculating map difficulty if there's less than 2 hit objects
+            // Don't bother calculating map difficulty if there's less than 2 HitObjects
             if (map.HitObjects.Count < 2)
                 return;
 
@@ -131,41 +131,79 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float ComputeForOverallDifficulty(float rate, Hand assumeHand = Hand.Right)
         {
-            // Convert to hitobjects
+            // Convert to hitobjects. The Algorithm iterates through the HitObjects backwards.
             var hitObjects = ConvertToStrainHitObject(assumeHand);
-            var leftHandData = new List<HandStateData>();
-            var rightHandData = new List<HandStateData>();
-            var allHandData = new List<HandStateData>();
-
-            // Get Initial Handstates
-            // - Iterate through hit objects backwards
             hitObjects.Reverse();
+
+            // Get States
+            var data = ComputeForInitialStates(hitObjects, assumeHand);
+            var left = data.left;
+            var right = data.right;
+            var all = data.all;
+
+            // Compute for chorded pairs.
+            ComputeForDifferentHandChords(all);
+
+            // Compute for wrist action.
+            ComputeForWristAction(hitObjects);
+
+            // Compute for Stamina Difficulty.
+            return ComputeForStaminaDifficulty(left, right);
+        }
+
+        /// <summary>
+        ///     Convert Regular HitObjects to Strain HitObjects.
+        ///     - Strain HitObject is also used for dynamic difficulty calculation in Map Editor.
+        /// </summary>
+        /// <param name="assumeHand"></param>
+        /// <returns></returns>
+        private List<StrainSolverHitObject> ConvertToStrainHitObject(Hand assumeHand)
+        {
+            var hitObjects = new List<StrainSolverHitObject>();
+            foreach (var ho in Map.HitObjects)
+                hitObjects.Add(new StrainSolverHitObject(ho, Map.Mode, assumeHand));
+
+            return hitObjects;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hitObjects"></param>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        private (List<HandStateData> left, List<HandStateData> right, List<HandStateData> all) ComputeForInitialStates(List<StrainSolverHitObject> hitObjects, Hand assumeHand)
+        {
+            var left = new List<HandStateData>();
+            var right = new List<HandStateData>();
+            var all = new List<HandStateData>();
+
             foreach (var data in hitObjects)
             {
                 // Determine Reference Hand
-                List<HandStateData> refHandData;
+                List<HandStateData> refHand;
                 switch (Map.Mode)
                 {
                     case GameMode.Keys4:
                         if (LaneToHand4K[data.HitObject.Lane] == Hand.Left)
-                            refHandData = leftHandData;
+                            refHand = left;
                         else
-                            refHandData = rightHandData;
+                            refHand = right;
                         break;
                     case GameMode.Keys7:
                         var hand = LaneToHand7K[data.HitObject.Lane];
                         if (hand.Equals(Hand.Left) || (hand.Equals(Hand.Ambiguous) && assumeHand.Equals(Hand.Left)))
-                            refHandData = leftHandData;
+                            refHand = left;
                         else
-                            refHandData = rightHandData;
+                            refHand = right;
                         break;
                     default:
                         throw new Exception("Unknown GameMode");
                 }
 
-                // Iterate through established handstates for chords
+                // Iterate through established handstates for Same-Hand Chords
                 var chordFound = false;
-                foreach (var reference in refHandData)
+                foreach (var reference in refHand)
                 {
                     // Break loop after leaving threshold
                     if (reference.Time
@@ -195,41 +233,20 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // Add new HandStateData to list if no chords are found
                 if (!chordFound)
                 {
-                    refHandData.Add(new HandStateData(data));
-                    allHandData.Add(refHandData.Last());
+                    refHand.Add(new HandStateData(data));
+                    all.Add(refHand.Last());
                 }
             }
 
-            // Compute for chorded pairs
-            ComputeForChordedPairs(allHandData);
-
-            // Compute for wrist action
-            ComputeForWristAction(hitObjects);
-
-            // Compute for Stamina Difficulty
-            return ComputeForStaminaDifficulty(leftHandData, rightHandData);
+            return (left, right, all);;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assumeHand"></param>
-        /// <returns></returns>
-        private List<StrainSolverHitObject> ConvertToStrainHitObject(Hand assumeHand)
-        {
-            var hitObjects = new List<StrainSolverHitObject>();
-            foreach (var ho in Map.HitObjects)
-                hitObjects.Add(new StrainSolverHitObject(ho, Map.Mode, assumeHand));
-
-            return hitObjects;
-        }
-
-        /// <summary>
-        /// 
+        ///     Solve and assign HandStateData to other HandStateData as chorded pairs.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private void ComputeForChordedPairs(List<HandStateData> data)
+        private void ComputeForDifferentHandChords(List<HandStateData> data)
         {
             for (var i = 0; i < data.Count; i++)
             {
@@ -239,9 +256,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 for (var j = i + 1; j < data.Count; j++)
                 {
                     if (data[i].Time - data[j].Time > StrainConstants.ChordThresholdOtherHandMs)
-                    {
                         break;
-                    }
 
                     if (data[j].ChordedHand == null)
                     {
@@ -257,37 +272,39 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        /// 
+        ///     Solve and assign Wrist States to every HitObject if necessary.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         private void ComputeForWristAction(List<StrainSolverHitObject> hitObjects)
         {
-            WristState laterStateLeft = null;
-            WristState laterStateRight = null;
+            WristStateData laterStateLeft = null;
+            WristStateData laterStateRight = null;
             for (var i = 0; i < hitObjects.Count; i++)
             {
+                // Ignore HitObjects with already solved Wrist States.
                 if (hitObjects[i].WristState == null)
                 {
-                    WristState wrist;
+                    // Assign Wrist State and reference appropriate preceding State.
+                    WristStateData wrist;
                     var state = hitObjects[i].FingerState;
                     if (hitObjects[i].Hand == Hand.Left)
                     {
-                        wrist = new WristState(laterStateLeft);
+                        wrist = new WristStateData(laterStateLeft);
                         laterStateLeft = wrist;
                     }
                     else
                     {
-                        wrist = new WristState(laterStateRight);
+                        wrist = new WristStateData(laterStateRight);
                         laterStateRight = wrist;
                     }
 
-                    // Update Current State
+                    // Update Current State.
                     for (var j = i + 1; j < hitObjects.Count; j++)
                     {
                         if (hitObjects[j].Hand == hitObjects[i].Hand)
                         {
-                            // Break loop upon same finger found
+                            // Break loop upon same finger found.
                             if (((int)state & (1 << (int)hitObjects[j].FingerState - 1)) != 0)
                                 break;
 
@@ -296,23 +313,23 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
 
-                    // Update Wrist State
+                    // Update Wrist State.
                     wrist.WristPair = state;
                     wrist.Time = hitObjects[i].StartTime;
 
-                    // Check if Wrist Manipulation is involved. (Example: Rolls)
+                    // Check if Wrist Manipulation is involved. (Example: Rolls).
                     if (!state.Equals(hitObjects[i].FingerState))
                     {
-                        wrist.WristAction = WristAction.Up;
+                        wrist.WristAction = WristOrientation.Up;
                         hitObjects[i].WristState = wrist;
                     }
-                    // Check for Simple Jacks
+                    // Check for Simple Jacks.
                     else if (wrist.NextState != null && wrist.NextState.WristPair.Equals(state))
                     {
-                        wrist.WristAction = WristAction.Up;
+                        wrist.WristAction = WristOrientation.Up;
                         hitObjects[i].WristState = wrist;
                     }
-                    // Anchor / Control is involved
+                    // Anchor / Control is involved,
                     // Do not remove this despite what ReSharper says!
                     else
                         wrist = null;
@@ -321,7 +338,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         }
 
         /// <summary>
-        /// 
+        ///     Compute Overall Difficulty with Stamina Interpolation.
         /// </summary>
         /// <param name="left"></param>
         /// <param name="right"></param>
@@ -331,8 +348,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             float total = 0;
             for (var z = 0; z <= 1; z++)
             {
-                var reference = z == 0 ? left : right;
                 float currentDiff = 0;
+                var reference = z == 0 ? left : right;
                 for (var i = 0; i < reference.Count - 2; i++)
                 {
                     reference[i].EvaluateDifficulty(StrainConstants, reference[i].Time - reference[i + 2].Time);
@@ -340,18 +357,67 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         currentDiff += ( reference[i].StateDifficulty - currentDiff ) * StrainConstants.StaminaIncrementalMultiplier.Value;
                     else
                         currentDiff += (reference[i].StateDifficulty - currentDiff) * StrainConstants.StaminaDecrementalMultiplier.Value;
-                }
 
-                total += currentDiff;
+                    total += currentDiff;
+                }
             }
 
-            // Stamina Multiplier Bonus
+            // Stamina Multiplier Bonus,
             var count = left.Count + right.Count;
             var stamina = (float)(Math.Log10(count) / 25 + 0.9);
 
-            // Overall Difficulty
+            // Overall Difficulty,
             if (count == 0) return 0;
             return stamina * total / count;
+        }
+
+        /// <summary>
+        ///     Count Total Chords in the Map.
+        ///     Todo: This is unused for now, but may be implemented for in-game later.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private Dictionary<ChordType, int> CountTotalChords(List<HandStateData> data)
+        {
+            // Initialize Dictionary
+            var count = new Dictionary<ChordType, int>()
+            {
+                {ChordType.None, 0},
+                {ChordType.Single, 0},
+                {ChordType.Jump, 0},
+                {ChordType.Hand, 0},
+                {ChordType.Quad, 0},
+                {ChordType.NChord, 0},
+            };
+
+            // Count Chords
+            foreach (var state in data)
+            {
+                var otherHand = state.ChordedHand == null ? 0 : state.ChordedHand.HitObjects.Count;
+                switch (state.HitObjects.Count + otherHand)
+                {
+                    case 0:
+                        count[ChordType.None]++;
+                        break;
+                    case 1:
+                        count[ChordType.Single]++;
+                        break;
+                    case 2:
+                        count[ChordType.Jump]++;
+                        break;
+                    case 3:
+                        count[ChordType.Hand]++;
+                        break;
+                    case 4:
+                        count[ChordType.Quad]++;
+                        break;
+                    default:
+                        count[ChordType.NChord]++;
+                        break;
+                }
+            }
+
+            return count;
         }
     }
 }

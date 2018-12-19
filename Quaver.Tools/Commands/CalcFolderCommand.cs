@@ -69,7 +69,7 @@ namespace Quaver.Tools.Commands
                 catch (Exception e)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"ERROR: {e.StackTrace}");
+                    Console.WriteLine($"ERROR: {e.Message} \n{e.StackTrace}\n");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }

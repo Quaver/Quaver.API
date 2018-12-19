@@ -5,15 +5,15 @@ using System.Text;
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
     /// <summary>
-    /// 
+    ///     Determined by how many HitObjects are in a Chord
     /// </summary>
     public enum ChordType
     {
         None,
-        SingleTap,
-        JumpChord,
-        HandChord,
-        QuadChord,
+        Single,
+        Jump,
+        Hand,
+        Quad,
         NChord
     }
 }
