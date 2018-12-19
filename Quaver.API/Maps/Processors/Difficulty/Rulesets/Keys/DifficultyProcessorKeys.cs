@@ -30,6 +30,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public DifficultyConstantsKeys Constants { get; }
 
         /// <summary>
+        ///     Version of the Difficulty Processor
+        /// </summary>
+        public string Version { get; } = "Alpha 1.0";
+
+        /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
         /// </summary>
         public static Dictionary<int, Hand> LaneToHand4K { get; } = new Dictionary<int, Hand>()
