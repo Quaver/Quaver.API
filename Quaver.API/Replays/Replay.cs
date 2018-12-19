@@ -1,3 +1,10 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,7 +24,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The game mode this replay is for.
         /// </summary>
-        public GameMode Mode { get; }
+        public GameMode Mode { get; set; }
 
         /// <summary>
         ///     All of the replay frames.
@@ -27,12 +34,12 @@ namespace Quaver.API.Replays
         /// <summary>
         ///    The version of Quaver the play was done on.
         /// </summary>
-        public string QuaverVersion { get; private set; } = "None";
+        public string QuaverVersion { get; set; } = "None";
 
         /// <summary>
         ///    The name of the player.
         /// </summary>
-        public string PlayerName { get; }
+        public string PlayerName { get; set; }
 
         /// <summary>
         ///     The activated mods on this replay.
@@ -57,7 +64,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The md5 hash of the map.
         /// </summary>
-        public string MapMd5 { get; }
+        public string MapMd5 { get; set; }
 
         /// <summary>
         ///     The score achieved
@@ -146,8 +153,13 @@ namespace Quaver.API.Replays
                     MapMd5 = br.ReadString();
                     Md5 = br.ReadString();
                     PlayerName = br.ReadString();
-                    Date = Convert.ToDateTime(br.ReadString());
+                    Date = Convert.ToDateTime(br.ReadString(), CultureInfo.InvariantCulture);
                     TimePlayed = br.ReadInt64();
+
+                    // The dates are serialized incorrectly in older replays, so to keep compatability,
+                    // use the time played.
+                    Date = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(TimePlayed);
+
                     Mode = (GameMode)br.ReadInt32();
                     Mods = (ModIdentifier)br.ReadInt32();
                     Score = br.ReadInt32();
@@ -163,7 +175,7 @@ namespace Quaver.API.Replays
                 }
                 else
                 {
-                    
+
                 }
 
                 // Create the new list of replay frames.

@@ -11,22 +11,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quaver.API.Enums
+namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
     /// <summary>
-    ///     Enum representation of grades
+    ///     Represented by how the current LN object is stacked with other LN objects in a hand.
     /// </summary>
-    public enum Grade
+    public enum LnLayerType
     {
         None,
-        A,
-        B,
-        C,
-        D,
-        F,
-        S,
-        SS,
-        X,
-        XX
+        InsideRelease,
+        OutsideRelease,
+        InsideTap
     }
 }

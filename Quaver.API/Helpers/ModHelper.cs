@@ -1,3 +1,10 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
 using System.Collections.Generic;
 using Quaver.API.Enums;
@@ -88,6 +95,9 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Paused:
                         modStrings.Add("Paused");
                         break;
+                    case ModIdentifier.NoFail:
+                        modStrings.Add("No Fail");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
                 }
@@ -107,7 +117,9 @@ namespace Quaver.API.Helpers
             var rate = 1.0f;
 
             // Map mods to rate.
-            if (mods.HasFlag(ModIdentifier.Speed05X))
+            if (mods.HasFlag(ModIdentifier.None))
+                rate = 1.0f;
+            else if (mods.HasFlag(ModIdentifier.Speed05X))
                 rate = 0.5f;
             else if (mods.HasFlag(ModIdentifier.Speed06X))
                 rate = 0.6f;

@@ -11,22 +11,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quaver.API.Enums
+namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
     /// <summary>
-    ///     Enum representation of grades
+    ///     Is determined by a finger's action between two finger states
     /// </summary>
-    public enum Grade
+    public enum FingerAction
     {
         None,
-        A,
-        B,
-        C,
-        D,
-        F,
-        S,
-        SS,
-        X,
-        XX
+        SimpleJack,
+        TechnicalJack,
+        Roll,
+        Bracket
     }
 }
