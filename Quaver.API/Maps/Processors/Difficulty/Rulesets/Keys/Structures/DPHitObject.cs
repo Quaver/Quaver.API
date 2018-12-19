@@ -47,9 +47,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public float RepetitionMultiplier { get; set; } = 1;
 
         /// <summary>
-        ///     Current Strain Value for this HitObject.
+        ///     Represents how difficult it is to hit this object in game.
         /// </summary>
-        public float StrainValue { get; set; }
+        public float Difficulty { get; set; }
 
         /// <summary>
         ///     When the HitObject Starts relative to the song in milliseconds.
@@ -85,12 +85,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// </summary>
         public void EvaluateDifficulty(DifficultyConstantsKeys constants)
         {
-            StrainValue = 1;
+            Difficulty = 1;
 
             // If Wrist State is null, Wrist Anchor Multiplier will be applied
             if (WristState == null)
             {
-                StrainValue = constants.WristAnchorMultiplier.Value;
+                Difficulty = constants.WristAnchorMultiplier.Value;
                 return;
             }
 
@@ -108,32 +108,32 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                         {
                             if (WristState.NextStateDelta < constants.VibroActionToleranceMs)
                             {
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty * constants.WristVibroMultiplier.Value;
+                                WristState.Difficulty = WristState.NextState.Difficulty * constants.WristVibroMultiplier.Value;
                             }
                             else if (WristState.NextStateDelta >= constants.VibroActionThresholdMs)
                             {
-                                WristState.WristDifficulty = (constants.WristSimpleJackMultiplier.Value + WristState.NextState.WristDifficulty) / 2;
+                                WristState.Difficulty = (constants.WristSimpleJackMultiplier.Value + WristState.NextState.Difficulty) / 2;
                             }
                             else
                             {
                                 var diff = constants.WristSimpleJackMultiplier.Value - constants.WristVibroMultiplier.Value;
                                 var interval = constants.VibroActionThresholdMs - constants.VibroActionToleranceMs;
-                                WristState.WristDifficulty = WristState.NextState.WristDifficulty + diff * (delta - constants.VibroActionToleranceMs) / interval;
+                                WristState.Difficulty = WristState.NextState.Difficulty + diff * (delta - constants.VibroActionToleranceMs) / interval;
                             }
                         }
 
                         // If there's a gap in a Simple Jack
                         else
-                            WristState.WristDifficulty = constants.WristGapMultiplier.Value;
+                            WristState.Difficulty = constants.WristGapMultiplier.Value;
                     }
 
                     DetermineRepetition(constants);
-                    StrainValue = WristState.WristDifficulty;
+                    Difficulty = WristState.Difficulty;
                     return;
                 }
 
                 // If Wirst State exists, but it's not a Simple Jack, A Technical Multiplier will be applied.
-                StrainValue = constants.WristTechMultiplier.Value;
+                Difficulty = constants.WristTechMultiplier.Value;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                 WristState.RepetitionCount = WristState.NextState.RepetitionCount + 1;
 
             RepetitionMultiplier = (float)Math.Pow(constants.WristRepetitionMultiplier.Value, Math.Min(WristState.RepetitionCount, constants.MaxSimpleJackRepetition));
-            WristState.WristDifficulty *= RepetitionMultiplier;
+            WristState.Difficulty *= RepetitionMultiplier;
         }
     }
 }

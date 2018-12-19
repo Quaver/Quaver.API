@@ -19,7 +19,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Difficulty Multiplier affected by this Wrist State.
         /// </summary>
-        public float WristDifficulty { get; set; } = 1;
+        public float Difficulty { get; set; } = 1;
 
         /// <summary>
         ///     Delta between Next State and Current State.

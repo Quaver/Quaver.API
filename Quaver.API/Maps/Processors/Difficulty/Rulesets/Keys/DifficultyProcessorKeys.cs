@@ -326,13 +326,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     // Check if Wrist Manipulation is involved. (Example: Rolls).
                     if (!state.Equals(hitObjects[i].FingerState))
                     {
-                        wrist.WristAction = WristOrientation.Up;
+                        wrist.WristOrientation = WristOrientation.Up;
                         hitObjects[i].WristState = wrist;
                     }
                     // Check for Simple Jacks.
                     else if (wrist.NextState != null && wrist.NextState.WristPair.Equals(state))
                     {
-                        wrist.WristAction = WristOrientation.Up;
+                        wrist.WristOrientation = WristOrientation.Up;
                         hitObjects[i].WristState = wrist;
                     }
                     // Anchor / Control is involved,
