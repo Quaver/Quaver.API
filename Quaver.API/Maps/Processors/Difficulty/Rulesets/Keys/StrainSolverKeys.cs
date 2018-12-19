@@ -234,7 +234,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             for (var i = 0; i < data.Count; i++)
             {
                 if (data[i].Hand.Equals(Hand.Ambiguous))
-                    throw new Exception("Ambiguious Hand Found");
+                    throw new Exception("Ambiguous Hand Found");
 
                 for (var j = i + 1; j < data.Count; j++)
                 {
@@ -265,13 +265,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             WristState laterStateLeft = null;
             WristState laterStateRight = null;
-            WristState wrist;
-            FingerState state;
             for (var i = 0; i < hitObjects.Count; i++)
             {
                 if (hitObjects[i].WristState == null)
                 {
-                    state = hitObjects[i].FingerState;
+                    WristState wrist;
+                    var state = hitObjects[i].FingerState;
                     if (hitObjects[i].Hand == Hand.Left)
                     {
                         wrist = new WristState(laterStateLeft);
@@ -283,6 +282,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         laterStateRight = wrist;
                     }
 
+                    // Update Current State
                     for (var j = i + 1; j < hitObjects.Count; j++)
                     {
                         if (hitObjects[j].Hand == hitObjects[i].Hand)
@@ -296,6 +296,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         }
                     }
 
+                    // Update Wrist State
                     wrist.WristPair = state;
                     wrist.Time = hitObjects[i].StartTime;
 
@@ -312,6 +313,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         hitObjects[i].WristState = wrist;
                     }
                     // Anchor / Control is involved
+                    // Do not remove this despite what ReSharper says!
                     else
                         wrist = null;
                 }
@@ -326,56 +328,30 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float ComputeForStaminaDifficulty(List<HandStateData> left, List<HandStateData> right)
         {
-            // temp calc variables
-            var count = 0;
             float total = 0;
-
-            // TEST CALC (OLD)
             for (var z = 0; z <= 1; z++)
             {
                 var reference = z == 0 ? left : right;
                 float currentDiff = 0;
                 for (var i = 0; i < reference.Count - 2; i++)
                 {
-                    // Interpolate Current Difficulty with Stamina
-                    // TODO: put this crap in HandStateData class
-                    reference[i].EvaluateDifficulty(StrainConstants);
-                    if (reference[i].StateDifficulty < currentDiff)
-                    {
-                        currentDiff += (reference[i].StateDifficulty - currentDiff)
-                            * StrainConstants.StaminaDecrementalMultiplier.Value * Math.Min((reference[i].Time - reference[i + 2].Time) / StrainConstants.MaxStaminaDelta, 1);
-                    }
+                    reference[i].EvaluateDifficulty(StrainConstants, reference[i].Time - reference[i + 2].Time);
+                    if (reference[i].StateDifficulty > currentDiff)
+                        currentDiff += ( reference[i].StateDifficulty - currentDiff ) * StrainConstants.StaminaIncrementalMultiplier.Value;
                     else
-                    {
-                        currentDiff += (reference[i].StateDifficulty - currentDiff)
-                            * StrainConstants.StaminaIncrementalMultiplier.Value * Math.Min((reference[i].Time - reference[i + 2].Time / StrainConstants.MaxStaminaDelta), 1);
-                    }
-
-                    // Calculate Difficulty of Current Section
-                    // TODO: put this crap in HandStateData class
-                    if (reference[i].Time
-                        - reference[i + 2].Time > 0)
-                    {
-                        count++;
-                        total
-                            += Math.Max(1, reference[i].StateDifficulty
-                            * StrainConstants.DifficultyMultiplier
-                            * (float)Math.Sqrt(StrainConstants.BpmToActionLengthMs / (reference[i].Time - reference[i + 2].Time)) + StrainConstants.DifficultyOffset);
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"HandStateData Action Delta is {reference[i].Time- reference[i + 2].Time}");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        //throw new Exception("HandStateData Action Delta is 0 or negative value.");
-                    }
+                        currentDiff += (reference[i].StateDifficulty - currentDiff) * StrainConstants.StaminaDecrementalMultiplier.Value;
                 }
+
+                total += currentDiff;
             }
 
-            // temp diff
-            var stam = (float)(Math.Log10(count) / 25 + 0.9);
+            // Stamina Multiplier Bonus
+            var count = left.Count + right.Count;
+            var stamina = (float)(Math.Log10(count) / 25 + 0.9);
+
+            // Overall Difficulty
             if (count == 0) return 0;
-            return stam * total / count;
+            return stamina * total / count;
         }
     }
 }

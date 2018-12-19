@@ -78,16 +78,23 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public void EvaluateDifficulty(StrainConstantsKeys constants)
         {
             StrainValue = 1;
+
+            // If Wrist State is null, Wrist Anchor Multiplier will be applied
             if (WristState == null)
             {
-                StrainValue = constants.WristTechMultiplier.Value;
+                StrainValue = constants.WristAnchorMultiplier.Value;
+                return;
             }
-            else if (WristState.NextState != null)
+
+            if (WristState.NextState != null)
             {
+                // Check 2 states to see if they're both Simple Jacks
                 if (WristState.NextState.WristPair.Equals(WristState.WristPair))
                 {
                     if (WristState.NextState.NextState != null)
                     {
+                        // Apply Multiplier for Vibro if necessary.
+                        // - Multiplier is a gradient between VibroActionThresholdMs and VibroActionToleranceMs.
                         var delta = Math.Abs(WristState.NextState.NextStateDelta - WristState.NextStateDelta);
                         if (delta < constants.WristGapDeltaThresholdMs)
                         {
@@ -106,19 +113,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                                 WristState.WristDifficulty = WristState.NextState.WristDifficulty + diff * (delta - constants.VibroActionToleranceMs) / interval;
                             }
                         }
+
+                        // If there's a gap in a Simple Jack
                         else
-                        {
                             WristState.WristDifficulty = constants.WristGapMultiplier.Value;
-                        }
                     }
 
                     DetermineRepetition(constants);
                     StrainValue = WristState.WristDifficulty;
+                    return;
                 }
-                else
-                {
-                    StrainValue = 1;
-                }
+
+                // If Wirst State exists, but it's not a Simple Jack, A Technical Multiplier will be applied.
+                StrainValue = constants.WristTechMultiplier.Value;
             }
         }
 

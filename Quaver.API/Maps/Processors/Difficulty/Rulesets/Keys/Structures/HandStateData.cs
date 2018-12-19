@@ -12,11 +12,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public HandStateData ChordedHand { get; set; }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public HandStateData NextState { get; set; }
-
-        /// <summary>
         ///     All HitObjects referenced for this Hand State
         /// </summary>
         public List<StrainSolverHitObject> HitObjects { get; private set; } = new List<StrainSolverHitObject>();
@@ -70,7 +65,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         /// 
         /// </summary>
-        public void EvaluateDifficulty(StrainConstantsKeys constants)
+        /// <param name="constants"></param>
+        /// <param name="nextState"></param>
+        public float EvaluateDifficulty(StrainConstantsKeys constants, float actionLength)
         {
             StateDifficulty = 0;
             FingerState = FingerState.None;
@@ -89,6 +86,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             // Apply Chord Multiplier if Other Hand is chorded with this hand.
             if (ChordedHand != null)
                 StateDifficulty *= constants.TwoHandedChordMultiplier.Value;
+
+            ;// Action Length must be greater than 0
+            if (actionLength <= 0)
+                throw new Exception("HandStateData Action Delta is 0 or negative value.");
+
+            // Set and Return Difficulty Value
+            return StateDifficulty = StateDifficulty * constants.DifficultyMultiplier * (float)Math.Sqrt(constants.BpmToActionLengthMs / actionLength) + constants.DifficultyOffset;
         }
 
         /// <summary>
