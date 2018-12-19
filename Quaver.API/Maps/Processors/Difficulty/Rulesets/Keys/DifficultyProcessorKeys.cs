@@ -138,7 +138,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         private float ComputeForOverallDifficulty(float rate, Hand assumeHand = Hand.Right)
         {
             // Convert to hitobjects. The Algorithm iterates through the HitObjects backwards.
-            var hitObjects = ConvertToStrainHitObject(assumeHand);
+            var hitObjects = ConvertToDPHitObject(assumeHand);
             hitObjects.Reverse();
 
             // Get States
@@ -163,7 +163,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="assumeHand"></param>
         /// <returns></returns>
-        private List<DPHitObject> ConvertToStrainHitObject(Hand assumeHand)
+        private List<DPHitObject> ConvertToDPHitObject(Hand assumeHand)
         {
             var hitObjects = new List<DPHitObject>();
             foreach (var ho in Map.HitObjects)

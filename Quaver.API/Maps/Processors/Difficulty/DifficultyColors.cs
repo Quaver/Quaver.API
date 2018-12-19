@@ -106,12 +106,12 @@ namespace Quaver.API.Maps.Processors.Difficulty
         private const float SKILL_COLOR_DELTA = 0.6f;
 
         /// <summary>
-        ///     Returns Color for general Strain Rating difficulty. Reads QSR (Quaver Strain Rating)
+        ///     Returns Color for general Difficulty. Reads QMR (Quaver Mania Rating)
         ///     This can be used to return Color to represent difficulty of a map or play.
         /// </summary>
         /// <param name="qsr"></param>
         /// <returns></returns>
-        public static Color GetStrainRatingColor(float qsr)
+        public static Color GetRatingColor(float qsr)
         {
             // Tier 0 and negative rating?
             if (qsr <= DifficultyTierInterval[ColorTier.Tier1])
