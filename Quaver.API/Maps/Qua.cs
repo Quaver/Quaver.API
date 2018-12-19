@@ -265,9 +265,9 @@ namespace Quaver.API.Maps
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    return new DifficultyProcessorKeysNEW(this, constants, mods);
+                    return new DifficultyProcessorKeys(this, constants, mods);
                 case GameMode.Keys7:
-                    return new DifficultyProcessorKeysNEW(this, constants, mods);
+                    return new DifficultyProcessorKeys(this, constants, mods);
                 default:
                     throw new InvalidEnumArgumentException();
             }

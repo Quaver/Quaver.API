@@ -11,7 +11,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
     /// <summary>
     ///     An expanded version of HitObject that is used for QSS implementations in API/editor/calculation
     /// </summary>
-    public class StrainSolverHitObject
+    public class DifficultyProcessorHitObject
     {
         /// <summary>
         ///     The HitObject this class is referencing
@@ -52,7 +52,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Constructor
         /// </summary>
         /// <param name="hitOb"></param>
-        public StrainSolverHitObject(HitObjectInfo hitOb, GameMode mode, Hand assumeHand)
+        public DifficultyProcessorHitObject(HitObjectInfo hitOb, GameMode mode, Hand assumeHand)
         {
             HitObject = hitOb;
 
@@ -60,12 +60,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             switch (mode)
             {
                 case GameMode.Keys4:
-                    FingerState = DifficultyProcessorKeysNEW.LaneToFinger4K[hitOb.Lane];
-                    Hand = DifficultyProcessorKeysNEW.LaneToHand4K[hitOb.Lane];
+                    FingerState = DifficultyProcessorKeys.LaneToFinger4K[hitOb.Lane];
+                    Hand = DifficultyProcessorKeys.LaneToHand4K[hitOb.Lane];
                     break;
                 case GameMode.Keys7:
-                    FingerState = DifficultyProcessorKeysNEW.LaneToFinger7K[hitOb.Lane];
-                    Hand = DifficultyProcessorKeysNEW.LaneToHand7K[hitOb.Lane].Equals(Hand.Ambiguous) ? assumeHand : DifficultyProcessorKeysNEW.LaneToHand7K[hitOb.Lane];
+                    FingerState = DifficultyProcessorKeys.LaneToFinger7K[hitOb.Lane];
+                    Hand = DifficultyProcessorKeys.LaneToHand7K[hitOb.Lane].Equals(Hand.Ambiguous) ? assumeHand : DifficultyProcessorKeys.LaneToHand7K[hitOb.Lane];
                     break;
                 default:
                     throw new Exception("Invalid GameMode used to create StrainSolverHitObject");

@@ -15,7 +15,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
     /// <summary>
     ///     Will be used to solve Strain Rating.
     /// </summary>
-    public class DifficultyProcessorKeysNEW : DifficultyProcessor
+    public class DifficultyProcessorKeys : DifficultyProcessor
     {
         /// <summary>
         ///     Constants used for solving
@@ -79,7 +79,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="constants"></param>
         /// <param name="mods"></param>
         /// <param name="detailedSolve"></param>
-        public DifficultyProcessorKeysNEW(Qua map, DifficultyConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
+        public DifficultyProcessorKeys(Qua map, DifficultyConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
         {
             // Cast the current Strain Constants Property to the correct type.
             StrainConstants = (DifficultyConstantsKeys)constants;
@@ -157,11 +157,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="assumeHand"></param>
         /// <returns></returns>
-        private List<StrainSolverHitObject> ConvertToStrainHitObject(Hand assumeHand)
+        private List<DifficultyProcessorHitObject> ConvertToStrainHitObject(Hand assumeHand)
         {
-            var hitObjects = new List<StrainSolverHitObject>();
+            var hitObjects = new List<DifficultyProcessorHitObject>();
             foreach (var ho in Map.HitObjects)
-                hitObjects.Add(new StrainSolverHitObject(ho, Map.Mode, assumeHand));
+                hitObjects.Add(new DifficultyProcessorHitObject(ho, Map.Mode, assumeHand));
 
             return hitObjects;
         }
@@ -172,7 +172,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="hitObjects"></param>
         /// <param name="left"></param>
         /// <param name="right"></param>
-        private (List<HandStateData> left, List<HandStateData> right, List<HandStateData> all) ComputeForInitialStates(List<StrainSolverHitObject> hitObjects, Hand assumeHand)
+        private (List<HandStateData> left, List<HandStateData> right, List<HandStateData> all) ComputeForInitialStates(List<DifficultyProcessorHitObject> hitObjects, Hand assumeHand)
         {
             var left = new List<HandStateData>();
             var right = new List<HandStateData>();
@@ -276,7 +276,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private void ComputeForWristAction(List<StrainSolverHitObject> hitObjects)
+        private void ComputeForWristAction(List<DifficultyProcessorHitObject> hitObjects)
         {
             WristStateData laterStateLeft = null;
             WristStateData laterStateRight = null;

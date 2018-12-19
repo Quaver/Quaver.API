@@ -14,7 +14,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     All HitObjects referenced for this Hand State
         /// </summary>
-        public List<StrainSolverHitObject> HitObjects { get; } = new List<StrainSolverHitObject>();
+        public List<DifficultyProcessorHitObject> HitObjects { get; } = new List<DifficultyProcessorHitObject>();
 
         /// <summary>
         ///     Reference Timing Position for this State. It will use the StartTime of the first HitObject that initialized this object.
@@ -47,7 +47,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// 
         /// </summary>
         /// <param name="hitObjects"></param>
-        public HandStateData(StrainSolverHitObject hitObject)
+        public HandStateData(DifficultyProcessorHitObject hitObject)
         {
             Hand = hitObject.Hand;
             AddHitObjectToChord(hitObject);
@@ -57,7 +57,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Add HitObject as a Chord to this state.
         /// </summary>
         /// <param name="hitObjects"></param>
-        public void AddHitObjectToChord(StrainSolverHitObject hitObject) => HitObjects.Add(hitObject);
+        public void AddHitObjectToChord(DifficultyProcessorHitObject hitObject) => HitObjects.Add(hitObject);
 
         /// <summary>
         ///     Evaluate Difficulty for this specific Hand State.
@@ -105,10 +105,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 
             // Set Finger State to appropriate value and calculate ChordProximity
             var lead = HitObjects[0];
-            StrainSolverHitObject furthest = null;
+            DifficultyProcessorHitObject furthest = null;
             foreach (var ob in HitObjects)
             {
-                if (DifficultyProcessorKeysNEW.LaneToHand4K[ob.HitObject.Lane] != Hand)
+                if (DifficultyProcessorKeys.LaneToHand4K[ob.HitObject.Lane] != Hand)
                 {
                     if (furthest == null || ob.HitObject.StartTime > furthest.HitObject.StartTime)
                         furthest = ob;
