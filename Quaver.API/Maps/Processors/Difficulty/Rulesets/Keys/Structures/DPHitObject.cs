@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
 {
     /// <summary>
-    ///     An expanded version of HitObject that is used for QSS implementations in API/editor/calculation
+    ///     Difficulty Processor Hit Object.
+    ///     An expanded version of HitObject that is used for QSS implementations in API/editor/calculation.
     /// </summary>
-    public class DifficultyProcessorHitObject
+    public class DPHitObject
     {
         /// <summary>
         ///     The HitObject this class is referencing
@@ -52,7 +53,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Constructor
         /// </summary>
         /// <param name="hitOb"></param>
-        public DifficultyProcessorHitObject(HitObjectInfo hitOb, GameMode mode, Hand assumeHand)
+        public DPHitObject(HitObjectInfo hitOb, GameMode mode, Hand assumeHand)
         {
             HitObject = hitOb;
 
