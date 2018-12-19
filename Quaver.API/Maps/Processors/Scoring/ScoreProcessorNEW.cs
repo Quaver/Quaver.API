@@ -7,7 +7,7 @@ using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
 {
-    public abstract class ScoreProcessor
+    public abstract class ScoreProcessorNEW
     {
         /// <summary>
         ///     The map that will have its score processed.
@@ -121,7 +121,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="map"></param>
         /// <param name="mods"></param>
-        public ScoreProcessor(Qua map, ModIdentifier mods)
+        public ScoreProcessorNEW(Qua map, ModIdentifier mods)
         {
             Map = map;
             Mods = mods;
@@ -134,7 +134,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Score processor from replay.
         /// </summary>
         /// <param name="replay"></param>
-        public ScoreProcessor(Replay replay)
+        public ScoreProcessorNEW(Replay replay)
         {
             Mods = replay.Mods;
             Score = replay.Score;

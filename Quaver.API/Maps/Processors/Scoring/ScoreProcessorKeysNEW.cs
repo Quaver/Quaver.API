@@ -7,7 +7,7 @@ using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
 {
-    public class ScoreProcessorKeys : ScoreProcessor
+    public class ScoreProcessorKeysNEW : ScoreProcessorNEW
     {
         /// <summary>
         ///     The maximum amount of judgements.
@@ -153,7 +153,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="map"></param>
         /// <param name="mods"></param>
-        public ScoreProcessorKeys(Qua map, ModIdentifier mods) : base(map, mods)
+        public ScoreProcessorKeysNEW(Qua map, ModIdentifier mods) : base(map, mods)
         {
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
@@ -163,7 +163,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Ctor -
         /// </summary>
         /// <param name="replay"></param>
-        public ScoreProcessorKeys(Replay replay) : base(replay){}
+        public ScoreProcessorKeysNEW(Replay replay) : base(replay){}
 
         /// <summary>
         ///     Accuracy Calculation component of CalculateScore() if a note has been pressed/released properly

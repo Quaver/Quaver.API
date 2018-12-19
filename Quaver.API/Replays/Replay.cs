@@ -239,7 +239,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///    Populates the replay header properties from a score processor.
         /// </summary>
-        public void FromScoreProcessor(ScoreProcessor processor)
+        public void FromScoreProcessor(ScoreProcessorNEW processor)
         {
             Score = processor.Score;
             Accuracy = processor.Accuracy;

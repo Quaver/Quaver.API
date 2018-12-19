@@ -60,12 +60,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             switch (mode)
             {
                 case GameMode.Keys4:
-                    FingerState = StrainSolverKeys.LaneToFinger4K[hitOb.Lane];
-                    Hand = StrainSolverKeys.LaneToHand4K[hitOb.Lane];
+                    FingerState = DifficultyProcessorKeys.LaneToFinger4K[hitOb.Lane];
+                    Hand = DifficultyProcessorKeys.LaneToHand4K[hitOb.Lane];
                     break;
                 case GameMode.Keys7:
-                    FingerState = StrainSolverKeys.LaneToFinger7K[hitOb.Lane];
-                    Hand = StrainSolverKeys.LaneToHand7K[hitOb.Lane].Equals(Hand.Ambiguous) ? assumeHand : StrainSolverKeys.LaneToHand7K[hitOb.Lane];
+                    FingerState = DifficultyProcessorKeys.LaneToFinger7K[hitOb.Lane];
+                    Hand = DifficultyProcessorKeys.LaneToHand7K[hitOb.Lane].Equals(Hand.Ambiguous) ? assumeHand : DifficultyProcessorKeys.LaneToHand7K[hitOb.Lane];
                     break;
                 default:
                     throw new Exception("Invalid GameMode used to create StrainSolverHitObject");

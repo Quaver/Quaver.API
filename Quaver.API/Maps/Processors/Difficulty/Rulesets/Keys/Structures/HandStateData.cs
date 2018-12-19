@@ -108,7 +108,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             StrainSolverHitObject furthest = null;
             foreach (var ob in HitObjects)
             {
-                if (StrainSolverKeys.LaneToHand4K[ob.HitObject.Lane] != Hand)
+                if (DifficultyProcessorKeys.LaneToHand4K[ob.HitObject.Lane] != Hand)
                 {
                     if (furthest == null || ob.HitObject.StartTime > furthest.HitObject.StartTime)
                         furthest = ob;
