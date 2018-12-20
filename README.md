@@ -1,11 +1,11 @@
 # Quaver.API [![Blog](https://img.shields.io/badge/Blog-Read-blue.svg)](https://blog.quavergame.com) [![Discord](https://discordapp.com/api/guilds/354206121386573824/widget.png?style=shield)](https://discord.gg/nJa8VFr)
 
->📖 Keep developing for [Quaver](https://github.com/Swan/Quaver) with these set of tools and C# libraries.
+>📖 Keep developing for [Quaver](https://github.com/Quaver) with these set of tools and C# libraries.
 
 ### Table of Contents ###
-* [What's Included](https://github.com/Swan/Quaver-API#whats-included)
-* [Contributing](https://github.com/Swan/Quaver-API#contributing)
-* [License](https://github.com/Swan/Quaver-API#license)
+* [What's Included](https://github.com/Quaver/Quaver-API#whats-included)
+* [Contributing](https://github.com/Quaver/Quaver-API#contributing)
+* [License](https://github.com/Quaver/Quaver-API#license)
 
 # What's Included
 We want to make it as easy and seamless as possible for developers to use the same tools as what is utilized in Quaver. That means if we change anything about anything, you'll have everything.
@@ -18,7 +18,7 @@ Everything regarding the following is packed into this one library:
 * Commonly used enums and helper classes
 
 # Contributing 
-We love and encourage people to contribute to Quaver - whether it be through code, designs, or ideas. Our mission is to provide a space where the rhythm game community's voice is able to be heard - which we feel has been neglected in the past. We aim to create the ultimate vertical scrolling rhythm game, and this isn't possible without community input.
+We love and encourage people to contribute to Quaver - whether it be through code, designs, or ideas. Our mission is to provide a space where the rhythm game community's voice is able to be heard. We aim to create the ultimate vertical scrolling rhythm game, and this isn't possible without community input.
 
 The best place to begin contributing to Quaver is through our [Discord server](https://discord.gg/nJa8VFr), where all of our developers, community, and testers are located.
 
@@ -26,12 +26,10 @@ Any contributions can be made through opening a pull request. When contributing 
 
 If you are wanting to develop a feature with the goal of having it being in the Steam release, open up an issue first, so we can discuss if it is in the scope of what we are trying to accomplish.
 
-When contributing, please remember to follow our [code style](https://github.com/Swan/Quaver/blob/release/CODESTYLE.md), so the codebase is consistent across the board. If you have any issues with our approaches to structuring/styling our code, feel free to bring this up.
-
 # LICENSE
 
 The Quaver game client is split up into submodules which are subject to their own individual licensing. Please see each submodule to view their respective license(s).
 
-The code in this repository is released and licensed under the [Mozilla Public License 2.0](https://github.com/Swan/Quaver.API/blob/master/LICENSE). Please see the [LICENSE](https://github.com/Swan/Quaver.API/blob/master/LICENSE) file for more information. In short, if you are making any modifications to this software, you **must** disclose the source code of the modified version of the file(s), and include the original copyright notice.
+The code in this repository is released and licensed under the [Mozilla Public License 2.0](https://github.com/Quaver/Quaver.API/blob/master/LICENSE). Please see the [LICENSE](https://github.com/QuaverQuaver.API/blob/master/LICENSE) file for more information. In short, if you are making any modifications to this software, you **must** disclose the source code of the modified version of the file(s), and include the original copyright notice.
 
-Please be aware that all game assets are released and covered by a separate license. This should be noted when using this software to create derivatives for commercial purposes. Please see the [Quaver.Resources](https://github.com/Swan/Quaver.Resources) repository for further information regarding licensing.
+Please be aware that all game assets are released and covered by a separate license. This should be noted when using this software to create derivatives for commercial purposes. Please see the [Quaver.Resources](https://github.com/Quaver/Quaver.Resources) repository for further information regarding licensing.
