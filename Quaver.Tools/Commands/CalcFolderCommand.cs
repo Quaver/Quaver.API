@@ -1,3 +1,10 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -60,7 +67,7 @@ namespace Quaver.Tools.Commands
                     if (map == null)
                         continue;
 
-                    var diffCalc = map.SolveDifficulty(new StrainConstantsKeys());
+                    var diffCalc = map.SolveDifficulty(new DifficultyConstantsKeys());
 
                     Console.WriteLine($"[{i}/{files.Count}] | {map} | {diffCalc.OverallDifficulty}");
                     output += $"{map.Artist} - {map.Title} [{map.DifficultyName}]\t{diffCalc.OverallDifficulty}\n";
@@ -68,13 +75,12 @@ namespace Quaver.Tools.Commands
                 }
                 catch (Exception e)
                 {
-                    continue;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"ERROR: {e.Message} \n{e.StackTrace}\n");
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
             }
-
-            //Console.WriteLine(table);
-
-            File.WriteAllText($"{BaseFolder}/__diff-sheet.txt", output);
+            File.WriteAllText($"{BaseFolder}/____diff-sheet.txt", output);
         }
     }
 }

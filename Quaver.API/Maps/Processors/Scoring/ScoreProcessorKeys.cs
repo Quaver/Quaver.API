@@ -1,3 +1,10 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +16,11 @@ namespace Quaver.API.Maps.Processors.Scoring
 {
     public class ScoreProcessorKeys : ScoreProcessor
     {
+        /// <summary>
+        ///     The version of the processor.
+        /// </summary>
+        public static string Version { get; } = "0.0.1";
+
         /// <summary>
         ///     The maximum amount of judgements.
         ///
@@ -55,16 +67,6 @@ namespace Quaver.API.Maps.Processors.Scoring
         private int ScoreCount { get; set; }
 
         /// <summary>
-        ///     Total Accuracy Weight Added
-        /// </summary>
-        private float AccuracyWeightCount { get; set; }
-
-        /// <summary>
-        ///     Lowest Accuracy that the player can recieve by hitting barely in the hit window
-        /// </summary>
-        private float LowestAccuracyWeight { get; } = -62.5f;
-
-        /// <summary>
         ///     Interval at which hit difference is rounded down to (in milliseconds)
         /// </summary>
         private float AccuracyWeightInterval { get; } = 4;
@@ -74,12 +76,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override SortedDictionary<Judgement, float> JudgementWindow { get; set; } = new SortedDictionary<Judgement, float>
         {
-            {Judgement.Marv, 16},
+            {Judgement.Marv, 18},
             {Judgement.Perf, 43},
             {Judgement.Great, 76},
             {Judgement.Good, 106},
             {Judgement.Okay, 127},
-            {Judgement.Miss, 142}
+            {Judgement.Miss, 164}
         };
 
         /// <inheritdoc />
@@ -126,11 +128,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         public override Dictionary<Judgement, int> JudgementAccuracyWeighting { get; } = new Dictionary<Judgement, int>()
         {
             {Judgement.Marv, 100},
-            {Judgement.Perf, 100},
+            {Judgement.Perf, 96},
             {Judgement.Great, 50},
             {Judgement.Good, 25},
-            {Judgement.Okay, -50},
-            {Judgement.Miss, -25}
+            {Judgement.Okay, -100},
+            {Judgement.Miss, -50}
         };
 
         /// <inheritdoc />
@@ -198,12 +200,6 @@ namespace Quaver.API.Maps.Processors.Scoring
             if (judgement == Judgement.Ghost)
                 return judgement;
 
-            // Calcualte and update acc weight
-            var hitOffsetMagnitude = JudgementAccuracyWeighting[Judgement.Marv] - LowestAccuracyWeight;
-            var hitOffsetRatio = (Math.Max(absoluteDifference - JudgementWindow[Judgement.Marv], 0)) / (JudgementWindow[Judgement.Miss] - JudgementWindow[Judgement.Marv]);
-            AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Marv] - hitOffsetMagnitude * (float)(1 - Math.Cos(hitOffsetRatio * Math.PI)) / 2f;
-
-            // Calculate score
             CalculateScore(judgement);
 
             return judgement;
@@ -219,14 +215,10 @@ namespace Quaver.API.Maps.Processors.Scoring
             // Update Judgement count
             CurrentJudgements[judgement]++;
 
-            // Update acc weight if missed
-            if (judgement == Judgement.Miss)
-                AccuracyWeightCount += JudgementAccuracyWeighting[Judgement.Miss];
-
             // Calculate and set the new accuracy.
-            Accuracy = Math.Max(AccuracyWeightCount / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
+            Accuracy = CalculateAccuracy();
 
-            #region SCORE_CALCULATION
+#region SCORE_CALCULATION
             // If the user didn't miss, then we want to update their combo and multiplier.
             if (judgement != Judgement.Miss)
             {
@@ -263,11 +255,11 @@ namespace Quaver.API.Maps.Processors.Scoring
             ScoreCount += JudgementScoreWeighting[judgement] + MultiplierIndex * MultiplierCountToIncreaseIndex;
 
             // Update total score.
-            const float StandardizedMaxScore = 1000000;
-            Score = (int)(StandardizedMaxScore * ((double)ScoreCount / SummedScore));
-            #endregion
+            const float standardizedMaxScore = 1000000;
+            Score = (int)(standardizedMaxScore * ((double)ScoreCount / SummedScore));
+#endregion
 
-            #region HEALTH_CALCULATION
+#region HEALTH_CALCULATION
             // Add health based on the health weighting for that given judgement.
             var newHealth = Health += JudgementHealthWeighting[judgement];
 
@@ -278,14 +270,13 @@ namespace Quaver.API.Maps.Processors.Scoring
                 Health = 100;
             else
                 Health = newHealth;
-            #endregion
+#endregion
         }
 
+        /// <inheritdoc />
         /// <summary>
-        ///     Old method to calculate accuracy with hit judgements
         /// </summary>
         /// <returns></returns>
-        [Obsolete("Accuracy is automatically calculated from CalculateScore(). This method returns outdated acc value.")]
         protected override float CalculateAccuracy()
         {
             float accuracy = 0;

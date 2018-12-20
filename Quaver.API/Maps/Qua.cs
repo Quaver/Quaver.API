@@ -1,3 +1,10 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -260,14 +267,14 @@ namespace Quaver.API.Maps
         /// <param name="constants"></param>
         /// <param name="mods"></param>
         /// <returns></returns>
-        public StrainSolver SolveDifficulty(StrainConstantsKeys constants, ModIdentifier mods = ModIdentifier.None)
+        public DifficultyProcessor SolveDifficulty(DifficultyConstantsKeys constants, ModIdentifier mods = ModIdentifier.None)
         {
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    return new StrainSolverKeys(this, constants, mods);
+                    return new DifficultyProcessorKeys(this, constants, mods);
                 case GameMode.Keys7:
-                    return new StrainSolverKeys(this, constants, mods);
+                    return new DifficultyProcessorKeys(this, constants, mods);
                 default:
                     throw new InvalidEnumArgumentException();
             }

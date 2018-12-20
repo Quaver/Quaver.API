@@ -1,3 +1,10 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +16,7 @@ namespace Quaver.API.Enums
     [Flags]
     public enum ModIdentifier
     {
-        None = 0,
+        None = -1,
         NoSliderVelocity = 1 << 0, // No Slider Velocity
         Speed05X = 1 << 1, // Speed 0.5x,
         Speed06X = 1 << 2, // Speed 0.6x
@@ -31,5 +38,6 @@ namespace Quaver.API.Enums
         NoPause = 1 << 18, // Disallows pausing.
         Autoplay = 1 << 19, // The game automatically plays it.
         Paused = 1 << 20, // The user paused during gameplay.
+        NoFail = 1 << 21 // Unable to fail during gameplay.
     }
 }

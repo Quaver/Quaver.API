@@ -1,3 +1,10 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +19,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
     ///     Generates Colors for anything related to QSR and note density,
     ///     This class and its contents are only used for generating colors,
     /// </summary>
-    public static class StrainColors
+    public static class DifficultyColors
     {
         /// <summary>
         ///     Interval at which each difficulty tier starts at
@@ -99,12 +106,12 @@ namespace Quaver.API.Maps.Processors.Difficulty
         private const float SKILL_COLOR_DELTA = 0.6f;
 
         /// <summary>
-        ///     Returns Color for general Strain Rating difficulty. Reads QSR (Quaver Strain Rating)
+        ///     Returns Color for general Difficulty. Reads QMR (Quaver Mania Rating)
         ///     This can be used to return Color to represent difficulty of a map or play.
         /// </summary>
         /// <param name="qsr"></param>
         /// <returns></returns>
-        public static Color GetStrainRatingColor(float qsr)
+        public static Color GetRatingColor(float qsr)
         {
             // Tier 0 and negative rating?
             if (qsr <= DifficultyTierInterval[ColorTier.Tier1])

@@ -1,3 +1,10 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
 using System;
 using System.Collections.Generic;
 using Quaver.API.Enums;
@@ -22,12 +29,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The total score the user has.
         /// </summary>
-        public int Score { get; protected set; }
+        public int Score { get; set; }
 
         /// <summary>
         ///     The accuracy the user has.
         /// </summary>
-        public float Accuracy { get; protected set; }
+        public float Accuracy { get; set; }
 
         /// <summary>
         ///     The current health.
@@ -42,7 +49,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The max combo achieved for this play session.
         /// </summary>
-        public int MaxCombo { get; protected set; }
+        public int MaxCombo { get; set; }
 
         /// <summary>
         ///     If the score is currently failed.
@@ -99,6 +106,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     It multiplies the judgement window by this amount.
         /// </summary>
         public abstract SortedDictionary<Judgement, float> WindowReleaseMultiplier { get; }
+
+        /// <summary>
+        ///     Determined by if the player has obtained a full combo in the score.
+        ///     This value can be applicable during real-time gameplay.
+        /// </summary>
+        public bool FullCombo => MaxCombo == TotalJudgementCount;
 
         /// <summary>
         ///     The total amount of judgements that the user has gotten in this play session.
@@ -173,32 +186,10 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Gets the judgement breakdown from hit data.
         /// </summary>
         /// <returns></returns>
-        public string GetHitBreakdown()
+        public string GetJudgementBreakdown()
         {
             var breakdown = "";
-
-            Stats.ForEach(x =>
-            {
-                if (x.HitDifference != int.MinValue)
-                    breakdown += x.HitDifference;
-                else
-                    breakdown += 0;
-
-                switch (x.KeyPressType)
-                {
-                    case KeyPressType.None:
-                        breakdown += "N";
-                        break;
-                    case KeyPressType.Press:
-                        breakdown += "P";
-                        break;
-                    case KeyPressType.Release:
-                        breakdown += "R";
-                        break;
-                }
-
-                breakdown += ",";
-            });
+            Stats.ForEach(x => breakdown += (int) x.Judgement);
 
             return breakdown;
         }
