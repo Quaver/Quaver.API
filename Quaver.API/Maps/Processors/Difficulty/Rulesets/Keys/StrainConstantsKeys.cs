@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 {
-    public class StrainConstantsKeys : StrainConstants
+    public class StrainConstantsKeys : DifficultyConstants
     {
         public float DifficultyMultiplier { get; } = 4.5f;
 
@@ -15,19 +15,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         public float VibroActionThreshold { get; } = 100;
 
-        public ConstantVariable StaminaIncrementalMultiplier { get; set; }
+        public DynamicVariable StaminaIncrementalMultiplier { get; set; }
 
-        public ConstantVariable StaminaDecrementalMultiplier { get; set; }
+        public DynamicVariable StaminaDecrementalMultiplier { get; set; }
 
-        public ConstantVariable WristRepetitionMultiplier { get; set; }
+        public DynamicVariable WristRepetitionMultiplier { get; set; }
 
-        public ConstantVariable WristTechMultiplier { get; set; }
+        public DynamicVariable WristTechMultiplier { get; set; }
 
-        public ConstantVariable WristGapMultiplier { get; set; }
+        public DynamicVariable WristGapMultiplier { get; set; }
 
-        public ConstantVariable WristVibroMultiplier { get; set; }
+        public DynamicVariable WristVibroMultiplier { get; set; }
 
-        public ConstantVariable WristSimpleJackMultiplier { get; set; }
+        public DynamicVariable WristSimpleJackMultiplier { get; set; }
 
         /// <summary>
         ///     Constructor. Create default strain constant values.
