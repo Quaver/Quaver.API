@@ -13,6 +13,7 @@ using System.Linq;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty;
+using Quaver.API.Maps.Processors.Difficulty.Optimization;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
 using Quaver.API.Maps.Structures;
 using YamlDotNet.Serialization;
@@ -267,14 +268,14 @@ namespace Quaver.API.Maps
         /// <param name="constants"></param>
         /// <param name="mods"></param>
         /// <returns></returns>
-        public DifficultyProcessor SolveDifficulty(DifficultyConstantsKeys constants, ModIdentifier mods = ModIdentifier.None)
+        public DifficultyProcessor SolveDifficulty(ModIdentifier mods = ModIdentifier.None, DifficultyConstants constants = null)
         {
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    return new DifficultyProcessorKeys(this, constants, mods);
+                    return new DifficultyProcessorKeys(this, constants == null ? new DifficultyConstantsKeys() : (DifficultyConstantsKeys)constants, mods);
                 case GameMode.Keys7:
-                    return new DifficultyProcessorKeys(this, constants, mods);
+                    return new DifficultyProcessorKeys(this, constants == null ? new DifficultyConstantsKeys() : (DifficultyConstantsKeys)constants, mods);
                 default:
                     throw new InvalidEnumArgumentException();
             }

@@ -47,7 +47,7 @@ namespace Quaver.Tools.Commands
         /// </summary>
         public override void Execute()
         {
-            var difficulty = Map.SolveDifficulty(new DifficultyConstantsKeys(), Mods);
+            var difficulty = Map.SolveDifficulty(Mods);
 
             Console.WriteLine(JObject.FromObject(new
             {

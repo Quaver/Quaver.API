@@ -106,7 +106,7 @@ namespace Quaver.Tools.Examples
             var sample = new double[OptimizationSamples.Count];
             for (var i = 0; i < OptimizationSamples.Count; i++)
             {
-                sample[i] = Qua.Parse(OptimizationSamples[i]).SolveDifficulty(Constants).OverallDifficulty;
+                sample[i] = Qua.Parse(OptimizationSamples[i]).SolveDifficulty(ModIdentifier.Speed10X, Constants).OverallDifficulty;
                 if (i > 0)
                     xbar += sample[i] - sample[i - 1];
             }

@@ -67,7 +67,7 @@ namespace Quaver.Tools.Commands
                     if (map == null)
                         continue;
 
-                    var diffCalc = map.SolveDifficulty(new DifficultyConstantsKeys());
+                    var diffCalc = map.SolveDifficulty();
 
                     Console.WriteLine($"[{i}/{files.Count}] | {map} | {diffCalc.OverallDifficulty}");
                     output += $"{map.Artist} - {map.Title} [{map.DifficultyName}]\t{diffCalc.OverallDifficulty}\n";
