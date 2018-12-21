@@ -47,5 +47,12 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// </summary>
         /// <param name="map"></param>
         public DifficultyProcessor(Qua map, DifficultyConstants constants, ModIdentifier mods = ModIdentifier.None) => Map = map;
+
+        /// <summary>
+        ///     Calculate Play Rating according to accuracy.
+        /// </summary>
+        /// <param name="accuracy"></param>
+        /// <returns></returns>
+        public abstract float CalculatePlayRating(float accuracy);
     }
 }
