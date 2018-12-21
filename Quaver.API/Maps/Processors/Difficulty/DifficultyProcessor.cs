@@ -25,8 +25,6 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// </summary>
         internal Qua Map { get; set; }
 
-        public string Version { get; }
-
         /// <summary>
         ///     Overall Difficulty of a map
         /// </summary>
