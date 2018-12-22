@@ -43,7 +43,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// <summary>
         ///     Total ammount of milliseconds in a second.
         /// </summary>
-        public const float SECONDS_TO_MILLISECONDS = 1000;
+        public const double SECONDS_TO_MILLISECONDS = 1000;
 
         /// <summary>
         ///     Constructor
@@ -56,6 +56,6 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// </summary>
         /// <param name="accuracy"></param>
         /// <returns></returns>
-        public static double CalculatePlayRating(float difficulty, float accuracy) => difficulty * (float)Math.Pow(accuracy, 3);
+        public static double CalculatePlayRating(double difficulty, double accuracy) => difficulty * Math.Pow(accuracy, 3);
     }
 }
