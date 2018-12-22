@@ -54,7 +54,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     When the HitObject Starts relative to the song in milliseconds.
         /// </summary>
-        public float StartTime => HitObject.StartTime;
+        public float StartTime => HitObject.StartTime * Rate;
+
+        /// <summary>
+        /// When the HitObject Ends relative to the song in milliseconds.
+        /// </summary>
+        public float EndTime => HitObject.EndTime * Rate;
+
+        private float Rate { get; }
 
         /// <summary>
         ///     Constructor
@@ -62,6 +69,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <param name="hitOb"></param>
         public DPHitObject(HitObjectInfo hitOb, float rate, GameMode mode, Hand assumeHand)
         {
+            Rate = rate;
             HitObject = hitOb;
 
             // Temporary
