@@ -119,17 +119,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // If map does not exist, ignore calculation.
             if (Map == null) return;
 
-            // Get song rate from selected mods
-            var rate = ModHelper.GetRateFromMods(mods);
-
             // Compute for overall difficulty
             switch (Map.Mode)
             {
                 case (GameMode.Keys4):
-                    OverallDifficulty = ComputeForOverallDifficulty(rate);
+                    OverallDifficulty = ComputeForOverallDifficulty(mods);
                     break;
                 case (GameMode.Keys7):
-                    OverallDifficulty = (ComputeForOverallDifficulty(rate, Hand.Left) + ComputeForOverallDifficulty(rate, Hand.Right)) / 2;
+                    OverallDifficulty = (ComputeForOverallDifficulty(mods, Hand.Left) + ComputeForOverallDifficulty(mods, Hand.Right)) / 2;
                     break;
             }
         }
@@ -140,10 +137,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="rate"></param>
         /// <param name="assumeHand"></param>
         /// <returns></returns>
-        private float ComputeForOverallDifficulty(float rate, Hand assumeHand = Hand.Right)
+        private float ComputeForOverallDifficulty(ModIdentifier mods, Hand assumeHand = Hand.Right)
         {
             // Convert to hitobjects. The Algorithm iterates through the HitObjects backwards.
-            var hitObjects = ConvertToDPHitObject(rate, assumeHand);
+            var hitObjects = ConvertToDPHitObject(mods, assumeHand);
             hitObjects.Reverse();
 
             // Get States
@@ -168,8 +165,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         /// <param name="assumeHand"></param>
         /// <returns></returns>
-        private List<DPHitObject> ConvertToDPHitObject(float rate, Hand assumeHand)
+        private List<DPHitObject> ConvertToDPHitObject(ModIdentifier mods, Hand assumeHand)
         {
+            // Get song rate from selected mods
+            var rate = ModHelper.GetRateFromMods(mods);
+
             var hitObjects = new List<DPHitObject>();
             foreach (var ho in Map.HitObjects)
                 hitObjects.Add(new DPHitObject(ho, rate, Map.Mode, assumeHand));
