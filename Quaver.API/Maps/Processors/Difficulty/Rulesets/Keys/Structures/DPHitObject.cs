@@ -65,8 +65,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             HitObject = hitOb;
 
             // Temporary
-            HitObject.StartTime = (int)(HitObject.StartTime * rate);
-            HitObject.EndTime = (int)(HitObject.EndTime * rate);
+            HitObject.StartTime = (int)(HitObject.StartTime / rate);
+            HitObject.EndTime = (int)(HitObject.EndTime / rate);
 
             // Determine Hand of this HitObject
             switch (mode)
