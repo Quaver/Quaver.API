@@ -25,14 +25,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <summary>
         ///     Value of this variable
         /// </summary>
-        public float Value { get; set; }
+        public double Value { get; set; }
 
         /// <summary>
         ///     Const
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public DynamicVariable(string name, float value)
+        public DynamicVariable(string name, double value)
         {
             Name = name;
             Value = value;

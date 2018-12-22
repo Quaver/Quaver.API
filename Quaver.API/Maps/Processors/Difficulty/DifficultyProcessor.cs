@@ -33,7 +33,7 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// <summary>
         ///     Overall Difficulty of a map
         /// </summary>
-        public float OverallDifficulty { get; set; }
+        public double OverallDifficulty { get; set; }
 
         /// <summary>
         ///     Used to display prominent patterns of a map in the client
@@ -56,6 +56,6 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// </summary>
         /// <param name="accuracy"></param>
         /// <returns></returns>
-        public static float CalculatePlayRating(float difficulty, float accuracy) => difficulty * (float)Math.Pow(accuracy, 3);
+        public static double CalculatePlayRating(float difficulty, float accuracy) => difficulty * (float)Math.Pow(accuracy, 3);
     }
 }

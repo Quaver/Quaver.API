@@ -27,7 +27,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public DynamicVariable NewConstant(string name, float value)
+        public DynamicVariable NewConstant(string name, double value)
         {
             // Create new constant variable
             var constVar = new DynamicVariable(name, value);
@@ -88,7 +88,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Optimization
         {
             for (var i = 0; i < updated.Length; i++)
             {
-                ConstantVariables[i].Value = (float)updated[i];
+                ConstantVariables[i].Value = updated[i];
             }
         }
     }

@@ -19,12 +19,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Difficulty Multiplier affected by this Wrist State.
         /// </summary>
-        public float Difficulty { get; set; } = 1;
+        public double Difficulty { get; set; } = 1;
 
         /// <summary>
         ///     Delta between Next State and Current State.
         /// </summary>
-        public float NextStateDelta => NextState.Time - Time;
+        public double NextStateDelta => NextState.Time - Time;
 
         /// <summary>
         ///     Determined by this Wrist State's Orientation.
@@ -34,7 +34,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Determines this Wrist State's time of effect.
         /// </summary>
-        public float Time { get; set; }
+        public double Time { get; set; }
 
         /// <summary>
         ///     Determined by which fingers affect this Wrist State.

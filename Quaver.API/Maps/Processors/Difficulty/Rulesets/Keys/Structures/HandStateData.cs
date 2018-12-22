@@ -26,7 +26,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Reference Timing Position for this State. It will use the StartTime of the first HitObject that initialized this object.
         /// </summary>
-        public float Time => HitObjects[0].StartTime;
+        public double Time => HitObjects[0].StartTime;
 
         /// <summary>
         ///     Determined by the hand this data point focuses on.
@@ -43,12 +43,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     0 = Perfect Chord
         ///     1 = Furthest from being a perfect chord
         /// </summary>
-        public float ChordProximity { get; private set; }
+        public double ChordProximity { get; private set; }
 
         /// <summary>
         ///     Difficulty for this specific Hand State
         /// </summary>
-        public float StateDifficulty { get; private set; }
+        public double StateDifficulty { get; private set; }
 
         /// <summary>
         /// 
@@ -71,7 +71,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// </summary>
         /// <param name="constants"></param>
         /// <param name="nextState"></param>
-        public float EvaluateDifficulty(DifficultyConstantsKeys constants, float actionLength)
+        public double EvaluateDifficulty(DifficultyConstantsKeys constants, double actionLength)
         {
             StateDifficulty = 0;
             FingerState = Finger.None;
@@ -96,7 +96,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
                 throw new Exception("HandStateData Action Delta is 0 or negative value.");
 
             // Set and Return Difficulty Value
-            return StateDifficulty = Math.Max(1, StateDifficulty * constants.DifficultyMultiplier * (float)Math.Sqrt(constants.BpmToActionLengthMs / actionLength) + constants.DifficultyOffset);
+            return StateDifficulty = Math.Max(1, StateDifficulty * constants.DifficultyMultiplier * (double)Math.Sqrt(constants.BpmToActionLengthMs / actionLength) + constants.DifficultyOffset);
         }
 
         /// <summary>

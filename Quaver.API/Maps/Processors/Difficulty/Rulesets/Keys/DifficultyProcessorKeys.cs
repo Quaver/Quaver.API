@@ -137,7 +137,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="rate"></param>
         /// <param name="assumeHand"></param>
         /// <returns></returns>
-        private float ComputeForOverallDifficulty(ModIdentifier mods, Hand assumeHand = Hand.Right)
+        private double ComputeForOverallDifficulty(ModIdentifier mods, Hand assumeHand = Hand.Right)
         {
             // Convert to hitobjects. The Algorithm iterates through the HitObjects backwards.
             var hitObjects = ConvertToDPHitObject(mods, assumeHand);
@@ -354,12 +354,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        private float ComputeForStaminaDifficulty(List<HandStateData> left, List<HandStateData> right)
+        private double ComputeForStaminaDifficulty(List<HandStateData> left, List<HandStateData> right)
         {
-            float total = 0;
+            double total = 0;
             for (var z = 0; z <= 1; z++)
             {
-                float currentDiff = 0;
+                double currentDiff = 0;
                 var reference = z == 0 ? left : right;
                 for (var i = 0; i < reference.Count - 2; i++)
                 {
@@ -375,7 +375,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // Stamina Multiplier Bonus,
             var count = left.Count + right.Count;
-            var stamina = (float)(Math.Log10(count) / 25 + 0.9);
+            var stamina = (Math.Log10(count) / 25 + 0.9);
 
             // Overall Difficulty,
             if (count == 0) return 0;

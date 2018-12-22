@@ -44,33 +44,32 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         /// <summary>
         ///     Determined by how repetitive the jack action is (if a jack follows up.)
         /// </summary>
-        public float RepetitionMultiplier { get; set; } = 1;
+        public double RepetitionMultiplier { get; set; } = 1;
 
         /// <summary>
         ///     Represents how difficult it is to hit this object in game.
         /// </summary>
-        public float Difficulty { get; set; }
+        public double Difficulty { get; set; }
 
         /// <summary>
         ///     When the HitObject Starts relative to the song in milliseconds.
         /// </summary>
-        public float StartTime => HitObject.StartTime * Rate;
+        public double StartTime { get; }
 
         /// <summary>
-        /// When the HitObject Ends relative to the song in milliseconds.
+        ///     When the HitObject Ends relative to the song in milliseconds.
         /// </summary>
-        public float EndTime => HitObject.EndTime * Rate;
-
-        private float Rate { get; }
+        public double EndTime { get; }
 
         /// <summary>
         ///     Constructor
         /// </summary>
         /// <param name="hitOb"></param>
-        public DPHitObject(HitObjectInfo hitOb, float rate, GameMode mode, Hand assumeHand)
+        public DPHitObject(HitObjectInfo hitOb, double rate, GameMode mode, Hand assumeHand)
         {
-            Rate = rate;
             HitObject = hitOb;
+            StartTime = HitObject.StartTime * rate;
+            EndTime = HitObject.EndTime * rate;
 
             // Temporary
             //HitObject.StartTime = (int)(HitObject.StartTime / rate);
@@ -158,7 +157,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
             if (WristState.NextState != null && WristState.NextState.WristPair.Equals(WristState.WristPair))
                 WristState.RepetitionCount = WristState.NextState.RepetitionCount + 1;
 
-            RepetitionMultiplier = (float)Math.Pow(constants.WristRepetitionMultiplier.Value, Math.Min(WristState.RepetitionCount, constants.MaxSimpleJackRepetition));
+            RepetitionMultiplier = Math.Pow(constants.WristRepetitionMultiplier.Value, Math.Min(WristState.RepetitionCount, constants.MaxSimpleJackRepetition));
             WristState.Difficulty *= RepetitionMultiplier;
         }
     }

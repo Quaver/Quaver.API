@@ -111,16 +111,16 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// </summary>
         /// <param name="qsr"></param>
         /// <returns></returns>
-        public static Color GetRatingColor(float qsr)
+        public static Color GetRatingColor(float dr)
         {
             // Tier 0 and negative rating?
-            if (qsr <= DifficultyTierInterval[ColorTier.Tier1])
+            if (dr <= DifficultyTierInterval[ColorTier.Tier1])
                 return DifficultyTierColor[ColorTier.Tier1];
 
             // Find color for qsr
             for (var i = 0; i < DifficultyTierInterval.Count - 1; i++)
             {
-                var val = qsr - DifficultyTierInterval[(ColorTier)i];
+                var val = dr - DifficultyTierInterval[(ColorTier)i];
                 var current = (ColorTier)i;
                 var next = (ColorTier)(i+1);
                 var denominator = DifficultyTierInterval[next] - DifficultyTierInterval[current];
