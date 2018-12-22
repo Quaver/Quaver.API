@@ -56,6 +56,9 @@ namespace Quaver.API.Maps.Processors.Difficulty
         /// </summary>
         /// <param name="accuracy"></param>
         /// <returns></returns>
-        public abstract float CalculatePlayRating(float accuracy);
+        public static float CalculatePlayRating(float difficulty, float accuracy) => difficulty * (float)Math.Pow(accuracy, 3);
+        {
+
+        }
     }
 }

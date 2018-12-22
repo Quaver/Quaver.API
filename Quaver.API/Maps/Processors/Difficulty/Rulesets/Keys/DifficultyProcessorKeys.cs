@@ -430,13 +430,5 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             return count;
         }
-
-        /// <inheritdoc/>
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="accuracy"></param>
-        /// <returns></returns>
-        public override float CalculatePlayRating(float accuracy) => OverallDifficulty * (float)Math.Pow(accuracy, 3);
     }
 }
