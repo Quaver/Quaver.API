@@ -123,10 +123,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             switch (Map.Mode)
             {
                 case (GameMode.Keys4):
-                    OverallDifficulty = 5;//= ComputeForOverallDifficulty(mods);
+                    OverallDifficulty = ComputeForOverallDifficulty(mods);
                     break;
                 case (GameMode.Keys7):
-                    OverallDifficulty = 5; //= (ComputeForOverallDifficulty(mods, Hand.Left) + ComputeForOverallDifficulty(mods, Hand.Right)) / 2;
+                    OverallDifficulty = (ComputeForOverallDifficulty(mods, Hand.Left) + ComputeForOverallDifficulty(mods, Hand.Right)) / 2;
                     break;
             }
         }
