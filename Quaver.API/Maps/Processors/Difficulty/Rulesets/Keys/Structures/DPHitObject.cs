@@ -60,9 +60,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         ///     Constructor
         /// </summary>
         /// <param name="hitOb"></param>
-        public DPHitObject(HitObjectInfo hitOb, GameMode mode, Hand assumeHand)
+        public DPHitObject(HitObjectInfo hitOb, float rate, GameMode mode, Hand assumeHand)
         {
             HitObject = hitOb;
+
+            // Temporary
+            HitObject.StartTime = (int)(HitObject.StartTime * rate);
+            HitObject.EndTime = (int)(HitObject.EndTime * rate);
 
             // Determine Hand of this HitObject
             switch (mode)
