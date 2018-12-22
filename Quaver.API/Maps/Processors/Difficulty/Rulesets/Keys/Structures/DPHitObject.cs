@@ -68,8 +68,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys.Structures
         public DPHitObject(HitObjectInfo hitOb, double rate, GameMode mode, Hand assumeHand)
         {
             HitObject = hitOb;
-            StartTime = HitObject.StartTime * rate;
-            EndTime = HitObject.EndTime * rate;
+            StartTime = HitObject.StartTime / rate;
+            EndTime = HitObject.EndTime / rate;
 
             // Temporary
             //HitObject.StartTime = (int)(HitObject.StartTime / rate);
