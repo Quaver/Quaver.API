@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -52,19 +52,13 @@ namespace Quaver.API.Maps.Structures
         /// <returns></returns>
         public TimingPointInfo GetTimingPoint(List<TimingPointInfo> timingPoints)
         {
-            // If the object's time is greater than the time of the last timing point, return the last point
-            if (StartTime >= timingPoints.Last().StartTime)
-                return timingPoints.Last();
-
             // Search through the entire list for the correct point
-            for (var i = 0; i < timingPoints.Count - 1; i++)
+            for (var i = timingPoints.Count - 1; i >= 0; i--)
             {
-                if (StartTime < timingPoints.Last().StartTime)
+                if (StartTime >= timingPoints[i].StartTime)
                     return timingPoints[i];
             }
 
-            // Otherwise just return first point if we can't find it.
-            // Qua file won't be considered valid if it doesn't have at least one timing point.
             return timingPoints.First();
         }
     }
