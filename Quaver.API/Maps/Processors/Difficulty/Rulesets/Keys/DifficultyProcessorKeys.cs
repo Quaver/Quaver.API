@@ -32,7 +32,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Version of the Difficulty Processor
         /// </summary>
-        public new static string Version { get; } = "0.0.1";
+        public new static string Version { get; } = "0.1.0";
 
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
