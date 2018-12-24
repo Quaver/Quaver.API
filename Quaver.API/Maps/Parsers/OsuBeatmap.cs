@@ -376,13 +376,13 @@ namespace Quaver.API.Maps.Parsers
                                     if (osuHitObject.X >= 384 && osuHitObject.X <= 511)
                                         osuHitObject.Key4 = true;
                                     break;
-                                case 7 when osuHitObject.X >= 0 && osuHitObject.X <= 108:
+                                case 7 when osuHitObject.X != 96 && osuHitObject.X >= 0 && osuHitObject.X <= 108:
                                     osuHitObject.Key1 = true;
                                     break;
-                                case 7 when osuHitObject.X >= 109 && osuHitObject.X <= 181:
+                                case 7 when osuHitObject.X == 96 | (osuHitObject.X != 160 && osuHitObject.X >= 109 && osuHitObject.X <= 181):
                                     osuHitObject.Key2 = true;
                                     break;
-                                case 7 when osuHitObject.X >= 182 && osuHitObject.X <= 255:
+                                case 7 when osuHitObject.X == 160 | (osuHitObject.X >= 182 && osuHitObject.X <= 255):
                                     osuHitObject.Key3 = true;
                                     break;
                                 case 7 when osuHitObject.X >= 256 && osuHitObject.X <= 328:
