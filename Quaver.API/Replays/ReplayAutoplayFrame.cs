@@ -53,7 +53,7 @@ namespace Quaver.API.Replays
     }
 
     /// <summary>
-    ///     Enum that allows us to determine which action to take when constructing autplay repolays.
+    ///     Enum that allows us to determine which action to take when constructing autoplay replays.
     /// </summary>
     public enum ReplayAutoplayFrameType
     {

@@ -156,7 +156,7 @@ namespace Quaver.API.Replays
                     Date = Convert.ToDateTime(br.ReadString(), CultureInfo.InvariantCulture);
                     TimePlayed = br.ReadInt64();
 
-                    // The dates are serialized incorrectly in older replays, so to keep compatability,
+                    // The dates are serialized incorrectly in older replays, so to keep compatibility,
                     // use the time played.
                     Date = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(TimePlayed);
 
