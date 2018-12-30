@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HoLLy.osu.DatabaseReader" Version="2.1.0" />
+    <PackageReference Include="MonoGame.Extended" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="YamlDotNet" Version="5.1.0" />
   </ItemGroup>

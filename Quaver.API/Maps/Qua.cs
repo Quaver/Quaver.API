@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using MonoGame.Extended.Collections;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty;
@@ -109,6 +110,13 @@ namespace Quaver.API.Maps
         [YamlIgnore]
         public int Length => HitObjects.Count == 0 ? 0 : HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
 
+        /// <summary>
+        ///     Integer based seed used for shuffling the lanes when randomize mod is active.
+        ///     Defaults to -1 if there is no seed.
+        /// </summary>
+        [YamlIgnore]
+        public int RandomizeModifierSeed { get; set; } = -1;
+        
         /// <summary>
         ///     Ctor
         /// </summary>
@@ -276,6 +284,28 @@ namespace Quaver.API.Maps
                     return new DifficultyProcessorKeys(this, new StrainConstantsKeys(), mods);
                 default:
                     throw new InvalidEnumArgumentException();
+            }
+        }
+        
+        /// <summary>
+        ///     Used by the Randomize modifier to shuffle around the lanes.
+        /// </summary>
+        public void RandomizeLanes(int seed)
+        {
+            // if seed is default, then abort.
+            if (seed == -1)
+                return;
+
+            RandomizeModifierSeed = seed;
+            
+            List<int> values = new List<int>();
+            values.AddRange(Enumerable.Range(0, GetKeyCount()).Select(x => x + 1));
+
+            values.Shuffle(new Random(seed));
+
+            foreach (var hitObject in HitObjects)
+            {
+                hitObject.Lane = values[hitObject.Lane - 1];
             }
         }
 
