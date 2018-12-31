@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -113,7 +113,7 @@ namespace Quaver.API.Maps
         ///     Ctor
         /// </summary>
         public Qua() {}
- 
+
         /// <summary>
         ///     Takes in a path to a .qua file and attempts to parse it.
         ///     Will throw an error if unable to be parsed.
@@ -173,7 +173,7 @@ namespace Quaver.API.Maps
             // Check if the mode is actually valid
             return Enum.IsDefined(typeof(GameMode), Mode);
         }
-        
+
         /// <summary>
         ///     Does some sorting of the Qua
         /// </summary>
@@ -183,13 +183,13 @@ namespace Quaver.API.Maps
             TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
             SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
         }
-        
+
         /// <summary>
         ///     The average notes per second in the map.
         /// </summary>
         /// <returns></returns>
         public float AverageNotesPerSecond(float rate = 1.0f) => HitObjects.Count / (Length / (1000f * rate));
-        
+
         /// <summary>
         ///    In Quaver, the key count is defined by the game mode.
         ///    This translates mode to key count.
@@ -229,14 +229,14 @@ namespace Quaver.API.Maps
         public TimingPointInfo GetTimingPointAt(double time)
         {
             var point = TimingPoints.FindLast(x => x.StartTime <= time);
-            
+
             // If the point can't be found, we want to return either null if there aren't
             // any points, or the first timing point, since it'll be considered as apart of it anyway.
             if (point == null)
                 return TimingPoints.Count == 0 ? null : TimingPoints.First();
 
             return point;
-        } 
+        }
 
         /// <summary>
         ///    Finds the length of a timing point.
@@ -247,16 +247,16 @@ namespace Quaver.API.Maps
         {
             // Find the index of the current timing point.
             var index = TimingPoints.IndexOf(point);
-            
+
             // ??
             if (index == -1)
                 throw new ArgumentException();
-            
+
             // There is another timing point ahead of this one
             // so we'll need to get the length of the two points.
             if (index + 1 < TimingPoints.Count)
                 return TimingPoints[index + 1].StartTime - TimingPoints[index].StartTime;
-            
+
             // Only one timing point, so we can assume that it goes to the end of the map.
             return Length - point.StartTime;
         }
@@ -280,5 +280,16 @@ namespace Quaver.API.Maps
         }
 
         public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";
+
+        /// <summary>
+        ///     Replaces long notes with regular notes starting at the same time.
+        /// </summary>
+        public void ReplaceLongNotesWithRegularNotes()
+        {
+            foreach (var hitObject in HitObjects)
+            {
+                hitObject.EndTime = 0;
+            }
+        }
     }
 }
