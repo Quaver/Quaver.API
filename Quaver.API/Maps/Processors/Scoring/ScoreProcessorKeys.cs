@@ -66,11 +66,6 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         private int ScoreCount { get; set; }
 
-        /// <summary>
-        ///     Interval at which hit difference is rounded down to (in milliseconds)
-        /// </summary>
-        private float AccuracyWeightInterval { get; } = 4;
-
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -174,7 +169,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="keyPressType"></param>
         public Judgement CalculateScore(int hitDifference, KeyPressType keyPressType)
         {
-            var absoluteDifference = (float)Math.Floor(Math.Abs(hitDifference) / AccuracyWeightInterval) * AccuracyWeightInterval;
+            var absoluteDifference = Math.Abs(hitDifference);
 
             var judgement = Judgement.Ghost;
 
