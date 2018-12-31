@@ -98,12 +98,10 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.NoFail:
                         modStrings.Add("No Fail");
                         break;
-                    case ModIdentifier.NoLongNotes:
-                        modStrings.Add("NLN");
-                        break;
                     case ModIdentifier.Randomize:
                         modStrings.Add("Randomize");
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
                 }
