@@ -116,7 +116,7 @@ namespace Quaver.API.Maps
         /// </summary>
         [YamlIgnore]
         public int RandomizeModifierSeed { get; set; } = -1;
-        
+
         /// <summary>
         ///     Ctor
         /// </summary>
@@ -286,28 +286,6 @@ namespace Quaver.API.Maps
                     throw new InvalidEnumArgumentException();
             }
         }
-        
-        /// <summary>
-        ///     Used by the Randomize modifier to shuffle around the lanes.
-        /// </summary>
-        public void RandomizeLanes(int seed)
-        {
-            // if seed is default, then abort.
-            if (seed == -1)
-                return;
-
-            RandomizeModifierSeed = seed;
-            
-            List<int> values = new List<int>();
-            values.AddRange(Enumerable.Range(0, GetKeyCount()).Select(x => x + 1));
-
-            values.Shuffle(new Random(seed));
-
-            foreach (var hitObject in HitObjects)
-            {
-                hitObject.Lane = values[hitObject.Lane - 1];
-            }
-        }
 
         public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";
 
@@ -331,6 +309,29 @@ namespace Quaver.API.Maps
             // If the No Long Notes mod is active, remove the long notes.
             if (mods.HasFlag(ModIdentifier.NoLongNotes))
                 ReplaceLongNotesWithRegularNotes();
+        }
+
+        /// <summary>
+        ///     Used by the Randomize modifier to shuffle around the lanes.
+        ///     Replaces long notes with regular notes starting at the same time.
+        /// </summary>
+        public void RandomizeLanes(int seed)
+        {
+            // if seed is default, then abort.
+            if (seed == -1)
+                return;
+
+            RandomizeModifierSeed = seed;
+
+            List<int> values = new List<int>();
+            values.AddRange(Enumerable.Range(0, GetKeyCount()).Select(x => x + 1));
+
+            values.Shuffle(new Random(seed));
+
+            foreach (var hitObject in HitObjects)
+            {
+                hitObject.Lane = values[hitObject.Lane - 1];
+            }
         }
     }
 }
