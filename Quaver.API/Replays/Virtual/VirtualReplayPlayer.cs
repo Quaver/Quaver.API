@@ -133,6 +133,15 @@ namespace Quaver.API.Replays.Virtual
         }
 
         /// <summary>
+        ///     Plays the entire replay.
+        /// </summary>
+        public void PlayAllFrames()
+        {
+            while (CurrentFrame + 1 < Replay.Frames.Count)
+                PlayNextFrame();
+        }
+
+        /// <summary>
         ///     Handles all key presses in the current replay frame.
         /// </summary>
         private void HandleKeyPressesInFrame()
