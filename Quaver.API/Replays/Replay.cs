@@ -24,7 +24,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The version of the replay.
         /// </summary>
-        public static string Version { get; } = "None";
+        public static string CurrentVersion { get; } = "None";
 
         /// <summary>
         ///     The game mode this replay is for.
@@ -219,6 +219,7 @@ namespace Quaver.API.Replays
         public void Write(string path)
         {
             var frames = FramesToString();
+            ReplayVersion = CurrentVersion;
 
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(frames)))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
