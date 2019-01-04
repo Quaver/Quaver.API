@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Quaver.API.Enums;
+using Quaver.API.Helpers;
 using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Maps.Parsers
@@ -303,7 +304,7 @@ namespace Quaver.API.Maps.Parsers
                     {
                         // We only care about parsing the background path,
                         // So there's no need to parse the storyboard data.
-                        if (line.Contains("png") || line.Contains("jpg") || line.Contains("jpeg"))
+                        if (line.ToLower().Contains("png") || line.ToLower().Contains("jpg") || line.ToLower().Contains("jpeg"))
                         {
                             var values = line.Split(',');
                             Background = values[2].Replace("\"", "");
@@ -355,59 +356,14 @@ namespace Quaver.API.Maps.Parsers
                             // signifies that it is an LN
                             var osuHitObject = new OsuHitObject
                             {
-                                X = int.Parse(values[0], CultureInfo.InvariantCulture)
+                                X = int.Parse(values[0], CultureInfo.InvariantCulture),
+                                Y = int.Parse(values[1], CultureInfo.InvariantCulture),
+                                StartTime = int.Parse(values[2], CultureInfo.InvariantCulture),
+                                Type = int.Parse(values[3], CultureInfo.InvariantCulture),
+                                HitSound = int.Parse(values[4], CultureInfo.InvariantCulture),
+                                Additions = "0:0:0:0:"
                             };
 
-
-                            switch (KeyCount)
-                            {
-                                // 4k and 7k have both different hit object parsing.
-                                case 4 when osuHitObject.X >= 0 && osuHitObject.X <= 127:
-                                    osuHitObject.Key1 = true;
-                                    break;
-                                case 4 when osuHitObject.X >= 128 && osuHitObject.X <= 255:
-                                    osuHitObject.Key2 = true;
-                                    break;
-                                case 4 when osuHitObject.X >= 256 && osuHitObject.X <= 383:
-                                    osuHitObject.Key3 = true;
-                                    break;
-                                // 7k
-                                case 4:
-                                    if (osuHitObject.X >= 384 && osuHitObject.X <= 511)
-                                        osuHitObject.Key4 = true;
-                                    break;
-                                case 7 when osuHitObject.X >= 0 && osuHitObject.X <= 108:
-                                    osuHitObject.Key1 = true;
-                                    break;
-                                case 7 when osuHitObject.X >= 109 && osuHitObject.X <= 181:
-                                    osuHitObject.Key2 = true;
-                                    break;
-                                case 7 when osuHitObject.X >= 182 && osuHitObject.X <= 255:
-                                    osuHitObject.Key3 = true;
-                                    break;
-                                case 7 when osuHitObject.X >= 256 && osuHitObject.X <= 328:
-                                    osuHitObject.Key4 = true;
-                                    break;
-                                case 7 when osuHitObject.X >= 329 && osuHitObject.X <= 401:
-                                    osuHitObject.Key5 = true;
-                                    break;
-                                case 7 when osuHitObject.X >= 402 && osuHitObject.X <= 474:
-                                    osuHitObject.Key6 = true;
-                                    break;
-                                case 7:
-                                    if (osuHitObject.X >= 475 && osuHitObject.X <= 547)
-                                        osuHitObject.Key7 = true;
-                                    break;
-                                default:
-                                    IsValid = false;
-                                    break;
-                            }
-
-                            osuHitObject.Y = int.Parse(values[1], CultureInfo.InvariantCulture);
-                            osuHitObject.StartTime = int.Parse(values[2], CultureInfo.InvariantCulture);
-                            osuHitObject.Type = int.Parse(values[3], CultureInfo.InvariantCulture);
-                            osuHitObject.HitSound = int.Parse(values[4], CultureInfo.InvariantCulture);
-                            osuHitObject.Additions = "0:0:0:0:";
 
                             // If it's an LN, we'll want to add the object's EndTime as well.
                             if (line.Contains("128"))
@@ -478,22 +434,7 @@ namespace Quaver.API.Maps.Parsers
             foreach (var hitObject in HitObjects)
             {
                 // Get the keyLane the hitObject is in
-                var keyLane = 0;
-
-                if (hitObject.Key1)
-                    keyLane = 1;
-                else if (hitObject.Key2)
-                    keyLane = 2;
-                else if (hitObject.Key3)
-                    keyLane = 3;
-                else if (hitObject.Key4)
-                    keyLane = 4;
-                else if (hitObject.Key5)
-                    keyLane = 5;
-                else if (hitObject.Key6)
-                    keyLane = 6;
-                else if (hitObject.Key7)
-                    keyLane = 7;
+                var keyLane = (int) (hitObject.X / (512d / KeyCount)).Clamp(0, KeyCount - 1) + 1;
 
                 // ReSharper disable once SwitchStatementMissingSomeCases
                 switch (hitObject.Type)
