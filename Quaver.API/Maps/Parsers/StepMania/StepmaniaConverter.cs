@@ -1,4 +1,4 @@
-﻿/**
+/**
  * StepMania Parser provided by: zardoru
  * https://gist.github.com/zardoru/5298155#file-fixed_converter-L498
  */
@@ -35,6 +35,8 @@ namespace Quaver.API.Maps.Parsers.StepMania
         private float Offset { get; set; }
 
         private float PreviewPoint { get; set; }
+
+        public StepmaniaConverter(string path) => ReadHeader(path, true);
 
         /// <summary>
         ///     Converts a stepmania style to their associated key count.
@@ -318,12 +320,14 @@ namespace Quaver.API.Maps.Parsers.StepMania
                     switch (measure[(int)mCount])
                     {
                         case '1':
-                            var newNote = new Note();
-                            newNote.NoteType = ENoteType.Tap;
-                            newNote.BeatStart = beat;
-                            newNote.TrackStart = currentTime;
-                            newNote.BeatEnd = 0;
-                            newNote.Track = currentTrack;
+                            var newNote = new Note
+                            {
+                                NoteType = ENoteType.Tap,
+                                BeatStart = beat,
+                                TrackStart = currentTime,
+                                BeatEnd = 0,
+                                Track = currentTrack
+                            };
                             theNotes.Add(newNote);
                             break;
                         case '2': // hold start
@@ -331,12 +335,14 @@ namespace Quaver.API.Maps.Parsers.StepMania
                             pendingTracks[currentTrack] = currentTime;
                             break;
                         case '3':
-                            newNote = new Note();
-                            newNote.NoteType = ENoteType.Tap;
-                            newNote.BeatEnd = beat;
-                            newNote.TrackStart = pendingTracks[currentTrack];
-                            newNote.TrackEnd = currentTime;
-                            newNote.Track = currentTrack;
+                            newNote = new Note
+                            {
+                                NoteType = ENoteType.Tap,
+                                BeatEnd = beat,
+                                TrackStart = pendingTracks[currentTrack],
+                                TrackEnd = currentTime,
+                                Track = currentTrack
+                            };
                             theNotes.Add(newNote);
                             break;
                     }
@@ -367,7 +373,7 @@ namespace Quaver.API.Maps.Parsers.StepMania
         /// </summary>
         /// <param name="filename"></param>
         /// <param name="readNotes"></param>
-        public void ReadHeader(string filename, bool readNotes = false)
+        private void ReadHeader(string filename, bool readNotes = false)
         {
             var stream = new System.IO.StreamReader(filename);
             string line;
