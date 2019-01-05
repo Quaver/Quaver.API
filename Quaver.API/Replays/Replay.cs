@@ -122,12 +122,6 @@ namespace Quaver.API.Replays
         public int PauseCount { get; set; }
 
         /// <summary>
-        ///     Integer based seed used for shuffling the lanes when randomize mod is active.
-        ///     Defaults to -1 if there is no seed.
-        /// </summary>
-        public int RandomizeModifierSeed { get; set; } = -1;
-
-        /// <summary>
         ///     Ctor -
         ///     Create fresh replay
         /// </summary>
@@ -257,7 +251,6 @@ namespace Quaver.API.Replays
                 bw.Write(CountOkay);
                 bw.Write(CountMiss);
                 bw.Write(PauseCount);
-                bw.Write(RandomizeModifierSeed);
                 bw.Write(StreamHelper.ConvertStreamToByteArray(LZMACoder.Compress(replayDataStream)));
             }
         }
