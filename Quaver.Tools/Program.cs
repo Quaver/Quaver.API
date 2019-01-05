@@ -25,7 +25,8 @@ namespace Quaver.Tools
                                   $"-virtualreplay <a.qr> <b.qua> <mods (int)> <-hl (optional to read headerless)> `Simulate a replay and retrieve its score outcome.`\n" +
                                   $"-buildreplay <replay_path> <output_path> <quaver_version> <map_md5> <timestamp> <mode> <mods> <score> <accuracy> <max_combo> <count_marv> <count_perf> <count_great> <count_good> <count_okay> <count_miss> <pause_count> <username>\n" +
                                   $"-calcrating <difficulty_rating> <accuracy>\n" +
-                                  $"-convertosu <file_path.osu> <output.qua>");
+                                  $"-convertosu <file_path.osu> <output.qua>\n" +
+                                  $"-convertsm <file_path.sm> <output directory>");
                 return;
             }
 
@@ -51,6 +52,9 @@ namespace Quaver.Tools
                     break;
                 case "-convertosu":
                     new ConvertOsuCommand(args).Execute();
+                    break;
+                case "-convertsm":
+                    new ConvertSmCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
