@@ -291,5 +291,16 @@ namespace Quaver.API.Maps
                 hitObject.EndTime = 0;
             }
         }
+
+        /// <summary>
+        ///     Applies mods to the map.
+        /// </summary>
+        /// <param name="mods">a list of mods to apply</param>
+        public void ApplyMods(ModIdentifier mods)
+        {
+            // If the No Long Notes mod is active, remove the long notes.
+            if (mods.HasFlag(ModIdentifier.NoLongNotes))
+                ReplaceLongNotesWithRegularNotes();
+        }
     }
 }
