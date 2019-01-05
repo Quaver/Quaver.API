@@ -10,10 +10,6 @@ using System.Text.RegularExpressions;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 
-/**
- * Courtesy of https://gist.github.com/zardoru/5298155
- */
-
 namespace Quaver.API.Maps.Parsers.StepMania
 {
     public class StepmaniaConverter
