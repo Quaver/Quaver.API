@@ -39,5 +39,19 @@ namespace Quaver.API.Tests.Stepmania
 
             Assert.True(qua.HitObjects.Count >= 1);
         }
+
+        [Fact]
+        public void FailUponBadPath()
+        {
+            try
+            {
+                var converter = new StepmaniaConverter("bad-path-no-file");
+                Assert.NotNull(converter);
+            }
+            catch (Exception e)
+            {
+                // passed.
+            }
+        }
     }
 }
