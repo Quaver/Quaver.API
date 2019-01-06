@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Quaver.API.Maps.Parsers.StepMania;
 
 namespace Quaver.Tools.Commands
@@ -14,8 +14,7 @@ namespace Quaver.Tools.Commands
             OutputPath = args[2];
             Directory.CreateDirectory(OutputPath);
 
-            Converter = new StepmaniaConverter();
-            Converter.ReadHeader(args[1], true);
+            Converter = new StepmaniaConverter(args[1]);
 
             var quas = Converter.ToQua();
 
