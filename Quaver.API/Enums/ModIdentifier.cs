@@ -40,5 +40,6 @@ namespace Quaver.API.Enums
         Paused = 1 << 20, // The user paused during gameplay.
         NoFail = 1 << 21, // Unable to fail during gameplay.
         NoLongNotes = 1 << 22, // Converts LNs into regular notes.
+        Randomize = 1 << 23 // Randomizes the playfield's lanes.
     }
 }
