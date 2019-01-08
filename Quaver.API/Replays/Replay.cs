@@ -22,6 +22,11 @@ namespace Quaver.API.Replays
     public class Replay
     {
         /// <summary>
+        ///     The version of the replay.
+        /// </summary>
+        public static string CurrentVersion { get; } = "None";
+
+        /// <summary>
         ///     The game mode this replay is for.
         /// </summary>
         public GameMode Mode { get; set; }
@@ -32,9 +37,9 @@ namespace Quaver.API.Replays
         public List<ReplayFrame> Frames { get; }
 
         /// <summary>
-        ///    The version of Quaver the play was done on.
+        ///    The version of the replay the play was done on.
         /// </summary>
-        public string QuaverVersion { get; set; } = "None";
+        public string ReplayVersion { get; set; }
 
         /// <summary>
         ///    The name of the player.
@@ -149,14 +154,15 @@ namespace Quaver.API.Replays
             {
                 if (!readHeaderless)
                 {
-                    QuaverVersion = br.ReadString();
+                    // Version None (Original data)
+                    ReplayVersion = br.ReadString();
                     MapMd5 = br.ReadString();
                     Md5 = br.ReadString();
                     PlayerName = br.ReadString();
                     Date = Convert.ToDateTime(br.ReadString(), CultureInfo.InvariantCulture);
                     TimePlayed = br.ReadInt64();
 
-                    // The dates are serialized incorrectly in older replays, so to keep compatability,
+                    // The dates are serialized incorrectly in older replays, so to keep compatibility,
                     // use the time played.
                     Date = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(TimePlayed);
 
@@ -172,10 +178,6 @@ namespace Quaver.API.Replays
                     CountOkay = br.ReadInt32();
                     CountMiss = br.ReadInt32();
                     PauseCount = br.ReadInt32();
-                }
-                else
-                {
-
                 }
 
                 // Create the new list of replay frames.
@@ -217,11 +219,12 @@ namespace Quaver.API.Replays
         public void Write(string path)
         {
             var frames = FramesToString();
+            ReplayVersion = CurrentVersion;
 
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(frames)))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
             {
-                bw.Write(QuaverVersion);
+                bw.Write(ReplayVersion);
                 bw.Write(MapMd5);
                 bw.Write(GetMd5(frames));
                 bw.Write(PlayerName);
@@ -447,7 +450,7 @@ namespace Quaver.API.Replays
         /// <returns></returns>
         public string GetMd5(string frames)
         {
-            return CryptoHelper.StringToMd5($"{QuaverVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
+            return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
                                      $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
                                      $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{frames}");
         }
