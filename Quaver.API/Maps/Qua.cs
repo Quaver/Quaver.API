@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using MonoGame.Extended.Collections;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty;
@@ -108,6 +109,13 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         [YamlIgnore]
         public int Length => HitObjects.Count == 0 ? 0 : HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
+
+        /// <summary>
+        ///     Integer based seed used for shuffling the lanes when randomize mod is active.
+        ///     Defaults to -1 if there is no seed.
+        /// </summary>
+        [YamlIgnore]
+        public int RandomizeModifierSeed { get; set; } = -1;
 
         /// <summary>
         ///     Ctor
@@ -301,6 +309,29 @@ namespace Quaver.API.Maps
             // If the No Long Notes mod is active, remove the long notes.
             if (mods.HasFlag(ModIdentifier.NoLongNotes))
                 ReplaceLongNotesWithRegularNotes();
+        }
+
+        /// <summary>
+        ///     Used by the Randomize modifier to shuffle around the lanes.
+        ///     Replaces long notes with regular notes starting at the same time.
+        /// </summary>
+        public void RandomizeLanes(int seed)
+        {
+            // if seed is default, then abort.
+            if (seed == -1)
+                return;
+
+            RandomizeModifierSeed = seed;
+
+            var values = new List<int>();
+            values.AddRange(Enumerable.Range(0, GetKeyCount()).Select(x => x + 1));
+
+            values.Shuffle(new Random(seed));
+
+            foreach (var hitObject in HitObjects)
+            {
+                hitObject.Lane = values[hitObject.Lane - 1];
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The version of the replay.
         /// </summary>
-        public static string CurrentVersion { get; } = "None";
+        public static string CurrentVersion { get; } = "0.0.1";
 
         /// <summary>
         ///     The game mode this replay is for.
@@ -122,6 +122,12 @@ namespace Quaver.API.Replays
         public int PauseCount { get; set; }
 
         /// <summary>
+        ///     Integer based seed used for shuffling the lanes when randomize mod is active.
+        ///     Defaults to -1 if there is no seed.
+        /// </summary>
+        public int RandomizeModifierSeed { get; set; } = -1;
+
+        /// <summary>
         ///     Ctor -
         ///     Create fresh replay
         /// </summary>
@@ -178,6 +184,15 @@ namespace Quaver.API.Replays
                     CountOkay = br.ReadInt32();
                     CountMiss = br.ReadInt32();
                     PauseCount = br.ReadInt32();
+
+                    // Versions beyond None
+                    if (ReplayVersion != "None")
+                    {
+                        var replayVersion = new Version(ReplayVersion);
+
+                        if (replayVersion >= new Version("0.0.1"))
+                            RandomizeModifierSeed = br.ReadInt32();
+                    }
                 }
 
                 // Create the new list of replay frames.
@@ -242,6 +257,7 @@ namespace Quaver.API.Replays
                 bw.Write(CountOkay);
                 bw.Write(CountMiss);
                 bw.Write(PauseCount);
+                bw.Write(RandomizeModifierSeed);
                 bw.Write(StreamHelper.ConvertStreamToByteArray(LZMACoder.Compress(replayDataStream)));
             }
         }
@@ -451,8 +467,8 @@ namespace Quaver.API.Replays
         public string GetMd5(string frames)
         {
             return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
-                                     $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
-                                     $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{frames}");
+                                            $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
+                                            $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{RandomizeModifierSeed}-{frames}");
         }
     }
 }
