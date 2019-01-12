@@ -323,7 +323,7 @@ namespace Quaver.API.Maps
 
             RandomizeModifierSeed = seed;
 
-            List<int> values = new List<int>();
+            var values = new List<int>();
             values.AddRange(Enumerable.Range(0, GetKeyCount()).Select(x => x + 1));
 
             values.Shuffle(new Random(seed));
