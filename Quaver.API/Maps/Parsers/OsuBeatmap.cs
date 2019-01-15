@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+ * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
 */
 
 using System;
@@ -447,7 +447,7 @@ namespace Quaver.API.Maps.Parsers
                             StartTime = hitObject.StartTime,
                             Lane = keyLane,
                             EndTime = 0,
-                            HitSound = (HitSounds) hitObject.HitSound
+                            HitSound = HitSounds.Normal
                         });
                         break;
                     case 128:
@@ -457,7 +457,7 @@ namespace Quaver.API.Maps.Parsers
                             StartTime = hitObject.StartTime,
                             Lane = keyLane,
                             EndTime = hitObject.EndTime,
-                            HitSound = (HitSounds) hitObject.HitSound
+                            HitSound = HitSounds.Normal
                         });
                         break;
                 }
