@@ -1,0 +1,51 @@
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
+*/
+
+using System.IO;
+using Quaver.API.Maps.Parsers;
+using Xunit;
+
+namespace Quaver.API.Tests.Osu
+{
+    public class TestCaseOsuConverter
+    {
+        private const string BeatmapFilename = "./Osu/Resources/Camellia - Backbeat Maniac (Evening) [Rewind VIP].osu";
+
+        [Fact]
+        public void SuccessfulParse()
+        {
+            var converter = new OsuBeatmap(BeatmapFilename);
+            Assert.True(converter.IsValid);
+        }
+
+        [Fact]
+        public void ConvertToQuaFile()
+        {
+            var dir = "./tests/osu";
+            Directory.CreateDirectory(dir);
+
+            var converter = new OsuBeatmap(BeatmapFilename);
+            var qua = converter.ToQua();
+            qua.Save($"{dir}/output.qua");
+        }
+
+        [Fact]
+        public void CheckObjectCount()
+        {
+            var converter = new OsuBeatmap(BeatmapFilename);
+            var qua = converter.ToQua();
+            Assert.Equal(2041 + 270, qua.HitObjects.Count);
+        }
+
+        [Fact]
+        public void FailUponBadPath()
+        {
+            var converter = new OsuBeatmap("bad-path-no-file");
+            Assert.False(converter.IsValid);
+        }
+    }
+}
