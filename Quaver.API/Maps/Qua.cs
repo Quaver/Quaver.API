@@ -234,16 +234,16 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public TimingPointInfo GetTimingPointAt(double time)
+        public TimingPointInfo? GetTimingPointAt(double time)
         {
-            var point = TimingPoints.FindLast(x => x.StartTime <= time);
+            var index = TimingPoints.FindLastIndex(x => x.StartTime <= time);
 
             // If the point can't be found, we want to return either null if there aren't
             // any points, or the first timing point, since it'll be considered as apart of it anyway.
-            if (point == null)
-                return TimingPoints.Count == 0 ? null : TimingPoints.First();
+            if (index == -1)
+                return TimingPoints.Count == 0 ? null : (TimingPointInfo?) TimingPoints.First();
 
-            return point;
+            return TimingPoints[index];
         }
 
         /// <summary>
