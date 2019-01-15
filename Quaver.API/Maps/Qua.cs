@@ -251,8 +251,23 @@ namespace Quaver.API.Maps
             if (TimingPoints.Count == 0)
                 return 0;
 
-            return Math.Round(TimingPoints.GroupBy(i => i.Bpm).OrderByDescending(grp => grp.Count())
-                .Select(grp => grp.Key).First(), 2, MidpointRounding.AwayFromZero);
+            var lastObject = HitObjects.OrderByDescending(x => x.IsLongNote ? x.EndTime : x.StartTime).First();
+            double lastTime = lastObject.IsLongNote ? lastObject.EndTime : lastObject.StartTime;
+
+            var durations = new Dictionary<float, int>();
+            for (var i = TimingPoints.Count - 1; i >= 0; i--)
+            {
+                var point = TimingPoints[i];
+                var duration = (int) (lastTime - (i == 0 ? 0 : point.StartTime));
+                lastTime = point.StartTime;
+
+                if (durations.ContainsKey(point.Bpm))
+                    durations[point.Bpm] += duration;
+                else
+                    durations[point.Bpm] = duration;
+            }
+
+            return durations.OrderByDescending(x => x.Value).First().Key;
         }
 
         /// <summary>

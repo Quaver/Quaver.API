@@ -27,6 +27,9 @@
     <None Update="Osu\Resources\xi - Blue Zenith (Jepetski) [Zen's Black Another].osu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Osu\Resources\Camellia feat. Nanahira - ChoChoKouSokuDeMaeSaiSoku!!! SpeedStarKanade (jakads) [Tsukahara's MAXIMUM].osu">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

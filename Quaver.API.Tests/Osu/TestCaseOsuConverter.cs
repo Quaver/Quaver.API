@@ -62,6 +62,16 @@ namespace Quaver.API.Tests.Osu
         }
 
         [Fact]
+        public void CheckCommonBPM()
+        {
+            // This map had incorrect common BPM.
+            var converter = new OsuBeatmap("./Osu/Resources/Camellia feat. Nanahira - ChoChoKouSokuDeMaeSaiSoku!!! SpeedStarKanade (jakads) [Tsukahara's MAXIMUM].osu");
+            var qua = converter.ToQua();
+
+            Assert.Equal(500, qua.GetCommonBpm());
+        }
+
+        [Fact]
         public void FailUponBadPath()
         {
             var converter = new OsuBeatmap("bad-path-no-file");
