@@ -6,6 +6,7 @@
 */
 
 using System.IO;
+using Quaver.API.Maps;
 using Quaver.API.Maps.Parsers;
 using Xunit;
 
@@ -39,6 +40,16 @@ namespace Quaver.API.Tests.Osu
             var converter = new OsuBeatmap(BeatmapFilename);
             var qua = converter.ToQua();
             Assert.Equal(2041 + 270, qua.HitObjects.Count);
+        }
+
+        [Fact]
+        public void FullConversionCheck()
+        {
+            var converter = new OsuBeatmap(BeatmapFilename);
+            var qua = converter.ToQua();
+
+            var groundTruthQua = Qua.Parse(Path.ChangeExtension(BeatmapFilename, "qua"));
+            Assert.True(qua.EqualByValue(groundTruthQua));
         }
 
         [Fact]
