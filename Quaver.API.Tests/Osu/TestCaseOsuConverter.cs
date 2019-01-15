@@ -43,6 +43,15 @@ namespace Quaver.API.Tests.Osu
         }
 
         [Fact]
+        public void CheckObjectCountWithHitsounds()
+        {
+            // This map had missing objects due to an error in the parsing logic.
+            var converter = new OsuBeatmap("./Osu/Resources/xi - Blue Zenith (Jepetski) [Zen's Black Another].osu");
+            var qua = converter.ToQua();
+            Assert.Equal(4084 + 49, qua.HitObjects.Count);
+        }
+
+        [Fact]
         public void FullConversionCheck()
         {
             var converter = new OsuBeatmap(BeatmapFilename);

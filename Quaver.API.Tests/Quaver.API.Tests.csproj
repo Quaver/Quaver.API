@@ -24,6 +24,9 @@
     <None Update="Osu\Resources\Camellia - Backbeat Maniac (Evening) [Rewind VIP].qua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Osu\Resources\xi - Blue Zenith (Jepetski) [Zen's Black Another].osu">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
