@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+ * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
 */
 
 using System;
@@ -18,7 +18,7 @@ namespace Quaver.API.Maps.Structures
     ///     HitObjects section of the .qua
     /// </summary>
     [Serializable]
-    public class HitObjectInfo
+    public struct HitObjectInfo
     {
         /// <summary>
         ///     The time in milliseconds when the HitObject is supposed to be hit.
@@ -28,7 +28,7 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     The lane the HitObject falls in
         /// </summary>
-        public int Lane { get; set; } = 1;
+        public int Lane { get; set; }
 
         /// <summary>
         ///     The endtime of the HitObject (if greater than 0, it's considered a hold note.)
@@ -38,7 +38,7 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     Bitwise combination of hit sounds for this object
         /// </summary>
-        public HitSounds HitSound { get; set; } = HitSounds.Normal;
+        public HitSounds HitSound { get; set; }
 
         /// <summary>
         ///     If the object is a long note. (EndTime > 0)

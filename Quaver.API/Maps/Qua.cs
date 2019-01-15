@@ -294,9 +294,11 @@ namespace Quaver.API.Maps
         /// </summary>
         public void ReplaceLongNotesWithRegularNotes()
         {
-            foreach (var hitObject in HitObjects)
+            for (var i = 0; i < HitObjects.Count; i++)
             {
-                hitObject.EndTime = 0;
+                var temp = HitObjects[i];
+                temp.EndTime = 0;
+                HitObjects[i] = temp;
             }
         }
 
@@ -328,9 +330,11 @@ namespace Quaver.API.Maps
 
             values.Shuffle(new Random(seed));
 
-            foreach (var hitObject in HitObjects)
+            for (var i = 0; i < HitObjects.Count; i++)
             {
-                hitObject.Lane = values[hitObject.Lane - 1];
+                var temp = HitObjects[i];
+                temp.Lane = values[temp.Lane - 1];
+                HitObjects[i] = temp;
             }
         }
     }

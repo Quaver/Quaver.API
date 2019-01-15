@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -30,7 +30,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// <summary>
         ///     The HitObject that this is referencing to.
         /// </summary>
-        public HitObjectInfo HitObject { get; }
+        public HitObjectInfo? HitObject { get; }
 
         /// <summary>
         ///     The position in the song the object was hit.
@@ -68,7 +68,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Data
         /// <param name="hitDifference"></param>
         /// <param name="acc"></param>
         /// <param name="health"></param>
-        public HitStat(HitStatType type, KeyPressType keyPressType, HitObjectInfo hitObject, int songPos,
+        public HitStat(HitStatType type, KeyPressType keyPressType, HitObjectInfo? hitObject, int songPos,
             Judgement judgement, int hitDifference, double acc, float health)
         {
             HitObject = hitObject;

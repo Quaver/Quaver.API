@@ -485,7 +485,8 @@ namespace Quaver.API.Maps.Parsers.StepMania
                         qua.HitObjects.Add(new HitObjectInfo
                         {
                             StartTime = (int) note.TrackStart,
-                            Lane = (int) note.Track + 1
+                            Lane = (int) note.Track + 1,
+                            HitSound = HitSounds.Normal
                         });
                     }
                     else
