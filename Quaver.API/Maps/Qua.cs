@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+ * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
 */
 
 using System;
@@ -121,6 +121,32 @@ namespace Quaver.API.Maps
         ///     Ctor
         /// </summary>
         public Qua() {}
+
+        /// <summary>
+        ///     Returns true if the two maps are equal by value.
+        /// </summary>
+        /// <param name="other">the Qua to compare to</param>
+        /// <returns></returns>
+        public bool EqualByValue(Qua other)
+        {
+            return AudioFile == other.AudioFile
+                   && SongPreviewTime == other.SongPreviewTime
+                   && BackgroundFile == other.BackgroundFile
+                   && MapId == other.MapId
+                   && MapSetId == other.MapSetId
+                   && Mode == other.Mode
+                   && Title == other.Title
+                   && Artist == other.Artist
+                   && Source == other.Source
+                   && Tags == other.Tags
+                   && Creator == other.Creator
+                   && DifficultyName == other.DifficultyName
+                   && Description == other.Description
+                   && TimingPoints.SequenceEqual(other.TimingPoints)
+                   && SliderVelocities.SequenceEqual(other.SliderVelocities)
+                   && HitObjects.SequenceEqual(other.HitObjects)
+                   && RandomizeModifierSeed == other.RandomizeModifierSeed;
+        }
 
         /// <summary>
         ///     Takes in a path to a .qua file and attempts to parse it.
