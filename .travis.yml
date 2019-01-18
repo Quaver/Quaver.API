@@ -5,6 +5,7 @@ install:
   - dotnet restore
 script:
   - dotnet build ./Quaver.API
+  - dotnet build ./Quaver.Tools
   - dotnet test ./Quaver.API.Tests/Quaver.API.Tests.csproj
 after_success:
  - wget https://raw.githubusercontent.com/Swan/travis-ci-discord-webhook/master/send.sh
