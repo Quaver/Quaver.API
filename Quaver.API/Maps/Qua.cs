@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+ * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
 */
 
 using System;
@@ -123,6 +123,32 @@ namespace Quaver.API.Maps
         public Qua() {}
 
         /// <summary>
+        ///     Returns true if the two maps are equal by value.
+        /// </summary>
+        /// <param name="other">the Qua to compare to</param>
+        /// <returns></returns>
+        public bool EqualByValue(Qua other)
+        {
+            return AudioFile == other.AudioFile
+                   && SongPreviewTime == other.SongPreviewTime
+                   && BackgroundFile == other.BackgroundFile
+                   && MapId == other.MapId
+                   && MapSetId == other.MapSetId
+                   && Mode == other.Mode
+                   && Title == other.Title
+                   && Artist == other.Artist
+                   && Source == other.Source
+                   && Tags == other.Tags
+                   && Creator == other.Creator
+                   && DifficultyName == other.DifficultyName
+                   && Description == other.Description
+                   && TimingPoints.SequenceEqual(other.TimingPoints)
+                   && SliderVelocities.SequenceEqual(other.SliderVelocities)
+                   && HitObjects.SequenceEqual(other.HitObjects)
+                   && RandomizeModifierSeed == other.RandomizeModifierSeed;
+        }
+
+        /// <summary>
         ///     Takes in a path to a .qua file and attempts to parse it.
         ///     Will throw an error if unable to be parsed.
         /// </summary>
@@ -225,8 +251,23 @@ namespace Quaver.API.Maps
             if (TimingPoints.Count == 0)
                 return 0;
 
-            return Math.Round(TimingPoints.GroupBy(i => i.Bpm).OrderByDescending(grp => grp.Count())
-                .Select(grp => grp.Key).First(), 2, MidpointRounding.AwayFromZero);
+            var lastObject = HitObjects.OrderByDescending(x => x.IsLongNote ? x.EndTime : x.StartTime).First();
+            double lastTime = lastObject.IsLongNote ? lastObject.EndTime : lastObject.StartTime;
+
+            var durations = new Dictionary<float, int>();
+            for (var i = TimingPoints.Count - 1; i >= 0; i--)
+            {
+                var point = TimingPoints[i];
+                var duration = (int) (lastTime - (i == 0 ? 0 : point.StartTime));
+                lastTime = point.StartTime;
+
+                if (durations.ContainsKey(point.Bpm))
+                    durations[point.Bpm] += duration;
+                else
+                    durations[point.Bpm] = duration;
+            }
+
+            return durations.OrderByDescending(x => x.Value).First().Key;
         }
 
         /// <summary>
@@ -234,16 +275,16 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public TimingPointInfo GetTimingPointAt(double time)
+        public TimingPointInfo? GetTimingPointAt(double time)
         {
-            var point = TimingPoints.FindLast(x => x.StartTime <= time);
+            var index = TimingPoints.FindLastIndex(x => x.StartTime <= time);
 
             // If the point can't be found, we want to return either null if there aren't
             // any points, or the first timing point, since it'll be considered as apart of it anyway.
-            if (point == null)
-                return TimingPoints.Count == 0 ? null : TimingPoints.First();
+            if (index == -1)
+                return TimingPoints.Count == 0 ? null : (TimingPointInfo?) TimingPoints.First();
 
-            return point;
+            return TimingPoints[index];
         }
 
         /// <summary>
@@ -294,9 +335,11 @@ namespace Quaver.API.Maps
         /// </summary>
         public void ReplaceLongNotesWithRegularNotes()
         {
-            foreach (var hitObject in HitObjects)
+            for (var i = 0; i < HitObjects.Count; i++)
             {
-                hitObject.EndTime = 0;
+                var temp = HitObjects[i];
+                temp.EndTime = 0;
+                HitObjects[i] = temp;
             }
         }
 
@@ -328,9 +371,11 @@ namespace Quaver.API.Maps
 
             values.Shuffle(new Random(seed));
 
-            foreach (var hitObject in HitObjects)
+            for (var i = 0; i < HitObjects.Count; i++)
             {
-                hitObject.Lane = values[hitObject.Lane - 1];
+                var temp = HitObjects[i];
+                temp.Lane = values[temp.Lane - 1];
+                HitObjects[i] = temp;
             }
         }
     }

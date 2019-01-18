@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+ * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
 */
 
 using System;
@@ -102,8 +102,17 @@ namespace Quaver.API.Maps.Parsers
 
             try
             {
-                foreach (var line in File.ReadAllLines(filePath))
+                foreach (var raw_line in File.ReadAllLines(filePath))
                 {
+                    // Skip empty lines and comments.
+                    if (string.IsNullOrWhiteSpace(raw_line)
+                        || raw_line.StartsWith("//", StringComparison.Ordinal)
+                        || raw_line.StartsWith(" ", StringComparison.Ordinal)
+                        || raw_line.StartsWith("_", StringComparison.Ordinal))
+                        continue;
+
+                    var line = StripComments(raw_line);
+
                     switch (line.Trim())
                     {
                         case "[General]":
@@ -346,9 +355,6 @@ namespace Quaver.API.Maps.Parsers
                     {
                         if (line.Contains(","))
                         {
-                            if (line.Contains("P") || line.Contains("L") || line.Contains("|"))
-                                continue;
-
                             var values = line.Split(',');
 
                             // We'll need to parse LNs differently than normal HitObjects,
@@ -359,16 +365,15 @@ namespace Quaver.API.Maps.Parsers
                                 X = int.Parse(values[0], CultureInfo.InvariantCulture),
                                 Y = int.Parse(values[1], CultureInfo.InvariantCulture),
                                 StartTime = int.Parse(values[2], CultureInfo.InvariantCulture),
-                                Type = int.Parse(values[3], CultureInfo.InvariantCulture),
+                                Type = (HitObjectType) int.Parse(values[3], CultureInfo.InvariantCulture),
                                 HitSound = int.Parse(values[4], CultureInfo.InvariantCulture),
                                 Additions = "0:0:0:0:"
                             };
 
-
                             // If it's an LN, we'll want to add the object's EndTime as well.
-                            if (line.Contains("128"))
+                            if (osuHitObject.Type.HasFlag(HitObjectType.Hold))
                             {
-                                var endTime = values[5].Substring(0, values[5].IndexOf(":"));
+                                var endTime = values[5].Substring(0, values[5].IndexOf(":", StringComparison.Ordinal));
                                 osuHitObject.EndTime = int.Parse(endTime, CultureInfo.InvariantCulture);
                             }
 
@@ -381,6 +386,19 @@ namespace Quaver.API.Maps.Parsers
             {
                 IsValid = false;
             }
+        }
+
+        /// <summary>
+        ///     Strips comments from a line.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        private static string StripComments(string line)
+        {
+            var index = line.IndexOf("//", StringComparison.Ordinal);
+            if (index > 0)
+                return line.Substring(0, index);
+            return line;
         }
 
         /// <summary>
@@ -436,30 +454,26 @@ namespace Quaver.API.Maps.Parsers
                 // Get the keyLane the hitObject is in
                 var keyLane = (int) (hitObject.X / (512d / KeyCount)).Clamp(0, KeyCount - 1) + 1;
 
-                // ReSharper disable once SwitchStatementMissingSomeCases
-                switch (hitObject.Type)
+                // Add HitObjects to the list depending on the object type
+                if (hitObject.Type.HasFlag(HitObjectType.Circle))
                 {
-                    // Add HitObjects to the list depending on the object type
-                    case 1:
-                    case 5:
-                        qua.HitObjects.Add(new HitObjectInfo
-                        {
-                            StartTime = hitObject.StartTime,
-                            Lane = keyLane,
-                            EndTime = 0,
-                            HitSound = (HitSounds) hitObject.HitSound
-                        });
-                        break;
-                    case 128:
-                    case 22:
-                        qua.HitObjects.Add(new HitObjectInfo
-                        {
-                            StartTime = hitObject.StartTime,
-                            Lane = keyLane,
-                            EndTime = hitObject.EndTime,
-                            HitSound = (HitSounds) hitObject.HitSound
-                        });
-                        break;
+                    qua.HitObjects.Add(new HitObjectInfo
+                    {
+                        StartTime = hitObject.StartTime,
+                        Lane = keyLane,
+                        EndTime = 0,
+                        HitSound = HitSounds.Normal
+                    });
+                }
+                else if (hitObject.Type.HasFlag(HitObjectType.Hold))
+                {
+                    qua.HitObjects.Add(new HitObjectInfo
+                    {
+                        StartTime = hitObject.StartTime,
+                        Lane = keyLane,
+                        EndTime = hitObject.EndTime,
+                        HitSound = HitSounds.Normal
+                    });
                 }
             }
 
@@ -471,6 +485,20 @@ namespace Quaver.API.Maps.Parsers
 
             return qua;
         }
+    }
+
+    /// <summary>
+    ///     Enumeration of the hit object types.
+    /// </summary>
+    [Flags]
+    public enum HitObjectType
+    {
+        Circle = 1 << 0,
+        Slider = 1 << 1,
+        NewCombo = 1 << 2,
+        Spinner = 1 << 3,
+        ComboOffset = 1 << 4 | 1 << 5 | 1 << 6,
+        Hold = 1 << 7
     }
 
     /// <summary>
@@ -496,7 +524,7 @@ namespace Quaver.API.Maps.Parsers
         public int X { get; set; }
         public int Y { get; set; }
         public int StartTime { get; set; }
-        public int Type { get; set; }
+        public HitObjectType Type { get; set; }
         public int HitSound { get; set; }
         public int EndTime { get; set; }
         public string Additions { get; set; }
