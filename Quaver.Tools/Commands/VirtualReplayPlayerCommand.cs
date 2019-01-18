@@ -88,7 +88,7 @@ namespace Quaver.Tools.Commands
                 {
                     Replay.Md5,
                     Replay.MapMd5,
-                    Replay.QuaverVersion,
+                    Replay.ReplayVersion,
                     Replay.PlayerName,
                     Replay.Date,
                     Replay.TimePlayed,

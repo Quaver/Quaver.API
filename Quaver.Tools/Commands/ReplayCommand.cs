@@ -32,7 +32,7 @@ namespace Quaver.Tools.Commands
             Replay.PlayerName,
             Replay.Md5,
             Replay.MapMd5,
-            Replay.QuaverVersion,
+            Replay.ReplayVersion,
             Date = Replay.Date.ToString(CultureInfo.InvariantCulture),
             Replay.Mods,
             Replay.Mode,

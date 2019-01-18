@@ -37,7 +37,7 @@ namespace Quaver.Tools.Commands
 
             Replay = new Replay(args[1], true)
             {
-                QuaverVersion = args[3],
+                ReplayVersion = args[3],
                 MapMd5 = args[4],
                 PlayerName = string.Join(" ", username),
                 TimePlayed = long.Parse(args[5]),
