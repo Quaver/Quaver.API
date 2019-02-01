@@ -13,8 +13,8 @@ namespace Quaver.API.Maps.Structures
         public string Name { get; set; }
 
         /// <summary>
-        ///     Is the layer visible in the editor?
+        ///     Is the layer hidden in the editor?
         /// </summary>
-        public bool Visible { get; set; }
+        public bool Hidden { get; set; }
     }
 }
