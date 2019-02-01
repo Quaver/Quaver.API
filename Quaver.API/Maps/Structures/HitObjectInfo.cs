@@ -18,7 +18,7 @@ namespace Quaver.API.Maps.Structures
     ///     HitObjects section of the .qua
     /// </summary>
     [Serializable]
-    public struct HitObjectInfo
+    public class HitObjectInfo
     {
         /// <summary>
         ///     The time in milliseconds when the HitObject is supposed to be hit.

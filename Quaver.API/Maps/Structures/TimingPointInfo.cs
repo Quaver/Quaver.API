@@ -15,7 +15,7 @@ namespace Quaver.API.Maps.Structures
     ///     TimingPoints section of the .qua
     /// </summary>
     [Serializable]
-    public struct TimingPointInfo
+    public class TimingPointInfo
     {
         /// <summary>
         ///     The time in milliseconds for when this timing point begins
