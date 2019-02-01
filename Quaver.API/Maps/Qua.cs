@@ -89,6 +89,11 @@ namespace Quaver.API.Maps
         public string Description { get; set; }
 
         /// <summary>
+        ///     EditorLayer .qua data
+        /// </summary>
+        public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
+
+        /// <summary>
         ///     TimingPoint .qua data
         /// </summary>
         public List<TimingPointInfo> TimingPoints { get; private set; } = new List<TimingPointInfo>();
@@ -145,6 +150,7 @@ namespace Quaver.API.Maps
                    && TimingPoints.SequenceEqual(other.TimingPoints)
                    && SliderVelocities.SequenceEqual(other.SliderVelocities)
                    && HitObjects.SequenceEqual(other.HitObjects)
+                   && EditorLayers.SequenceEqual(other.EditorLayers)
                    && RandomizeModifierSeed == other.RandomizeModifierSeed;
         }
 

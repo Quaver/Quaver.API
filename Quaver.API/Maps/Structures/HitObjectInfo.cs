@@ -41,6 +41,11 @@ namespace Quaver.API.Maps.Structures
         public HitSounds HitSound { get; set; }
 
         /// <summary>
+        ///     The layer in the editor that the object belongs to.
+        /// </summary>
+        public int EditorLayer { get; set; }
+
+        /// <summary>
         ///     If the object is a long note. (EndTime > 0)
         /// </summary>
         [YamlIgnore]
