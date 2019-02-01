@@ -11,5 +11,10 @@ namespace Quaver.API.Maps.Structures
         ///     The name of the layer
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        ///     Is the layer visible in the editor?
+        /// </summary>
+        public bool Visible { get; set; }
     }
 }
