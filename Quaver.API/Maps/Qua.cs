@@ -159,7 +159,8 @@ namespace Quaver.API.Maps
         ///     Will throw an error if unable to be parsed.
         /// </summary>
         /// <param name="path"></param>
-        public static Qua Parse(string path)
+        /// <param name="checkValidity"></param>
+        public static Qua Parse(string path, bool checkValidity = true)
         {
             Qua qua;
 
@@ -169,8 +170,7 @@ namespace Quaver.API.Maps
                 qua = (Qua)serializer.Deserialize(file, typeof(Qua));
             }
 
-            // Check the Qua object's validity.
-            if (!qua.IsValid())
+            if (checkValidity && !qua.IsValid())
                 throw new ArgumentException(".qua file does not have HitObjects, TimingPoints, or Mode invalid");
 
             // Try to sort the Qua before returning.
