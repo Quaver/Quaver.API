@@ -270,7 +270,7 @@ namespace Quaver.API.Replays.Virtual
                 ScoreProcessor.CalculateScore(Judgement.Okay);
 
                 // Add new miss stat.
-                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, Time, Judgement.Okay, int.MinValue,
+                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, Judgement.Okay, int.MinValue,
                     ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                 ScoreProcessor.Stats.Add(stat);
@@ -296,7 +296,7 @@ namespace Quaver.API.Replays.Virtual
                     ScoreProcessor.CalculateScore(Judgement.Miss);
 
                     // Create a new HitStat to add to the ScoreProcessor.
-                    var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, Time, Judgement.Miss, int.MinValue,
+                    var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.StartTime, Judgement.Miss, int.MinValue,
                         ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                     ScoreProcessor.Stats.Add(stat);
