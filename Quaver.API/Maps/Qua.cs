@@ -15,6 +15,7 @@ using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
+using Quaver.API.Maps.Processors.Scoring;
 using Quaver.API.Maps.Structures;
 using YamlDotNet.Serialization;
 
@@ -411,12 +412,152 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
+        ///     Replaces regular notes with long notes and vice versa.
+        ///
+        ///     HitObjects and TimingPoints MUST be sorted by StartTime prior to calling this method,
+        ///     see <see cref="Sort()"/>.
+        /// </summary>
+        public void ApplyInverse()
+        {
+            // Minimal LN and gap lengths in milliseconds.
+            //
+            // Ideally this should be computed in a smart way using the judgements so that it is always possible to get
+            // perfects, but making map mods depend on the judgements (affected by strict/chill/accuracy adjustments) is
+            // a really bad idea. I'm setting these to values that will probably work fine for the majority of the
+            // cases.
+            const int MINIMAL_LN_LENGTH = 36;
+            const int MINIMAL_GAP_LENGTH = 36;
+
+            var newHitObjects = new List<HitObjectInfo>();
+
+            for (var i = 0; i < HitObjects.Count; i++)
+            {
+                var currentObject = HitObjects[i];
+
+                // Find the next and second next hit object in the lane.
+                HitObjectInfo? nextObjectInLane = null, secondNextObjectInLane = null;
+                for (var j = i + 1; j < HitObjects.Count; j++)
+                {
+                    if (HitObjects[j].Lane == currentObject.Lane)
+                    {
+                        if (nextObjectInLane == null)
+                        {
+                            nextObjectInLane = HitObjects[j];
+                        }
+                        else
+                        {
+                            secondNextObjectInLane = HitObjects[j];
+                            break;
+                        }
+                    }
+                }
+
+                // Figure out the time gap between the end of the LN which we'll create and the next object.
+                int? timeGap = null;
+                if (nextObjectInLane != null)
+                {
+                    var timingPoint = GetTimingPointAt(nextObjectInLane.Value.StartTime).Value;
+                    float bpm;
+
+                    // If the timing point starts at the next object, we want to use the previous timing point's BPM.
+                    // For example, consider a fast section of the map transitioning into a very low BPM ending starting
+                    // with the next hit object. Since the LN release and the gap are still in the fast section, they
+                    // should use the fast section's BPM.
+                    if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.Value.StartTime)
+                    {
+                        var previousTimingPoint = TimingPoints.Last(x => x.StartTime < timingPoint.StartTime);
+                        bpm = previousTimingPoint.Bpm;
+                    }
+                    else
+                    {
+                        bpm = timingPoint.Bpm;
+                    }
+
+                    // The time gap is quarter of the milliseconds per beat.
+                    timeGap = (int?) Math.Max(15000 / bpm, MINIMAL_GAP_LENGTH);
+                }
+
+                // Summary of the changes:
+                // Regular 1 -> Regular 2 => LN until 2 - time gap
+                // Regular 1 -> LN 2      => LN until 2
+                //      LN 1 -> Regular 2 => Nothing
+                //      LN 1 -> LN 2      => Regular at 2
+                //
+                // Exceptions:
+                // - last LNs are kept (treated as regular 2)
+                // - last regular objects are treated as LN 2
+
+                if (currentObject.IsLongNote)
+                {
+                    // LNs before regular objects are replaced with nothing.
+                    // LNs before LNs put a regular object at the next LN's start.
+
+                    if (nextObjectInLane == null)
+                    {
+                        // If this is the last object in its lane, though, then it's probably a better idea
+                        // to leave it be. For example, finishing long LNs in charts.
+                    }
+                    else
+                    {
+                        // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
+                        // not the last object in the lane, create a regular object at the next object's start position.
+                        if ((secondNextObjectInLane == null) != nextObjectInLane.Value.IsLongNote)
+                        {
+                            currentObject.StartTime = nextObjectInLane.Value.StartTime; // (this part can mess up the ordering)
+                            currentObject.EndTime = 0;
+                        }
+                        else
+                        {
+                            // Otherwise, this LN is simply replaced with nothing.
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    // Regular objects are replaced with LNs starting from their start and ending quarter of a beat
+                    // before the next object's start.
+                    if (nextObjectInLane == null)
+                    {
+                        // If this is the last object in lane, though, then it's not included, and instead the previous
+                        // LN spans up to this object's StartTime.
+                        continue;
+                    }
+
+                    currentObject.EndTime = nextObjectInLane.Value.StartTime - timeGap.Value;
+
+                    // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
+                    // not the last object in the lane, this LN should span until its start.
+                    if ((secondNextObjectInLane == null) == (nextObjectInLane.Value.EndTime == 0))
+                    {
+                        currentObject.EndTime = nextObjectInLane.Value.StartTime;
+                    }
+
+                    // Filter out really short LNs or even negative length resulting from jacks or weird BPM values.
+                    if (currentObject.EndTime - currentObject.StartTime < MINIMAL_LN_LENGTH)
+                    {
+                        // These get converted back into regular objects.
+                        currentObject.EndTime = 0;
+                    }
+                }
+
+                newHitObjects.Add(currentObject);
+            }
+
+            // LN conversion can mess up the ordering, so sort it again. See the (this part can mess up the ordering)
+            // comment above.
+            HitObjects = newHitObjects.OrderBy(x => x.StartTime).ToList();
+        }
+
+        /// <summary>
         ///     Applies mods to the map.
         /// </summary>
         /// <param name="mods">a list of mods to apply</param>
         public void ApplyMods(ModIdentifier mods)
         {
-            // If the No Long Notes mod is active, remove the long notes.
+            if (mods.HasFlag(ModIdentifier.Inverse))
+                ApplyInverse();
+
             if (mods.HasFlag(ModIdentifier.NoLongNotes))
                 ReplaceLongNotesWithRegularNotes();
 

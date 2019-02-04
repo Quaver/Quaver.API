@@ -119,6 +119,9 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Randomize:
                         modStrings.Add("RND");
                         break;
+                    case ModIdentifier.Inverse:
+                        modStrings.Add("Inverse");
+                        break;
                     case ModIdentifier.Mirror:
                         modStrings.Add("Mirror");
                         break;
