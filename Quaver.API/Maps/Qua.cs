@@ -166,8 +166,9 @@ namespace Quaver.API.Maps
 
             using (var file = File.OpenText(path))
             {
-                var serializer = new Deserializer();
-                qua = (Qua)serializer.Deserialize(file, typeof(Qua));
+                var deserializer = new DeserializerBuilder();
+                deserializer.IgnoreUnmatchedProperties();
+                qua = (Qua)deserializer.Build().Deserialize(file, typeof(Qua));
             }
 
             if (checkValidity && !qua.IsValid())
