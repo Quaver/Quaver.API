@@ -446,7 +446,7 @@ namespace Quaver.API.Maps.Parsers
             // Get SliderVelocity Info
             foreach (var tp in TimingPoints)
                 if (tp.Inherited == 0)
-                    qua.SliderVelocities.Add(new SliderVelocityInfo { StartTime = tp.Offset, Multiplier = (float)Math.Round(0.10 / ((tp.MillisecondsPerBeat / -100) / 10), 2) });
+                    qua.SliderVelocities.Add(new SliderVelocityInfo { StartTime = tp.Offset, Multiplier = (-100 / tp.MillisecondsPerBeat).Clamp(0.1f, 10) });
 
             // Get HitObject Info
             foreach (var hitObject in HitObjects)
