@@ -246,7 +246,7 @@ namespace Quaver.API.Maps
         ///     Finds the most common BPM in a Qua object.
         /// </summary>
         /// <returns></returns>
-        public double GetCommonBpm()
+        public float GetCommonBpm()
         {
             if (TimingPoints.Count == 0)
                 return 0;
