@@ -258,6 +258,11 @@ namespace Quaver.API.Maps
             for (var i = TimingPoints.Count - 1; i >= 0; i--)
             {
                 var point = TimingPoints[i];
+
+                // Make sure that timing points past the last object don't break anything.
+                if (point.StartTime > lastTime)
+                    continue;
+
                 var duration = (int) (lastTime - (i == 0 ? 0 : point.StartTime));
                 lastTime = point.StartTime;
 
