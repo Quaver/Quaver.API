@@ -333,7 +333,7 @@ namespace Quaver.API.Maps.Parsers
                                 {
                                     Offset = float.Parse(values[0], CultureInfo.InvariantCulture),
                                     MillisecondsPerBeat = float.Parse(values[1], CultureInfo.InvariantCulture),
-                                    Meter = int.Parse(values[2], CultureInfo.InvariantCulture),
+                                    Signature = values[2][0] == '0' ? TimeSignature.Quadruple : (TimeSignature) int.Parse(values[2], CultureInfo.InvariantCulture),
                                     SampleType = int.Parse(values[3], CultureInfo.InvariantCulture),
                                     SampleSet = int.Parse(values[4], CultureInfo.InvariantCulture),
                                     Volume = int.Parse(values[5], CultureInfo.InvariantCulture),
@@ -444,7 +444,8 @@ namespace Quaver.API.Maps.Parsers
                     qua.TimingPoints.Add(new TimingPointInfo
                     {
                         StartTime = tp.Offset,
-                        Bpm = 60000 / tp.MillisecondsPerBeat
+                        Bpm = 60000 / tp.MillisecondsPerBeat,
+                        Signature = tp.Signature
                     });
 
             // Get SliderVelocity Info
@@ -516,7 +517,7 @@ namespace Quaver.API.Maps.Parsers
     {
         public float Offset { get; set; }
         public float MillisecondsPerBeat { get; set; }
-        public int Meter { get; set; }
+        public TimeSignature Signature { get; set; }
         public int SampleType { get; set; }
         public int SampleSet { get; set; }
         public int Volume { get; set; }
