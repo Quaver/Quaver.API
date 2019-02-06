@@ -243,7 +243,7 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        /// Finds the most common BPM in a Qua object.
+        ///     Finds the most common BPM in a Qua object.
         /// </summary>
         /// <returns></returns>
         public double GetCommonBpm()
