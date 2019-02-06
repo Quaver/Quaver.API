@@ -441,12 +441,20 @@ namespace Quaver.API.Maps.Parsers
             // Get Timing Info
             foreach (var tp in TimingPoints)
                 if (tp.Inherited == 1)
-                    qua.TimingPoints.Add(new TimingPointInfo { StartTime = tp.Offset, Bpm = 60000 / tp.MillisecondsPerBeat });
+                    qua.TimingPoints.Add(new TimingPointInfo
+                    {
+                        StartTime = tp.Offset,
+                        Bpm = 60000 / tp.MillisecondsPerBeat
+                    });
 
             // Get SliderVelocity Info
             foreach (var tp in TimingPoints)
                 if (tp.Inherited == 0)
-                    qua.SliderVelocities.Add(new SliderVelocityInfo { StartTime = tp.Offset, Multiplier = (-100 / tp.MillisecondsPerBeat).Clamp(0.1f, 10) });
+                    qua.SliderVelocities.Add(new SliderVelocityInfo
+                    {
+                        StartTime = tp.Offset,
+                        Multiplier = (-100 / tp.MillisecondsPerBeat).Clamp(0.1f, 10)
+                    });
 
             // Get HitObject Info
             foreach (var hitObject in HitObjects)
