@@ -329,10 +329,15 @@ namespace Quaver.API.Maps.Parsers
                             {
                                 var values = line.Split(',');
 
+                                // Parse as double because there are some maps which have this value too large to fit in
+                                // a float, for example https://osu.ppy.sh/beatmapsets/681731#mania/1441497. Parsing as
+                                // double and then casting to float results in the correct outcome though.
+                                var msecPerBeat = double.Parse(values[1], CultureInfo.InvariantCulture);
+
                                 var timingPoint = new OsuTimingPoint
                                 {
                                     Offset = float.Parse(values[0], CultureInfo.InvariantCulture),
-                                    MillisecondsPerBeat = float.Parse(values[1], CultureInfo.InvariantCulture),
+                                    MillisecondsPerBeat = (float) msecPerBeat,
                                     Signature = values[2][0] == '0' ? TimeSignature.Quadruple : (TimeSignature) int.Parse(values[2], CultureInfo.InvariantCulture),
                                     SampleType = int.Parse(values[3], CultureInfo.InvariantCulture),
                                     SampleSet = int.Parse(values[4], CultureInfo.InvariantCulture),
