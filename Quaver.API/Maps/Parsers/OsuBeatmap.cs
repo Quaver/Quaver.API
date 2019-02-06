@@ -438,24 +438,38 @@ namespace Quaver.API.Maps.Parsers
                     break;
             }
 
-            // Get Timing Info
+            // Get timing points and slider velocities.
             foreach (var tp in TimingPoints)
-                if (tp.Inherited == 1)
+            {
+                // WARNING: As far as I can tell, BPM changes with BPM < 0 behave as SVs for all intents and purposes,
+                //          except that they also participate in the common BPM computation (as negative values).
+                //          However, I don't think there are any maps that have enough negative BPM for the common BPM
+                //          to become negative, and I am also not sure that negative common BPM wouldn't just break
+                //          everything in osu! itself, so instead of inserting a ton of hacks throughout the rest of
+                //          Quaver's code base, I'm making negative BPM changes behave fully like SVs (so they are never
+                //          taken into account in common BPM computation). If there happens to be an actually working
+                //          map with negative common BPM, this is the place to revisit.
+                //          -- YaLTeR
+                bool isSV = tp.Inherited == 0 || tp.MillisecondsPerBeat < 0;
+
+                if (isSV)
+                {
+                    qua.SliderVelocities.Add(new SliderVelocityInfo
+                    {
+                        StartTime = tp.Offset,
+                        Multiplier = (-100 / tp.MillisecondsPerBeat).Clamp(0.1f, 10)
+                    });
+                }
+                else
+                {
                     qua.TimingPoints.Add(new TimingPointInfo
                     {
                         StartTime = tp.Offset,
                         Bpm = 60000 / tp.MillisecondsPerBeat,
                         Signature = tp.Signature
                     });
-
-            // Get SliderVelocity Info
-            foreach (var tp in TimingPoints)
-                if (tp.Inherited == 0)
-                    qua.SliderVelocities.Add(new SliderVelocityInfo
-                    {
-                        StartTime = tp.Offset,
-                        Multiplier = (-100 / tp.MillisecondsPerBeat).Clamp(0.1f, 10)
-                    });
+                }
+            }
 
             // Get HitObject Info
             foreach (var hitObject in HitObjects)
