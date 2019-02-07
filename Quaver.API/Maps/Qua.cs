@@ -162,6 +162,23 @@ namespace Quaver.API.Maps
             {
                 var serializer = new Deserializer();
                 qua = (Qua)serializer.Deserialize(file, typeof(Qua));
+
+                // Restore default values.
+                for (int i = 0; i < qua.TimingPoints.Count; i++)
+                {
+                    var tp = qua.TimingPoints[i];
+                    if (tp.Signature == 0)
+                        tp.Signature = TimeSignature.Quadruple;
+                    qua.TimingPoints[i] = tp;
+                }
+
+                for (int i = 0; i < qua.HitObjects.Count; i++)
+                {
+                    var obj = qua.HitObjects[i];
+                    if (obj.HitSound == 0)
+                        obj.HitSound = HitSounds.Normal;
+                    qua.HitObjects[i] = obj;
+                }
             }
 
             if (checkValidity && !qua.IsValid())
@@ -182,12 +199,57 @@ namespace Quaver.API.Maps
             // Sort the object before saving.
             Sort();
 
-            // Save
+            // Set default values to zero so they don't waste space in the .qua file.
+            var originalTimingPoints = TimingPoints;
+            var originalHitObjects = HitObjects;
+
+            TimingPoints = new List<TimingPointInfo>();
+            foreach (var tp in originalTimingPoints)
+            {
+                if (tp.Signature == TimeSignature.Quadruple)
+                {
+                    TimingPoints.Add(new TimingPointInfo()
+                    {
+                        Bpm = tp.Bpm,
+                        Signature = 0,
+                        StartTime = tp.StartTime
+                    });
+                }
+                else
+                {
+                    TimingPoints.Add(tp);
+                }
+            }
+
+            HitObjects = new List<HitObjectInfo>();
+            foreach (var obj in originalHitObjects)
+            {
+                if (obj.HitSound == HitSounds.Normal)
+                {
+                    HitObjects.Add(new HitObjectInfo()
+                    {
+                        EndTime = obj.EndTime,
+                        HitSound = 0,
+                        Lane = obj.Lane,
+                        StartTime = obj.StartTime
+                    });
+                }
+                else
+                {
+                    HitObjects.Add(obj);
+                }
+            }
+
+            // Save.
             using (var file = File.CreateText(path))
             {
                 var serializer = new Serializer();
                 serializer.Serialize(file, this);
             }
+
+            // Restore the original lists.
+            TimingPoints = originalTimingPoints;
+            HitObjects = originalHitObjects;
         }
 
         /// <summary>
@@ -243,10 +305,10 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        /// Finds the most common BPM in a Qua object.
+        ///     Finds the most common BPM in a Qua object.
         /// </summary>
         /// <returns></returns>
-        public double GetCommonBpm()
+        public float GetCommonBpm()
         {
             if (TimingPoints.Count == 0)
                 return 0;
@@ -258,6 +320,11 @@ namespace Quaver.API.Maps
             for (var i = TimingPoints.Count - 1; i >= 0; i--)
             {
                 var point = TimingPoints[i];
+
+                // Make sure that timing points past the last object don't break anything.
+                if (point.StartTime > lastTime)
+                    continue;
+
                 var duration = (int) (lastTime - (i == 0 ? 0 : point.StartTime));
                 lastTime = point.StartTime;
 
