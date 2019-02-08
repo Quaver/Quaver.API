@@ -555,12 +555,19 @@ namespace Quaver.API.Maps
         /// <param name="mods">a list of mods to apply</param>
         public void ApplyMods(ModIdentifier mods)
         {
-            if (mods.HasFlag(ModIdentifier.Inverse))
-                ApplyInverse();
-
             if (mods.HasFlag(ModIdentifier.NoLongNotes))
                 ReplaceLongNotesWithRegularNotes();
 
+            if (mods.HasFlag(ModIdentifier.Inverse))
+                ApplyInverse();
+
+            // FullLN is NLN followed by Inverse.
+            if (mods.HasFlag(ModIdentifier.FullLN))
+            {
+                ReplaceLongNotesWithRegularNotes();
+                ApplyInverse();
+            }
+            
             if (mods.HasFlag(ModIdentifier.Mirror))
                 MirrorHitObjects();
         }

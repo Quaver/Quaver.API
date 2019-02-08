@@ -122,6 +122,9 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Inverse:
                         modStrings.Add("Inverse");
                         break;
+                    case ModIdentifier.FullLN:
+                        modStrings.Add("FullLN");
+                        break;
                     case ModIdentifier.Mirror:
                         modStrings.Add("Mirror");
                         break;
