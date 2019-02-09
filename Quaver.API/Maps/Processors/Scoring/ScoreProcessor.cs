@@ -159,6 +159,8 @@ namespace Quaver.API.Maps.Processors.Scoring
             CurrentJudgements[Judgement.Good] = replay.CountGood;
             CurrentJudgements[Judgement.Okay] = replay.CountOkay;
             CurrentJudgements[Judgement.Miss] = replay.CountMiss;
+
+            InitializeMods();
         }
 
         /// <summary>
