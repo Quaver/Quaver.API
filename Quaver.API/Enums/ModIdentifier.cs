@@ -46,6 +46,6 @@ namespace Quaver.API.Enums
         Speed075X = 1 << 26, // Speed 0.75x
         Speed085X = 1 << 27, // Speed 0.85x
         Speed095X = 1 << 28, // Speed 0.95x
-        Mirror = 1 << 30
+        Mirror = 1 << 31, // Flips the map horizontally
     }
 }
