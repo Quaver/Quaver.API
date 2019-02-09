@@ -455,7 +455,7 @@ namespace Quaver.API.Maps.Parsers
                 //          taken into account in common BPM computation). If there happens to be an actually working
                 //          map with negative common BPM, this is the place to revisit.
                 //          -- YaLTeR
-                bool isSV = tp.Inherited == 0 || tp.MillisecondsPerBeat < 0;
+                var isSV = tp.Inherited == 0 || tp.MillisecondsPerBeat < 0;
 
                 if (isSV)
                 {
