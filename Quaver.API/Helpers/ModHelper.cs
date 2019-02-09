@@ -119,6 +119,9 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Randomize:
                         modStrings.Add("RND");
                         break;
+                    case ModIdentifier.Mirror:
+                        modStrings.Add("Mirror");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
                 }
