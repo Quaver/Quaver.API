@@ -164,7 +164,7 @@ namespace Quaver.API.Maps
                 qua = (Qua)serializer.Deserialize(file, typeof(Qua));
 
                 // Restore default values.
-                for (int i = 0; i < qua.TimingPoints.Count; i++)
+                for (var i = 0; i < qua.TimingPoints.Count; i++)
                 {
                     var tp = qua.TimingPoints[i];
                     if (tp.Signature == 0)
@@ -172,7 +172,7 @@ namespace Quaver.API.Maps
                     qua.TimingPoints[i] = tp;
                 }
 
-                for (int i = 0; i < qua.HitObjects.Count; i++)
+                for (var i = 0; i < qua.HitObjects.Count; i++)
                 {
                     var obj = qua.HitObjects[i];
                     if (obj.HitSound == 0)
@@ -419,6 +419,9 @@ namespace Quaver.API.Maps
             // If the No Long Notes mod is active, remove the long notes.
             if (mods.HasFlag(ModIdentifier.NoLongNotes))
                 ReplaceLongNotesWithRegularNotes();
+
+            if (mods.HasFlag(ModIdentifier.Mirror))
+                MirrorHitObjects();
         }
 
         /// <summary>
@@ -442,6 +445,19 @@ namespace Quaver.API.Maps
             {
                 var temp = HitObjects[i];
                 temp.Lane = values[temp.Lane - 1];
+                HitObjects[i] = temp;
+            }
+        }
+
+        /// <summary>
+        ///     Flips the lanes of the HitObjects
+        /// </summary>
+        public void MirrorHitObjects()
+        {
+            for (var i = 0; i < HitObjects.Count; i++)
+            {
+                var temp = HitObjects[i];
+                temp.Lane = GetKeyCount() - temp.Lane + 1;
                 HitObjects[i] = temp;
             }
         }
