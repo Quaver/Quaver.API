@@ -474,7 +474,7 @@ namespace Quaver.API.Maps
                     }
 
                     // The time gap is quarter of the milliseconds per beat.
-                    timeGap = (int?) Math.Max(15000 / bpm, MINIMAL_GAP_LENGTH);
+                    timeGap = (int?) Math.Max(Math.Round(15000 / bpm), MINIMAL_GAP_LENGTH);
                 }
 
                 // Summary of the changes:
