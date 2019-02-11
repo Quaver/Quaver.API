@@ -480,17 +480,18 @@ namespace Quaver.API.Maps
                 // Summary of the changes:
                 // Regular 1 -> Regular 2 => LN until 2 - time gap
                 // Regular 1 -> LN 2      => LN until 2
-                //      LN 1 -> Regular 2 => Nothing
-                //      LN 1 -> LN 2      => Regular at 2
+                //      LN 1 -> Regular 2 => LN from 1 end until 2 - time gap
+                //      LN 1 -> LN 2      => LN from 1 end until 2
                 //
                 // Exceptions:
                 // - last LNs are kept (treated as regular 2)
-                // - last regular objects are treated as LN 2
+                // - last regular objects are removed and treated as LN 2
 
                 if (currentObject.IsLongNote)
                 {
-                    // LNs before regular objects are replaced with nothing.
-                    // LNs before LNs put a regular object at the next LN's start.
+                    // LNs before regular objects are changed so they start where they ended and end a time gap before
+                    // the object.
+                    // LNs before LNs do the same but without a time gap.
 
                     if (nextObjectInLane == null)
                     {
@@ -499,16 +500,22 @@ namespace Quaver.API.Maps
                     }
                     else
                     {
+                        currentObject.StartTime = currentObject.EndTime; // (this part can mess up the ordering)
+                        currentObject.EndTime = nextObjectInLane.Value.StartTime - timeGap.Value;
+
                         // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
                         // not the last object in the lane, create a regular object at the next object's start position.
                         if ((secondNextObjectInLane == null) != nextObjectInLane.Value.IsLongNote)
+                            currentObject.EndTime = nextObjectInLane.Value.StartTime;
+
+                        // Filter out really short LNs or even negative length resulting from jacks or weird BPM values.
+                        if (currentObject.EndTime - currentObject.StartTime < MINIMAL_LN_LENGTH)
                         {
-                            currentObject.StartTime = nextObjectInLane.Value.StartTime; // (this part can mess up the ordering)
-                            currentObject.EndTime = 0;
-                        }
-                        else
-                        {
-                            // Otherwise, this LN is simply replaced with nothing.
+                            // These get skipped entirely.
+                            //
+                            // Actually, there can be a degenerate pattern of multiple LNs with really short gaps
+                            // in between them (less than MINIMAL_LN_LENGTH), which this logic will convert
+                            // into nothing. That should be pretty rare though.
                             continue;
                         }
                     }
