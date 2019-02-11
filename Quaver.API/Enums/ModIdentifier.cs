@@ -46,7 +46,7 @@ namespace Quaver.API.Enums
         Speed075X = 1 << 26, // Speed 0.75x
         Speed085X = 1 << 27, // Speed 0.85x
         Speed095X = 1 << 28, // Speed 0.95x
-        Inverse = 1 << 29, // Converts regular notes into LNs and vice versa.
+        Inverse = 1 << 29, // Converts regular notes into LNs and LNs into gaps.
         FullLN = 1 << 30, // Converts regular notes into LNs, keeps existing LNs.
         Mirror = 1 << 31, // Flips the map horizontally
     }
