@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Quaver.API.Enums;
 using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
@@ -26,6 +27,11 @@ namespace Quaver.API.Maps.Structures
         ///     The BPM during this timing point
         /// </summary>
         public float Bpm { get; set; }
+
+        /// <summary>
+        ///     The signature during this timing point
+        /// </summary>
+        public TimeSignature Signature { get; set; }
 
         /// <summary>
         ///     The amount of milliseconds per beat this one takes up.

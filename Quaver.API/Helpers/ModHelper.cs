@@ -38,17 +38,32 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Speed05X:
                         modStrings.Add("0.5x");
                         break;
+                    case ModIdentifier.Speed055X:
+                        modStrings.Add("0.55x");
+                        break;
                     case ModIdentifier.Speed06X:
                         modStrings.Add("0.6x");
+                        break;
+                    case ModIdentifier.Speed065X:
+                        modStrings.Add("0.65x");
                         break;
                     case ModIdentifier.Speed07X:
                         modStrings.Add("0.7x");
                         break;
+                    case ModIdentifier.Speed075X:
+                        modStrings.Add("0.75x");
+                        break;
                     case ModIdentifier.Speed08X:
                         modStrings.Add("0.8x");
                         break;
+                    case ModIdentifier.Speed085X:
+                        modStrings.Add("0.85x");
+                        break;
                     case ModIdentifier.Speed09X:
                         modStrings.Add("0.9x");
+                        break;
+                    case ModIdentifier.Speed095X:
+                        modStrings.Add("0.95x");
                         break;
                     case ModIdentifier.Speed11X:
                         modStrings.Add("1.1x");
@@ -104,6 +119,15 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Randomize:
                         modStrings.Add("RND");
                         break;
+                    case ModIdentifier.Inverse:
+                        modStrings.Add("Inverse");
+                        break;
+                    case ModIdentifier.FullLN:
+                        modStrings.Add("FullLN");
+                        break;
+                    case ModIdentifier.Mirror:
+                        modStrings.Add("Mirror");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
                 }
@@ -127,14 +151,24 @@ namespace Quaver.API.Helpers
                 rate = 1.0f;
             else if (mods.HasFlag(ModIdentifier.Speed05X))
                 rate = 0.5f;
+            else if (mods.HasFlag(ModIdentifier.Speed055X))
+                rate = 0.55f;
             else if (mods.HasFlag(ModIdentifier.Speed06X))
                 rate = 0.6f;
+            else if (mods.HasFlag(ModIdentifier.Speed065X))
+                rate = 0.65f;
             else if (mods.HasFlag(ModIdentifier.Speed07X))
                 rate = 0.7f;
+            else if (mods.HasFlag(ModIdentifier.Speed075X))
+                rate = 0.75f;
             else if (mods.HasFlag(ModIdentifier.Speed08X))
                 rate = 0.8f;
+            else if (mods.HasFlag(ModIdentifier.Speed085X))
+                rate = 0.85f;
             else if (mods.HasFlag(ModIdentifier.Speed09X))
                 rate = 0.9f;
+            else if (mods.HasFlag(ModIdentifier.Speed095X))
+                rate = 0.95f;
             else if (mods.HasFlag(ModIdentifier.Speed11X))
                 rate = 1.1f;
             else if (mods.HasFlag(ModIdentifier.Speed12X))
@@ -170,14 +204,24 @@ namespace Quaver.API.Helpers
             {
                 case 0.5f:
                     return ModIdentifier.Speed05X;
+                case 0.55f:
+                    return ModIdentifier.Speed055X;
                 case 0.6f:
                     return ModIdentifier.Speed06X;
+                case 0.65f:
+                    return ModIdentifier.Speed065X;
                 case 0.7f:
                     return ModIdentifier.Speed07X;
+                case 0.75f:
+                    return ModIdentifier.Speed075X;
                 case 0.8f:
                     return ModIdentifier.Speed08X;
+                case 0.85f:
+                    return ModIdentifier.Speed085X;
                 case 0.9f:
                     return ModIdentifier.Speed09X;
+                case 0.95f:
+                    return ModIdentifier.Speed095X;
                 case 1.1f:
                     return ModIdentifier.Speed11X;
                 case 1.2f:
