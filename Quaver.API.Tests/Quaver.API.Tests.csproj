@@ -26,6 +26,12 @@
     <None Update="Osu\Resources\Camellia feat. Nanahira - ChoChoKouSokuDeMaeSaiSoku!!! SpeedStarKanade (jakads) [Tsukahara's MAXIMUM].osu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Osu\Resources\hitsounds.osu">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Osu\Resources\hitsounds.qua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Quaver\Resources\ln-conversion-input.qua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

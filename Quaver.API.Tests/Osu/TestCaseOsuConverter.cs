@@ -62,6 +62,16 @@ namespace Quaver.API.Tests.Osu
         }
 
         [Fact]
+        public void HitSoundTypeConversionCheck()
+        {
+            var converter = new OsuBeatmap("./Osu/Resources/hitsounds.osu");
+            var qua = converter.ToQua();
+
+            var groundTruthQua = Qua.Parse("./Osu/Resources/hitsounds.qua");
+            Assert.True(qua.EqualByValue(groundTruthQua));
+        }
+
+        [Fact]
         public void CheckCommonBPM()
         {
             // This map had incorrect common BPM.
