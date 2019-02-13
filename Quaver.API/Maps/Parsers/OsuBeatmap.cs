@@ -371,7 +371,7 @@ namespace Quaver.API.Maps.Parsers
                                 Y = int.Parse(values[1], CultureInfo.InvariantCulture),
                                 StartTime = int.Parse(values[2], CultureInfo.InvariantCulture),
                                 Type = (HitObjectType) int.Parse(values[3], CultureInfo.InvariantCulture),
-                                HitSound = int.Parse(values[4], CultureInfo.InvariantCulture),
+                                HitSound = (HitSoundType) int.Parse(values[4], CultureInfo.InvariantCulture),
                                 Additions = "0:0:0:0:"
                             };
 
@@ -490,7 +490,7 @@ namespace Quaver.API.Maps.Parsers
                         StartTime = hitObject.StartTime,
                         Lane = keyLane,
                         EndTime = 0,
-                        HitSound = HitSounds.Normal
+                        HitSound = hitObject.HitSound.ToQuaverHitSounds()
                     });
                 }
                 else if (hitObject.Type.HasFlag(HitObjectType.Hold))
@@ -500,7 +500,7 @@ namespace Quaver.API.Maps.Parsers
                         StartTime = hitObject.StartTime,
                         Lane = keyLane,
                         EndTime = hitObject.EndTime,
-                        HitSound = HitSounds.Normal
+                        HitSound = hitObject.HitSound.ToQuaverHitSounds()
                     });
                 }
             }
@@ -530,6 +530,38 @@ namespace Quaver.API.Maps.Parsers
     }
 
     /// <summary>
+    ///     Enumeration of the hitsound types.
+    /// </summary>
+    [Flags]
+    public enum HitSoundType
+    {
+        None = 0,
+        Normal = 1,
+        Whistle = 2,
+        Finish = 4,
+        Clap = 8
+    }
+
+    public static class HitSoundTypeExtension
+    {
+        /// <summary>
+        ///     Converts osu! hit sound type to Quaver hit sound type.
+        /// </summary>
+        /// <param name="hitSoundType"></param>
+        /// <returns></returns>
+        public static HitSounds ToQuaverHitSounds(this HitSoundType hitSoundType)
+        {
+            var value = (int) hitSoundType & 15; // Clear any higher bits.
+
+            if (value == 0)
+                return HitSounds.Normal;
+
+            // HitSounds happens to have the same values.
+            return (HitSounds) hitSoundType;
+        }
+    }
+
+    /// <summary>
     ///     Struct for the timing point data.
     /// </summary>
     public struct OsuTimingPoint
@@ -553,7 +585,7 @@ namespace Quaver.API.Maps.Parsers
         public int Y { get; set; }
         public int StartTime { get; set; }
         public HitObjectType Type { get; set; }
-        public int HitSound { get; set; }
+        public HitSoundType HitSound { get; set; }
         public int EndTime { get; set; }
         public string Additions { get; set; }
         public bool Key1 { get; set; }
