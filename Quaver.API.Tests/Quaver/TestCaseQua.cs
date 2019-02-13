@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Immutable;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Structures;
@@ -8,6 +8,8 @@ namespace Quaver.API.Tests.Quaver
 {
     public class TestCaseQua
     {
+        private const string LN_CONVERSION_INPUT = "./Quaver/Resources/ln-conversion-input.qua";
+
         [Fact]
         public void MirrorHitObjects4K()
         {
@@ -41,6 +43,45 @@ namespace Quaver.API.Tests.Quaver
                         qua.HitObjects[4].Lane == 3 &&
                         qua.HitObjects[5].Lane == 2 &&
                         qua.HitObjects[6].Lane == 1);
+        }
+
+        [Fact]
+        public void NLN()
+        {
+            var qua = Qua.Parse(LN_CONVERSION_INPUT);
+            qua.ApplyMods(ModIdentifier.NoLongNotes);
+            var objects = qua.HitObjects.ToImmutableHashSet();
+
+            var expected = Qua.Parse("./Quaver/Resources/nln-output.qua");
+            var expectedObjects = expected.HitObjects.ToImmutableHashSet();
+
+            Assert.True(objects.SetEquals(expectedObjects));
+        }
+
+        [Fact]
+        public void Inverse()
+        {
+            var qua = Qua.Parse(LN_CONVERSION_INPUT);
+            qua.ApplyMods(ModIdentifier.Inverse);
+            var objects = qua.HitObjects.ToImmutableHashSet();
+
+            var expected = Qua.Parse("./Quaver/Resources/inverse-output.qua");
+            var expectedObjects = expected.HitObjects.ToImmutableHashSet();
+
+            Assert.True(objects.SetEquals(expectedObjects));
+        }
+
+        [Fact]
+        public void FullLN()
+        {
+            var qua = Qua.Parse(LN_CONVERSION_INPUT);
+            qua.ApplyMods(ModIdentifier.FullLN);
+            var objects = qua.HitObjects.ToImmutableHashSet();
+
+            var expected = Qua.Parse("./Quaver/Resources/fullln-output.qua");
+            var expectedObjects = expected.HitObjects.ToImmutableHashSet();
+
+            Assert.True(objects.SetEquals(expectedObjects));
         }
     }
 }

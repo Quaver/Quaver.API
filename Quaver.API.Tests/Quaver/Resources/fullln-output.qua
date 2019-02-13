@@ -1,0 +1,46 @@
+Mode: Keys4
+TimingPoints:
+- StartTime: 601
+  Bpm: 177
+- StartTime: 1617
+  Bpm: 88.5
+HitObjects:
+- StartTime: 601
+  Lane: 2
+  EndTime: 854
+- StartTime: 601
+  Lane: 3
+  EndTime: 1193
+- StartTime: 601
+  Lane: 4
+  EndTime: 1109
+- StartTime: 601
+  Lane: 1
+  EndTime: 854
+- StartTime: 939
+  Lane: 1
+  EndTime: 1193
+- StartTime: 939
+  Lane: 2
+  EndTime: 1617
+- StartTime: 1194
+  Lane: 4
+  EndTime: 1532
+- StartTime: 1278
+  Lane: 1
+  EndTime: 1532
+- StartTime: 1278
+  Lane: 3
+  EndTime: 1448
+- StartTime: 1533
+  Lane: 3
+  EndTime: 1955
+- StartTime: 1617
+  Lane: 1
+  EndTime: 1786
+- StartTime: 1617
+  Lane: 4
+  EndTime: 1955
+- StartTime: 1955
+  Lane: 1
+  EndTime: 2294
