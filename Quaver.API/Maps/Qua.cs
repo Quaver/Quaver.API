@@ -623,5 +623,9 @@ namespace Quaver.API.Maps
                 HitObjects[i] = temp;
             }
         }
+
+        /// <summary>
+        /// </summary>
+        public void SortSliderVelocities() => SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
     }
 }
