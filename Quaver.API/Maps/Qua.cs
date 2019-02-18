@@ -627,5 +627,9 @@ namespace Quaver.API.Maps
         /// <summary>
         /// </summary>
         public void SortSliderVelocities() => SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+
+        /// <summary>
+        /// </summary>
+        public void SortTimingPoints() => TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
     }
 }
