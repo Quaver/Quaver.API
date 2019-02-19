@@ -14,7 +14,7 @@ namespace Quaver.API.Maps.Structures
     ///     SliderVelocities section of the .qua
     /// </summary>
     [Serializable]
-    public struct SliderVelocityInfo
+    public class SliderVelocityInfo
     {
         /// <summary>
         ///     The time in milliseconds when the new SliderVelocity section begins

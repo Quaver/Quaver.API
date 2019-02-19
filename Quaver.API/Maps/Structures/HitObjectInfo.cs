@@ -18,7 +18,7 @@ namespace Quaver.API.Maps.Structures
     ///     HitObjects section of the .qua
     /// </summary>
     [Serializable]
-    public struct HitObjectInfo
+    public class HitObjectInfo
     {
         /// <summary>
         ///     The time in milliseconds when the HitObject is supposed to be hit.
@@ -39,6 +39,11 @@ namespace Quaver.API.Maps.Structures
         ///     Bitwise combination of hit sounds for this object
         /// </summary>
         public HitSounds HitSound { get; set; }
+
+        /// <summary>
+        ///     The layer in the editor that the object belongs to.
+        /// </summary>
+        public int EditorLayer { get; set; }
 
         /// <summary>
         ///     If the object is a long note. (EndTime > 0)

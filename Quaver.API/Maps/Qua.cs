@@ -90,6 +90,11 @@ namespace Quaver.API.Maps
         public string Description { get; set; }
 
         /// <summary>
+        ///     EditorLayer .qua data
+        /// </summary>
+        public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
+
+        /// <summary>
         ///     TimingPoint .qua data
         /// </summary>
         public List<TimingPointInfo> TimingPoints { get; private set; } = new List<TimingPointInfo>();
@@ -146,6 +151,7 @@ namespace Quaver.API.Maps
                    && TimingPoints.SequenceEqual(other.TimingPoints)
                    && SliderVelocities.SequenceEqual(other.SliderVelocities)
                    && HitObjects.SequenceEqual(other.HitObjects)
+                   && EditorLayers.SequenceEqual(other.EditorLayers)
                    && RandomizeModifierSeed == other.RandomizeModifierSeed;
         }
 
@@ -344,14 +350,14 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public TimingPointInfo? GetTimingPointAt(double time)
+        public TimingPointInfo GetTimingPointAt(double time)
         {
             var index = TimingPoints.FindLastIndex(x => x.StartTime <= time);
 
             // If the point can't be found, we want to return either null if there aren't
             // any points, or the first timing point, since it'll be considered as apart of it anyway.
             if (index == -1)
-                return TimingPoints.Count == 0 ? null : (TimingPointInfo?) TimingPoints.First();
+                return TimingPoints.Count == 0 ? null : TimingPoints.First();
 
             return TimingPoints[index];
         }
@@ -436,7 +442,7 @@ namespace Quaver.API.Maps
                 var currentObject = HitObjects[i];
 
                 // Find the next and second next hit object in the lane.
-                HitObjectInfo? nextObjectInLane = null, secondNextObjectInLane = null;
+                HitObjectInfo nextObjectInLane = null, secondNextObjectInLane = null;
                 for (var j = i + 1; j < HitObjects.Count; j++)
                 {
                     if (HitObjects[j].Lane == currentObject.Lane)
@@ -457,14 +463,14 @@ namespace Quaver.API.Maps
                 int? timeGap = null;
                 if (nextObjectInLane != null)
                 {
-                    var timingPoint = GetTimingPointAt(nextObjectInLane.Value.StartTime).Value;
+                    var timingPoint = GetTimingPointAt(nextObjectInLane.StartTime);
                     float bpm;
 
                     // If the timing point starts at the next object, we want to use the previous timing point's BPM.
                     // For example, consider a fast section of the map transitioning into a very low BPM ending starting
                     // with the next hit object. Since the LN release and the gap are still in the fast section, they
                     // should use the fast section's BPM.
-                    if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.Value.StartTime)
+                    if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
                     {
                         var previousTimingPoint = TimingPoints.Last(x => x.StartTime < timingPoint.StartTime);
                         bpm = previousTimingPoint.Bpm;
@@ -502,12 +508,12 @@ namespace Quaver.API.Maps
                     else
                     {
                         currentObject.StartTime = currentObject.EndTime; // (this part can mess up the ordering)
-                        currentObject.EndTime = nextObjectInLane.Value.StartTime - timeGap.Value;
+                        currentObject.EndTime = nextObjectInLane.StartTime - timeGap.Value;
 
                         // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
                         // not the last object in the lane, create a regular object at the next object's start position.
-                        if ((secondNextObjectInLane == null) != nextObjectInLane.Value.IsLongNote)
-                            currentObject.EndTime = nextObjectInLane.Value.StartTime;
+                        if ((secondNextObjectInLane == null) != nextObjectInLane.IsLongNote)
+                            currentObject.EndTime = nextObjectInLane.StartTime;
 
                         // Filter out really short LNs or even negative length resulting from jacks or weird BPM values.
                         if (currentObject.EndTime - currentObject.StartTime < MINIMAL_LN_LENGTH)
@@ -532,13 +538,13 @@ namespace Quaver.API.Maps
                         continue;
                     }
 
-                    currentObject.EndTime = nextObjectInLane.Value.StartTime - timeGap.Value;
+                    currentObject.EndTime = nextObjectInLane.StartTime - timeGap.Value;
 
                     // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
                     // not the last object in the lane, this LN should span until its start.
-                    if ((secondNextObjectInLane == null) == (nextObjectInLane.Value.EndTime == 0))
+                    if ((secondNextObjectInLane == null) == (nextObjectInLane.EndTime == 0))
                     {
-                        currentObject.EndTime = nextObjectInLane.Value.StartTime;
+                        currentObject.EndTime = nextObjectInLane.StartTime;
                     }
 
                     // Filter out really short LNs or even negative length resulting from jacks or weird BPM values.
@@ -617,5 +623,13 @@ namespace Quaver.API.Maps
                 HitObjects[i] = temp;
             }
         }
+
+        /// <summary>
+        /// </summary>
+        public void SortSliderVelocities() => SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+
+        /// <summary>
+        /// </summary>
+        public void SortTimingPoints() => TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
     }
 }
