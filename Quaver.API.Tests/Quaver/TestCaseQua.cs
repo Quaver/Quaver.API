@@ -45,7 +45,7 @@ namespace Quaver.API.Tests.Quaver
                         qua.HitObjects[6].Lane == 1);
         }
 
-        [Fact]
+        /*[Fact]
         public void NLN()
         {
             var qua = Qua.Parse(LN_CONVERSION_INPUT);
@@ -82,6 +82,6 @@ namespace Quaver.API.Tests.Quaver
             var expectedObjects = expected.HitObjects.ToImmutableHashSet();
 
             Assert.True(objects.SetEquals(expectedObjects));
-        }
+        }*/
     }
 }
