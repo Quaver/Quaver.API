@@ -239,7 +239,8 @@ namespace Quaver.API.Maps
                         EndTime = obj.EndTime,
                         HitSound = 0,
                         Lane = obj.Lane,
-                        StartTime = obj.StartTime
+                        StartTime = obj.StartTime,
+                        EditorLayer = obj.EditorLayer
                     });
                 }
                 else
