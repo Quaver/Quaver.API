@@ -26,7 +26,8 @@ namespace Quaver.Tools
                                   $"-buildreplay <replay_path> <output_path> <quaver_version> <map_md5> <timestamp> <mode> <mods> <score> <accuracy> <max_combo> <count_marv> <count_perf> <count_great> <count_good> <count_okay> <count_miss> <pause_count> <username>\n" +
                                   $"-calcrating <difficulty_rating> <accuracy>\n" +
                                   $"-convertosu <file_path.osu> <output.qua>\n" +
-                                  $"-convertsm <file_path.sm> <output directory>");
+                                  $"-convertsm <file_path.sm> <output directory>\n" +
+                                  $"-changequaids <file_path.qua> <output_path.qua> <map_id> <mapset_id>");
                 return;
             }
 
@@ -55,6 +56,9 @@ namespace Quaver.Tools
                     break;
                 case "-convertsm":
                     new ConvertSmCommand(args).Execute();
+                    break;
+                case "-changequaids":
+                    new ChangeQuaIdsCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
