@@ -51,7 +51,7 @@ namespace Quaver.API.Tests.Osu
             Assert.Equal(4084 + 49, qua.HitObjects.Count);
         }
 
-        /*[Fact]
+        [Fact]
         public void FullConversionCheck()
         {
             var converter = new OsuBeatmap(BeatmapFilename);
@@ -69,7 +69,7 @@ namespace Quaver.API.Tests.Osu
 
             var groundTruthQua = Qua.Parse("./Osu/Resources/hitsounds.qua");
             Assert.True(qua.EqualByValue(groundTruthQua));
-        }*/
+        }
 
         [Fact]
         public void CheckCommonBPM()

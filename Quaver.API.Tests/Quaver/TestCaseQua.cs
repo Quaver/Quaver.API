@@ -45,15 +45,15 @@ namespace Quaver.API.Tests.Quaver
                         qua.HitObjects[6].Lane == 1);
         }
 
-        /*[Fact]
+        [Fact]
         public void NLN()
         {
             var qua = Qua.Parse(LN_CONVERSION_INPUT);
             qua.ApplyMods(ModIdentifier.NoLongNotes);
-            var objects = qua.HitObjects.ToImmutableHashSet();
+            var objects = qua.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
 
             var expected = Qua.Parse("./Quaver/Resources/nln-output.qua");
-            var expectedObjects = expected.HitObjects.ToImmutableHashSet();
+            var expectedObjects = expected.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
 
             Assert.True(objects.SetEquals(expectedObjects));
         }
@@ -63,10 +63,10 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse(LN_CONVERSION_INPUT);
             qua.ApplyMods(ModIdentifier.Inverse);
-            var objects = qua.HitObjects.ToImmutableHashSet();
+            var objects = qua.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
 
             var expected = Qua.Parse("./Quaver/Resources/inverse-output.qua");
-            var expectedObjects = expected.HitObjects.ToImmutableHashSet();
+            var expectedObjects = expected.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
 
             Assert.True(objects.SetEquals(expectedObjects));
         }
@@ -76,12 +76,12 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse(LN_CONVERSION_INPUT);
             qua.ApplyMods(ModIdentifier.FullLN);
-            var objects = qua.HitObjects.ToImmutableHashSet();
+            var objects = qua.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
 
             var expected = Qua.Parse("./Quaver/Resources/fullln-output.qua");
-            var expectedObjects = expected.HitObjects.ToImmutableHashSet();
+            var expectedObjects = expected.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
 
             Assert.True(objects.SetEquals(expectedObjects));
-        }*/
+        }
     }
 }
