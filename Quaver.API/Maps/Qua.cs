@@ -190,7 +190,7 @@ namespace Quaver.API.Maps
             }
 
             if (checkValidity && !qua.IsValid())
-                throw new ArgumentException(".qua file does not have HitObjects, TimingPoints, or Mode invalid");
+                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
 
             // Try to sort the Qua before returning.
             qua.Sort();
