@@ -83,5 +83,12 @@ namespace Quaver.API.Tests.Quaver
 
             Assert.True(objects.SetEquals(expectedObjects));
         }
+
+        [Fact]
+        public void IssueQuaver592()
+        {
+            var qua = Qua.Parse("./Quaver/Resources/issue-quaver-592.qua");
+            qua.ApplyMods(ModIdentifier.FullLN); // Should not throw.
+        }
     }
 }
