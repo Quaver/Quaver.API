@@ -473,8 +473,14 @@ namespace Quaver.API.Maps
                     // should use the fast section's BPM.
                     if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
                     {
-                        var previousTimingPoint = TimingPoints.Last(x => x.StartTime < timingPoint.StartTime);
-                        bpm = previousTimingPoint.Bpm;
+                        var prevTimingPointIndex = TimingPoints.FindLastIndex(x => x.StartTime < timingPoint.StartTime);
+
+                        // No timing points before the object? Just use the first timing point then, it has the correct
+                        // BPM.
+                        if (prevTimingPointIndex == -1)
+                            prevTimingPointIndex = 0;
+
+                        bpm = TimingPoints[prevTimingPointIndex].Bpm;
                     }
                     else
                     {
