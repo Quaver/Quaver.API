@@ -343,6 +343,9 @@ namespace Quaver.API.Maps
                     durations[point.Bpm] = duration;
             }
 
+            if (durations.Count == 0)
+                return TimingPoints[0].Bpm; // osu! hangs on loading the map in this case; we return a sensible result.
+
             return durations.OrderByDescending(x => x.Value).First().Key;
         }
 
