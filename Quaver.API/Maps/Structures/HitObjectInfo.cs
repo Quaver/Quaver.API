@@ -23,7 +23,7 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     The time in milliseconds when the HitObject is supposed to be hit.
         /// </summary>
-        public int StartTime { get; set; }
+        public float StartTime { get; set; }
 
         /// <summary>
         ///     The lane the HitObject falls in
