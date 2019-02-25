@@ -507,7 +507,7 @@ namespace Quaver.API.Maps.Parsers
 
             // Do a validity check and some final sorting.
             if (!qua.IsValid())
-                throw new ArgumentException();
+                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
 
             qua.Sort();
 

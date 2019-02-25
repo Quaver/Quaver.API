@@ -190,7 +190,7 @@ namespace Quaver.API.Maps
             }
 
             if (checkValidity && !qua.IsValid())
-                throw new ArgumentException(".qua file does not have HitObjects, TimingPoints, or Mode invalid");
+                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
 
             // Try to sort the Qua before returning.
             qua.Sort();
@@ -276,7 +276,18 @@ namespace Quaver.API.Maps
                 return false;
 
             // Check if the mode is actually valid
-            return Enum.IsDefined(typeof(GameMode), Mode);
+            if (!Enum.IsDefined(typeof(GameMode), Mode))
+                return false;
+
+            // Check that hit objects are valid.
+            foreach (var info in HitObjects)
+            {
+                // LN end times should be > start times.
+                if (info.IsLongNote && info.EndTime <= info.StartTime)
+                    return false;
+            }
+
+            return true;
         }
 
         /// <summary>
