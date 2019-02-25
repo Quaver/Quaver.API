@@ -148,10 +148,10 @@ namespace Quaver.API.Maps
                    && Creator == other.Creator
                    && DifficultyName == other.DifficultyName
                    && Description == other.Description
-                   && TimingPoints.SequenceEqual(other.TimingPoints)
-                   && SliderVelocities.SequenceEqual(other.SliderVelocities)
-                   && HitObjects.SequenceEqual(other.HitObjects)
-                   && EditorLayers.SequenceEqual(other.EditorLayers)
+                   && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
+                   && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
+                   && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
+                   && EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer)
                    && RandomizeModifierSeed == other.RandomizeModifierSeed;
         }
 
@@ -487,8 +487,14 @@ namespace Quaver.API.Maps
                     // should use the fast section's BPM.
                     if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
                     {
-                        var previousTimingPoint = TimingPoints.Last(x => x.StartTime < timingPoint.StartTime);
-                        bpm = previousTimingPoint.Bpm;
+                        var prevTimingPointIndex = TimingPoints.FindLastIndex(x => x.StartTime < timingPoint.StartTime);
+
+                        // No timing points before the object? Just use the first timing point then, it has the correct
+                        // BPM.
+                        if (prevTimingPointIndex == -1)
+                            prevTimingPointIndex = 0;
+
+                        bpm = TimingPoints[prevTimingPointIndex].Bpm;
                     }
                     else
                     {
