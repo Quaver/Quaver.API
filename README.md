@@ -1,4 +1,4 @@
-# Quaver.API [![Blog](https://img.shields.io/badge/Blog-Read-blue.svg)](https://blog.quavergame.com) [![Discord](https://discordapp.com/api/guilds/354206121386573824/widget.png?style=shield)](https://discord.gg/nJa8VFr)
+# Quaver.API [![Build Status](https://travis-ci.com/Quaver/Quaver.API.svg?branch=master)](https://travis-ci.com/Quaver/Quaver.API) [![CodeFactor](https://www.codefactor.io/repository/github/quaver/quaver.api/badge)](https://www.codefactor.io/repository/github/quaver/quaver.api) [![Blog](https://img.shields.io/badge/Blog-Read-blue.svg)](https://blog.quavergame.com) [![Discord](https://discordapp.com/api/guilds/354206121386573824/widget.png?style=shield)](https://discord.gg/nJa8VFr)
 
 >📖 Keep developing for [Quaver](https://github.com/Quaver) with these set of tools and C# libraries.
 

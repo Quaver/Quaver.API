@@ -1,0 +1,41 @@
+AudioFile: Firestorm.mp3
+SongPreviewTime: 91448
+BackgroundFile: bg.jpg
+MapId: -1
+MapSetId: -1
+Mode: Keys4
+Title: Firestorm
+Artist: ETIA.
+Source: SOUND VOLTEX III GRAVITY WARS
+Tags: sdvx gravity wars sound_voltex inteliser
+Creator: PiraTom
+DifficultyName: temp
+Description: This is a Quaver converted version of PiraTom's map.
+TimingPoints:
+- StartTime: 601
+  Bpm: 177
+SliderVelocities: []
+HitObjects:
+- StartTime: 601
+  Lane: 1
+- StartTime: 685
+  Lane: 1
+  HitSound: Whistle
+- StartTime: 770
+  Lane: 1
+  HitSound: Finish
+- StartTime: 855
+  Lane: 1
+  HitSound: Clap
+- StartTime: 939
+  Lane: 1
+  HitSound: Whistle, Finish
+- StartTime: 1024
+  Lane: 1
+  HitSound: Whistle, Clap
+- StartTime: 1109
+  Lane: 1
+  HitSound: Finish, Clap
+- StartTime: 1194
+  Lane: 1
+  HitSound: Whistle, Finish, Clap

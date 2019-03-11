@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+ * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
 */
 
 using System;
@@ -10,11 +10,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text;
+using MonoGame.Extended.Collections;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty;
 using Quaver.API.Maps.Processors.Difficulty.Optimization;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
+using Quaver.API.Maps.Processors.Scoring;
 using Quaver.API.Maps.Structures;
 using YamlDotNet.Serialization;
 
@@ -89,6 +92,11 @@ namespace Quaver.API.Maps
         public string Description { get; set; }
 
         /// <summary>
+        ///     EditorLayer .qua data
+        /// </summary>
+        public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
+
+        /// <summary>
         ///     TimingPoint .qua data
         /// </summary>
         public List<TimingPointInfo> TimingPoints { get; private set; } = new List<TimingPointInfo>();
@@ -111,31 +119,84 @@ namespace Quaver.API.Maps
         public int Length => HitObjects.Count == 0 ? 0 : HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
 
         /// <summary>
+        ///     Integer based seed used for shuffling the lanes when randomize mod is active.
+        ///     Defaults to -1 if there is no seed.
+        /// </summary>
+        [YamlIgnore]
+        public int RandomizeModifierSeed { get; set; } = -1;
+
+        /// <summary>
         ///     Ctor
         /// </summary>
         public Qua() {}
+
+        /// <summary>
+        ///     Returns true if the two maps are equal by value.
+        /// </summary>
+        /// <param name="other">the Qua to compare to</param>
+        /// <returns></returns>
+        public bool EqualByValue(Qua other)
+        {
+            return AudioFile == other.AudioFile
+                   && SongPreviewTime == other.SongPreviewTime
+                   && BackgroundFile == other.BackgroundFile
+                   && MapId == other.MapId
+                   && MapSetId == other.MapSetId
+                   && Mode == other.Mode
+                   && Title == other.Title
+                   && Artist == other.Artist
+                   && Source == other.Source
+                   && Tags == other.Tags
+                   && Creator == other.Creator
+                   && DifficultyName == other.DifficultyName
+                   && Description == other.Description
+                   && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
+                   && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
+                   && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
+                   && EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer)
+                   && RandomizeModifierSeed == other.RandomizeModifierSeed;
+        }
+
+        /// <summary>
+        ///     Loads a .qua file from a stream
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="checkValidity"></param>
+        /// <returns></returns>
+        public static Qua Parse(byte[] buffer, bool checkValidity = true)
+        {
+            var input = new StringReader(Encoding.UTF8.GetString(buffer, 0, buffer.Length));
+
+            var deserializer = new DeserializerBuilder();
+            deserializer.IgnoreUnmatchedProperties();
+            var qua = (Qua)deserializer.Build().Deserialize(input, typeof(Qua));
+
+            RestoreDefaultValues(qua);
+            AfterLoad(qua, checkValidity);
+
+            return qua;
+        }
 
         /// <summary>
         ///     Takes in a path to a .qua file and attempts to parse it.
         ///     Will throw an error if unable to be parsed.
         /// </summary>
         /// <param name="path"></param>
-        public static Qua Parse(string path)
+        /// <param name="checkValidity"></param>
+        public static Qua Parse(string path, bool checkValidity = true)
         {
             Qua qua;
 
             using (var file = File.OpenText(path))
             {
-                var serializer = new Deserializer();
-                qua = (Qua)serializer.Deserialize(file, typeof(Qua));
+                var deserializer = new DeserializerBuilder();
+                deserializer.IgnoreUnmatchedProperties();
+                qua = (Qua)deserializer.Build().Deserialize(file, typeof(Qua));
+
+                RestoreDefaultValues(qua);
             }
 
-            // Check the Qua object's validity.
-            if (!qua.IsValid())
-                throw new ArgumentException(".qua file does not have HitObjects, TimingPoints, or Mode invalid");
-
-            // Try to sort the Qua before returning.
-            qua.Sort();
+            AfterLoad(qua, checkValidity);
 
             return qua;
         }
@@ -149,12 +210,58 @@ namespace Quaver.API.Maps
             // Sort the object before saving.
             Sort();
 
-            // Save
+            // Set default values to zero so they don't waste space in the .qua file.
+            var originalTimingPoints = TimingPoints;
+            var originalHitObjects = HitObjects;
+
+            TimingPoints = new List<TimingPointInfo>();
+            foreach (var tp in originalTimingPoints)
+            {
+                if (tp.Signature == TimeSignature.Quadruple)
+                {
+                    TimingPoints.Add(new TimingPointInfo()
+                    {
+                        Bpm = tp.Bpm,
+                        Signature = 0,
+                        StartTime = tp.StartTime
+                    });
+                }
+                else
+                {
+                    TimingPoints.Add(tp);
+                }
+            }
+
+            HitObjects = new List<HitObjectInfo>();
+            foreach (var obj in originalHitObjects)
+            {
+                if (obj.HitSound == HitSounds.Normal)
+                {
+                    HitObjects.Add(new HitObjectInfo()
+                    {
+                        EndTime = obj.EndTime,
+                        HitSound = 0,
+                        Lane = obj.Lane,
+                        StartTime = obj.StartTime,
+                        EditorLayer = obj.EditorLayer
+                    });
+                }
+                else
+                {
+                    HitObjects.Add(obj);
+                }
+            }
+
+            // Save.
             using (var file = File.CreateText(path))
             {
                 var serializer = new Serializer();
                 serializer.Serialize(file, this);
             }
+
+            // Restore the original lists.
+            TimingPoints = originalTimingPoints;
+            HitObjects = originalHitObjects;
         }
 
         /// <summary>
@@ -172,7 +279,18 @@ namespace Quaver.API.Maps
                 return false;
 
             // Check if the mode is actually valid
-            return Enum.IsDefined(typeof(GameMode), Mode);
+            if (!Enum.IsDefined(typeof(GameMode), Mode))
+                return false;
+
+            // Check that hit objects are valid.
+            foreach (var info in HitObjects)
+            {
+                // LN end times should be > start times.
+                if (info.IsLongNote && info.EndTime <= info.StartTime)
+                    return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -210,16 +328,39 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        /// Finds the most common BPM in a Qua object.
+        ///     Finds the most common BPM in a Qua object.
         /// </summary>
         /// <returns></returns>
-        public double GetCommonBpm()
+        public float GetCommonBpm()
         {
             if (TimingPoints.Count == 0)
                 return 0;
 
-            return Math.Round(TimingPoints.GroupBy(i => i.Bpm).OrderByDescending(grp => grp.Count())
-                .Select(grp => grp.Key).First(), 2, MidpointRounding.AwayFromZero);
+            var lastObject = HitObjects.OrderByDescending(x => x.IsLongNote ? x.EndTime : x.StartTime).First();
+            double lastTime = lastObject.IsLongNote ? lastObject.EndTime : lastObject.StartTime;
+
+            var durations = new Dictionary<float, int>();
+            for (var i = TimingPoints.Count - 1; i >= 0; i--)
+            {
+                var point = TimingPoints[i];
+
+                // Make sure that timing points past the last object don't break anything.
+                if (point.StartTime > lastTime)
+                    continue;
+
+                var duration = (int) (lastTime - (i == 0 ? 0 : point.StartTime));
+                lastTime = point.StartTime;
+
+                if (durations.ContainsKey(point.Bpm))
+                    durations[point.Bpm] += duration;
+                else
+                    durations[point.Bpm] = duration;
+            }
+
+            if (durations.Count == 0)
+                return TimingPoints[0].Bpm; // osu! hangs on loading the map in this case; we return a sensible result.
+
+            return durations.OrderByDescending(x => x.Value).First().Key;
         }
 
         /// <summary>
@@ -229,14 +370,14 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public TimingPointInfo GetTimingPointAt(double time)
         {
-            var point = TimingPoints.FindLast(x => x.StartTime <= time);
+            var index = TimingPoints.FindLastIndex(x => x.StartTime <= time);
 
             // If the point can't be found, we want to return either null if there aren't
             // any points, or the first timing point, since it'll be considered as apart of it anyway.
-            if (point == null)
+            if (index == -1)
                 return TimingPoints.Count == 0 ? null : TimingPoints.First();
 
-            return point;
+            return TimingPoints[index];
         }
 
         /// <summary>
@@ -288,10 +429,163 @@ namespace Quaver.API.Maps
         /// </summary>
         public void ReplaceLongNotesWithRegularNotes()
         {
-            foreach (var hitObject in HitObjects)
+            for (var i = 0; i < HitObjects.Count; i++)
             {
-                hitObject.EndTime = 0;
+                var temp = HitObjects[i];
+                temp.EndTime = 0;
+                HitObjects[i] = temp;
             }
+        }
+
+        /// <summary>
+        ///     Replaces regular notes with long notes and vice versa.
+        ///
+        ///     HitObjects and TimingPoints MUST be sorted by StartTime prior to calling this method,
+        ///     see <see cref="Sort()"/>.
+        /// </summary>
+        public void ApplyInverse()
+        {
+            // Minimal LN and gap lengths in milliseconds.
+            //
+            // Ideally this should be computed in a smart way using the judgements so that it is always possible to get
+            // perfects, but making map mods depend on the judgements (affected by strict/chill/accuracy adjustments) is
+            // a really bad idea. I'm setting these to values that will probably work fine for the majority of the
+            // cases.
+            const int MINIMAL_LN_LENGTH = 36;
+            const int MINIMAL_GAP_LENGTH = 36;
+
+            var newHitObjects = new List<HitObjectInfo>();
+
+            for (var i = 0; i < HitObjects.Count; i++)
+            {
+                var currentObject = HitObjects[i];
+
+                // Find the next and second next hit object in the lane.
+                HitObjectInfo nextObjectInLane = null, secondNextObjectInLane = null;
+                for (var j = i + 1; j < HitObjects.Count; j++)
+                {
+                    if (HitObjects[j].Lane == currentObject.Lane)
+                    {
+                        if (nextObjectInLane == null)
+                        {
+                            nextObjectInLane = HitObjects[j];
+                        }
+                        else
+                        {
+                            secondNextObjectInLane = HitObjects[j];
+                            break;
+                        }
+                    }
+                }
+
+                // Figure out the time gap between the end of the LN which we'll create and the next object.
+                int? timeGap = null;
+                if (nextObjectInLane != null)
+                {
+                    var timingPoint = GetTimingPointAt(nextObjectInLane.StartTime);
+                    float bpm;
+
+                    // If the timing point starts at the next object, we want to use the previous timing point's BPM.
+                    // For example, consider a fast section of the map transitioning into a very low BPM ending starting
+                    // with the next hit object. Since the LN release and the gap are still in the fast section, they
+                    // should use the fast section's BPM.
+                    if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
+                    {
+                        var prevTimingPointIndex = TimingPoints.FindLastIndex(x => x.StartTime < timingPoint.StartTime);
+
+                        // No timing points before the object? Just use the first timing point then, it has the correct
+                        // BPM.
+                        if (prevTimingPointIndex == -1)
+                            prevTimingPointIndex = 0;
+
+                        bpm = TimingPoints[prevTimingPointIndex].Bpm;
+                    }
+                    else
+                    {
+                        bpm = timingPoint.Bpm;
+                    }
+
+                    // The time gap is quarter of the milliseconds per beat.
+                    timeGap = (int?) Math.Max(Math.Round(15000 / bpm), MINIMAL_GAP_LENGTH);
+                }
+
+                // Summary of the changes:
+                // Regular 1 -> Regular 2 => LN until 2 - time gap
+                // Regular 1 -> LN 2      => LN until 2
+                //      LN 1 -> Regular 2 => LN from 1 end until 2 - time gap
+                //      LN 1 -> LN 2      => LN from 1 end until 2
+                //
+                // Exceptions:
+                // - last LNs are kept (treated as regular 2)
+                // - last regular objects are removed and treated as LN 2
+
+                if (currentObject.IsLongNote)
+                {
+                    // LNs before regular objects are changed so they start where they ended and end a time gap before
+                    // the object.
+                    // LNs before LNs do the same but without a time gap.
+
+                    if (nextObjectInLane == null)
+                    {
+                        // If this is the last object in its lane, though, then it's probably a better idea
+                        // to leave it be. For example, finishing long LNs in charts.
+                    }
+                    else
+                    {
+                        currentObject.StartTime = currentObject.EndTime; // (this part can mess up the ordering)
+                        currentObject.EndTime = nextObjectInLane.StartTime - timeGap.Value;
+
+                        // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
+                        // not the last object in the lane, create a regular object at the next object's start position.
+                        if ((secondNextObjectInLane == null) != nextObjectInLane.IsLongNote)
+                            currentObject.EndTime = nextObjectInLane.StartTime;
+
+                        // Filter out really short LNs or even negative length resulting from jacks or weird BPM values.
+                        if (currentObject.EndTime - currentObject.StartTime < MINIMAL_LN_LENGTH)
+                        {
+                            // These get skipped entirely.
+                            //
+                            // Actually, there can be a degenerate pattern of multiple LNs with really short gaps
+                            // in between them (less than MINIMAL_LN_LENGTH), which this logic will convert
+                            // into nothing. That should be pretty rare though.
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    // Regular objects are replaced with LNs starting from their start and ending quarter of a beat
+                    // before the next object's start.
+                    if (nextObjectInLane == null)
+                    {
+                        // If this is the last object in lane, though, then it's not included, and instead the previous
+                        // LN spans up to this object's StartTime.
+                        continue;
+                    }
+
+                    currentObject.EndTime = nextObjectInLane.StartTime - timeGap.Value;
+
+                    // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
+                    // not the last object in the lane, this LN should span until its start.
+                    if ((secondNextObjectInLane == null) == (nextObjectInLane.EndTime == 0))
+                    {
+                        currentObject.EndTime = nextObjectInLane.StartTime;
+                    }
+
+                    // Filter out really short LNs or even negative length resulting from jacks or weird BPM values.
+                    if (currentObject.EndTime - currentObject.StartTime < MINIMAL_LN_LENGTH)
+                    {
+                        // These get converted back into regular objects.
+                        currentObject.EndTime = 0;
+                    }
+                }
+
+                newHitObjects.Add(currentObject);
+            }
+
+            // LN conversion can mess up the ordering, so sort it again. See the (this part can mess up the ordering)
+            // comment above.
+            HitObjects = newHitObjects.OrderBy(x => x.StartTime).ToList();
         }
 
         /// <summary>
@@ -300,9 +594,104 @@ namespace Quaver.API.Maps
         /// <param name="mods">a list of mods to apply</param>
         public void ApplyMods(ModIdentifier mods)
         {
-            // If the No Long Notes mod is active, remove the long notes.
             if (mods.HasFlag(ModIdentifier.NoLongNotes))
                 ReplaceLongNotesWithRegularNotes();
+
+            if (mods.HasFlag(ModIdentifier.Inverse))
+                ApplyInverse();
+
+            // FullLN is NLN followed by Inverse.
+            if (mods.HasFlag(ModIdentifier.FullLN))
+            {
+                ReplaceLongNotesWithRegularNotes();
+                ApplyInverse();
+            }
+
+            if (mods.HasFlag(ModIdentifier.Mirror))
+                MirrorHitObjects();
+        }
+
+        /// <summary>
+        ///     Used by the Randomize modifier to shuffle around the lanes.
+        ///     Replaces long notes with regular notes starting at the same time.
+        /// </summary>
+        public void RandomizeLanes(int seed)
+        {
+            // if seed is default, then abort.
+            if (seed == -1)
+                return;
+
+            RandomizeModifierSeed = seed;
+
+            var values = new List<int>();
+            values.AddRange(Enumerable.Range(0, GetKeyCount()).Select(x => x + 1));
+
+            values.Shuffle(new Random(seed));
+
+            for (var i = 0; i < HitObjects.Count; i++)
+            {
+                var temp = HitObjects[i];
+                temp.Lane = values[temp.Lane - 1];
+                HitObjects[i] = temp;
+            }
+        }
+
+        /// <summary>
+        ///     Flips the lanes of the HitObjects
+        /// </summary>
+        public void MirrorHitObjects()
+        {
+            for (var i = 0; i < HitObjects.Count; i++)
+            {
+                var temp = HitObjects[i];
+                temp.Lane = GetKeyCount() - temp.Lane + 1;
+                HitObjects[i] = temp;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public void SortSliderVelocities() => SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+
+        /// <summary>
+        /// </summary>
+        public void SortTimingPoints() => TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
+
+        /// <summary>
+        /// </summary>
+        /// <param name="qua"></param>
+        private static void RestoreDefaultValues(Qua qua)
+        {
+            // Restore default values.
+            for (var i = 0; i < qua.TimingPoints.Count; i++)
+            {
+                var tp = qua.TimingPoints[i];
+                if (tp.Signature == 0)
+                    tp.Signature = TimeSignature.Quadruple;
+                qua.TimingPoints[i] = tp;
+            }
+
+            for (var i = 0; i < qua.HitObjects.Count; i++)
+            {
+                var obj = qua.HitObjects[i];
+                if (obj.HitSound == 0)
+                    obj.HitSound = HitSounds.Normal;
+                qua.HitObjects[i] = obj;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="qua"></param>
+        /// <param name="checkValidity"></param>
+        /// <exception cref="ArgumentException"></exception>
+        private static void AfterLoad(Qua qua, bool checkValidity)
+        {
+            if (checkValidity && !qua.IsValid())
+                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
+
+            // Try to sort the Qua before returning.
+            qua.Sort();
         }
     }
 }

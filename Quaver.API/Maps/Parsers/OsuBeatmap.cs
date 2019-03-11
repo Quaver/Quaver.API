@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
+ * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
 */
 
 using System;
@@ -102,8 +102,17 @@ namespace Quaver.API.Maps.Parsers
 
             try
             {
-                foreach (var line in File.ReadAllLines(filePath))
+                foreach (var raw_line in File.ReadAllLines(filePath))
                 {
+                    // Skip empty lines and comments.
+                    if (string.IsNullOrWhiteSpace(raw_line)
+                        || raw_line.StartsWith("//", StringComparison.Ordinal)
+                        || raw_line.StartsWith(" ", StringComparison.Ordinal)
+                        || raw_line.StartsWith("_", StringComparison.Ordinal))
+                        continue;
+
+                    var line = StripComments(raw_line);
+
                     switch (line.Trim())
                     {
                         case "[General]":
@@ -320,11 +329,16 @@ namespace Quaver.API.Maps.Parsers
                             {
                                 var values = line.Split(',');
 
+                                // Parse as double because there are some maps which have this value too large to fit in
+                                // a float, for example https://osu.ppy.sh/beatmapsets/681731#mania/1441497. Parsing as
+                                // double and then casting to float results in the correct outcome though.
+                                var msecPerBeat = double.Parse(values[1], CultureInfo.InvariantCulture);
+
                                 var timingPoint = new OsuTimingPoint
                                 {
                                     Offset = float.Parse(values[0], CultureInfo.InvariantCulture),
-                                    MillisecondsPerBeat = float.Parse(values[1], CultureInfo.InvariantCulture),
-                                    Meter = int.Parse(values[2], CultureInfo.InvariantCulture),
+                                    MillisecondsPerBeat = (float) msecPerBeat,
+                                    Signature = values[2][0] == '0' ? TimeSignature.Quadruple : (TimeSignature) int.Parse(values[2], CultureInfo.InvariantCulture),
                                     SampleType = int.Parse(values[3], CultureInfo.InvariantCulture),
                                     SampleSet = int.Parse(values[4], CultureInfo.InvariantCulture),
                                     Volume = int.Parse(values[5], CultureInfo.InvariantCulture),
@@ -346,9 +360,6 @@ namespace Quaver.API.Maps.Parsers
                     {
                         if (line.Contains(","))
                         {
-                            if (line.Contains("P") || line.Contains("L") || line.Contains("|"))
-                                continue;
-
                             var values = line.Split(',');
 
                             // We'll need to parse LNs differently than normal HitObjects,
@@ -359,16 +370,15 @@ namespace Quaver.API.Maps.Parsers
                                 X = int.Parse(values[0], CultureInfo.InvariantCulture),
                                 Y = int.Parse(values[1], CultureInfo.InvariantCulture),
                                 StartTime = int.Parse(values[2], CultureInfo.InvariantCulture),
-                                Type = int.Parse(values[3], CultureInfo.InvariantCulture),
-                                HitSound = int.Parse(values[4], CultureInfo.InvariantCulture),
+                                Type = (HitObjectType) int.Parse(values[3], CultureInfo.InvariantCulture),
+                                HitSound = (HitSoundType) int.Parse(values[4], CultureInfo.InvariantCulture),
                                 Additions = "0:0:0:0:"
                             };
 
-
                             // If it's an LN, we'll want to add the object's EndTime as well.
-                            if (line.Contains("128"))
+                            if (osuHitObject.Type.HasFlag(HitObjectType.Hold))
                             {
-                                var endTime = values[5].Substring(0, values[5].IndexOf(":"));
+                                var endTime = values[5].Substring(0, values[5].IndexOf(":", StringComparison.Ordinal));
                                 osuHitObject.EndTime = int.Parse(endTime, CultureInfo.InvariantCulture);
                             }
 
@@ -381,6 +391,19 @@ namespace Quaver.API.Maps.Parsers
             {
                 IsValid = false;
             }
+        }
+
+        /// <summary>
+        ///     Strips comments from a line.
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        private static string StripComments(string line)
+        {
+            var index = line.IndexOf("//", StringComparison.Ordinal);
+            if (index > 0)
+                return line.Substring(0, index);
+            return line;
         }
 
         /// <summary>
@@ -420,15 +443,38 @@ namespace Quaver.API.Maps.Parsers
                     break;
             }
 
-            // Get Timing Info
+            // Get timing points and slider velocities.
             foreach (var tp in TimingPoints)
-                if (tp.Inherited == 1)
-                    qua.TimingPoints.Add(new TimingPointInfo { StartTime = tp.Offset, Bpm = 60000 / tp.MillisecondsPerBeat });
+            {
+                // WARNING: As far as I can tell, BPM changes with BPM < 0 behave as SVs for all intents and purposes,
+                //          except that they also participate in the common BPM computation (as negative values).
+                //          However, I don't think there are any maps that have enough negative BPM for the common BPM
+                //          to become negative, and I am also not sure that negative common BPM wouldn't just break
+                //          everything in osu! itself, so instead of inserting a ton of hacks throughout the rest of
+                //          Quaver's code base, I'm making negative BPM changes behave fully like SVs (so they are never
+                //          taken into account in common BPM computation). If there happens to be an actually working
+                //          map with negative common BPM, this is the place to revisit.
+                //          -- YaLTeR
+                var isSV = tp.Inherited == 0 || tp.MillisecondsPerBeat < 0;
 
-            // Get SliderVelocity Info
-            foreach (var tp in TimingPoints)
-                if (tp.Inherited == 0)
-                    qua.SliderVelocities.Add(new SliderVelocityInfo { StartTime = tp.Offset, Multiplier = (float)Math.Round(0.10 / ((tp.MillisecondsPerBeat / -100) / 10), 2) });
+                if (isSV)
+                {
+                    qua.SliderVelocities.Add(new SliderVelocityInfo
+                    {
+                        StartTime = tp.Offset,
+                        Multiplier = (-100 / tp.MillisecondsPerBeat).Clamp(0.1f, 10)
+                    });
+                }
+                else
+                {
+                    qua.TimingPoints.Add(new TimingPointInfo
+                    {
+                        StartTime = tp.Offset,
+                        Bpm = 60000 / tp.MillisecondsPerBeat,
+                        Signature = tp.Signature
+                    });
+                }
+            }
 
             // Get HitObject Info
             foreach (var hitObject in HitObjects)
@@ -436,40 +482,82 @@ namespace Quaver.API.Maps.Parsers
                 // Get the keyLane the hitObject is in
                 var keyLane = (int) (hitObject.X / (512d / KeyCount)).Clamp(0, KeyCount - 1) + 1;
 
-                // ReSharper disable once SwitchStatementMissingSomeCases
-                switch (hitObject.Type)
+                // Add HitObjects to the list depending on the object type
+                if (hitObject.Type.HasFlag(HitObjectType.Circle))
                 {
-                    // Add HitObjects to the list depending on the object type
-                    case 1:
-                    case 5:
-                        qua.HitObjects.Add(new HitObjectInfo
-                        {
-                            StartTime = hitObject.StartTime,
-                            Lane = keyLane,
-                            EndTime = 0,
-                            HitSound = (HitSounds) hitObject.HitSound
-                        });
-                        break;
-                    case 128:
-                    case 22:
-                        qua.HitObjects.Add(new HitObjectInfo
-                        {
-                            StartTime = hitObject.StartTime,
-                            Lane = keyLane,
-                            EndTime = hitObject.EndTime,
-                            HitSound = (HitSounds) hitObject.HitSound
-                        });
-                        break;
+                    qua.HitObjects.Add(new HitObjectInfo
+                    {
+                        StartTime = hitObject.StartTime,
+                        Lane = keyLane,
+                        EndTime = 0,
+                        HitSound = hitObject.HitSound.ToQuaverHitSounds()
+                    });
+                }
+                else if (hitObject.Type.HasFlag(HitObjectType.Hold))
+                {
+                    qua.HitObjects.Add(new HitObjectInfo
+                    {
+                        StartTime = hitObject.StartTime,
+                        Lane = keyLane,
+                        EndTime = hitObject.EndTime,
+                        HitSound = hitObject.HitSound.ToQuaverHitSounds()
+                    });
                 }
             }
 
             // Do a validity check and some final sorting.
             if (!qua.IsValid())
-                throw new ArgumentException();
+                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
 
             qua.Sort();
 
             return qua;
+        }
+    }
+
+    /// <summary>
+    ///     Enumeration of the hit object types.
+    /// </summary>
+    [Flags]
+    public enum HitObjectType
+    {
+        Circle = 1 << 0,
+        Slider = 1 << 1,
+        NewCombo = 1 << 2,
+        Spinner = 1 << 3,
+        ComboOffset = 1 << 4 | 1 << 5 | 1 << 6,
+        Hold = 1 << 7
+    }
+
+    /// <summary>
+    ///     Enumeration of the hitsound types.
+    /// </summary>
+    [Flags]
+    public enum HitSoundType
+    {
+        None = 0,
+        Normal = 1,
+        Whistle = 2,
+        Finish = 4,
+        Clap = 8
+    }
+
+    public static class HitSoundTypeExtension
+    {
+        /// <summary>
+        ///     Converts osu! hit sound type to Quaver hit sound type.
+        /// </summary>
+        /// <param name="hitSoundType"></param>
+        /// <returns></returns>
+        public static HitSounds ToQuaverHitSounds(this HitSoundType hitSoundType)
+        {
+            var value = (int) hitSoundType & 15; // Clear any higher bits.
+
+            if (value == 0)
+                return HitSounds.Normal;
+
+            // HitSounds happens to have the same values.
+            return (HitSounds) hitSoundType;
         }
     }
 
@@ -480,7 +568,7 @@ namespace Quaver.API.Maps.Parsers
     {
         public float Offset { get; set; }
         public float MillisecondsPerBeat { get; set; }
-        public int Meter { get; set; }
+        public TimeSignature Signature { get; set; }
         public int SampleType { get; set; }
         public int SampleSet { get; set; }
         public int Volume { get; set; }
@@ -496,8 +584,8 @@ namespace Quaver.API.Maps.Parsers
         public int X { get; set; }
         public int Y { get; set; }
         public int StartTime { get; set; }
-        public int Type { get; set; }
-        public int HitSound { get; set; }
+        public HitObjectType Type { get; set; }
+        public HitSoundType HitSound { get; set; }
         public int EndTime { get; set; }
         public string Additions { get; set; }
         public bool Key1 { get; set; }

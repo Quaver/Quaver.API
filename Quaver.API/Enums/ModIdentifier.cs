@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -40,5 +40,14 @@ namespace Quaver.API.Enums
         Paused = 1 << 20, // The user paused during gameplay.
         NoFail = 1 << 21, // Unable to fail during gameplay.
         NoLongNotes = 1 << 22, // Converts LNs into regular notes.
+        Randomize = 1 << 23, // Randomizes the playfield's lanes.
+        Speed055X = 1 << 24, // Speed 0.55x,
+        Speed065X = 1 << 25, // Speed 0.65x
+        Speed075X = 1 << 26, // Speed 0.75x
+        Speed085X = 1 << 27, // Speed 0.85x
+        Speed095X = 1 << 28, // Speed 0.95x
+        Inverse = 1 << 29, // Converts regular notes into LNs and LNs into gaps.
+        FullLN = 1 << 30, // Converts regular notes into LNs, keeps existing LNs.
+        Mirror = 1 << 31, // Flips the map horizontally
     }
 }

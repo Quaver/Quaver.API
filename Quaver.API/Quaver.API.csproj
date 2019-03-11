@@ -11,7 +11,8 @@
   <ItemGroup>
     <PackageReference Include="Accord.Math" Version="3.8.2-alpha" />
     <PackageReference Include="HoLLy.osu.DatabaseReader" Version="2.1.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="YamlDotNet" Version="5.3.0" />
+    <PackageReference Include="MonoGame.Extended" Version="1.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="YamlDotNet" Version="5.1.0" />
   </ItemGroup>
 </Project>
