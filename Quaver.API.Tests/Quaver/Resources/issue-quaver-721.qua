@@ -1,0 +1,11 @@
+Mode: Keys4
+TimingPoints:
+- StartTime: 1617
+  Bpm: 88.5
+HitObjects:
+- StartTime: 500
+  Lane: 2
+- StartTime: 600
+  Lane: 3
+- StartTime: 650
+  Lane: 1

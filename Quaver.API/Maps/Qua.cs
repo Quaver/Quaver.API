@@ -454,6 +454,11 @@ namespace Quaver.API.Maps
 
             var newHitObjects = new List<HitObjectInfo>();
 
+            // An array indicating whether the currently processed HitObject is the first in its lane.
+            var firstInLane = new bool[GetKeyCount()];
+            for (var i = 0; i < firstInLane.Length; i++)
+                firstInLane[i] = true;
+
             for (var i = 0; i < HitObjects.Count; i++)
             {
                 var currentObject = HitObjects[i];
@@ -474,6 +479,16 @@ namespace Quaver.API.Maps
                             break;
                         }
                     }
+                }
+
+                var isFirstInLane = firstInLane[currentObject.Lane - 1];
+                firstInLane[currentObject.Lane - 1] = false;
+
+                // If this is the only object in its lane, keep it as is.
+                if (nextObjectInLane == null && isFirstInLane)
+                {
+                    newHitObjects.Add(currentObject);
+                    continue;
                 }
 
                 // Figure out the time gap between the end of the LN which we'll create and the next object.

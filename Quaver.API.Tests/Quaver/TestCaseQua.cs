@@ -93,6 +93,19 @@ namespace Quaver.API.Tests.Quaver
         }
 
         [Fact]
+        public void IssueQuaver721()
+        {
+            var qua = Qua.Parse("./Quaver/Resources/issue-quaver-721.qua");
+            qua.ApplyMods(ModIdentifier.FullLN);
+
+            var originalQua = Qua.Parse("./Quaver/Resources/issue-quaver-721.qua");
+
+            // Full LN should preserve the object if it's the only object in a lane.
+            Assert.True(qua.EqualByValue(originalQua));
+            Assert.True(qua.IsValid());
+        }
+
+        [Fact]
         public void LoadFromStream()
         {
             var map = "./Quaver/Resources/fullln-output.qua";
