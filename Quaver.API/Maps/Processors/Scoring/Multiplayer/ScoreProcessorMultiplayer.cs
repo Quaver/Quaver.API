@@ -76,6 +76,10 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
                             return;
 
                         Lives--;
+
+                        if (Lives == 0)
+                            return;
+
                         Processor.Health = 100;
                     }
                     break;
