@@ -51,6 +51,9 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
         /// </summary>
         public virtual void CalculateHealth()
         {
+            if (Processor.Mods.HasFlag(ModIdentifier.NoFail))
+                return;
+
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (Processor.Health == 0)
                 HasFailed = true;
