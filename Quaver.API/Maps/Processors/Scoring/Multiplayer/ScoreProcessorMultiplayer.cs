@@ -60,7 +60,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
 
             switch (HealthType)
             {
-                case MultiplayerHealthType.ManualGeneration:
+                case MultiplayerHealthType.ManualRegeneration:
                     // ReSharper disable twice CompareOfFloatsByEqualityOperator
                     if (Processor.Health == 0)
                         IsRegeneratingHealth = true;
