@@ -47,5 +47,8 @@
     <None Update="Quaver\Resources\issue-quaver-592.qua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Quaver\Resources\issue-quaver-721.qua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

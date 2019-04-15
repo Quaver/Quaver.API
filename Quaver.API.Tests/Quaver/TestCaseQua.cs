@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.IO;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Structures;
@@ -89,6 +90,32 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/issue-quaver-592.qua");
             qua.ApplyMods(ModIdentifier.FullLN); // Should not throw.
+        }
+
+        [Fact]
+        public void IssueQuaver721()
+        {
+            var qua = Qua.Parse("./Quaver/Resources/issue-quaver-721.qua");
+            qua.ApplyMods(ModIdentifier.FullLN);
+
+            var originalQua = Qua.Parse("./Quaver/Resources/issue-quaver-721.qua");
+
+            // Full LN should preserve the object if it's the only object in a lane.
+            Assert.True(qua.EqualByValue(originalQua));
+            Assert.True(qua.IsValid());
+        }
+
+        [Fact]
+        public void LoadFromStream()
+        {
+            var map = "./Quaver/Resources/fullln-output.qua";
+
+            var buffer = File.ReadAllBytes(map);
+            var byteArrayQua = Qua.Parse(buffer);
+            var normalQua = Qua.Parse(map);
+
+            var expectedObjects = normalQua.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
+            Assert.True(byteArrayQua.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer).SetEquals(expectedObjects));
         }
     }
 }

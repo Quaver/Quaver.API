@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using MonoGame.Extended.Collections;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Parsers;
@@ -156,6 +157,26 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
+        ///     Loads a .qua file from a stream
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="checkValidity"></param>
+        /// <returns></returns>
+        public static Qua Parse(byte[] buffer, bool checkValidity = true)
+        {
+            var input = new StringReader(Encoding.UTF8.GetString(buffer, 0, buffer.Length));
+
+            var deserializer = new DeserializerBuilder();
+            deserializer.IgnoreUnmatchedProperties();
+            var qua = (Qua)deserializer.Build().Deserialize(input, typeof(Qua));
+
+            RestoreDefaultValues(qua);
+            AfterLoad(qua, checkValidity);
+
+            return qua;
+        }
+
+        /// <summary>
         ///     Takes in a path to a .qua file and attempts to parse it.
         ///     Will throw an error if unable to be parsed.
         /// </summary>
@@ -171,29 +192,10 @@ namespace Quaver.API.Maps
                 deserializer.IgnoreUnmatchedProperties();
                 qua = (Qua)deserializer.Build().Deserialize(file, typeof(Qua));
 
-                // Restore default values.
-                for (var i = 0; i < qua.TimingPoints.Count; i++)
-                {
-                    var tp = qua.TimingPoints[i];
-                    if (tp.Signature == 0)
-                        tp.Signature = TimeSignature.Quadruple;
-                    qua.TimingPoints[i] = tp;
-                }
-
-                for (var i = 0; i < qua.HitObjects.Count; i++)
-                {
-                    var obj = qua.HitObjects[i];
-                    if (obj.HitSound == 0)
-                        obj.HitSound = HitSounds.Normal;
-                    qua.HitObjects[i] = obj;
-                }
+                RestoreDefaultValues(qua);
             }
 
-            if (checkValidity && !qua.IsValid())
-                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
-
-            // Try to sort the Qua before returning.
-            qua.Sort();
+            AfterLoad(qua, checkValidity);
 
             return qua;
         }
@@ -452,6 +454,11 @@ namespace Quaver.API.Maps
 
             var newHitObjects = new List<HitObjectInfo>();
 
+            // An array indicating whether the currently processed HitObject is the first in its lane.
+            var firstInLane = new bool[GetKeyCount()];
+            for (var i = 0; i < firstInLane.Length; i++)
+                firstInLane[i] = true;
+
             for (var i = 0; i < HitObjects.Count; i++)
             {
                 var currentObject = HitObjects[i];
@@ -472,6 +479,16 @@ namespace Quaver.API.Maps
                             break;
                         }
                     }
+                }
+
+                var isFirstInLane = firstInLane[currentObject.Lane - 1];
+                firstInLane[currentObject.Lane - 1] = false;
+
+                // If this is the only object in its lane, keep it as is.
+                if (nextObjectInLane == null && isFirstInLane)
+                {
+                    newHitObjects.Add(currentObject);
+                    continue;
                 }
 
                 // Figure out the time gap between the end of the LN which we'll create and the next object.
@@ -652,5 +669,42 @@ namespace Quaver.API.Maps
         /// <summary>
         /// </summary>
         public void SortTimingPoints() => TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
+
+        /// <summary>
+        /// </summary>
+        /// <param name="qua"></param>
+        private static void RestoreDefaultValues(Qua qua)
+        {
+            // Restore default values.
+            for (var i = 0; i < qua.TimingPoints.Count; i++)
+            {
+                var tp = qua.TimingPoints[i];
+                if (tp.Signature == 0)
+                    tp.Signature = TimeSignature.Quadruple;
+                qua.TimingPoints[i] = tp;
+            }
+
+            for (var i = 0; i < qua.HitObjects.Count; i++)
+            {
+                var obj = qua.HitObjects[i];
+                if (obj.HitSound == 0)
+                    obj.HitSound = HitSounds.Normal;
+                qua.HitObjects[i] = obj;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="qua"></param>
+        /// <param name="checkValidity"></param>
+        /// <exception cref="ArgumentException"></exception>
+        private static void AfterLoad(Qua qua, bool checkValidity)
+        {
+            if (checkValidity && !qua.IsValid())
+                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
+
+            // Try to sort the Qua before returning.
+            qua.Sort();
+        }
     }
 }
