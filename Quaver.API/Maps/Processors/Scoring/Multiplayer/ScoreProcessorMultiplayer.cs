@@ -21,8 +21,6 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
 
         /// <summary>
         ///     If the player is eliminated from the game
-        ///
-        ///     1. Has no more lives left
         /// </summary>
         public bool IsEliminated => HealthType == MultiplayerHealthType.Lives && Lives == 0;
 
@@ -60,6 +58,8 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
 
             switch (HealthType)
             {
+                // When player reaches 0 health, place them in a state where they have to reach 100 health
+                // in order to be considered alive again
                 case MultiplayerHealthType.ManualRegeneration:
                     // ReSharper disable twice CompareOfFloatsByEqualityOperator
                     if (Processor.Health == 0)
@@ -67,7 +67,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
                     else if (Processor.Health == 100 && IsRegeneratingHealth)
                         IsRegeneratingHealth = false;
                     break;
-                // If we're dealing with lives, we want to
+                // If we're dealing with lives, remove lives from the player & restore their health back to 100
                 case MultiplayerHealthType.Lives:
                     // ReSharper disable once CompareOfFloatsByEqualityOperator
                     if (Processor.Health == 0)
