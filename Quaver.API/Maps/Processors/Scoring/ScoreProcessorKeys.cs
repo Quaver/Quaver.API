@@ -8,8 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Shared;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Processors.Scoring.Data;
+using Quaver.API.Maps.Processors.Scoring.Multiplayer;
 using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
@@ -156,6 +158,18 @@ namespace Quaver.API.Maps.Processors.Scoring
             SummedScore = CalculateSummedScore();
         }
 
+        /// <inheritdoc />
+        /// <summary>
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="mods"></param>
+        /// <param name="multiplayer"></param>
+        public ScoreProcessorKeys(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayer) : base(map, mods, multiplayer)
+        {
+            TotalJudgements = GetTotalJudgementCount();
+            SummedScore = CalculateSummedScore();
+        }
+
         /// <summary>
         ///     Ctor -
         /// </summary>
@@ -265,6 +279,9 @@ namespace Quaver.API.Maps.Processors.Scoring
                 Health = 100;
             else
                 Health = newHealth;
+
+            // If we're in multiplayer, handle health accordingly (lives, etc.)
+            MultiplayerProcessor?.CalculateHealth();
 #endregion
         }
 
