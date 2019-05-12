@@ -17,12 +17,12 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
         /// <summary>
         ///     The amount of lives the player has in multiplayer
         /// </summary>
-        public int Lives { get; protected set; }
+        public int Lives { get; set; }
 
         /// <summary>
         ///     If the player is eliminated from the game
         /// </summary>
-        public bool IsEliminated => HealthType == MultiplayerHealthType.Lives && Lives == 0;
+        public bool IsEliminated => (HealthType == MultiplayerHealthType.Lives && Lives == 0) || IsBattleRoyaleEliminated;
 
         /// <summary>
         ///     If the player has failed at any point during the game.
@@ -33,6 +33,11 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
         ///     If the user is currently failed and regenerating their health
         /// </summary>
         public bool IsRegeneratingHealth { get; protected set; }
+
+        /// <summary>
+        ///     If the player is elimintated from battle royale
+        /// </summary>
+        public bool IsBattleRoyaleEliminated { get; set; }
 
         /// <summary>
         /// </summary>
