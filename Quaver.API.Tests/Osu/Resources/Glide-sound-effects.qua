@@ -1,0 +1,47 @@
+Mode: Keys4
+TimingPoints:
+- StartTime: 0
+  Bpm: 88.5
+HitObjects:
+- StartTime: 500
+  Lane: 2
+CustomAudioSamples:
+- normal-hitnormal4.wav
+- normal-hitnormal37.wav
+- normal-hitnormal45.wav
+- normal-hitnormal121.wav
+SoundEffects:
+- StartTime: 2909
+  Sample: 1
+- StartTime: 16000
+  Sample: 2
+- StartTime: 16545
+  Sample: 2
+- StartTime: 16909
+  Sample: 2
+- StartTime: 59273
+  Sample: 2
+- StartTime: 85818
+  Sample: 3
+- StartTime: 86182
+  Sample: 3
+- StartTime: 86545
+  Sample: 3
+- StartTime: 86909
+  Sample: 3
+- StartTime: 87273
+  Sample: 3
+- StartTime: 87636
+  Sample: 3
+- StartTime: 88000
+  Sample: 3
+- StartTime: 88364
+  Sample: 3
+- StartTime: 112000
+  Sample: 2
+- StartTime: 112545
+  Sample: 2
+- StartTime: 113091
+  Sample: 4
+- StartTime: 117818
+  Sample: 2

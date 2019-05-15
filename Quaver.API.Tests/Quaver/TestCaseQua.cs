@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using System.IO;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
@@ -116,6 +117,36 @@ namespace Quaver.API.Tests.Quaver
 
             var expectedObjects = normalQua.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
             Assert.True(byteArrayQua.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer).SetEquals(expectedObjects));
+        }
+
+        [Fact]
+        public void SoundEffects()
+        {
+            var qua = Qua.Parse("./Quaver/Resources/sound-effects.qua");
+            Assert.True(qua.IsValid());
+            Assert.Equal(new [] { "hello.wav", "world.mp3" }, qua.CustomAudioSamples, StringComparer.Ordinal);
+            Assert.Equal(new []
+            {
+                new SoundEffectInfo()
+                {
+                    StartTime = 123,
+                    Sample = 2,
+                    Volume = 100
+                },
+                new SoundEffectInfo()
+                {
+                    StartTime = 200,
+                    Sample = 1,
+                    Volume = 53
+                }
+            }, qua.SoundEffects, SoundEffectInfo.ByValueComparer);
+        }
+
+        [Fact]
+        public void InvalidSampleIndex()
+        {
+            var qua = Qua.Parse("./Quaver/Resources/sound-effects-invalid-sample-index.qua", false);
+            Assert.False(qua.IsValid());
         }
     }
 }

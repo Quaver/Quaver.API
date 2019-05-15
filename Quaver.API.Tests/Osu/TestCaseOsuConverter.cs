@@ -5,9 +5,11 @@
  * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
 */
 
+using System;
 using System.IO;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Parsers;
+using Quaver.API.Maps.Structures;
 using Xunit;
 
 namespace Quaver.API.Tests.Osu
@@ -86,6 +88,17 @@ namespace Quaver.API.Tests.Osu
         {
             var converter = new OsuBeatmap("bad-path-no-file");
             Assert.False(converter.IsValid);
+        }
+
+        [Fact]
+        public void SoundEffectsFromO2JamConvert()
+        {
+            var converter = new OsuBeatmap("./Osu/Resources/Glide.osu");
+            var qua = converter.ToQua();
+            var groundTruthQua = Qua.Parse("./Osu/Resources/Glide-sound-effects.qua");
+
+            Assert.Equal(groundTruthQua.CustomAudioSamples, qua.CustomAudioSamples, StringComparer.Ordinal);
+            Assert.Equal(groundTruthQua.SoundEffects, qua.SoundEffects, SoundEffectInfo.ByValueComparer);
         }
     }
 }

@@ -96,6 +96,16 @@ namespace Quaver.API.Maps
         public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
 
         /// <summary>
+        ///     CustomAudioSamples .qua data
+        /// </summary>
+        public List<string> CustomAudioSamples { get; set; } = new List<string>();
+
+        /// <summary>
+        ///     SoundEffects .qua data
+        /// </summary>
+        public List<SoundEffectInfo> SoundEffects { get; private set; } = new List<SoundEffectInfo>();
+
+        /// <summary>
         ///     TimingPoint .qua data
         /// </summary>
         public List<TimingPointInfo> TimingPoints { get; private set; } = new List<TimingPointInfo>();
@@ -152,6 +162,8 @@ namespace Quaver.API.Maps
                    && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
                    && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
                    && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
+                   && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, StringComparer.Ordinal)
+                   && SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer)
                    && EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer)
                    && RandomizeModifierSeed == other.RandomizeModifierSeed;
         }
@@ -212,6 +224,7 @@ namespace Quaver.API.Maps
             // Set default values to zero so they don't waste space in the .qua file.
             var originalTimingPoints = TimingPoints;
             var originalHitObjects = HitObjects;
+            var originalSoundEffects = SoundEffects;
 
             TimingPoints = new List<TimingPointInfo>();
             foreach (var tp in originalTimingPoints)
@@ -251,6 +264,24 @@ namespace Quaver.API.Maps
                 }
             }
 
+            SoundEffects = new List<SoundEffectInfo>();
+            foreach (var info in originalSoundEffects)
+            {
+                if (info.Volume == 100)
+                {
+                    SoundEffects.Add(new SoundEffectInfo()
+                    {
+                        StartTime = info.StartTime,
+                        Sample = info.Sample,
+                        Volume = 0
+                    });
+                }
+                else
+                {
+                    SoundEffects.Add(info);
+                }
+            }
+
             // Save.
             using (var file = File.CreateText(path))
             {
@@ -261,6 +292,7 @@ namespace Quaver.API.Maps
             // Restore the original lists.
             TimingPoints = originalTimingPoints;
             HitObjects = originalHitObjects;
+            SoundEffects = originalSoundEffects;
         }
 
         /// <summary>
@@ -281,6 +313,18 @@ namespace Quaver.API.Maps
             if (!Enum.IsDefined(typeof(GameMode), Mode))
                 return false;
 
+            // Check that sound effects are valid.
+            foreach (var info in SoundEffects)
+            {
+                // Sample should be a valid array index.
+                if (info.Sample < 1 || info.Sample >= CustomAudioSamples.Count + 1)
+                    return false;
+
+                // The sample volume should be between 1 and 100.
+                if (info.Volume < 1 || info.Volume > 100)
+                    return false;
+            }
+
             // Check that hit objects are valid.
             foreach (var info in HitObjects)
             {
@@ -300,6 +344,7 @@ namespace Quaver.API.Maps
             HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
             TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
             SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+            SoundEffects = SoundEffects.OrderBy(x => x.StartTime).ToList();
         }
 
         /// <summary>
@@ -690,6 +735,14 @@ namespace Quaver.API.Maps
                 if (obj.HitSound == 0)
                     obj.HitSound = HitSounds.Normal;
                 qua.HitObjects[i] = obj;
+            }
+
+            for (var i = 0; i < qua.SoundEffects.Count; i++)
+            {
+                var info = qua.SoundEffects[i];
+                if (info.Volume == 0)
+                    info.Volume = 100;
+                qua.SoundEffects[i] = info;
             }
         }
 

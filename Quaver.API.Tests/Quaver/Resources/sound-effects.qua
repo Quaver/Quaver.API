@@ -1,0 +1,16 @@
+Mode: Keys4
+TimingPoints:
+- StartTime: 0
+  Bpm: 88.5
+HitObjects:
+- StartTime: 500
+  Lane: 2
+CustomAudioSamples:
+- hello.wav
+- world.mp3
+SoundEffects:
+- StartTime: 123
+  Sample: 2
+- StartTime: 200
+  Sample: 1
+  Volume: 53
