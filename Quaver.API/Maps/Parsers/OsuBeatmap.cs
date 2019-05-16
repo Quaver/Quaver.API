@@ -328,30 +328,12 @@ namespace Quaver.API.Maps.Parsers
                         {
                             var path = values[3].Trim('"').Replace(Path.DirectorySeparatorChar, '/');
 
-                            // Find the sample index in CustomAudioSamples.
-                            var index = -1;
-                            for (var i = 0; i < CustomAudioSamples.Count; i++)
-                            {
-                                if (CustomAudioSamples[i] == path)
-                                {
-                                    index = i;
-                                    break;
-                                }
-                            }
-
-                            // If it's not there yet, add it.
-                            if (index == -1)
-                            {
-                                CustomAudioSamples.Add(path);
-                                index = CustomAudioSamples.Count - 1;
-                            }
-
                             SoundEffects.Add(new OsuSampleInfo()
                             {
                                 StartTime = int.Parse(values[1]),
                                 Layer = int.Parse(values[2]),
                                 Volume = Math.Max(0, Math.Min(100, values.Length >= 5 ? int.Parse(values[4], CultureInfo.InvariantCulture) : 100)),
-                                Sample = index
+                                Sample = CustomAudioSampleIndex(path)
                             });
                         }
                     }
@@ -427,6 +409,22 @@ namespace Quaver.API.Maps.Parsers
             {
                 IsValid = false;
             }
+        }
+
+        /// <summary>
+        ///     Gets the custom audio sample index by path. Inserts a new sample path if it doesn't exist yet.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private int CustomAudioSampleIndex(string path)
+        {
+            for (var i = 0; i < CustomAudioSamples.Count; i++)
+                if (CustomAudioSamples[i] == path)
+                    return i;
+
+            // If it's not there yet, add it.
+            CustomAudioSamples.Add(path);
+            return CustomAudioSamples.Count - 1;
         }
 
         /// <summary>
