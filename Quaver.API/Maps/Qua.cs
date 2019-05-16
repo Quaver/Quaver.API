@@ -96,6 +96,16 @@ namespace Quaver.API.Maps
         public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
 
         /// <summary>
+        ///     CustomAudioSamples .qua data
+        /// </summary>
+        public List<CustomAudioSampleInfo> CustomAudioSamples { get; set; } = new List<CustomAudioSampleInfo>();
+
+        /// <summary>
+        ///     SoundEffects .qua data
+        /// </summary>
+        public List<SoundEffectInfo> SoundEffects { get; private set; } = new List<SoundEffectInfo>();
+
+        /// <summary>
         ///     TimingPoint .qua data
         /// </summary>
         public List<TimingPointInfo> TimingPoints { get; private set; } = new List<TimingPointInfo>();
@@ -152,6 +162,8 @@ namespace Quaver.API.Maps
                    && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
                    && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
                    && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
+                   && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
+                   && SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer)
                    && EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer)
                    && RandomizeModifierSeed == other.RandomizeModifierSeed;
         }
@@ -212,6 +224,7 @@ namespace Quaver.API.Maps
             // Set default values to zero so they don't waste space in the .qua file.
             var originalTimingPoints = TimingPoints;
             var originalHitObjects = HitObjects;
+            var originalSoundEffects = SoundEffects;
 
             TimingPoints = new List<TimingPointInfo>();
             foreach (var tp in originalTimingPoints)
@@ -240,6 +253,7 @@ namespace Quaver.API.Maps
                     {
                         EndTime = obj.EndTime,
                         HitSound = 0,
+                        KeySounds = obj.KeySounds,
                         Lane = obj.Lane,
                         StartTime = obj.StartTime,
                         EditorLayer = obj.EditorLayer
@@ -248,6 +262,24 @@ namespace Quaver.API.Maps
                 else
                 {
                     HitObjects.Add(obj);
+                }
+            }
+
+            SoundEffects = new List<SoundEffectInfo>();
+            foreach (var info in originalSoundEffects)
+            {
+                if (info.Volume == 100)
+                {
+                    SoundEffects.Add(new SoundEffectInfo()
+                    {
+                        StartTime = info.StartTime,
+                        Sample = info.Sample,
+                        Volume = 0
+                    });
+                }
+                else
+                {
+                    SoundEffects.Add(info);
                 }
             }
 
@@ -261,6 +293,7 @@ namespace Quaver.API.Maps
             // Restore the original lists.
             TimingPoints = originalTimingPoints;
             HitObjects = originalHitObjects;
+            SoundEffects = originalSoundEffects;
         }
 
         /// <summary>
@@ -281,12 +314,29 @@ namespace Quaver.API.Maps
             if (!Enum.IsDefined(typeof(GameMode), Mode))
                 return false;
 
+            // Check that sound effects are valid.
+            foreach (var info in SoundEffects)
+            {
+                // Sample should be a valid array index.
+                if (info.Sample < 1 || info.Sample >= CustomAudioSamples.Count + 1)
+                    return false;
+
+                // The sample volume should be between 1 and 100.
+                if (info.Volume < 1 || info.Volume > 100)
+                    return false;
+            }
+
             // Check that hit objects are valid.
             foreach (var info in HitObjects)
             {
                 // LN end times should be > start times.
                 if (info.IsLongNote && info.EndTime <= info.StartTime)
                     return false;
+
+                // All key sounds should be valid indices.
+                foreach (var keySound in info.KeySounds)
+                    if (keySound < 1 || keySound >= CustomAudioSamples.Count + 1)
+                        return false;
             }
 
             return true;
@@ -300,6 +350,7 @@ namespace Quaver.API.Maps
             HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
             TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
             SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+            SoundEffects = SoundEffects.OrderBy(x => x.StartTime).ToList();
         }
 
         /// <summary>
@@ -548,6 +599,9 @@ namespace Quaver.API.Maps
                         currentObject.StartTime = currentObject.EndTime; // (this part can mess up the ordering)
                         currentObject.EndTime = nextObjectInLane.StartTime - timeGap.Value;
 
+                        // Clear the keysounds as we're moving the start, so they won't make sense.
+                        currentObject.KeySounds = new List<int>();
+
                         // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
                         // not the last object in the lane, create a regular object at the next object's start position.
                         if ((secondNextObjectInLane == null) != nextObjectInLane.IsLongNote)
@@ -690,6 +744,14 @@ namespace Quaver.API.Maps
                 if (obj.HitSound == 0)
                     obj.HitSound = HitSounds.Normal;
                 qua.HitObjects[i] = obj;
+            }
+
+            for (var i = 0; i < qua.SoundEffects.Count; i++)
+            {
+                var info = qua.SoundEffects[i];
+                if (info.Volume == 0)
+                    info.Volume = 100;
+                qua.SoundEffects[i] = info;
             }
         }
 

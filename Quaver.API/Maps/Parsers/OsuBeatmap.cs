@@ -73,12 +73,16 @@ namespace Quaver.API.Maps.Parsers
 
         // [Events]
         public string Background { get; set; }
+        public List<OsuSampleInfo> SoundEffects { get; set; } = new List<OsuSampleInfo>();
 
         // [TimingPoints]
         public List<OsuTimingPoint> TimingPoints { get; set; } = new List<OsuTimingPoint>();
 
         // [HitObjects]
         public List<OsuHitObject> HitObjects { get; set; } = new List<OsuHitObject>();
+
+        // Stuff that's better cached in a different format right away.
+        public List<string> CustomAudioSamples { get; set; } = new List<string>();
 
         /// <summary>
         ///     Ctor - Automatically parses a Peppy beatmap
@@ -311,12 +315,26 @@ namespace Quaver.API.Maps.Parsers
                     // Parse [Events] Data
                     if (section.Equals("[Events]"))
                     {
-                        // We only care about parsing the background path,
-                        // So there's no need to parse the storyboard data.
+                        var values = line.Split(',');
+
+                        // Background
                         if (line.ToLower().Contains("png") || line.ToLower().Contains("jpg") || line.ToLower().Contains("jpeg"))
                         {
-                            var values = line.Split(',');
                             Background = values[2].Replace("\"", "");
+                        }
+
+                        // Sound effects
+                        if (values[0] == "Sample" || values[0] == "5")
+                        {
+                            var path = values[3].Trim('"').Replace(Path.DirectorySeparatorChar, '/');
+
+                            SoundEffects.Add(new OsuSampleInfo()
+                            {
+                                StartTime = int.Parse(values[1]),
+                                Layer = int.Parse(values[2]),
+                                Volume = Math.Max(0, Math.Min(100, values.Length >= 5 ? int.Parse(values[4], CultureInfo.InvariantCulture) : 100)),
+                                Sample = CustomAudioSampleIndex(path)
+                            });
                         }
                     }
 
@@ -372,7 +390,8 @@ namespace Quaver.API.Maps.Parsers
                                 StartTime = int.Parse(values[2], CultureInfo.InvariantCulture),
                                 Type = (HitObjectType) int.Parse(values[3], CultureInfo.InvariantCulture),
                                 HitSound = (HitSoundType) int.Parse(values[4], CultureInfo.InvariantCulture),
-                                Additions = "0:0:0:0:"
+                                Additions = "0:0:0:0:",
+                                KeySound = -1
                             };
 
                             // If it's an LN, we'll want to add the object's EndTime as well.
@@ -380,6 +399,15 @@ namespace Quaver.API.Maps.Parsers
                             {
                                 var endTime = values[5].Substring(0, values[5].IndexOf(":", StringComparison.Ordinal));
                                 osuHitObject.EndTime = int.Parse(endTime, CultureInfo.InvariantCulture);
+                            }
+
+                            // Parse the key sound.
+                            if (values.Length > 5)
+                            {
+                                var additions = values[5].Split(':');
+                                var keySoundField = osuHitObject.Type.HasFlag(HitObjectType.Hold) ? 5 : 4;
+                                if (additions.Length > keySoundField && additions[keySoundField].Length > 0)
+                                    osuHitObject.KeySound = CustomAudioSampleIndex(additions[keySoundField]);
                             }
 
                             HitObjects.Add(osuHitObject);
@@ -391,6 +419,22 @@ namespace Quaver.API.Maps.Parsers
             {
                 IsValid = false;
             }
+        }
+
+        /// <summary>
+        ///     Gets the custom audio sample index by path. Inserts a new sample path if it doesn't exist yet.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private int CustomAudioSampleIndex(string path)
+        {
+            for (var i = 0; i < CustomAudioSamples.Count; i++)
+                if (CustomAudioSamples[i] == path)
+                    return i;
+
+            // If it's not there yet, add it.
+            CustomAudioSamples.Add(path);
+            return CustomAudioSamples.Count - 1;
         }
 
         /// <summary>
@@ -443,6 +487,30 @@ namespace Quaver.API.Maps.Parsers
                     break;
             }
 
+            foreach (var path in CustomAudioSamples)
+            {
+                qua.CustomAudioSamples.Add(new CustomAudioSampleInfo()
+                {
+                    Path = path,
+                    UnaffectedByRate = false
+                });
+            }
+
+            // Get custom audio samples and sound effects.
+            foreach (var info in SoundEffects)
+            {
+                // Skip sound effects with zero volume. In Qua 0 is the default value which in this case equals to 100.
+                if (info.Volume == 0)
+                    continue;
+
+                qua.SoundEffects.Add(new SoundEffectInfo()
+                {
+                    StartTime = info.StartTime,
+                    Sample = info.Sample + 1,
+                    Volume = info.Volume
+                });
+            }
+
             // Get timing points and slider velocities.
             foreach (var tp in TimingPoints)
             {
@@ -490,7 +558,8 @@ namespace Quaver.API.Maps.Parsers
                         StartTime = hitObject.StartTime,
                         Lane = keyLane,
                         EndTime = 0,
-                        HitSound = hitObject.HitSound.ToQuaverHitSounds()
+                        HitSound = hitObject.HitSound.ToQuaverHitSounds(),
+                        KeySounds = hitObject.KeySound == -1 ? new List<int>() : new List<int> { hitObject.KeySound + 1 }
                     });
                 }
                 else if (hitObject.Type.HasFlag(HitObjectType.Hold))
@@ -500,7 +569,8 @@ namespace Quaver.API.Maps.Parsers
                         StartTime = hitObject.StartTime,
                         Lane = keyLane,
                         EndTime = hitObject.EndTime,
-                        HitSound = hitObject.HitSound.ToQuaverHitSounds()
+                        HitSound = hitObject.HitSound.ToQuaverHitSounds(),
+                        KeySounds = hitObject.KeySound == -1 ? new List<int>() : new List<int> { hitObject.KeySound + 1 }
                     });
                 }
             }
@@ -595,5 +665,25 @@ namespace Quaver.API.Maps.Parsers
         public bool Key5 { get; set; }
         public bool Key6 { get; set; }
         public bool Key7 { get; set; }
+
+        /// <summary>
+        ///     Index into the CustomAudioSamples array.
+        /// </summary>
+        public int KeySound { get; set; }
+    }
+
+    /// <summary>
+    ///     Struct for the Sample storyboard event.
+    /// </summary>
+    public struct OsuSampleInfo
+    {
+        public int StartTime { get; set; }
+        public int Layer { get; set; }
+        public int Volume { get; set; }
+
+        /// <summary>
+        ///     Index into the CustomAudioSamples array.
+        /// </summary>
+        public int Sample { get; set; }
     }
 }
