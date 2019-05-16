@@ -470,8 +470,7 @@ namespace Quaver.API.Maps.Parsers
                 Tags = Tags,
                 Creator = Creator,
                 DifficultyName = Version,
-                Description = $"This is a Quaver converted version of {Creator}'s map.",
-                CustomAudioSamples = CustomAudioSamples
+                Description = $"This is a Quaver converted version of {Creator}'s map."
             };
 
             // Get the correct game mode based on the amount of keys the map has.
@@ -486,6 +485,15 @@ namespace Quaver.API.Maps.Parsers
                 default:
                     qua.Mode = (GameMode)(-1);
                     break;
+            }
+
+            foreach (var path in CustomAudioSamples)
+            {
+                qua.CustomAudioSamples.Add(new CustomAudioSampleInfo()
+                {
+                    Path = path,
+                    UnaffectedByRate = false
+                });
             }
 
             // Get custom audio samples and sound effects.

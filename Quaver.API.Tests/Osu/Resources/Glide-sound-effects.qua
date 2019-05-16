@@ -6,10 +6,10 @@ HitObjects:
 - StartTime: 500
   Lane: 2
 CustomAudioSamples:
-- normal-hitnormal4.wav
-- normal-hitnormal37.wav
-- normal-hitnormal45.wav
-- normal-hitnormal121.wav
+- Path: normal-hitnormal4.wav
+- Path: normal-hitnormal37.wav
+- Path: normal-hitnormal45.wav
+- Path: normal-hitnormal121.wav
 SoundEffects:
 - StartTime: 2909
   Sample: 1

@@ -98,7 +98,7 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     CustomAudioSamples .qua data
         /// </summary>
-        public List<string> CustomAudioSamples { get; set; } = new List<string>();
+        public List<CustomAudioSampleInfo> CustomAudioSamples { get; set; } = new List<CustomAudioSampleInfo>();
 
         /// <summary>
         ///     SoundEffects .qua data
@@ -162,7 +162,7 @@ namespace Quaver.API.Maps
                    && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
                    && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
                    && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
-                   && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, StringComparer.Ordinal)
+                   && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
                    && SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer)
                    && EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer)
                    && RandomizeModifierSeed == other.RandomizeModifierSeed;

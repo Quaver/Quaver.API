@@ -97,7 +97,7 @@ namespace Quaver.API.Tests.Osu
             var qua = converter.ToQua();
             var groundTruthQua = Qua.Parse("./Osu/Resources/Glide-sound-effects.qua");
 
-            Assert.Equal(groundTruthQua.CustomAudioSamples, qua.CustomAudioSamples, StringComparer.Ordinal);
+            Assert.Equal(groundTruthQua.CustomAudioSamples, qua.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer);
             Assert.Equal(groundTruthQua.SoundEffects, qua.SoundEffects, SoundEffectInfo.ByValueComparer);
         }
 

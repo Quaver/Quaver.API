@@ -1,7 +1,7 @@
 Mode: Keys4
 CustomAudioSamples:
-- hello.wav
-- world.mp3
+- Path: hello.wav
+- Path: world.mp3
 TimingPoints:
 - StartTime: 0
   Bpm: 88.5

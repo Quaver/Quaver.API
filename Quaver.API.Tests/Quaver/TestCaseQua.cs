@@ -125,7 +125,19 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/sound-effects.qua");
             Assert.True(qua.IsValid());
-            Assert.Equal(new [] { "hello.wav", "world.mp3" }, qua.CustomAudioSamples, StringComparer.Ordinal);
+            Assert.Equal(new []
+            {
+                new CustomAudioSampleInfo()
+                {
+                    Path = "hello.wav",
+                    UnaffectedByRate = false
+                },
+                new CustomAudioSampleInfo()
+                {
+                    Path = "world.mp3",
+                    UnaffectedByRate = true
+                }
+            }, qua.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer);
             Assert.Equal(new []
             {
                 new SoundEffectInfo()
@@ -155,7 +167,19 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/keysounds.qua");
             Assert.True(qua.IsValid());
-            Assert.Equal(new [] { "hello.wav", "world.mp3" }, qua.CustomAudioSamples, StringComparer.Ordinal);
+            Assert.Equal(new []
+            {
+                new CustomAudioSampleInfo()
+                {
+                    Path = "hello.wav",
+                    UnaffectedByRate = false
+                },
+                new CustomAudioSampleInfo()
+                {
+                    Path = "world.mp3",
+                    UnaffectedByRate = true
+                }
+            }, qua.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer);
             Assert.Equal(new List<int> {1, 2}, qua.HitObjects[0].KeySounds);
             Assert.Equal(new List<int> {2}, qua.HitObjects[1].KeySounds);
             Assert.Equal(new List<int>(), qua.HitObjects[2].KeySounds);

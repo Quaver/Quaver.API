@@ -6,8 +6,9 @@ HitObjects:
 - StartTime: 500
   Lane: 2
 CustomAudioSamples:
-- hello.wav
-- world.mp3
+- Path: hello.wav
+- Path: world.mp3
+  UnaffectedByRate: yes
 SoundEffects:
 - StartTime: 123
   Sample: 2

@@ -13,68 +13,68 @@ DifficultyName: toby fox - Megalovania
 Description: This is a Quaver converted version of silentch's map.
 EditorLayers: []
 CustomAudioSamples:
-- D5S_s.ogg
-- D6S_s.ogg
-- A5S_s.ogg
-- G#5S_Ab5S_s.ogg
-- G5S_s.ogg
-- F5S_s.ogg
-- C5S_s.ogg
-- B4S_s.ogg
-- A#4S_Bb4S_s.ogg
-- D4S_s.ogg
-- C4S_s.ogg
-- B3S_s.ogg
-- A#3S_Bb3S_s.ogg
-- D3S_s.ogg
-- D7S_s.ogg
-- A6S_s.ogg
-- G#6S_Ab6S_s.ogg
-- G6S_s.ogg
-- F6S_s.ogg
-- C3S_s.ogg
-- C6S_s.ogg
-- B2S_s.ogg
-- B5S_s.ogg
-- A#2S_Bb2S_s.ogg
-- A#5S_Bb5S_s.ogg
-- D6S.ogg
-- C7S_s.ogg
-- C7S.ogg
-- G7S_s.ogg
-- A3S_s.ogg
-- G#3S_Ab3S_s.ogg
-- G3S_s.ogg
-- F3S_s.ogg
-- G6S.ogg
-- E6S_s.ogg
-- B6S_s.ogg
-- E6S.ogg
-- C#3S_Db3S_s.ogg
-- C#7S_Db7S_s.ogg
-- C#4S_Db4S_s.ogg
-- D#3S_Eb3S_s.ogg
-- D#4S_Eb4S_s.ogg
-- E5S_s.ogg
-- A6S.ogg
-- F#6S_Gb6S_s.ogg
-- D#6S_Eb6S_s.ogg
-- G#5S_Ab5S.ogg
-- C#6S_Db6S.ogg
-- A#5S_Bb5S.ogg
-- D#6S_Eb6S.ogg
-- A#4S_Bb4S.ogg
-- E5S.ogg
-- D5S.ogg
-- F5S.ogg
-- C#5S_Db5S_s.ogg
-- A4S_s.ogg
-- G#4S_Ab4S_s.ogg
-- G4S_s.ogg
-- F#4S_Gb4S_s.ogg
-- F4S_s.ogg
-- E4S_s.ogg
-- D4S.ogg
+- Path: D5S_s.ogg
+- Path: D6S_s.ogg
+- Path: A5S_s.ogg
+- Path: G#5S_Ab5S_s.ogg
+- Path: G5S_s.ogg
+- Path: F5S_s.ogg
+- Path: C5S_s.ogg
+- Path: B4S_s.ogg
+- Path: A#4S_Bb4S_s.ogg
+- Path: D4S_s.ogg
+- Path: C4S_s.ogg
+- Path: B3S_s.ogg
+- Path: A#3S_Bb3S_s.ogg
+- Path: D3S_s.ogg
+- Path: D7S_s.ogg
+- Path: A6S_s.ogg
+- Path: G#6S_Ab6S_s.ogg
+- Path: G6S_s.ogg
+- Path: F6S_s.ogg
+- Path: C3S_s.ogg
+- Path: C6S_s.ogg
+- Path: B2S_s.ogg
+- Path: B5S_s.ogg
+- Path: A#2S_Bb2S_s.ogg
+- Path: A#5S_Bb5S_s.ogg
+- Path: D6S.ogg
+- Path: C7S_s.ogg
+- Path: C7S.ogg
+- Path: G7S_s.ogg
+- Path: A3S_s.ogg
+- Path: G#3S_Ab3S_s.ogg
+- Path: G3S_s.ogg
+- Path: F3S_s.ogg
+- Path: G6S.ogg
+- Path: E6S_s.ogg
+- Path: B6S_s.ogg
+- Path: E6S.ogg
+- Path: C#3S_Db3S_s.ogg
+- Path: C#7S_Db7S_s.ogg
+- Path: C#4S_Db4S_s.ogg
+- Path: D#3S_Eb3S_s.ogg
+- Path: D#4S_Eb4S_s.ogg
+- Path: E5S_s.ogg
+- Path: A6S.ogg
+- Path: F#6S_Gb6S_s.ogg
+- Path: D#6S_Eb6S_s.ogg
+- Path: G#5S_Ab5S.ogg
+- Path: C#6S_Db6S.ogg
+- Path: A#5S_Bb5S.ogg
+- Path: D#6S_Eb6S.ogg
+- Path: A#4S_Bb4S.ogg
+- Path: E5S.ogg
+- Path: D5S.ogg
+- Path: F5S.ogg
+- Path: C#5S_Db5S_s.ogg
+- Path: A4S_s.ogg
+- Path: G#4S_Ab4S_s.ogg
+- Path: G4S_s.ogg
+- Path: F#4S_Gb4S_s.ogg
+- Path: F4S_s.ogg
+- Path: E4S_s.ogg
+- Path: D4S.ogg
 SoundEffects: []
 TimingPoints:
 - Bpm: 120

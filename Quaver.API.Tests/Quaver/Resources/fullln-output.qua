@@ -1,6 +1,6 @@
 Mode: Keys4
 CustomAudioSamples:
-- test.wav
+- Path: test.wav
 TimingPoints:
 - StartTime: 601
   Bpm: 177
