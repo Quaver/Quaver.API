@@ -253,6 +253,7 @@ namespace Quaver.API.Maps
                     {
                         EndTime = obj.EndTime,
                         HitSound = 0,
+                        KeySounds = obj.KeySounds,
                         Lane = obj.Lane,
                         StartTime = obj.StartTime,
                         EditorLayer = obj.EditorLayer
@@ -331,6 +332,11 @@ namespace Quaver.API.Maps
                 // LN end times should be > start times.
                 if (info.IsLongNote && info.EndTime <= info.StartTime)
                     return false;
+
+                // All key sounds should be valid indices.
+                foreach (var keySound in info.KeySounds)
+                    if (keySound < 1 || keySound >= CustomAudioSamples.Count + 1)
+                        return false;
             }
 
             return true;
@@ -592,6 +598,9 @@ namespace Quaver.API.Maps
                     {
                         currentObject.StartTime = currentObject.EndTime; // (this part can mess up the ordering)
                         currentObject.EndTime = nextObjectInLane.StartTime - timeGap.Value;
+
+                        // Clear the keysounds as we're moving the start, so they won't make sense.
+                        currentObject.KeySounds = new List<int>();
 
                         // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
                         // not the last object in the lane, create a regular object at the next object's start position.

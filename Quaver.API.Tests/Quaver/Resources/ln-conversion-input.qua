@@ -1,4 +1,6 @@
 Mode: Keys4
+CustomAudioSamples:
+- test.wav
 TimingPoints:
 - StartTime: 601
   Bpm: 177
@@ -23,8 +25,10 @@ HitObjects:
 - StartTime: 1194
   Lane: 4
   EndTime: 1363
+  KeySounds: [1]
 - StartTime: 1278
   Lane: 3
+  KeySounds: [1]
 - StartTime: 1278
   Lane: 1
 - StartTime: 1533
