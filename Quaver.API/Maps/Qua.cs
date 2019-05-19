@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using MonoGame.Extended.Collections;
 using Quaver.API.Enums;
@@ -723,6 +724,59 @@ namespace Quaver.API.Maps
         /// <summary>
         /// </summary>
         public void SortTimingPoints() => TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
+
+        /// <summary>
+        ///     Gets the judgement of a particular hitobject in the map
+        /// </summary>
+        /// <param name="ho"></param>
+        /// <returns></returns>
+        public int GetHitObjectJudgementIndex(HitObjectInfo ho)
+        {
+            var index = -1;
+
+            var total = 0;
+
+            for (var i = 0; i < HitObjects.Count; i++)
+            {
+                if (HitObjects[i] == ho)
+                    return total;
+
+                if (HitObjects[i].IsLongNote)
+                    total += 2;
+                else
+                    total += 1;
+            }
+
+            return index;
+        }
+
+        /// <summary>
+        ///     Gets a hitobject at a particular judgement index
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public HitObjectInfo GetHitObjectAtJudgementIndex(int index)
+        {
+            HitObjectInfo h = null;
+
+            var total = 0;
+
+            for (var i = 0; i < HitObjects.Count; i++)
+            {
+                if (HitObjects[i].IsLongNote)
+                    total += 2;
+                else
+                    total += 1;
+
+                if (total - 1 == index)
+                {
+                    h = HitObjects[i];
+                    break;
+                }
+            }
+
+            return h;
+        }
 
         /// <summary>
         /// </summary>
