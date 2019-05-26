@@ -1,0 +1,16 @@
+Mode: Keys4
+CustomAudioSamples:
+- Path: hello.wav
+- Path: world.mp3
+TimingPoints:
+- StartTime: 0
+  Bpm: 88.5
+HitObjects:
+- StartTime: 500
+  Lane: 2
+  KeySounds: [1, 3]
+- StartTime: 500
+  Lane: 3
+  KeySounds: [2]
+- StartTime: 500
+  Lane: 4

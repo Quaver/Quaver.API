@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
 using Quaver.API.Maps.Processors.Scoring.Data;
+using Quaver.API.Maps.Processors.Scoring.Multiplayer;
 using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
@@ -39,7 +40,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The current health.
         /// </summary>
-        public float Health { get; protected set; } = 100;
+        public float Health { get; set; } = 100;
 
         /// <summary>
         ///     The user's current combo.
@@ -130,6 +131,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         }
 
         /// <summary>
+        ///     Contains everything related to multiplayer scoring.
+        /// </summary>
+        public ScoreProcessorMultiplayer MultiplayerProcessor { get; }
+
+        /// <summary>
         ///     Ctor -
         /// </summary>
         /// <param name="map"></param>
@@ -141,6 +147,18 @@ namespace Quaver.API.Maps.Processors.Scoring
             Stats = new List<HitStat>();
 
             InitializeMods();
+        }
+
+        /// <summary>
+        ///     For multiplayer
+        /// </summary>
+        /// <param name="map"></param>
+        /// <param name="mods"></param>
+        /// <param name="multiplayerProcessor"></param>
+        public ScoreProcessor(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayerProcessor) : this(map, mods)
+        {
+            MultiplayerProcessor = multiplayerProcessor;
+            MultiplayerProcessor.Processor = this;
         }
 
         /// <summary>
