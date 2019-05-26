@@ -167,9 +167,15 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="hitDifference"></param>
         /// <param name="keyPressType"></param>
-        public Judgement CalculateScore(int hitDifference, KeyPressType keyPressType)
+        /// <param name="calculateAllStats"></param>
+        public Judgement CalculateScore(int hitDifference, KeyPressType keyPressType, bool calculateAllStats = true)
         {
-            var absoluteDifference = Math.Abs(hitDifference);
+            int absoluteDifference = 0;
+
+            if (hitDifference != int.MinValue)
+                absoluteDifference = Math.Abs(hitDifference);
+            else
+                return Judgement.Miss;
 
             var judgement = Judgement.Ghost;
 
@@ -195,7 +201,8 @@ namespace Quaver.API.Maps.Processors.Scoring
             if (judgement == Judgement.Ghost)
                 return judgement;
 
-            CalculateScore(judgement);
+            if (calculateAllStats)
+                CalculateScore(judgement);
 
             return judgement;
         }
