@@ -187,6 +187,13 @@ namespace Quaver.API.Replays.Virtual
                             continue;
                         // Object needs to be removed completely if it's a miss.
                         case Judgement.Miss:
+                            // Add another miss for an LN (head and tail)
+                            if (hitObject.IsLongNote)
+                            {
+                                ScoreProcessor.CalculateScore(Judgement.Miss);
+                                ScoreProcessor.Stats.Add(new HitStat(HitStatType.Miss, KeyPressType.Press, hitObject, Time, Judgement.Miss, int.MinValue,
+                                    ScoreProcessor.Accuracy, ScoreProcessor.Health));
+                            }
                             break;
                         default:
                             // Long notes need to be changed to a held status.
