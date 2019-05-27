@@ -763,9 +763,15 @@ namespace Quaver.API.Maps
 
             for (var i = 0; i < HitObjects.Count; i++)
             {
+                total += 1;
+
+                if (total - 1 == index)
+                {
+                    h = HitObjects[i];
+                    break;
+                }
+
                 if (HitObjects[i].IsLongNote)
-                    total += 2;
-                else
                     total += 1;
 
                 if (total - 1 == index)

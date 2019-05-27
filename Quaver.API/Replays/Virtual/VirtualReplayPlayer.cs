@@ -133,9 +133,10 @@ namespace Quaver.API.Replays.Virtual
 
                 if (judgementDifference != 0)
                 {
-                    for (var i = totalScoredJudgements; i < judgementDifference; i++)
+                    for (var i = totalScoredJudgements; i < totalJudgementCount; i++)
                     {
-                        var obj = Map.GetHitObjectAtJudgementIndex(i + 1);
+                        var obj = Map.GetHitObjectAtJudgementIndex(i);
+                        Console.WriteLine(i + " " + totalJudgementCount + " " + (obj == null));
 
                         ScoreProcessor.CalculateScore(Judgement.Miss);
 
