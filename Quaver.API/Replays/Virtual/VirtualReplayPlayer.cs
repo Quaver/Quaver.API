@@ -69,6 +69,12 @@ namespace Quaver.API.Replays.Virtual
         public List<VirtualReplayKeyBinding> InputKeyStore { get; }
 
         /// <summary>
+        ///     If the replay was failing, it may not have the extra miss judgements, causing it to be
+        ///     incomplete. This artificially extends the replay with misses to make it accurate again.
+        /// </summary>
+        private bool ExtendedFailingReplay { get; set; }
+
+        /// <summary>
         /// </summary>
         /// <param name="replay"></param>
         /// <param name="map"></param>
@@ -118,8 +124,35 @@ namespace Quaver.API.Replays.Virtual
         /// </summary>
         public void PlayNextFrame()
         {
-            if (CurrentFrame + 1 >= Replay.Frames.Count)
-                throw new InvalidOperationException("Cannot play the next replay frame because there aren't any frames left!");
+            if (CurrentFrame >= Replay.Frames.Count && !ExtendedFailingReplay)
+            {
+                // Handle when the replay isn't extended enough to have enough misses to cause a failure.
+                var totalJudgementCount = ScoreProcessor.GetTotalJudgementCount();
+                var totalScoredJudgements = ScoreProcessor.TotalJudgementCount;
+                var judgementDifference = totalJudgementCount - totalScoredJudgements;
+
+                if (judgementDifference != 0)
+                {
+                    for (var i = totalScoredJudgements; i < judgementDifference; i++)
+                    {
+                        var obj = Map.GetHitObjectAtJudgementIndex(i + 1);
+
+                        ScoreProcessor.CalculateScore(Judgement.Miss);
+
+                        ScoreProcessor.Stats.Add(new HitStat(HitStatType.Miss, KeyPressType.None, obj, obj.StartTime,
+                            Judgement.Miss, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health));
+
+                        if (!ScoreProcessor.Failed)
+                            continue;
+
+                        ExtendedFailingReplay = true;
+                        return;
+                    }
+                }
+
+                ExtendedFailingReplay = true;
+                return;
+            }
 
             CurrentFrame++;
 
@@ -127,9 +160,12 @@ namespace Quaver.API.Replays.Virtual
             ActiveHitObjectsToRemove = new List<HitObjectInfo>();
             ActiveHeldLongNotesToRemove = new List<HitObjectInfo>();
 
-            HandleKeyPressesInFrame();
-            HandleMissedLongNoteReleases();
-            HandleMissedHitObjects();
+            if (CurrentFrame < Replay.Frames.Count)
+            {
+                HandleKeyPressesInFrame();
+                HandleMissedLongNoteReleases();
+                HandleMissedHitObjects();
+            }
         }
 
         /// <summary>
@@ -137,7 +173,7 @@ namespace Quaver.API.Replays.Virtual
         /// </summary>
         public void PlayAllFrames()
         {
-            while (CurrentFrame + 1 < Replay.Frames.Count)
+            while (CurrentFrame <= Replay.Frames.Count && !ExtendedFailingReplay)
                 PlayNextFrame();
         }
 

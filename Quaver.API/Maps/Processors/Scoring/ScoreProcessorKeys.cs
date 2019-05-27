@@ -313,7 +313,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Every LN counts as 2 judgements (Beginning + End)
         /// </summary>
         /// <returns></returns>
-        private int GetTotalJudgementCount()
+        public int GetTotalJudgementCount()
         {
             var judgements = 0;
 
