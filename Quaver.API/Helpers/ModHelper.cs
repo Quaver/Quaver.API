@@ -96,22 +96,22 @@ namespace Quaver.API.Helpers
                         modStrings.Add("2.0x");
                         break;
                     case ModIdentifier.Strict:
-                        modStrings.Add("Strict");
+                        modStrings.Add("ST");
                         break;
                     case ModIdentifier.Chill:
-                        modStrings.Add("Chill");
+                        modStrings.Add("CH");
                         break;
                     case ModIdentifier.NoPause:
-                        modStrings.Add("No Pause");
+                        modStrings.Add("NP");
                         break;
                     case ModIdentifier.Autoplay:
-                        modStrings.Add("Autoplay");
+                        modStrings.Add("AP");
                         break;
                     case ModIdentifier.Paused:
-                        modStrings.Add("Paused");
+                        modStrings.Add("PS");
                         break;
                     case ModIdentifier.NoFail:
-                        modStrings.Add("No Fail");
+                        modStrings.Add("NF");
                         break;
                     case ModIdentifier.NoLongNotes:
                         modStrings.Add("NLN");
@@ -120,13 +120,13 @@ namespace Quaver.API.Helpers
                         modStrings.Add("RND");
                         break;
                     case ModIdentifier.Inverse:
-                        modStrings.Add("Inverse");
+                        modStrings.Add("IV");
                         break;
                     case ModIdentifier.FullLN:
-                        modStrings.Add("FullLN");
+                        modStrings.Add("FLN");
                         break;
                     case ModIdentifier.Mirror:
-                        modStrings.Add("Mirror");
+                        modStrings.Add("MR");
                         break;
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
