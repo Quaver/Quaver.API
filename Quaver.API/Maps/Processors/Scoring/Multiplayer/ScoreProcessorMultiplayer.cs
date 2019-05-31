@@ -65,7 +65,7 @@ namespace Quaver.API.Maps.Processors.Scoring.Multiplayer
             {
                 // When player reaches 0 health, place them in a state where they have to reach 100 health
                 // in order to be considered alive again
-                case MultiplayerHealthType.ManualRegeneration:
+                case MultiplayerHealthType.Manual_Regeneration:
                     // ReSharper disable twice CompareOfFloatsByEqualityOperator
                     if (Processor.Health == 0)
                         IsRegeneratingHealth = true;

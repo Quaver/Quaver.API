@@ -2,7 +2,7 @@
 {
     public enum MultiplayerHealthType
     {
-        ManualRegeneration,
+        Manual_Regeneration,
         Lives
     }
 }
