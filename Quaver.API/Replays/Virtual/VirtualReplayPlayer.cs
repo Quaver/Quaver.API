@@ -75,13 +75,20 @@ namespace Quaver.API.Replays.Virtual
         private bool ExtendedFailingReplay { get; set; }
 
         /// <summary>
+        ///     If the replay player won't automatically extend to the end
+        /// </summary>
+        private bool DontExtendReplay { get; }
+
+        /// <summary>
         /// </summary>
         /// <param name="replay"></param>
         /// <param name="map"></param>
-        public VirtualReplayPlayer(Replay replay, Qua map)
+        /// <param name="dontExtend"></param>
+        public VirtualReplayPlayer(Replay replay, Qua map, bool dontExtend = false)
         {
             Replay = replay;
             Map = map;
+            DontExtendReplay = dontExtend;
 
             ScoreProcessor = new ScoreProcessorKeys(map, Replay.Mods);
 
@@ -124,7 +131,7 @@ namespace Quaver.API.Replays.Virtual
         /// </summary>
         public void PlayNextFrame()
         {
-            if (CurrentFrame >= Replay.Frames.Count && !ExtendedFailingReplay)
+            if (CurrentFrame >= Replay.Frames.Count && !ExtendedFailingReplay && !DontExtendReplay)
             {
                 // Handle when the replay isn't extended enough to have enough misses to cause a failure.
                 var totalJudgementCount = ScoreProcessor.GetTotalJudgementCount();
@@ -154,7 +161,8 @@ namespace Quaver.API.Replays.Virtual
                 return;
             }
 
-            CurrentFrame++;
+            if (CurrentFrame == -1)
+                CurrentFrame++;
 
             // Store the objects that need to be removed from the list of active objects.
             ActiveHitObjectsToRemove = new List<HitObjectInfo>();
@@ -165,6 +173,8 @@ namespace Quaver.API.Replays.Virtual
                 HandleKeyPressesInFrame();
                 HandleMissedLongNoteReleases();
                 HandleMissedHitObjects();
+
+                CurrentFrame++;
             }
         }
 
@@ -173,8 +183,16 @@ namespace Quaver.API.Replays.Virtual
         /// </summary>
         public void PlayAllFrames()
         {
-            while (CurrentFrame <= Replay.Frames.Count && !ExtendedFailingReplay)
-                PlayNextFrame();
+            if (DontExtendReplay)
+            {
+                while (CurrentFrame < Replay.Frames.Count && !ExtendedFailingReplay)
+                    PlayNextFrame();
+            }
+            else
+            {
+                while (CurrentFrame <= Replay.Frames.Count && !ExtendedFailingReplay)
+                    PlayNextFrame();
+            }
         }
 
         /// <summary>
