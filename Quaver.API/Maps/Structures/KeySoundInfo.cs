@@ -15,7 +15,7 @@ namespace Quaver.API.Maps.Structures
         public int Sample { get; set; }
 
         /// <summary>
-        ///     The volume of the sound sample.
+        ///     The volume of the sound sample. Defaults to 100.
         /// </summary>
         public int Volume { get; set; }
 

@@ -248,22 +248,25 @@ namespace Quaver.API.Maps
             HitObjects = new List<HitObjectInfo>();
             foreach (var obj in originalHitObjects)
             {
-                if (obj.HitSound == HitSounds.Normal)
+                var keySoundsWithDefaults = new List<KeySoundInfo>();
+                foreach (var keySound in obj.KeySounds)
                 {
-                    HitObjects.Add(new HitObjectInfo()
+                    keySoundsWithDefaults.Add(new KeySoundInfo
                     {
-                        EndTime = obj.EndTime,
-                        HitSound = 0,
-                        KeySounds = obj.KeySounds,
-                        Lane = obj.Lane,
-                        StartTime = obj.StartTime,
-                        EditorLayer = obj.EditorLayer
+                        Sample = keySound.Sample,
+                        Volume = keySound.Volume == 100 ? 0 : keySound.Volume
                     });
                 }
-                else
+
+                HitObjects.Add(new HitObjectInfo()
                 {
-                    HitObjects.Add(obj);
-                }
+                    EndTime = obj.EndTime,
+                    HitSound = obj.HitSound == HitSounds.Normal ? 0 : obj.HitSound,
+                    KeySounds = keySoundsWithDefaults,
+                    Lane = obj.Lane,
+                    StartTime = obj.StartTime,
+                    EditorLayer = obj.EditorLayer
+                });
             }
 
             SoundEffects = new List<SoundEffectInfo>();
@@ -808,8 +811,14 @@ namespace Quaver.API.Maps
             for (var i = 0; i < qua.HitObjects.Count; i++)
             {
                 var obj = qua.HitObjects[i];
+
                 if (obj.HitSound == 0)
                     obj.HitSound = HitSounds.Normal;
+
+                foreach (var keySound in obj.KeySounds)
+                    if (keySound.Volume == 0)
+                        keySound.Volume = 100;
+
                 qua.HitObjects[i] = obj;
             }
 

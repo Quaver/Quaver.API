@@ -606,9 +606,17 @@ namespace Quaver.API.Maps.Parsers
                         volume = TimingPoints[timingPointIndex].Volume;
                     }
 
-                    foreach (var keySound in hitObject.KeySounds)
+                    for (var i = hitObject.KeySounds.Count - 1; i >= 0; i--)
+                    {
+                        var keySound = hitObject.KeySounds[i];
                         if (keySound.Volume == 0)
                             keySound.Volume = volume;
+
+                        // If the volume is still zero, remove this key sound.
+                        // In Qua 0 is the default value which equals to 100.
+                        if (keySound.Volume == 0)
+                            hitObject.KeySounds.RemoveAt(i);
+                    }
                 }
             }
 

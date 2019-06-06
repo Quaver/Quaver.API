@@ -18,3 +18,10 @@ HitObjects:
   KeySounds:
   - Sample: 5
     Volume: 30
+- StartTime: 4000
+  Lane: 4
+- StartTime: 4001
+  Lane: 4
+  KeySounds:
+  - Sample: 5
+    Volume: 34
