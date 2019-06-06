@@ -359,7 +359,7 @@ namespace Quaver.API.Maps.Parsers
                                     Signature = values[2][0] == '0' ? TimeSignature.Quadruple : (TimeSignature) int.Parse(values[2], CultureInfo.InvariantCulture),
                                     SampleType = int.Parse(values[3], CultureInfo.InvariantCulture),
                                     SampleSet = int.Parse(values[4], CultureInfo.InvariantCulture),
-                                    Volume = int.Parse(values[5], CultureInfo.InvariantCulture),
+                                    Volume = Math.Max(0, int.Parse(values[5], CultureInfo.InvariantCulture)),
                                     Inherited = int.Parse(values[6], CultureInfo.InvariantCulture),
                                     KiaiMode = int.Parse(values[7], CultureInfo.InvariantCulture)
                                 };
@@ -405,7 +405,12 @@ namespace Quaver.API.Maps.Parsers
                             if (values.Length > 5)
                             {
                                 var additions = values[5].Split(':');
-                                var keySoundField = osuHitObject.Type.HasFlag(HitObjectType.Hold) ? 5 : 4;
+
+                                var volumeField = osuHitObject.Type.HasFlag(HitObjectType.Hold) ? 4 : 3;
+                                if (additions.Length > volumeField && additions[volumeField].Length > 0)
+                                    osuHitObject.Volume = Math.Max(0, int.Parse(additions[volumeField], CultureInfo.InvariantCulture));
+
+                                var keySoundField = volumeField + 1;
                                 if (additions.Length > keySoundField && additions[keySoundField].Length > 0)
                                     osuHitObject.KeySound = CustomAudioSampleIndex(additions[keySoundField]);
                             }
@@ -559,7 +564,10 @@ namespace Quaver.API.Maps.Parsers
                         Lane = keyLane,
                         EndTime = 0,
                         HitSound = hitObject.HitSound.ToQuaverHitSounds(),
-                        KeySounds = hitObject.KeySound == -1 ? new List<int>() : new List<int> { hitObject.KeySound + 1 }
+                        KeySounds = hitObject.KeySound == -1 ? new List<KeySoundInfo>() : new List<KeySoundInfo>
+                        {
+                            new KeySoundInfo { Sample = hitObject.KeySound + 1, Volume = hitObject.Volume }
+                        }
                     });
                 }
                 else if (hitObject.Type.HasFlag(HitObjectType.Hold))
@@ -570,16 +578,51 @@ namespace Quaver.API.Maps.Parsers
                         Lane = keyLane,
                         EndTime = hitObject.EndTime,
                         HitSound = hitObject.HitSound.ToQuaverHitSounds(),
-                        KeySounds = hitObject.KeySound == -1 ? new List<int>() : new List<int> { hitObject.KeySound + 1 }
+                        KeySounds = hitObject.KeySound == -1 ? new List<KeySoundInfo>() : new List<KeySoundInfo>
+                        {
+                            new KeySoundInfo { Sample = hitObject.KeySound + 1, Volume = hitObject.Volume }
+                        }
                     });
                 }
             }
 
-            // Do a validity check and some final sorting.
+            // Sort the various lists.
+            qua.Sort();
+
+            if (TimingPoints.Count > 0)
+            {
+                // If the individual object key sound volume is zero, we need to set it to the timing point sample volume.
+                var timingPointIndex = 0;
+                var volume = TimingPoints[timingPointIndex].Volume;
+
+                // Assumption: hit objects and timing points are sorted by start time (enforced by qua.Sort() above).
+                foreach (var hitObject in qua.HitObjects)
+                {
+                    // Advance the current timing point index as necessary.
+                    while (timingPointIndex < TimingPoints.Count - 1 &&
+                           TimingPoints[timingPointIndex + 1].Offset <= hitObject.StartTime)
+                    {
+                        timingPointIndex++;
+                        volume = TimingPoints[timingPointIndex].Volume;
+                    }
+
+                    for (var i = hitObject.KeySounds.Count - 1; i >= 0; i--)
+                    {
+                        var keySound = hitObject.KeySounds[i];
+                        if (keySound.Volume == 0)
+                            keySound.Volume = volume;
+
+                        // If the volume is still zero, remove this key sound.
+                        // In Qua 0 is the default value which equals to 100.
+                        if (keySound.Volume == 0)
+                            hitObject.KeySounds.RemoveAt(i);
+                    }
+                }
+            }
+
+            // Do a validity check.
             if (!qua.IsValid())
                 throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
-
-            qua.Sort();
 
             return qua;
         }
@@ -665,6 +708,7 @@ namespace Quaver.API.Maps.Parsers
         public bool Key5 { get; set; }
         public bool Key6 { get; set; }
         public bool Key7 { get; set; }
+        public int Volume { get; set; }
 
         /// <summary>
         ///     Index into the CustomAudioSamples array.

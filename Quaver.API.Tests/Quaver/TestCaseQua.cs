@@ -180,9 +180,28 @@ namespace Quaver.API.Tests.Quaver
                     UnaffectedByRate = true
                 }
             }, qua.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer);
-            Assert.Equal(new List<int> {1, 2}, qua.HitObjects[0].KeySounds);
-            Assert.Equal(new List<int> {2}, qua.HitObjects[1].KeySounds);
-            Assert.Equal(new List<int>(), qua.HitObjects[2].KeySounds);
+            Assert.Equal(new List<KeySoundInfo>
+            {
+                new KeySoundInfo
+                {
+                    Sample = 1,
+                    Volume = 100
+                },
+                new KeySoundInfo
+                {
+                    Sample = 2,
+                    Volume = 50
+                }
+            }, qua.HitObjects[0].KeySounds, KeySoundInfo.ByValueComparer);
+            Assert.Equal(new List<KeySoundInfo>
+            {
+                new KeySoundInfo
+                {
+                    Sample = 2,
+                    Volume = 100
+                }
+            }, qua.HitObjects[1].KeySounds, KeySoundInfo.ByValueComparer);
+            Assert.Equal(new List<KeySoundInfo>(), qua.HitObjects[2].KeySounds, KeySoundInfo.ByValueComparer);
         }
 
         [Fact]

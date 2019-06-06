@@ -9,9 +9,13 @@ TimingPoints:
 HitObjects:
 - StartTime: 500
   Lane: 2
-  KeySounds: [1, 2]
+  KeySounds:
+  - Sample: 1
+  - Sample: 2
+    Volume: 50
 - StartTime: 500
   Lane: 3
-  KeySounds: [2]
+  KeySounds:
+  - Sample: 2
 - StartTime: 500
   Lane: 4

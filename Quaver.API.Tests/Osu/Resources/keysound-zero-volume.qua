@@ -1,0 +1,27 @@
+Mode: Keys7
+CustomAudioSamples:
+- Path: normal-hitnormal4.wav
+- Path: normal-hitnormal37.wav
+- Path: normal-hitnormal45.wav
+- Path: normal-hitnormal121.wav
+- Path: a.wav
+TimingPoints:
+- Bpm: 165
+HitObjects:
+- StartTime: 2909
+  Lane: 4
+  KeySounds:
+  - Sample: 5
+    Volume: 62
+- StartTime: 3000
+  Lane: 4
+  KeySounds:
+  - Sample: 5
+    Volume: 30
+- StartTime: 4000
+  Lane: 4
+- StartTime: 4001
+  Lane: 4
+  KeySounds:
+  - Sample: 5
+    Volume: 34
