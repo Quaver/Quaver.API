@@ -110,5 +110,15 @@ namespace Quaver.API.Tests.Osu
             var groundTruthQua = Qua.Parse("./Osu/Resources/megalovania.qua");
             Assert.True(qua.EqualByValue(groundTruthQua));
         }
+
+        [Fact]
+        public void KeySoundZeroVolume()
+        {
+            var converter = new OsuBeatmap("./Osu/Resources/keysound-zero-volume.osu");
+            var qua = converter.ToQua();
+            var groundTruthQua = Qua.Parse("./Osu/Resources/keysound-zero-volume.qua");
+
+            Assert.Equal(groundTruthQua.HitObjects, qua.HitObjects, HitObjectInfo.ByValueComparer);
+        }
     }
 }

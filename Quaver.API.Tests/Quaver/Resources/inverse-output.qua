@@ -31,7 +31,9 @@ HitObjects:
 - StartTime: 1278
   Lane: 3
   EndTime: 1533
-  KeySounds: [1]
+  KeySounds:
+  - Sample: 1
+    Volume: 50
 - StartTime: 1363
   Lane: 4
   EndTime: 1532

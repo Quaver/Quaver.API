@@ -334,10 +334,17 @@ namespace Quaver.API.Maps
                 if (info.IsLongNote && info.EndTime <= info.StartTime)
                     return false;
 
-                // All key sounds should be valid indices.
+                // Check that key sounds are valid.
                 foreach (var keySound in info.KeySounds)
-                    if (keySound < 1 || keySound >= CustomAudioSamples.Count + 1)
+                {
+                    // Sample should be a valid array index.
+                    if (keySound.Sample < 1 || keySound.Sample >= CustomAudioSamples.Count + 1)
                         return false;
+
+                    // The sample volume should be above 0.
+                    if (keySound.Volume < 1)
+                        return false;
+                }
             }
 
             return true;
@@ -601,7 +608,7 @@ namespace Quaver.API.Maps
                         currentObject.EndTime = nextObjectInLane.StartTime - timeGap.Value;
 
                         // Clear the keysounds as we're moving the start, so they won't make sense.
-                        currentObject.KeySounds = new List<int>();
+                        currentObject.KeySounds = new List<KeySoundInfo>();
 
                         // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
                         // not the last object in the lane, create a regular object at the next object's start position.

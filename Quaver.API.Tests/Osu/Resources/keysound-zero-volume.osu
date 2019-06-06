@@ -1,0 +1,74 @@
+osu file format v14
+
+[General]
+AudioFilename: EX.mp3
+AudioLeadIn: 0
+PreviewTime: 0
+Countdown: 0
+SampleSet: None
+StackLeniency: 0.7
+Mode: 3
+LetterboxInBreaks: 0
+SpecialStyle: 0
+WidescreenStoryboard: 0
+
+[Editor]
+DistanceSpacing: 1.4
+BeatDivisor: 4
+GridSize: 4
+TimelineZoom: 1
+
+[Metadata]
+Title:O2JAM Convert Pack Vol.5
+TitleUnicode:O2JAM Convert Pack Vol.5
+Artist:Various artists [LV.45~49]
+ArtistUnicode:Various artists [LV.45~49]
+Creator:MAAAAAAAAAAAAAS
+Version:[LV.48] Glide
+Source:o2jam
+Tags:Note by Genesis / Convert by __M A S__
+BeatmapID:1733808
+BeatmapSetID:827408
+
+[Difficulty]
+HPDrainRate:8
+CircleSize:7
+OverallDifficulty:0
+ApproachRate:5
+SliderMultiplier:1.4
+SliderTickRate:1
+
+[Events]
+//Background and Video events
+0,0,"Glide.jpg",0,0
+//Break Periods
+//Storyboard Layer 0 (Background)
+//Storyboard Layer 1 (Fail)
+//Storyboard Layer 2 (Pass)
+//Storyboard Layer 3 (Foreground)
+//Storyboard Sound Samples
+Sample,2909,0,"normal-hitnormal4.wav",100
+Sample,16000,0,"normal-hitnormal37.wav",100
+Sample,16545,0,"normal-hitnormal37.wav",100
+Sample,16909,0,"normal-hitnormal37.wav",100
+Sample,59273,0,"normal-hitnormal37.wav",100
+Sample,85818,0,"normal-hitnormal45.wav",100
+Sample,86182,0,"normal-hitnormal45.wav",100
+Sample,86545,0,"normal-hitnormal45.wav",100
+Sample,86909,0,"normal-hitnormal45.wav",100
+Sample,87273,0,"normal-hitnormal45.wav",100
+Sample,87636,0,"normal-hitnormal45.wav",100
+Sample,88000,0,"normal-hitnormal45.wav",100
+Sample,88364,0,"normal-hitnormal45.wav",100
+Sample,112000,0,"normal-hitnormal37.wav",100
+Sample,112545,0,"normal-hitnormal37.wav",100
+Sample,113091,0,"normal-hitnormal121.wav",100
+Sample,117818,0,"normal-hitnormal37.wav",100
+
+[TimingPoints]
+0,363.636363636364,4,2,2,30,1,0
+
+
+[HitObjects]
+256,192,2909,1,0,0:0:0:62:a.wav
+256,192,3000,1,0,0:0:0:0:a.wav

@@ -41,9 +41,9 @@ namespace Quaver.API.Maps.Structures
         public HitSounds HitSound { get; set; }
 
         /// <summary>
-        ///     Key sounds to play when this object is hit. One-based indices into Qua.CustomAudioSamples.
+        ///     Key sounds to play when this object is hit.
         /// </summary>
-        public List<int> KeySounds { get; set; } = new List<int>();
+        public List<KeySoundInfo> KeySounds { get; set; } = new List<KeySoundInfo>();
 
         /// <summary>
         ///     The layer in the editor that the object belongs to.
@@ -83,7 +83,7 @@ namespace Quaver.API.Maps.Structures
                 if (ReferenceEquals(x, null)) return false;
                 if (ReferenceEquals(y, null)) return false;
                 if (x.GetType() != y.GetType()) return false;
-                return x.StartTime == y.StartTime && x.Lane == y.Lane && x.EndTime == y.EndTime && x.HitSound == y.HitSound && x.KeySounds.SequenceEqual(y.KeySounds) && x.EditorLayer == y.EditorLayer;
+                return x.StartTime == y.StartTime && x.Lane == y.Lane && x.EndTime == y.EndTime && x.HitSound == y.HitSound && x.KeySounds.SequenceEqual(y.KeySounds, KeySoundInfo.ByValueComparer) && x.EditorLayer == y.EditorLayer;
             }
 
             public int GetHashCode(HitObjectInfo obj)
@@ -95,7 +95,7 @@ namespace Quaver.API.Maps.Structures
                     hashCode = (hashCode * 397) ^ obj.EndTime;
                     hashCode = (hashCode * 397) ^ (int) obj.HitSound;
                     foreach (var keySound in obj.KeySounds)
-                        hashCode = (hashCode * 397) ^ keySound;
+                        hashCode = (hashCode * 397) ^ KeySoundInfo.ByValueComparer.GetHashCode(keySound);
                     hashCode = (hashCode * 397) ^ obj.EditorLayer;
                     return hashCode;
                 }
