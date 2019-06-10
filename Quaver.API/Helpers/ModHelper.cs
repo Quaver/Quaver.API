@@ -20,7 +20,7 @@ namespace Quaver.API.Helpers
         /// <returns></returns>
         public static string GetModsString(ModIdentifier mods)
         {
-            if (mods == 0)
+            if (mods <= 0)
                 return "None";
 
             var modStrings = new List<string>();
