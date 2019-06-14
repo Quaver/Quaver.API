@@ -214,16 +214,12 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        ///     Serializes the Qua object to a file.
-        ///
-        ///     If returnSerialized is true, it will return a string of the .qua file,
-        ///     otherwise it will save it normally to the specified path
+        ///     Serializes the Qua object and returns a string of it
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="returnSerialized"></param>
-        public string Save(string path = null, bool returnSerialized = false)
+        /// <returns></returns>
+        public string Serialize()
         {
-            // Sort the object before saving.
+           // Sort the object before saving.
             Sort();
 
             // Set default values to zero so they don't waste space in the .qua file.
@@ -291,23 +287,24 @@ namespace Quaver.API.Maps
                 }
             }
 
-            string serialized;
-
             var serializer = new Serializer();
             var stringWriter = new StringWriter {NewLine = "\r\n"};
             serializer.Serialize(stringWriter, this);
-            serialized = stringWriter.ToString();
-
-            if (!returnSerialized)
-                File.WriteAllText(path ?? throw new ArgumentNullException(nameof(path)), serialized);
+            var serialized = stringWriter.ToString();
 
             // Restore the original lists.
             TimingPoints = originalTimingPoints;
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
 
-            return returnSerialized ? serialized : null;
+            return serialized;
         }
+
+        /// <summary>
+        ///     Serializes the Qua object and writes it to a file
+        /// </summary>
+        /// <param name="path"></param>
+        public void Save(string path) => File.WriteAllText(path, Serialize());
 
         /// <summary>
         ///     If the .qua file is actually valid.
