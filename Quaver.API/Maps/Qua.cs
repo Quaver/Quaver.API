@@ -291,24 +291,22 @@ namespace Quaver.API.Maps
                 }
             }
 
-            string serialized = null;
+            string serialized;
 
             var serializer = new Serializer();
+            var stringWriter = new StringWriter {NewLine = "\r\n"};
+            serializer.Serialize(stringWriter, this);
+            serialized = stringWriter.ToString();
 
-            if (returnSerialized)
-                serialized = serializer.Serialize(this);
-            else
-            {
-                using (var file = File.CreateText(path))
-                    serializer.Serialize(file, this);
-            }
+            if (!returnSerialized)
+                File.WriteAllText(path ?? throw new ArgumentNullException(nameof(path)), serialized);
 
             // Restore the original lists.
             TimingPoints = originalTimingPoints;
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
 
-            return serialized;
+            return returnSerialized ? serialized : null;
         }
 
         /// <summary>
