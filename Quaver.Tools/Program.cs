@@ -27,7 +27,8 @@ namespace Quaver.Tools
                                   $"-calcrating <difficulty_rating> <accuracy>\n" +
                                   $"-convertosu <file_path.osu> <output.qua>\n" +
                                   $"-convertsm <file_path.sm> <output directory>\n" +
-                                  $"-changequaids <file_path.qua> <output_path.qua> <map_id> <mapset_id>");
+                                  $"-changequaids <file_path.qua> <output_path.qua> <map_id> <mapset_id>\n" +
+                                  $"-recalculate <user_id> <mode> Recalculates a given user's top 50 scores for a game mode.");
                 return;
             }
 
@@ -59,6 +60,9 @@ namespace Quaver.Tools
                     break;
                 case "-changequaids":
                     new ChangeQuaIdsCommand(args).Execute();
+                    break;
+                case "-recalculate":
+                    new RecalculateCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
