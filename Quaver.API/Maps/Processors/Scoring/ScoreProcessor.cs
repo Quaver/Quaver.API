@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
 using Quaver.API.Maps.Processors.Scoring.Data;
@@ -212,6 +213,52 @@ namespace Quaver.API.Maps.Processors.Scoring
             Stats.ForEach(x => breakdown += (int) x.Judgement);
 
             return breakdown;
+        }
+
+        /// <summary>
+        ///     Computes the hit statistics from the hit data.
+        /// </summary>
+        /// <returns></returns>
+        public HitStatistics GetHitStatistics()
+        {
+            var largestHitWindow = JudgementWindow.Values.Max();
+            var hitDifferences = new List<int>();
+            var sum = 0;
+
+            foreach (var breakdown in Stats)
+            {
+                var hitDifference = breakdown.HitDifference;
+
+                // The LN releases are _not_ scaled here because we want an accurate mean.
+
+                // No need to check for Type == Miss as all of them have hitDifference == int.MinValue.
+                if (hitDifference != int.MinValue && Math.Abs(hitDifference) <= largestHitWindow)
+                {
+                    hitDifferences.Add(hitDifference);
+                    sum += hitDifference; // This overflows at like 13 million max judgements.
+                }
+            }
+
+            double mean = 0.0;
+            double standardDeviation = 0.0;
+
+            var count = hitDifferences.Count();
+            if (count > 0)
+            {
+                mean = (double) sum / (double) count;
+                standardDeviation = Math.Sqrt(hitDifferences.Average(v => Math.Pow(v - mean, 2)));
+
+                // Undo the rate scaling.
+                mean /= ModHelper.GetRateFromMods(Mods);
+                // Since variance(ax) = a^2 variance(x), then std(ax) = a std(x)
+                standardDeviation /= ModHelper.GetRateFromMods(Mods);
+            }
+
+            return new HitStatistics
+            {
+                Mean = mean,
+                StandardDeviation = standardDeviation
+            };
         }
     }
 }
