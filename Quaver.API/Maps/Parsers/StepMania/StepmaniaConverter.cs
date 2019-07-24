@@ -485,7 +485,8 @@ namespace Quaver.API.Maps.Parsers.StepMania
                     qua.TimingPoints.Add(new TimingPointInfo
                     {
                         StartTime = point.Time,
-                        Bpm = 60000 / point.Beatspace
+                        Bpm = 60000 / point.Beatspace,
+                        Signature = TimeSignature.Quadruple
                     });
                 }
 
