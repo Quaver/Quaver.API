@@ -264,16 +264,18 @@ namespace Quaver.API.Maps.Parsers.StepMania
             // now we work with the notes.
             var notes = data[5];
             var measures = notes.Split(',');
+            uint mCount = 0;
 
             foreach (var measure in measures)
             {
                 var rows = measure.Length / diff.KeyCount;
+                uint currentRow = 0;
+                uint currentTrack = 0;
 
-                // measure len / rows. assume mlen = 4
-                var fractionperrow  = 4.0f / rows;
-                uint currentTrack = 0, mCount = 0;
+                var prevTime = currentTime;
+                var addedTime = 0f;
 
-                while (rows > 0)
+                foreach (var mNote in measure)
                 {
                     // this is only for timing sections
                     // ReSharper disable once CompareOfFloatsByEqualityOperator
@@ -317,7 +319,7 @@ namespace Quaver.API.Maps.Parsers.StepMania
 
                     var mspb = 60000 / curBpm;
 
-                    switch (measure[(int)mCount])
+                    switch (mNote)
                     {
                         case '1':
                             var newNote = new Note
@@ -347,22 +349,32 @@ namespace Quaver.API.Maps.Parsers.StepMania
                             break;
                     }
 
-                    mCount++;
                     currentTrack++;
 
                     if (currentTrack != diff.KeyCount)
                         continue;
 
                     currentTrack = 0;
-                    rows--;
+                    currentRow++;
 
-                    currentTime += fractionperrow * mspb + GetStopForBeat(beat);
+                    // current measure * measure len / rows. assume mlen = 4
+                    var fraction = currentRow * 4.0f / rows;
+
                     var prevBeat = beat;
-                    beat += fractionperrow;
-                    currentTime += SumStopInterval(prevBeat, beat);
-                    currentTime += SumBpmInterval(curBpm, prevBeat, beat, out var altBpm);
+                    beat = mCount * 4 + fraction;
+
+                    addedTime += GetStopForBeat(prevBeat);
+                    addedTime += SumStopInterval(prevBeat, beat);
+                    addedTime += SumBpmInterval(curBpm, prevBeat, beat, out var altBpm);
+
+                    currentTime = prevTime;
+                    currentTime += addedTime;
+                    currentTime += fraction * mspb;
+
                     curBpm = altBpm;
                 }
+
+                mCount++;
             }
 
             return diff;
