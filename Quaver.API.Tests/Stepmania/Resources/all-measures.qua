@@ -1,0 +1,149 @@
+AudioFile: none.mp3
+SongPreviewTime: 1000
+BackgroundFile: ''
+MapId: -1
+MapSetId: -1
+Mode: Keys4
+Title: Beat accuracy test
+Artist: None
+Creator: ''
+DifficultyName: Challenge
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 120
+- StartTime: 2000
+  Bpm: 240
+- StartTime: 4000
+  Bpm: 120
+- StartTime: 6000
+  Bpm: 240
+- StartTime: 8000
+  Bpm: 120
+- StartTime: 10000
+  Bpm: 240
+- StartTime: 12000
+  Bpm: 120
+- StartTime: 14000
+  Bpm: 240
+- StartTime: 16000
+  Bpm: 120
+- StartTime: 18000
+  Bpm: 240
+- StartTime: 20000
+  Bpm: 120
+- StartTime: 22000
+  Bpm: 240
+- StartTime: 24000
+  Bpm: 120
+- StartTime: 26000
+  Bpm: 240
+- StartTime: 28000
+  Bpm: 120
+- StartTime: 30000
+  Bpm: 240
+- StartTime: 32000
+  Bpm: 120
+- StartTime: 34000
+  Bpm: 240
+- StartTime: 36000
+  Bpm: 120
+- StartTime: 38000
+  Bpm: 240
+- StartTime: 40000
+  Bpm: 120
+SliderVelocities: []
+HitObjects:
+- Lane: 1
+  KeySounds: []
+- StartTime: 2000
+  Lane: 1
+  KeySounds: []
+- StartTime: 3000
+  Lane: 1
+  KeySounds: []
+- StartTime: 4000
+  Lane: 1
+  KeySounds: []
+- StartTime: 6000
+  Lane: 1
+  KeySounds: []
+- StartTime: 7000
+  Lane: 1
+  KeySounds: []
+- StartTime: 8000
+  Lane: 1
+  KeySounds: []
+- StartTime: 10000
+  Lane: 1
+  KeySounds: []
+- StartTime: 11000
+  Lane: 1
+  KeySounds: []
+- StartTime: 12000
+  Lane: 1
+  KeySounds: []
+- StartTime: 14000
+  Lane: 1
+  KeySounds: []
+- StartTime: 15000
+  Lane: 1
+  KeySounds: []
+- StartTime: 16000
+  Lane: 1
+  KeySounds: []
+- StartTime: 18000
+  Lane: 1
+  KeySounds: []
+- StartTime: 19000
+  Lane: 1
+  KeySounds: []
+- StartTime: 20000
+  Lane: 1
+  KeySounds: []
+- StartTime: 22000
+  Lane: 1
+  KeySounds: []
+- StartTime: 23000
+  Lane: 1
+  KeySounds: []
+- StartTime: 24000
+  Lane: 1
+  KeySounds: []
+- StartTime: 26000
+  Lane: 1
+  KeySounds: []
+- StartTime: 27000
+  Lane: 1
+  KeySounds: []
+- StartTime: 28000
+  Lane: 1
+  KeySounds: []
+- StartTime: 30000
+  Lane: 1
+  KeySounds: []
+- StartTime: 31000
+  Lane: 1
+  KeySounds: []
+- StartTime: 32000
+  Lane: 1
+  KeySounds: []
+- StartTime: 34000
+  Lane: 1
+  KeySounds: []
+- StartTime: 35000
+  Lane: 1
+  KeySounds: []
+- StartTime: 36000
+  Lane: 1
+  KeySounds: []
+- StartTime: 38000
+  Lane: 1
+  KeySounds: []
+- StartTime: 39000
+  Lane: 1
+  KeySounds: []
+- StartTime: 40000
+  Lane: 1
+  KeySounds: []

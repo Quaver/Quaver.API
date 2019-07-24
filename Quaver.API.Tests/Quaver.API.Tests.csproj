@@ -11,6 +11,12 @@
     <ProjectReference Include="..\Quaver.API\Quaver.API.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Stepmania\Resources\all-measures.qua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Stepmania\Resources\all-measures.sm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Stepmania\Resources\chaoz-airflow.sm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
