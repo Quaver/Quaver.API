@@ -274,6 +274,7 @@ namespace Quaver.API.Maps.Parsers.StepMania
 
                 var prevTime = currentTime;
                 var addedTime = 0f;
+                var lastBpmChange = 0f;
 
                 foreach (var mNote in measure)
                 {
@@ -289,6 +290,15 @@ namespace Quaver.API.Maps.Parsers.StepMania
                         };
 
                         diff.TimingSections.Add(newPair);
+
+                        // ReSharper disable once CompareOfFloatsByEqualityOperator
+                        if (curBpm != 0) {
+                            // use the old bpm for timing the beats before
+                            var bpmChangeFraction = currentRow * 4.0f / rows;
+                            var oldMspb = 60000 / curBpm;
+                            addedTime += (bpmChangeFraction - lastBpmChange) * oldMspb;
+                            lastBpmChange = bpmChangeFraction;
+                        }
                     }
 
                     // ReSharper disable once CompareOfFloatsByEqualityOperator
@@ -369,7 +379,7 @@ namespace Quaver.API.Maps.Parsers.StepMania
 
                     currentTime = prevTime;
                     currentTime += addedTime;
-                    currentTime += fraction * mspb;
+                    currentTime += (fraction - lastBpmChange) * mspb;
 
                     curBpm = altBpm;
                 }
