@@ -40,19 +40,6 @@ namespace Quaver.API.Tests.Stepmania
         }
 
         [Fact]
-        public void CheckTimingPointCount()
-        {
-            // Contains all possible measure types, each measure having exactly one note;
-            //   as well as timing points to test each transition.
-            // Timing points are at: 0s, 2s,     4s, 6s,     8s, ...
-            // Hit objects are at:   0s, 2s, 3s; 4s, 6s, 7s; 8s, ...
-            var converter = new StepmaniaConverter("./Stepmania/Resources/all-measures.sm");
-            var qua = converter.ToQua().First();
-
-            Assert.Equal(21, qua.TimingPoints.Count());
-        }
-
-        [Fact]
         public void CheckTimingPoints()
         {
             var converter = new StepmaniaConverter("./Stepmania/Resources/all-measures.sm");
@@ -60,15 +47,6 @@ namespace Quaver.API.Tests.Stepmania
 
             var accurateQua = Qua.Parse("./Stepmania/Resources/all-measures.qua");
             Assert.True(qua.TimingPoints.SequenceEqual(accurateQua.TimingPoints, TimingPointInfo.ByValueComparer));
-        }
-
-        [Fact]
-        public void CheckHitObjectCount()
-        {
-            var converter = new StepmaniaConverter("./Stepmania/Resources/all-measures.sm");
-            var qua = converter.ToQua().First();
-
-            Assert.Equal(31, qua.HitObjects.Count());
         }
 
         [Fact]
