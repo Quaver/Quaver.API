@@ -96,7 +96,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     The weighting for accuracy.
         /// </summary>
-        public abstract Dictionary<Judgement, int> JudgementAccuracyWeighting { get; }
+        public abstract Dictionary<Judgement, float> JudgementAccuracyWeighting { get; }
 
         /// <summary>
         ///     The percentage for each grade.

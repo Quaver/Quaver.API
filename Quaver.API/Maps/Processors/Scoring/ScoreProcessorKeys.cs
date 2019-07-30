@@ -122,11 +122,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override Dictionary<Judgement, int> JudgementAccuracyWeighting { get; } = new Dictionary<Judgement, int>()
+        public override Dictionary<Judgement, float> JudgementAccuracyWeighting { get; } = new Dictionary<Judgement, float>()
         {
             {Judgement.Marv, 100},
-            {Judgement.Perf, 96},
-            {Judgement.Great, 50},
+            {Judgement.Perf, 98.25f},
+            {Judgement.Great, 65},
             {Judgement.Good, 25},
             {Judgement.Okay, -100},
             {Judgement.Miss, -50}
