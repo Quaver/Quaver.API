@@ -70,6 +70,16 @@ namespace Quaver.API.Tests.Stepmania
         }
 
         [Fact]
+        public void InMeasureBPMChange() {
+            // Contains BPM changes inside a measure - some at 4ths, some at 3rds.
+            var converter = new StepmaniaConverter("./Stepmania/Resources/in-measure-change.sm");
+            var qua = converter.ToQua().First();
+
+            var accurateQua = Qua.Parse("./Stepmania/Resources/in-measure-change.qua");
+            Assert.True(qua.EqualByValue(accurateQua));
+        }
+
+        [Fact]
         public void FailUponBadPath()
         {
             try

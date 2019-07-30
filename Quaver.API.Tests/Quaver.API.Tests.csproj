@@ -20,6 +20,12 @@
     <None Update="Stepmania\Resources\chaoz-airflow.sm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Stepmania\Resources\in-measure-change.qua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Stepmania\Resources\in-measure-change.sm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Osu\Resources\Camellia - Backbeat Maniac (Evening) [Rewind VIP].osu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
