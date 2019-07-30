@@ -175,12 +175,13 @@ namespace Quaver.API.Maps.Parsers.StepMania
         }
 
         /// <summary>
+        /// Handles BPM changes between 2 beats
         /// </summary>
-        /// <param name="lastBpm"></param>
-        /// <param name="beat"></param>
-        /// <param name="nextBeat"></param>
-        /// <param name="altBpm"></param>
-        /// <returns></returns>
+        /// <param name="lastBpm">BPM at the current beat</param>
+        /// <param name="beat">Current beat</param>
+        /// <param name="nextBeat">Next beat</param>
+        /// <param name="altBpm">Expected BPM at the next beat</param>
+        /// <returns>The elapsed time between the 2 beats, or 0 if there's no BPM change</returns>
         private float SumBpmInterval(float lastBpm, float beat, float nextBeat, out float altBpm)
         {
             float timeSum = 0;
@@ -296,6 +297,7 @@ namespace Quaver.API.Maps.Parsers.StepMania
                             // use the old bpm for timing the beats before
                             var bpmChangeFraction = currentRow * 4.0f / rows;
                             var oldMspb = 60000 / curBpm;
+                            
                             addedTime += (bpmChangeFraction - lastBpmChange) * oldMspb;
                             lastBpmChange = bpmChangeFraction;
                         }
@@ -377,11 +379,27 @@ namespace Quaver.API.Maps.Parsers.StepMania
                     addedTime += SumStopInterval(prevBeat, beat);
                     addedTime += SumBpmInterval(curBpm, prevBeat, beat, out var altBpm);
 
+                    // ReSharper disable once CompareOfFloatsByEqualityOperator
+                    if (curBpm != altBpm) {
+                        // timing of this beat handled by SumBpmInterval,
+                        // even the last part until the start of the beat
+                        addedTime += ((prevBeat - mCount * 4) - lastBpmChange) * mspb;
+                        lastBpmChange = beat - mCount * 4;
+                        
+                        var newPair = new BpmPair
+                        {
+                            Beatspace = 60000 / altBpm,
+                            Time = prevTime + addedTime
+                        };
+
+                        diff.TimingSections.Add(newPair);
+                        curBpm = altBpm;
+                        mspb = 60000 / altBpm;
+                    }
+
                     currentTime = prevTime;
                     currentTime += addedTime;
                     currentTime += (fraction - lastBpmChange) * mspb;
-
-                    curBpm = altBpm;
                 }
 
                 mCount++;
