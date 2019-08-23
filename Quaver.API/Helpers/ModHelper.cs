@@ -120,7 +120,7 @@ namespace Quaver.API.Helpers
                         modStrings.Add("RND");
                         break;
                     case ModIdentifier.Inverse:
-                        modStrings.Add("IV");
+                        modStrings.Add("INV");
                         break;
                     case ModIdentifier.FullLN:
                         modStrings.Add("FLN");
