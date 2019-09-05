@@ -42,6 +42,11 @@ namespace Quaver.API.Maps
         public string BackgroundFile { get; set; }
 
         /// <summary>
+        ///     The name of the mapset banner
+        /// </summary>
+        public string BannerFile { get; set; }
+
+        /// <summary>
         ///     The unique Map Identifier (-1 if not submitted)
         /// </summary>
         public int MapId { get; set; } = -1;
@@ -150,6 +155,7 @@ namespace Quaver.API.Maps
             return AudioFile == other.AudioFile
                    && SongPreviewTime == other.SongPreviewTime
                    && BackgroundFile == other.BackgroundFile
+                   && BannerFile == other.BannerFile
                    && MapId == other.MapId
                    && MapSetId == other.MapSetId
                    && Mode == other.Mode
