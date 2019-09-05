@@ -152,7 +152,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="map"></param>
         /// <param name="mods"></param>
-        public ScoreProcessorKeys(Qua map, ModIdentifier mods) : base(map, mods)
+        /// <param name="windows"></param>
+        public ScoreProcessorKeys(Qua map, ModIdentifier mods, JudgementWindows windows = null) : base(map, mods, windows)
         {
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
@@ -164,7 +165,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="map"></param>
         /// <param name="mods"></param>
         /// <param name="multiplayer"></param>
-        public ScoreProcessorKeys(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayer) : base(map, mods, multiplayer)
+        /// <param name="windows"></param>
+        public ScoreProcessorKeys(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayer, JudgementWindows windows = null) : base(map, mods, multiplayer, windows)
         {
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
@@ -174,7 +176,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Ctor -
         /// </summary>
         /// <param name="replay"></param>
-        public ScoreProcessorKeys(Replay replay) : base(replay){}
+        /// <param name="windows"></param>
+        public ScoreProcessorKeys(Replay replay, JudgementWindows windows = null) : base(replay, windows){}
 
         /// <summary>
         ///     Accuracy Calculation component of CalculateScore() if a note has been pressed/released properly

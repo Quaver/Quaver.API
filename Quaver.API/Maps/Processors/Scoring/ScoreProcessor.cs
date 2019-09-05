@@ -141,12 +141,13 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="map"></param>
         /// <param name="mods"></param>
-        public ScoreProcessor(Qua map, ModIdentifier mods)
+        public ScoreProcessor(Qua map, ModIdentifier mods, JudgementWindows windows = null)
         {
             Map = map;
             Mods = mods;
             Stats = new List<HitStat>();
 
+            InitializeJudgementWindows(windows);
             InitializeMods();
         }
 
@@ -156,7 +157,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="map"></param>
         /// <param name="mods"></param>
         /// <param name="multiplayerProcessor"></param>
-        public ScoreProcessor(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayerProcessor) : this(map, mods)
+        /// <param name="windows"></param>
+        public ScoreProcessor(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayerProcessor, JudgementWindows windows = null) : this(map, mods, windows)
         {
             MultiplayerProcessor = multiplayerProcessor;
             MultiplayerProcessor.Processor = this;
@@ -166,7 +168,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Score processor from replay.
         /// </summary>
         /// <param name="replay"></param>
-        public ScoreProcessor(Replay replay)
+        /// <param name="windows"></param>
+        public ScoreProcessor(Replay replay, JudgementWindows windows = null)
         {
             Mods = replay.Mods;
             Score = replay.Score;
@@ -179,6 +182,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             CurrentJudgements[Judgement.Okay] = replay.CountOkay;
             CurrentJudgements[Judgement.Miss] = replay.CountMiss;
 
+            InitializeJudgementWindows(windows);
             InitializeMods();
         }
 
@@ -192,6 +196,22 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <returns></returns>
         protected abstract float CalculateAccuracy();
+
+        /// <summary>
+        ///     Changes the judgement windows for the processor
+        /// </summary>
+        private void InitializeJudgementWindows(JudgementWindows windows)
+        {
+            if (windows == null)
+                return;
+
+            JudgementWindow[Judgement.Marv] = windows.Marvelous;
+            JudgementWindow[Judgement.Perf] = windows.Perfect;
+            JudgementWindow[Judgement.Great] = windows.Great;
+            JudgementWindow[Judgement.Good] = windows.Good;
+            JudgementWindow[Judgement.Okay] = windows.Okay;
+            JudgementWindow[Judgement.Miss] = windows.Miss;
+        }
 
         /// <summary>
         ///     Initializes the mods for this given play.
