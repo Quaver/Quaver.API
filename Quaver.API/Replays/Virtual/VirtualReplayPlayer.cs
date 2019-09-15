@@ -83,14 +83,15 @@ namespace Quaver.API.Replays.Virtual
         /// </summary>
         /// <param name="replay"></param>
         /// <param name="map"></param>
+        /// <param name="windows"></param>
         /// <param name="dontExtend"></param>
-        public VirtualReplayPlayer(Replay replay, Qua map, bool dontExtend = false)
+        public VirtualReplayPlayer(Replay replay, Qua map, JudgementWindows windows = null, bool dontExtend = false)
         {
             Replay = replay;
             Map = map;
             DontExtendReplay = dontExtend;
 
-            ScoreProcessor = new ScoreProcessorKeys(map, Replay.Mods);
+            ScoreProcessor = new ScoreProcessorKeys(map, Replay.Mods, windows);
 
             ActiveHitObjects = new List<HitObjectInfo>();
             ActiveHeldLongNotes = new List<HitObjectInfo>();
