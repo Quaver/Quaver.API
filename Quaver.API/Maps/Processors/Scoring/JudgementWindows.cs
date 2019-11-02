@@ -1,3 +1,5 @@
+using System;
+using Quaver.API.Enums;
 using SQLite;
 
 namespace Quaver.API.Maps.Processors.Scoring
@@ -30,5 +32,32 @@ namespace Quaver.API.Maps.Processors.Scoring
         public float Okay { get; set; } = 127;
 
         public float Miss { get; set; } = 164;
+
+        /// <summary>
+        ///     Returns the value of the window from <see cref="Judgement"/>
+        /// </summary>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public float GetValueFromJudgement(Judgement j)
+        {
+            switch (j)
+            {
+                case Judgement.Marv:
+                    return Marvelous;
+                case Judgement.Perf:
+                    return Perfect;
+                case Judgement.Great:
+                    return Great;
+                case Judgement.Good:
+                    return Good;
+                case Judgement.Okay:
+                    return Okay;
+                case Judgement.Miss:
+                    return Miss;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(j), j, null);
+            }
+        }
     }
 }

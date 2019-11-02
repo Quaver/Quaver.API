@@ -97,6 +97,11 @@ namespace Quaver.API.Maps
         public string Description { get; set; }
 
         /// <summary>
+        ///     The genre of the song
+        /// </summary>
+        public string Genre { get; set; }
+
+        /// <summary>
         ///     EditorLayer .qua data
         /// </summary>
         public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
@@ -166,6 +171,7 @@ namespace Quaver.API.Maps
                    && Creator == other.Creator
                    && DifficultyName == other.DifficultyName
                    && Description == other.Description
+                   && Genre == other.Genre
                    && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
                    && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
                    && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
