@@ -809,7 +809,7 @@ namespace Quaver.API.Maps
         /// <summary>
         /// </summary>
         /// <param name="qua"></param>
-        private static void RestoreDefaultValues(Qua qua)
+        public static void RestoreDefaultValues(Qua qua)
         {
             // Restore default values.
             for (var i = 0; i < qua.TimingPoints.Count; i++)
