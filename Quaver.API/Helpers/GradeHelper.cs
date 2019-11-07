@@ -41,12 +41,9 @@ namespace Quaver.API.Helpers
                         return Grade.B;
                     else if (accuracy >= 70)
                         return Grade.C;
-                    else if (accuracy >= 60)
-                        return Grade.D;
-                    break;
-            }
 
-            return Grade.F;
+                    return Grade.D;
+            }
         }
 
         /// <summary>
