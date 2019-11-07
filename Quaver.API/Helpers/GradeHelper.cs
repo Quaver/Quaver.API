@@ -6,10 +6,6 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Quaver.API.Enums;
 
 namespace Quaver.API.Helpers
@@ -20,30 +16,24 @@ namespace Quaver.API.Helpers
         ///     Gets the grade from an accuracy value
         /// </summary>
         /// <param name="accuracy"></param>
-        /// <param name="isPerfect"></param>
         /// <returns></returns>
-        public static Grade GetGradeFromAccuracy(float accuracy, bool isPerfect = false)
+        public static Grade GetGradeFromAccuracy(float accuracy)
         {
-            switch (accuracy)
-            {
-                case 100 when isPerfect:
-                    return Grade.XX;
-                case 100 when true:
-                    return Grade.X;
-                default:
-                    if (accuracy >= 99)
-                        return Grade.SS;
-                    else if (accuracy >= 95)
-                        return Grade.S;
-                    else if (accuracy >= 90)
-                        return Grade.A;
-                    else if (accuracy >= 80)
-                        return Grade.B;
-                    else if (accuracy >= 70)
-                        return Grade.C;
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (accuracy == 100)
+                return Grade.X;
+            if (accuracy >= 99)
+                return Grade.SS;
+            if (accuracy >= 95)
+                return Grade.S;
+            if (accuracy >= 90)
+                return Grade.A;
+            if (accuracy >= 80)
+                return Grade.B;
+            if (accuracy >= 70)
+                return Grade.C;
 
-                    return Grade.D;
-            }
+            return Grade.D;
         }
 
         /// <summary>
