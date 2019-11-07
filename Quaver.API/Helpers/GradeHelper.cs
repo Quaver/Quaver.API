@@ -65,8 +65,6 @@ namespace Quaver.API.Helpers
                     return 7;
                 case Grade.X:
                     return 8;
-                case Grade.XX:
-                    return 9;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(g), g, null);
             }
@@ -100,8 +98,6 @@ namespace Quaver.API.Helpers
                     return Grade.SS;
                 case 8:
                     return Grade.X;
-                case 9:
-                    return Grade.XX;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(i), i, null);
             }
