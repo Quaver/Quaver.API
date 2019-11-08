@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -173,7 +173,28 @@ namespace Quaver.API.Replays
                     Date = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddMilliseconds(TimePlayed);
 
                     Mode = (GameMode)br.ReadInt32();
-                    Mods = (ModIdentifier)br.ReadInt32();
+
+                    // The mirror mod is the 32-nd bit, which, when read as an Int32, results in a negative number.
+                    // To fix this, that case is handled separately.
+                    var mods = br.ReadInt32();
+
+                    // First check if the mods are None, which is -1 (all bits set). This doesn't cause issues because
+                    // there are incompatible mods among the first 32 (like all the speed mods), so all first 32 bits
+                    // can't be 1 simultaneously unless it's a None.
+                    if (mods == -1)
+                    {
+                        Mods = ModIdentifier.None;
+                        mods = 0;
+                    }
+                    else if (mods < 0)
+                    {
+                        // If the 32-nd bit is set, add the Mirror mod and unset the 32-nd bit.
+                        Mods = ModIdentifier.Mirror;
+                        mods &= ~(1 << 31);
+                    }
+                    // Add the rest of the mods.
+                    Mods |= (ModIdentifier) mods;
+
                     Score = br.ReadInt32();
                     Accuracy = br.ReadSingle();
                     MaxCombo = br.ReadInt32();
