@@ -99,11 +99,6 @@ namespace Quaver.API.Maps.Processors.Scoring
         public abstract Dictionary<Judgement, float> JudgementAccuracyWeighting { get; }
 
         /// <summary>
-        ///     The percentage for each grade.
-        /// </summary>
-        public abstract Dictionary<Grade, int> GradePercentage { get; }
-
-        /// <summary>
         ///     The window multiplier for long notes.
         ///     It multiplies the judgement window by this amount.
         /// </summary>

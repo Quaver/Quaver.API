@@ -135,21 +135,6 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public override Dictionary<Grade, int> GradePercentage { get; } = new Dictionary<Grade, int>()
-        {
-            {Grade.XX, 100},
-            {Grade.X, 100},
-            {Grade.SS, 99},
-            {Grade.S, 95},
-            {Grade.A, 90},
-            {Grade.B, 80},
-            {Grade.C, 70},
-            {Grade.D, 60},
-        };
-
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
         /// <param name="map"></param>
         /// <param name="mods"></param>
         /// <param name="windows"></param>
