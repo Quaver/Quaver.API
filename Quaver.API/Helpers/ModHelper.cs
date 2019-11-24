@@ -128,6 +128,9 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Mirror:
                         modStrings.Add("MR");
                         break;
+                    case ModIdentifier.Coop:
+                        modStrings.Add("Co-op");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
                 }

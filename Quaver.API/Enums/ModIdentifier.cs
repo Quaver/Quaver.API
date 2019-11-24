@@ -49,5 +49,6 @@ namespace Quaver.API.Enums
         Inverse = 1L << 29, // Converts regular notes into LNs and LNs into gaps.
         FullLN = 1L << 30, // Converts regular notes into LNs, keeps existing LNs.
         Mirror = 1L << 31, // Flips the map horizontally
+        Coop = 1L << 32 // Allows multiple people to play together on one client
     }
 }
