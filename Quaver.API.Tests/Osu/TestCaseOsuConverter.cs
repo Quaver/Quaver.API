@@ -120,5 +120,15 @@ namespace Quaver.API.Tests.Osu
 
             Assert.Equal(groundTruthQua.HitObjects, qua.HitObjects, HitObjectInfo.ByValueComparer);
         }
+
+        [Fact]
+        public void SuccessfulParseSongTitle()
+        {
+            var fileSongNameWithColon = "./Osu/Resources/uma vs. Morimori Atsushi - ReEnd of a Dream (Critical_Star) [Another].osu";
+            var converter = new OsuBeatmap(fileSongNameWithColon);
+
+            Assert.True(converter.IsValid);
+            Assert.Equal("Re:End of a Dream", converter.Title);
+        }
     }
 }
