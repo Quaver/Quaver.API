@@ -230,13 +230,13 @@ namespace Quaver.API.Maps.Parsers
 
                     }
 
-                    // Parse [Editor] Data
+                    // Parse [Metadata] Data
                     if (section.Equals("[Metadata]"))
                     {
                         if (line.Contains(":"))
                         {
                             var key = line.Substring(0, line.IndexOf(':'));
-                            var value = line.Split(':').Last();
+                            var value = line.Substring(line.IndexOf(':') + 1);
 
                             switch (key.Trim())
                             {
