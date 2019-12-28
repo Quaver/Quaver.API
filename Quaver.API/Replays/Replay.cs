@@ -34,7 +34,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     All of the replay frames.
         /// </summary>
-        public List<ReplayFrame> Frames { get; }
+        public List<ReplayFrame> Frames { get; set; }
 
         /// <summary>
         ///    The version of the replay the play was done on.
@@ -248,6 +248,8 @@ namespace Quaver.API.Replays
                 }
             }
         }
+
+        public void ReplaceFrames(List<ReplayFrame> frames) => Frames = frames;
 
         /// <summary>
         ///    Writes the current replay to a binary file.
