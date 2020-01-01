@@ -34,5 +34,12 @@ namespace Quaver.API.Maps.Processors.Rating
         /// <param name="processor"></param>
         /// <returns></returns>
         public abstract double CalculateRating(ScoreProcessor processor);
+
+        /// <summary>
+        ///     Calculates the accuracy required to achieve a given rating
+        /// </summary>
+        /// <param name="performanceRating"></param>
+        /// <returns></returns>
+        public abstract double GetAccuracyFromRating(double performanceRating);
     }
 }
