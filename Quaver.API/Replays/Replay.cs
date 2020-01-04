@@ -24,7 +24,7 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The version of the replay.
         /// </summary>
-        public static string CurrentVersion { get; } = "0.0.1";
+        public static string CurrentVersion { get; } = "0.0.2";
 
         /// <summary>
         ///     The game mode this replay is for.
@@ -176,24 +176,31 @@ namespace Quaver.API.Replays
 
                     // The mirror mod is the 32-nd bit, which, when read as an Int32, results in a negative number.
                     // To fix this, that case is handled separately.
-                    var mods = br.ReadInt32();
+                    if (ReplayVersion == "0.0.1" || ReplayVersion == "None")
+                    {
+                        var mods = br.ReadInt32();
 
-                    // First check if the mods are None, which is -1 (all bits set). This doesn't cause issues because
-                    // there are incompatible mods among the first 32 (like all the speed mods), so all first 32 bits
-                    // can't be 1 simultaneously unless it's a None.
-                    if (mods == -1)
-                    {
-                        Mods = ModIdentifier.None;
-                        mods = 0;
+                        // First check if the mods are None, which is -1 (all bits set). This doesn't cause issues because
+                        // there are incompatible mods among the first 32 (like all the speed mods), so all first 32 bits
+                        // can't be 1 simultaneously unless it's a None.
+                        if (mods == -1)
+                        {
+                            Mods = ModIdentifier.None;
+                            mods = 0;
+                        }
+                        else if (mods < 0)
+                        {
+                            // If the 32-nd bit is set, add the Mirror mod and unset the 32-nd bit.
+                            Mods = ModIdentifier.Mirror;
+                            mods &= ~(1 << 31);
+                        }
+                        // Add the rest of the mods.
+                        Mods |= (ModIdentifier) mods;
                     }
-                    else if (mods < 0)
+                    else
                     {
-                        // If the 32-nd bit is set, add the Mirror mod and unset the 32-nd bit.
-                        Mods = ModIdentifier.Mirror;
-                        mods &= ~(1 << 31);
+                        Mods = (ModIdentifier) br.ReadInt64();
                     }
-                    // Add the rest of the mods.
-                    Mods |= (ModIdentifier) mods;
 
                     Score = br.ReadInt32();
                     Accuracy = br.ReadSingle();
@@ -257,7 +264,13 @@ namespace Quaver.API.Replays
         public void Write(string path)
         {
             var frames = FramesToString();
-            ReplayVersion = CurrentVersion;
+
+            // TOOD: This should be removed when everyone is running the new redesign client
+            // This will manually downgrade the replay version if the user isn't using new modifiers to keep
+            // compatibility between old and new clients.
+            // 0.0.1 used to write the modifiers as a 32-bit integer, but because of the amount of new mods, they need
+            // to be written as 64-bit.
+            ReplayVersion = Mods < ModIdentifier.Speed105X ? "0.0.1" : CurrentVersion;
 
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(frames)))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
@@ -269,7 +282,12 @@ namespace Quaver.API.Replays
                 bw.Write(DateTime.Now.ToString(CultureInfo.InvariantCulture));
                 bw.Write(TimePlayed);
                 bw.Write((int)Mode);
-                bw.Write((int)Mods);
+                // This check is to keep compatibility with older clients.
+                // We only want to write a 64-bit integer for replays with newer mods activated
+                if (ReplayVersion == "0.0.1" || Mods < ModIdentifier.Speed105X)
+                    bw.Write((int) Mods);
+                else
+                    bw.Write((long) Mods);
                 bw.Write(Score);
                 bw.Write(Accuracy);
                 bw.Write(MaxCombo);
