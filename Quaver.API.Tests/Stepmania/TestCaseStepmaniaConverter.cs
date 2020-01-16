@@ -8,7 +8,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using Quaver.API.Maps.Parsers.StepMania;
+using Quaver.API.Maps.Parsers.Stepmania;
 using Xunit;
 
 namespace Quaver.API.Tests.Stepmania
@@ -18,8 +18,8 @@ namespace Quaver.API.Tests.Stepmania
         [Fact]
         public void ConvertToQua()
         {
-            var converter = new StepmaniaConverter("./Stepmania/Resources/chaoz-airflow.sm");
-            var quas = converter.ToQua();
+            var converter = new StepFile("./Stepmania/Resources/chaoz-airflow.sm");
+            var quas = converter.ToQuas();
 
             Assert.Single(quas);
         }
@@ -30,8 +30,8 @@ namespace Quaver.API.Tests.Stepmania
             var dir = "./tests/sm";
             Directory.CreateDirectory(dir);
 
-            var converter = new StepmaniaConverter("./Stepmania/Resources/chaoz-airflow.sm");
-            var quas = converter.ToQua();
+            var converter = new StepFile("./Stepmania/Resources/chaoz-airflow.sm");
+            var quas = converter.ToQuas();
 
 
             for (var i = 0; i < quas.Count; i++)
@@ -41,8 +41,8 @@ namespace Quaver.API.Tests.Stepmania
         [Fact]
         public void CheckObjectCount()
         {
-            var converter = new StepmaniaConverter("./Stepmania/Resources/chaoz-airflow.sm");
-            var qua = converter.ToQua().First();
+            var converter = new StepFile("./Stepmania/Resources/chaoz-airflow.sm");
+            var qua = converter.ToQuas().First();
 
             Assert.True(qua.HitObjects.Count >= 1);
         }
@@ -52,7 +52,7 @@ namespace Quaver.API.Tests.Stepmania
         {
             try
             {
-                var converter = new StepmaniaConverter("bad-path-no-file");
+                var converter = new StepFile("bad-path-no-file");
                 Assert.NotNull(converter);
             }
             catch (Exception e)
