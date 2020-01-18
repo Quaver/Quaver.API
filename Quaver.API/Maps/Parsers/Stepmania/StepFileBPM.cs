@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Quaver.API.Maps.Parsers.Stepmania
@@ -35,7 +36,14 @@ namespace Quaver.API.Maps.Parsers.Stepmania
 
             foreach (var bpm in split)
             {
-                var bpmSplit = bpm.Split('=');
+                if (string.IsNullOrEmpty(bpm))
+                    continue;
+
+                var bpmSplit = bpm.Replace(",", "").Replace(";", "").Split('=');
+
+                if (bpmSplit.Length != 2)
+                    continue;
+
                 bpms.Add(new StepFileBPM(float.Parse(bpmSplit[0]), float.Parse(bpmSplit[1])));
             }
 

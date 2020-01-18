@@ -34,7 +34,14 @@ namespace Quaver.API.Maps.Parsers.Stepmania
 
             foreach (var stop in split)
             {
-                var stopSplit = stop.Split('=');
+                if (string.IsNullOrEmpty(stop))
+                    continue;
+
+                var stopSplit = stop.Replace(",", "").Replace(";", "").Split('=');
+
+                if (stopSplit.Length != 2)
+                    continue;
+
                 stops.Add(new StepFileStop(float.Parse(stopSplit[0]), float.Parse(stopSplit[1])));
             }
 
