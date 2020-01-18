@@ -104,6 +104,9 @@ namespace Quaver.API.Maps.Parsers.Stepmania
             // The currently parsed chart
             StepFileChart currentChart = null;
 
+            var inBpms = false;
+            var inStops = false;
+
             foreach (var line in lines)
             {
                 var trimmedLine = line.Trim();
@@ -168,9 +171,11 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                         case "SELECTABLE":
                             break;
                         case "BPMS":
+                            inBpms = true;
                             Bpms = StepFileBPM.Parse(value);
                             break;
                         case "STOPS":
+                            inStops = true;
                             Stops = string.IsNullOrEmpty(value) ? new List<StepFileStop>() : StepFileStop.Parse(value);
                             break;
                         case "NOTES":
@@ -179,6 +184,20 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             Charts.Add(chart);
                             break;
                     }
+                }
+                else if (inBpms)
+                {
+                    Bpms.AddRange(StepFileBPM.Parse(line));
+
+                    if (line.Contains(";"))
+                        inBpms = false;
+                }
+                else if (inStops)
+                {
+                    Stops.AddRange(StepFileStop.Parse(line));
+
+                    if (line.Contains(";"))
+                        inStops = false;
                 }
                 // Ignore comments
                 else if (trimmedLine.StartsWith("//"))
