@@ -173,10 +173,16 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                         case "BPMS":
                             inBpms = true;
                             Bpms = StepFileBPM.Parse(value);
+
+                            if (line.Contains(";"))
+                                inBpms = false;
                             break;
                         case "STOPS":
                             inStops = true;
                             Stops = string.IsNullOrEmpty(value) ? new List<StepFileStop>() : StepFileStop.Parse(value);
+
+                            if (line.Contains(";"))
+                                inStops = false;
                             break;
                         case "NOTES":
                             var chart = new StepFileChart();
