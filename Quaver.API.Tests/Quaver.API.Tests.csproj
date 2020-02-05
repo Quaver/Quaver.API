@@ -11,6 +11,9 @@
     <ProjectReference Include="..\Quaver.API\Quaver.API.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Malody\Resources\1574436578.mc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Osu\Resources\uma vs. Morimori Atsushi - ReEnd of a Dream %28Critical_Star%29 [Another].osu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
