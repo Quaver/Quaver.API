@@ -3,11 +3,9 @@ using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 
-namespace Quaver.API.Maps.Parsers
+namespace Quaver.API.Maps.Parsers.Malody
 {
     public class MalodyFile
     {
@@ -60,7 +58,6 @@ namespace Quaver.API.Maps.Parsers
                     qua.Mode = (GameMode)(-1);
                     break;
             }
-
 
             foreach (var tp in TimingPoints)
             {
@@ -162,103 +159,13 @@ namespace Quaver.API.Maps.Parsers
         /// <param name="beats"></param>
         /// <param name="prevOffset"></param>
         /// <returns></returns>
-        private int GetOffset(float bpm, float beats, int prevOffset) => (int)(1000 * (60 / bpm) * beats + prevOffset);
+        private int GetOffset(float bpm, float beats, int prevOffset) => (int)((1000 * (60 / bpm) * beats) + prevOffset);
 
         /// <summary>
         /// Converts a beat (Form: [measure, nth beat, divisor]) to a single float number
         /// </summary>
         /// <param name="beat"></param>
         /// <returns></returns>
-        private float GetBeat(List<int> beat) => beat[0] + beat[1] / (float)beat[2];
+        private float GetBeat(List<int> beat) => beat[0] + (beat[1] / (float)beat[2]);
     }
-    public class MalodyHitObject
-    {
-        [JsonProperty("beat")]
-        public List<int> Beat { get; set; }
-
-        [JsonProperty("endbeat")]
-        public List<int> BeatEnd { get; set; }
-
-        [JsonProperty("column")]
-        public int Column { get; set; }
-
-        [JsonProperty("volume")]
-        public int Volume { get; set; }
-
-        [JsonProperty("offset")]
-        public int Offset { get; set; }
-
-        [JsonProperty("type")]
-        public int Type { get; set; }
-
-        [JsonProperty("sound")]
-        public string Sound { get; set; }
-    }
-
-    public class MalodyTimingPoint
-    {
-        [JsonProperty("beat")]
-        public List<int> Beat { get; set; }
-
-        [JsonProperty("bpm")]
-        public float Bpm { get; set; }
-    }
-
-    public class MalodySvPoint
-    {
-        [JsonProperty("beat")]
-        public List<int> Beat { get; set; }
-
-        [JsonProperty("scroll")]
-        public float Scroll { get; set; }
-    }
-
-    public class MalodyFileMeta
-    {
-        [JsonProperty("creator")]
-        public string Creator { get; set; }
-
-        [JsonProperty("background")]
-        public string Background { get; set; }
-
-        [JsonProperty("version")]
-        public string Version { get; set; }
-
-        [JsonProperty("song")]
-        public MalodyFileSong Song { get; set; }
-
-        [JsonProperty("preview")]
-        public int PreviewTime { get; set; }
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        [JsonProperty("mode_ext")]
-        public MalodyMetaKeymode Keymode { get; set; }
-    }
-
-    public class MalodyMetaKeymode
-    {
-        [JsonProperty("column")]
-        public int Keymode { get; set; }
-    }
-
-    public class MalodyFileSong
-    {
-        [JsonProperty("artist")]
-        public string Artist { get; set; }
-
-        [JsonProperty("artistorg")]
-        public string ArtistOriginal { get; set; }
-
-        [JsonProperty("title")]
-        public string Title { get; set; }
-
-        [JsonProperty("titleorg")]
-        public string TitleOriginal { get; set; }
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
-    }
-
 }
