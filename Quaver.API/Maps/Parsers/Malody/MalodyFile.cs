@@ -54,6 +54,9 @@ namespace Quaver.API.Maps.Parsers.Malody
                 Description = $"This is a Quaver converted version of {Meta.Creator}'s map."
             };
 
+            if (Meta.Mode != 0)
+                throw new ArgumentException("Only the 'Key' Malody game mode can be converted to Qua");
+
             switch (Meta.Keymode.Keymode)
             {
                 case 4:

@@ -24,6 +24,9 @@ namespace Quaver.API.Maps.Parsers.Malody
         [JsonProperty("id")]
         public int Id { get; set; }
 
+        [JsonProperty("mode")]
+        public int Mode { get; set; }
+
         [JsonProperty("mode_ext")]
         public MalodyMetaKeymode Keymode { get; set; }
     }
