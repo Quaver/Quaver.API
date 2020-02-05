@@ -13,7 +13,7 @@ namespace Quaver.API.Tests.Malody
         [Fact]
         public void ConvertToQua()
         {
-            var converter = JsonConvert.DeserializeObject<MalodyFile>(File.ReadAllText("./Malody/Resources/1574436578.mc"));
+            var converter = MalodyFile.Parse("./Malody/Resources/1574436578.mc");
             var qua = converter.ToQua();
 
             Assert.NotNull(qua);
@@ -25,7 +25,7 @@ namespace Quaver.API.Tests.Malody
             var dir = "./tests/malody";
             Directory.CreateDirectory(dir);
 
-            var converter = JsonConvert.DeserializeObject<MalodyFile>(File.ReadAllText("./Malody/Resources/1574436578.mc"));
+            var converter = MalodyFile.Parse("./Malody/Resources/1574436578.mc");
             var qua = converter.ToQua();
 
             qua.Save($"{dir}/map.qua");
@@ -34,7 +34,7 @@ namespace Quaver.API.Tests.Malody
         [Fact]
         public void CheckObjectCount()
         {
-            var converter = JsonConvert.DeserializeObject<MalodyFile>(File.ReadAllText("./Malody/Resources/1574436578.mc"));
+            var converter = MalodyFile.Parse("./Malody/Resources/1574436578.mc");
             var qua = converter.ToQua();
 
             Assert.True(qua.HitObjects.Count >= 1);
@@ -45,7 +45,7 @@ namespace Quaver.API.Tests.Malody
         {
             try
             {
-                var converter = JsonConvert.DeserializeObject<MalodyFile>(File.ReadAllText("bad-path-no-file"));
+                var converter = MalodyFile.Parse("bad-path-no-file");
                 Assert.NotNull(converter);
             }
             catch (Exception e)

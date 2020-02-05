@@ -3,6 +3,7 @@ using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Quaver.API.Maps.Parsers.Malody
@@ -22,13 +23,19 @@ namespace Quaver.API.Maps.Parsers.Malody
         public List<MalodySvPoint> SvPoints { get; set; }
 
         /// <summary>
+        ///     Parses a malody file from a file path
+        /// </summary>
+        /// <returns></returns>
+        public static MalodyFile Parse(string path) => JsonConvert.DeserializeObject<MalodyFile>(File.ReadAllText(path));
+
+        /// <summary>
         /// Converts a Malody object to Qua
         /// </summary>
         /// <returns>Qua object</returns>
         public Qua ToQua()
         {
-            var audioFile = Hitobjects.FirstOrDefault(x => x.Type == 1).Sound;
-            var audioOffset = -Hitobjects.FirstOrDefault(x => x.Type == 1).Offset;
+            var audioFile = Hitobjects.FirstOrDefault(x => x.Type == 1)?.Sound;
+            var audioOffset = -Hitobjects.FirstOrDefault(x => x.Type == 1)?.Offset;
 
             var qua = new Qua()
             {
