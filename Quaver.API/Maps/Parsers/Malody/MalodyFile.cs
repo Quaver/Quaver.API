@@ -3,6 +3,7 @@ using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 
@@ -34,8 +35,8 @@ namespace Quaver.API.Maps.Parsers.Malody
         /// <returns>Qua object</returns>
         public Qua ToQua()
         {
-            var audioFile = Hitobjects.FirstOrDefault(x => x.Type == 1)?.Sound;
-            var audioOffset = -Hitobjects.FirstOrDefault(x => x.Type == 1)?.Offset;
+            var audioFile = Hitobjects.FirstOrDefault(x => x.Type == 1).Sound;
+            var audioOffset = -Hitobjects.FirstOrDefault(x => x.Type == 1).Offset;
 
             var qua = new Qua()
             {
@@ -62,8 +63,7 @@ namespace Quaver.API.Maps.Parsers.Malody
                     qua.Mode = GameMode.Keys7;
                     break;
                 default:
-                    qua.Mode = (GameMode)(-1);
-                    break;
+                    throw new InvalidEnumArgumentException();
             }
 
             foreach (var tp in TimingPoints)
@@ -90,43 +90,38 @@ namespace Quaver.API.Maps.Parsers.Malody
 
             foreach (var ho in Hitobjects)
             {
-                try
+                KeySoundInfo keySound;
+
+                if (ho.Type == 1) // The song itself, doesn't have a note representation
+                    continue;
+
+                if (string.IsNullOrEmpty(ho.Sound))
+                    keySound = null;
+                else
                 {
-                    KeySoundInfo keySound;
-
-                    if (ho.Type == 1) // The song itself, doesn't have a note representation
-                        continue;
-                    else if (string.IsNullOrEmpty(ho.Sound))
-                        keySound = null;
-                    else
+                    var cas = new CustomAudioSampleInfo
                     {
-                        var cas = new CustomAudioSampleInfo()
-                        {
-                            Path = ho.Sound,
-                            UnaffectedByRate = false
-                        };
+                        Path = ho.Sound,
+                        UnaffectedByRate = false
+                    };
 
-                        if (!qua.CustomAudioSamples.Contains(cas))
-                            qua.CustomAudioSamples.Add(cas);
+                    if (!qua.CustomAudioSamples.Contains(cas))
+                        qua.CustomAudioSamples.Add(cas);
 
-                        keySound = new KeySoundInfo()
-                        {
-                            Sample = qua.CustomAudioSamples.IndexOf(cas),
-                            Volume = ho.Volume
-                        };
-                    }
-
-                    qua.HitObjects.Add(new Structures.HitObjectInfo
+                    keySound = new KeySoundInfo
                     {
-                        StartTime = GetMilliSeconds(GetBeat(ho.Beat), audioOffset),
-                        EndTime = ho.BeatEnd == null ? 0 : GetMilliSeconds(GetBeat(ho.BeatEnd), audioOffset),
-                        Lane = ho.Column + 1,
-                        KeySounds = keySound == null ? new List<KeySoundInfo>() : new List<KeySoundInfo> { keySound }
-                    });
+                        Sample = qua.CustomAudioSamples.IndexOf(cas),
+                        Volume = ho.Volume
+                    };
                 }
-                catch
+
+                qua.HitObjects.Add(new HitObjectInfo
                 {
-                }
+                    StartTime = GetMilliSeconds(GetBeat(ho.Beat), audioOffset),
+                    EndTime = ho.BeatEnd == null ? 0 : GetMilliSeconds(GetBeat(ho.BeatEnd), audioOffset),
+                    Lane = ho.Column + 1,
+                    KeySounds = keySound == null ? new List<KeySoundInfo>() : new List<KeySoundInfo> { keySound }
+                });
             }
 
             qua.Sort();
@@ -146,14 +141,17 @@ namespace Quaver.API.Maps.Parsers.Malody
         private int GetMilliSeconds(float beat, int offset)
         {
             var ms = offset;
+
             var i = 1;
-            for (; i < TimingPoints.Count(); i++)
+
+            for (; i < TimingPoints.Count; i++)
             {
                 if (GetBeat(TimingPoints[i].Beat) >= beat)
                     break;
 
                 offset = GetOffset(TimingPoints[i - 1].Bpm, GetBeat(TimingPoints[i].Beat) - GetBeat(TimingPoints[i - 1].Beat), offset);
             }
+
             ms = GetOffset(TimingPoints[i - 1].Bpm, beat - GetBeat(TimingPoints[i - 1].Beat), offset);
 
             return ms;
