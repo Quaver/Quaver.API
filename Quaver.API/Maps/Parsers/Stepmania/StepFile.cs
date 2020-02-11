@@ -227,7 +227,6 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                 // Parsing the actual notes (ex: 0001, 0100...)
                 else if (currentChart != null && currentChart.GrooveRadarValues != null && !string.IsNullOrEmpty(trimmedLine))
                 {
-                    Console.WriteLine("??");
                     // Denotes a new measure
                     if (trimmedLine.StartsWith(","))
                     {
