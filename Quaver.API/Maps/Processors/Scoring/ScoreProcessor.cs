@@ -184,7 +184,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
-        public abstract void CalculateScore(Judgement judgement);
+        public abstract void CalculateScore(Judgement judgement, bool isLongNoteRelease = false);
 
         /// <summary>
         ///     Calculates the accuracy of the current play session.
@@ -216,6 +216,15 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             for (var i = 0; i < JudgementWindow.Count; i++)
                 JudgementWindow[(Judgement) i] *= ModHelper.GetRateFromMods(Mods);
+
+            if (Mods.HasFlag(ModIdentifier.LongNoteAdjust))
+            {
+                WindowReleaseMultiplier[Judgement.Marv] = 2f;
+                WindowReleaseMultiplier[Judgement.Perf] = 1.8f;
+                WindowReleaseMultiplier[Judgement.Great] = 1.7f;
+                WindowReleaseMultiplier[Judgement.Good] = 1.5f;
+                WindowReleaseMultiplier[Judgement.Okay] = 1.5f;
+            }
         }
 
         /// <summary>

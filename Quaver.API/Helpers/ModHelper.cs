@@ -161,6 +161,9 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.Coop:
                         modStrings.Add("Co-op");
                         break;
+                    case ModIdentifier.LongNoteAdjust:
+                        modStrings.Add("LNA");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
                 }

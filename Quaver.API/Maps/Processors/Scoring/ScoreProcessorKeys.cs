@@ -204,7 +204,7 @@ namespace Quaver.API.Maps.Processors.Scoring
                 return judgement;
 
             if (calculateAllStats)
-                CalculateScore(judgement);
+                CalculateScore(judgement, keyPressType == KeyPressType.Release);
 
             return judgement;
         }
@@ -214,7 +214,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Calculate Score and Health increase/decrease with a given judgement.
         /// </summary>
         /// <param name="judgement"></param>
-        public override void CalculateScore(Judgement judgement)
+        /// <param name="isLongNoteRelease"></param>
+        public override void CalculateScore(Judgement judgement, bool isLongNoteRelease = false)
         {
             // Update Judgement count
             CurrentJudgements[judgement]++;
@@ -264,8 +265,34 @@ namespace Quaver.API.Maps.Processors.Scoring
 #endregion
 
 #region HEALTH_CALCULATION
+            var releaseMultiplier = 1f;
+
             // Add health based on the health weighting for that given judgement.
-            var newHealth = Health += JudgementHealthWeighting[judgement];
+            if (Mods.HasFlag(ModIdentifier.LongNoteAdjust))
+            {
+                if (isLongNoteRelease)
+                {
+                    switch (judgement)
+                    {
+                        case Judgement.Marv:
+                        case Judgement.Perf:
+                        case Judgement.Great:
+                            break;
+                        case Judgement.Good:
+                        case Judgement.Okay:
+                        case Judgement.Miss:
+                            // Reduce HP punishment for LN releases
+                            releaseMultiplier = 0.70f;
+                            break;
+                        case Judgement.Ghost:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(judgement), judgement, null);
+                    }
+                }
+            }
+
+            var newHealth = Health += JudgementHealthWeighting[judgement] * releaseMultiplier;
 
             // Constrain health from 0-100
             if (newHealth <= 0)

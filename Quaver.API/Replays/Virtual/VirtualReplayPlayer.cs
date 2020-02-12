@@ -245,7 +245,8 @@ namespace Quaver.API.Replays.Virtual
                             // Add another miss for an LN (head and tail)
                             if (hitObject.IsLongNote)
                             {
-                                ScoreProcessor.CalculateScore(Judgement.Miss);
+                                ScoreProcessor.CalculateScore(Judgement.Miss, true);
+
                                 ScoreProcessor.Stats.Add(new HitStat(HitStatType.Miss, KeyPressType.Press, hitObject, Time, Judgement.Miss, int.MinValue,
                                     ScoreProcessor.Accuracy, ScoreProcessor.Health));
                             }
@@ -295,7 +296,7 @@ namespace Quaver.API.Replays.Virtual
                         // The LN was released too early (miss)
                         else
                         {
-                            ScoreProcessor.CalculateScore(Judgement.Miss);
+                            ScoreProcessor.CalculateScore(Judgement.Miss, true);
 
                             // Add a new stat to ScoreProcessor.
                             var stat = new HitStat(HitStatType.Hit, KeyPressType.Release, hitObject, Time, Judgement.Miss, hitDifference,
@@ -329,7 +330,7 @@ namespace Quaver.API.Replays.Virtual
                 if (!(Time > hitObject.EndTime + releaseWindow))
                     continue;
 
-                ScoreProcessor.CalculateScore(Judgement.Okay);
+                ScoreProcessor.CalculateScore(Judgement.Okay, true);
 
                 // Add new miss stat.
                 var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, Judgement.Okay, int.MinValue,
@@ -366,7 +367,7 @@ namespace Quaver.API.Replays.Virtual
                     // Long notes count as two misses, so add another one if the object is one.
                     if (hitObject.IsLongNote)
                     {
-                        ScoreProcessor.CalculateScore(Judgement.Miss);
+                        ScoreProcessor.CalculateScore(Judgement.Miss, true);
                         ScoreProcessor.Stats.Add(stat);
                     }
 
