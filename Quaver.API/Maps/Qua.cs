@@ -132,11 +132,11 @@ namespace Quaver.API.Maps
         public List<HitObjectInfo> HitObjects { get; private set; } = new List<HitObjectInfo>();
 
         /// <summary>
-        ///     Finds the length of the map
+        ///     Finds the length of the map from the first to the final object
         /// </summary>
         /// <returns></returns>
         [YamlIgnore]
-        public int Length => HitObjects.Count == 0 ? 0 : HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
+        public int Length => HitObjects.Count == 0 ? 0 : HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime)) - HitObjects.Min(x => x.StartTime);
 
         /// <summary>
         ///     Integer based seed used for shuffling the lanes when randomize mod is active.
