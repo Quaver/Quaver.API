@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -21,7 +21,7 @@ namespace Quaver.Tools.Commands
 {
     public class VirtualReplayPlayerCommand : Command
     {
-        /// <summary>  
+        /// <summary>
         /// </summary>
         public Replay Replay { get; }
 
@@ -119,6 +119,7 @@ namespace Quaver.Tools.Commands
                     CountGood = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Good],
                     CountOkay = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Okay],
                     CountMiss = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Miss],
+                    Hits = virtualPlayer.ScoreProcessor.Stats.Select(x => x.HitDifference).ToList()
                 },
             }));
         }
