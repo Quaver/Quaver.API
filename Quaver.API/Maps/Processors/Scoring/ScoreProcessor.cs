@@ -217,13 +217,14 @@ namespace Quaver.API.Maps.Processors.Scoring
             for (var i = 0; i < JudgementWindow.Count; i++)
                 JudgementWindow[(Judgement) i] *= ModHelper.GetRateFromMods(Mods);
 
-            if (Mods.HasFlag(ModIdentifier.LongNoteAdjust))
+            if (Mods.HasFlag(ModIdentifier.HeatlthAdjust))
             {
-                WindowReleaseMultiplier[Judgement.Marv] = 2f;
-                WindowReleaseMultiplier[Judgement.Perf] = 1.8f;
-                WindowReleaseMultiplier[Judgement.Great] = 1.7f;
-                WindowReleaseMultiplier[Judgement.Good] = 1.5f;
-                WindowReleaseMultiplier[Judgement.Okay] = 1.5f;
+                JudgementHealthWeighting[Judgement.Marv] = 0.65f;
+                JudgementHealthWeighting[Judgement.Perf] = 0.45f;
+                JudgementHealthWeighting[Judgement.Great] = 0.3f;
+                JudgementHealthWeighting[Judgement.Good] = 0.1f;
+                JudgementHealthWeighting[Judgement.Okay] = -2.5f;
+                JudgementHealthWeighting[Judgement.Miss] = -5.0f;
             }
         }
 

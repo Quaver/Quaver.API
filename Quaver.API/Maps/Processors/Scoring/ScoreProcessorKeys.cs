@@ -195,6 +195,16 @@ namespace Quaver.API.Maps.Processors.Scoring
                 if (!(absoluteDifference <= window))
                     continue;
 
+                // With HealthAdjust, okays are no longer possible on releases
+                if (Mods.HasFlag(ModIdentifier.HeatlthAdjust))
+                {
+                    if (keyPressType == KeyPressType.Release && j == Judgement.Okay)
+                    {
+                        judgement = Judgement.Good;
+                        break;
+                    }
+                }
+
                 judgement = j;
                 break;
             }
@@ -265,34 +275,7 @@ namespace Quaver.API.Maps.Processors.Scoring
 #endregion
 
 #region HEALTH_CALCULATION
-            var releaseMultiplier = 1f;
-
-            // Add health based on the health weighting for that given judgement.
-            if (Mods.HasFlag(ModIdentifier.LongNoteAdjust))
-            {
-                if (isLongNoteRelease)
-                {
-                    switch (judgement)
-                    {
-                        case Judgement.Marv:
-                        case Judgement.Perf:
-                        case Judgement.Great:
-                            break;
-                        case Judgement.Good:
-                        case Judgement.Okay:
-                        case Judgement.Miss:
-                            // Reduce HP punishment for LN releases
-                            releaseMultiplier = 0.70f;
-                            break;
-                        case Judgement.Ghost:
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException(nameof(judgement), judgement, null);
-                    }
-                }
-            }
-
-            var newHealth = Health += JudgementHealthWeighting[judgement] * releaseMultiplier;
+            var newHealth = Health += JudgementHealthWeighting[judgement];
 
             // Constrain health from 0-100
             if (newHealth <= 0)

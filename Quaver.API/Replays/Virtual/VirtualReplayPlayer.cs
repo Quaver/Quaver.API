@@ -285,7 +285,7 @@ namespace Quaver.API.Replays.Virtual
                         var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Release);
 
                         // LN was released during a hit window.
-                        if (judgement != Judgement.Ghost)
+                        if (judgement != Judgement.Ghost && judgement != Judgement.Miss)
                         {
                             // Add a new hit stat to the score processor.
                             var stat = new HitStat(HitStatType.Hit, KeyPressType.Release, hitObject, Time, judgement, hitDifference,
@@ -330,10 +330,15 @@ namespace Quaver.API.Replays.Virtual
                 if (!(Time > hitObject.EndTime + releaseWindow))
                     continue;
 
-                ScoreProcessor.CalculateScore(Judgement.Okay, true);
+                var missedReleaseJudgement = Judgement.Okay;
+
+                if (ScoreProcessor.Mods.HasFlag(ModIdentifier.HeatlthAdjust))
+                    missedReleaseJudgement = Judgement.Good;
+
+                ScoreProcessor.CalculateScore(missedReleaseJudgement, true);
 
                 // Add new miss stat.
-                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, Judgement.Okay, int.MinValue,
+                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, missedReleaseJudgement, int.MinValue,
                     ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                 ScoreProcessor.Stats.Add(stat);
