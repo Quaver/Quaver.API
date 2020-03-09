@@ -11,6 +11,7 @@
   <ItemGroup>
     <PackageReference Include="HoLLy.osu.DatabaseReader" Version="2.1.0" />
     <PackageReference Include="MonoGame.Extended" Version="1.1.0" />
+    <PackageReference Include="MoonSharp" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="YamlDotNet" Version="5.1.0" />

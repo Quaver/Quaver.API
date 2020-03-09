@@ -8,6 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Interop;
 using Quaver.API.Enums;
 using YamlDotNet.Serialization;
 
@@ -17,44 +19,76 @@ namespace Quaver.API.Maps.Structures
     /// <summary>
     ///     HitObjects section of the .qua
     /// </summary>
+    [MoonSharpUserData]
     [Serializable]
     public class HitObjectInfo
     {
         /// <summary>
         ///     The time in milliseconds when the HitObject is supposed to be hit.
         /// </summary>
-        public int StartTime { get; set; }
+        public int StartTime
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     The lane the HitObject falls in
         /// </summary>
-        public int Lane { get; set; }
+        public int Lane
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     The endtime of the HitObject (if greater than 0, it's considered a hold note.)
         /// </summary>
-        public int EndTime { get; set; }
+        public int EndTime
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     Bitwise combination of hit sounds for this object
         /// </summary>
-        public HitSounds HitSound { get; set; }
+        public HitSounds HitSound
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     Key sounds to play when this object is hit.
         /// </summary>
+        [MoonSharpVisible(false)]
         public List<KeySoundInfo> KeySounds { get; set; } = new List<KeySoundInfo>();
 
         /// <summary>
         ///     The layer in the editor that the object belongs to.
         /// </summary>
-        public int EditorLayer { get; set; }
+        public int EditorLayer
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     If the object is a long note. (EndTime > 0)
         /// </summary>
         [YamlIgnore]
         public bool IsLongNote => EndTime > 0;
+
+        /// <summary>
+        ///     Returns if the object is allowed to be edited in lua scripts
+        /// </summary>
+        [YamlIgnore]
+        public bool IsEditableInLuaScript
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     Gets the timing point this object is in range of.
@@ -70,6 +104,52 @@ namespace Quaver.API.Maps.Structures
             }
 
             return timingPoints.First();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="time"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void SetStartTime(int time)
+        {
+            ThrowUneditableException();
+            StartTime = time;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void SetEndTime(int time)
+        {
+            ThrowUneditableException();
+            EndTime = time;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="lane"></param>
+        public void SetLane(int lane)
+        {
+            ThrowUneditableException();
+            Lane = lane;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="hitsounds"></param>
+        public void SetHitSounds(HitSounds hitsounds)
+        {
+            ThrowUneditableException();
+            HitSound = hitsounds;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
+        private void ThrowUneditableException()
+        {
+            if (!IsEditableInLuaScript)
+                throw new InvalidOperationException("Value is not allowed to be edited in lua scripts.");
         }
 
         /// <summary>
