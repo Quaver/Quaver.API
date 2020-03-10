@@ -530,6 +530,58 @@ namespace Quaver.API.Maps
             }
         }
 
+        /// <summary>
+        ///     Computes the "SV-ness" of a map.
+        ///
+        ///     The general idea is the "SV-ness" is higher when there are larger SV-changes over shorter time.
+        ///
+        ///     SliderVelocities, TimingPoints and HitObjects must be sorted by time before calling this function.
+        /// </summary>
+        /// <returns></returns>
+        public double SVFactor()
+        {
+            // Time between SVs in milliseconds is max()'d with this number.
+            const float MIN_SV_TIME_DIFFERENCE = 250;
+            // SVs below this are considered the same. "Basically stationary."
+            const float MIN_MULTIPLIER = 1e-4f;
+            // SVs above this are considered the same. "Basically teleport."
+            const float MAX_MULTIPLIER = 1e4f;
+
+            var qua = WithNormalizedSVs();
+
+            var sum = 0d;
+            for (var i = 1; i < qua.SliderVelocities.Count; i++)
+            {
+                var prevSv = qua.SliderVelocities[i - 1];
+                var sv = qua.SliderVelocities[i];
+
+                // The idea behind capping the time difference from below is to not differentiate between different
+                // time steps of a smooth SV change generator. For example, an SV change from 1× to 0.1× over 1 second
+                // should count the same regardless of whether it's done in 100 ms intervals or in 50 ms intervals.
+                var timeDifference = Math.Max(sv.StartTime - prevSv.StartTime, MIN_SV_TIME_DIFFERENCE);
+
+                // If the SV changes sign, difference of absolute SV values won't give the correct result, so it's special-cased.
+                var differentSigns = (sv.Multiplier * prevSv.Multiplier) < 0;
+
+                var prevMultiplier = Math.Min(Math.Max(Math.Abs(prevSv.Multiplier), MIN_MULTIPLIER), MAX_MULTIPLIER);
+                var multiplier = Math.Min(Math.Max(Math.Abs(sv.Multiplier), MIN_MULTIPLIER), MAX_MULTIPLIER);
+
+                // The difference between SV multipliers is computed under a log, because it matters that the SV multiplier
+                // changed, for example, ten-fold (from 0.1× to 1× or from 1× to 10×), and not that it changed _by_ some value (e.g. by 0.9 or by 9).
+                var prevLogMultiplier = Math.Log(prevMultiplier);
+                var logMultiplier = Math.Log(multiplier);
+
+                var difference = Math.Abs(logMultiplier - prevLogMultiplier);
+                if (differentSigns)
+                    // If the SV changes sign, use the same difference as if the SV changed to or from zero.
+                    difference = Math.Max(logMultiplier, prevLogMultiplier) - Math.Log(MIN_MULTIPLIER);
+
+                sum += difference / timeDifference;
+            }
+
+            return sum;
+        }
+
         public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";
 
         /// <summary>
