@@ -1,0 +1,19 @@
+---
+Mode: Keys4
+Title: ~
+Artist: ~
+Creator: ~
+DifficultyName: ~
+AudioFile: ~
+BPMDoesNotAffectScrollVelocity: true
+InitialScrollVelocity: -8.0
+TimingPoints:
+  - StartTime: 0.0
+    Bpm: 1.0
+    Signature: 0
+SliderVelocities:
+  - StartTime: -12057820.0
+    Multiplier: -4.0
+  - StartTime: 0.0
+    Multiplier: -8.0
+HitObjects: []

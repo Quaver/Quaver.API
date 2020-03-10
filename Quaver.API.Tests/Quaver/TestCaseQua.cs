@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
+using System.Text;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Structures;
@@ -209,6 +210,56 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/keysounds-invalid-sample-index.qua", false);
             Assert.False(qua.IsValid());
+        }
+
+        [Fact]
+        public void SVNormalization()
+        {
+            var tests = new[]
+            {
+                "regression-1",
+                "regression-2",
+                "regression-3",
+                "regression-4",
+                "regression-5",
+                "regression-6",
+                "regression-7",
+                "regression-8",
+                "sample",
+                "sv-at-first-timing-point",
+                "sv-before-first-timing-point",
+                "symphony",
+                "timing-points-override-svs",
+                "cheat",
+            };
+
+            foreach (var test in tests)
+            {
+                // These files were generated with plitki-map-qua (taken as ground truth) from its test suite.
+                var pathNormalized = $"./Quaver/Resources/{test}.qua";
+                var pathDenormalized = $"./Quaver/Resources/{test}-normalized.qua";
+
+                var quaDenormalized = Qua.Parse(pathNormalized, false);
+                var quaNormalized = Qua.Parse(pathDenormalized, false);
+
+                // Check that the normalization gives the correct result.
+                var quaDenormalizedNormalized = quaDenormalized.WithNormalizedSVs();
+                Assert.True(quaDenormalizedNormalized.EqualByValue(quaNormalized));
+
+                // Denormalization can move the first SV (it doesn't matter where to put the InitialScrollVelocity SV).
+                // So check back-and-forth instead of just denormalization.
+                var quaNormalizedDenormalizedNormalized = quaNormalized.WithDenormalizedSVs().WithNormalizedSVs();
+                Assert.True(quaNormalizedDenormalizedNormalized.EqualByValue(quaNormalized));
+
+                // Check that serializing and parsing the result does not change it.
+                var bufferDenormalized = Encoding.UTF8.GetBytes(quaDenormalized.Serialize());
+                var quaDenormalized2 = Qua.Parse(bufferDenormalized, false);
+                Assert.True(quaDenormalized.EqualByValue(quaDenormalized2));
+
+                var bufferNormalized = Encoding.UTF8.GetBytes(quaNormalized.Serialize());
+                var quaNormalized2 = Qua.Parse(bufferNormalized, false);
+                Assert.True(quaNormalized.EqualByValue(quaNormalized2));
+            }
         }
     }
 }

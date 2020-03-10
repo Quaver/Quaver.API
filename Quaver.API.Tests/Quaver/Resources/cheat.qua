@@ -1,0 +1,5979 @@
+---
+Mode: Keys4
+Title: Shiawase ni Nareru Kakushi Command ga Arurashii
+Artist: Utata-P feat. Yuzuki Yukari
+Creator: Kamikaze
+DifficultyName: Cheat Code
+AudioFile: audiooooo.mp3
+BPMDoesNotAffectScrollVelocity: false
+InitialScrollVelocity: 0.0
+TimingPoints:
+  - StartTime: 680.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 7440.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 7441.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 7863.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 7864.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 8285.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 8286.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 8708.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 8709.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 9130.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 9131.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 9553.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 9554.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 9975.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 9976.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 10398.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 10399.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 10820.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 10821.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 11243.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 11244.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 11665.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 11666.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 12088.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 12089.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 12510.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 12511.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 12933.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 12934.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 13356.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 13357.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 13778.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 13779.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 14201.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 14202.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 14623.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 14624.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 15046.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 15047.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 15468.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 15469.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 15891.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 15892.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 16313.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 16314.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 16736.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 16737.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 17158.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 17159.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 17581.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 17582.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 18003.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 18004.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 18426.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 18427.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 18849.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 18850.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 19271.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 19272.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 19694.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 19695.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 20116.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 20117.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 20539.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 20540.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 20961.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 20962.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 21384.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 21385.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 21806.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 21807.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 22229.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 22230.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 22651.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 22652.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 23074.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 23075.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 23496.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 23497.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 23919.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 23920.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 24341.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 24342.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 24764.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 24765.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 25187.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 25188.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 25609.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 25610.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 26032.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 27722.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 29412.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 29413.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 29834.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 29835.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 30257.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 30258.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 30679.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 30680.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 31102.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 31103.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 31524.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 31525.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 31947.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 31948.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 32370.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 32371.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 32792.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 32793.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 33215.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 33216.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 33637.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 33638.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 34060.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 34061.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 34482.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 34483.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 34905.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 34906.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 35327.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 35328.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 35750.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 35751.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 36172.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 36173.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 36595.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 36596.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 37017.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 37018.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 37440.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 37441.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 37862.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 37863.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 38285.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 38286.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 38708.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 38709.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 39130.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 39131.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 39553.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 39554.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 39975.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 39976.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 40398.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 40399.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 40820.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 40821.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 41243.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 42933.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 42934.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 43355.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 43356.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 43778.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 43779.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 44201.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 44202.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 44623.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 44624.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 45046.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 45047.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 45468.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 45469.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 45891.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 45892.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 46313.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 46314.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 46736.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 46737.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 47158.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 47159.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 47581.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 47582.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 48003.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 48004.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 48426.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 48427.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 48848.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 48849.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 49271.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 49272.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 49693.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 49694.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 50116.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 50117.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 50539.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 50540.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 50961.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 50962.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 51384.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 51385.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 51806.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 51807.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 52229.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 52230.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 52651.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 52652.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 53074.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 53075.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 53496.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 53497.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 53919.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 53920.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 54341.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 54342.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 54764.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 56454.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 69130.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 69975.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 81806.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 83496.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 83497.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 83918.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 83919.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 84341.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 84342.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 84763.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 84764.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 85186.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 85187.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 85608.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 85609.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 86031.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 86032.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 86454.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 86455.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 86876.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 86877.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 87299.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 87300.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 87721.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 87722.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 88144.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 88145.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 88566.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 88567.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 88989.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 88990.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 89411.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 89412.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 89834.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 89835.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 90256.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 90257.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 90679.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 90680.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 91101.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 91102.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 91524.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 91525.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 91946.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 91947.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 92369.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 92370.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 92792.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 92793.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 93214.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 93215.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 93637.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 93638.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 94059.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 94060.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 94482.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 94483.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 94904.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 94905.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 95327.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 97017.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 97018.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 97439.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 97440.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 97862.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 97863.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 98284.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 98285.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 98707.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 98708.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 99130.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 99131.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 99552.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 99553.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 99975.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 99976.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 100397.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 100398.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 100820.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 100821.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 101242.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 101243.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 101665.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 101666.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 102087.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 102088.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 102510.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 102511.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 102932.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 102933.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 103355.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 103356.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 103777.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 103778.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 104200.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 104201.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 104623.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 104624.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 105045.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 105046.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 105468.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 105469.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 105890.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 105891.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 106313.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 106314.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 106735.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 106736.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 107158.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 107159.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 107580.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 107581.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 108003.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 108004.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 108425.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 108426.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 108848.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 110538.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 112228.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 124904.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 125749.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 141805.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 141858.0
+    Bpm: 106.49999237060547
+    Signature: 4
+  - StartTime: 141910.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 141963.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 142016.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 142227.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 142438.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 142544.0
+    Bpm: 106.49999237060547
+    Signature: 4
+  - StartTime: 142650.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 145185.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 145238.0
+    Bpm: 106.49999237060547
+    Signature: 4
+  - StartTime: 145290.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 145343.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 145396.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 145607.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 145818.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 145924.0
+    Bpm: 106.49999237060547
+    Signature: 4
+  - StartTime: 146030.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 151101.0
+    Bpm: 106.49999237060547
+    Signature: 4
+  - StartTime: 151171.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 151241.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 151312.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 151945.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 153635.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 153899.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 153952.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 154058.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 154322.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 154375.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 154481.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 154745.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 154798.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 154904.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 155168.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 155221.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 155327.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 155591.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 155644.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 155750.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 156014.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 156067.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 156173.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 156437.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 156490.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 156596.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 156860.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 156913.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 157019.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 157283.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 157336.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 157442.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 157706.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 157759.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 157865.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 158129.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 158182.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 158288.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 158552.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 158605.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 158711.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 158975.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 159028.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 159134.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 159398.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 159451.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 159557.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 159821.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 159874.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 159980.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 160244.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 160297.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 160403.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 160667.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 160720.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 160826.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 161090.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 161143.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 161249.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 161513.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 161566.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 161672.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 161936.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 161989.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 162095.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 162359.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 162412.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 162518.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 162782.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 162835.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 162941.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 163205.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 163258.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 163364.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 163628.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 163681.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 163787.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 164051.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 164104.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 164210.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 164474.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 164527.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 164633.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 164897.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 164950.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 165055.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 165319.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 165372.0
+    Bpm: 285.0
+    Signature: 4
+  - StartTime: 165490.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 167157.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 168847.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 168848.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 169058.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 169059.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 169269.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 169270.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 169481.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 169482.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 169692.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 169693.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 169903.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 169904.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 170114.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 170115.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 170326.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 170327.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 170537.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 172227.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 172228.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 172438.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 172439.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 172649.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 172650.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 172860.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 172861.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 173072.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 173073.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 173283.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 173284.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 173494.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 173495.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 173706.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 173707.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 173917.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 175607.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 175608.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 176030.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 176031.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 176452.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 176453.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 176664.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 176665.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 176875.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 176876.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 177086.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 177087.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 177297.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 177298.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 177720.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 177721.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 178143.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 178144.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 178565.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 178566.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 178988.0
+    Bpm: 35.5
+    Signature: 4
+  - StartTime: 180678.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 193354.0
+    Bpm: 71.0
+    Signature: 4
+  - StartTime: 194199.0
+    Bpm: 142.0
+    Signature: 4
+  - StartTime: 207720.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 207721.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 208143.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 208144.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 208565.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 208566.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 208988.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 208989.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 209410.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 209411.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 209833.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 209834.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 210255.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 210256.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 210678.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 210679.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 211100.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 211101.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 211523.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 211524.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 211945.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 211946.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 212368.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 212369.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 212790.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 212791.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 213213.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 213214.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 213636.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 213637.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 214058.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 214059.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 214481.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 214482.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 214903.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 214904.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 215326.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 215327.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 215748.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 215749.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 216171.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 216172.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 216593.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 216594.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 217016.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 217017.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 217438.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 217439.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 217861.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 217862.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 218283.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 218284.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 218706.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 218707.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 219128.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 219129.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 219551.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 219552.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 219974.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 219975.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 220396.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 220397.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 220819.0
+    Bpm: .inf
+    Signature: 4
+  - StartTime: 220820.0
+    Bpm: 0.0005988000193610787
+    Signature: 4
+  - StartTime: 221241.0
+    Bpm: 568.0
+    Signature: 4
+SliderVelocities: []
+HitObjects:
+  - StartTime: 680
+    Lane: 4
+    EndTime: 0
+  - StartTime: 1102
+    Lane: 4
+    EndTime: 0
+  - StartTime: 1525
+    Lane: 4
+    EndTime: 0
+  - StartTime: 1947
+    Lane: 4
+    EndTime: 0
+  - StartTime: 2370
+    Lane: 4
+    EndTime: 0
+  - StartTime: 2792
+    Lane: 4
+    EndTime: 0
+  - StartTime: 3215
+    Lane: 4
+    EndTime: 0
+  - StartTime: 3637
+    Lane: 4
+    EndTime: 0
+  - StartTime: 4060
+    Lane: 4
+    EndTime: 0
+  - StartTime: 4482
+    Lane: 4
+    EndTime: 0
+  - StartTime: 4905
+    Lane: 4
+    EndTime: 0
+  - StartTime: 5327
+    Lane: 4
+    EndTime: 0
+  - StartTime: 5750
+    Lane: 4
+    EndTime: 0
+  - StartTime: 6172
+    Lane: 4
+    EndTime: 0
+  - StartTime: 6595
+    Lane: 4
+    EndTime: 0
+  - StartTime: 7018
+    Lane: 4
+    EndTime: 0
+  - StartTime: 7440
+    Lane: 4
+    EndTime: 0
+  - StartTime: 7863
+    Lane: 2
+    EndTime: 0
+  - StartTime: 8285
+    Lane: 3
+    EndTime: 0
+  - StartTime: 8708
+    Lane: 4
+    EndTime: 0
+  - StartTime: 9130
+    Lane: 4
+    EndTime: 0
+  - StartTime: 9553
+    Lane: 2
+    EndTime: 0
+  - StartTime: 9975
+    Lane: 4
+    EndTime: 0
+  - StartTime: 10398
+    Lane: 4
+    EndTime: 0
+  - StartTime: 10820
+    Lane: 3
+    EndTime: 0
+  - StartTime: 11243
+    Lane: 3
+    EndTime: 0
+  - StartTime: 11665
+    Lane: 2
+    EndTime: 0
+  - StartTime: 12088
+    Lane: 2
+    EndTime: 0
+  - StartTime: 12510
+    Lane: 1
+    EndTime: 0
+  - StartTime: 12933
+    Lane: 4
+    EndTime: 0
+  - StartTime: 13356
+    Lane: 1
+    EndTime: 0
+  - StartTime: 13778
+    Lane: 4
+    EndTime: 0
+  - StartTime: 14201
+    Lane: 4
+    EndTime: 0
+  - StartTime: 14623
+    Lane: 2
+    EndTime: 0
+  - StartTime: 15046
+    Lane: 3
+    EndTime: 0
+  - StartTime: 15468
+    Lane: 4
+    EndTime: 0
+  - StartTime: 15891
+    Lane: 4
+    EndTime: 0
+  - StartTime: 16313
+    Lane: 2
+    EndTime: 0
+  - StartTime: 16736
+    Lane: 4
+    EndTime: 0
+  - StartTime: 17158
+    Lane: 4
+    EndTime: 0
+  - StartTime: 17581
+    Lane: 3
+    EndTime: 0
+  - StartTime: 18003
+    Lane: 3
+    EndTime: 0
+  - StartTime: 18426
+    Lane: 2
+    EndTime: 0
+  - StartTime: 18849
+    Lane: 2
+    EndTime: 0
+  - StartTime: 19271
+    Lane: 1
+    EndTime: 0
+  - StartTime: 19694
+    Lane: 4
+    EndTime: 0
+  - StartTime: 20116
+    Lane: 1
+    EndTime: 0
+  - StartTime: 20539
+    Lane: 4
+    EndTime: 0
+  - StartTime: 20961
+    Lane: 4
+    EndTime: 0
+  - StartTime: 21384
+    Lane: 2
+    EndTime: 0
+  - StartTime: 21806
+    Lane: 3
+    EndTime: 0
+  - StartTime: 22229
+    Lane: 4
+    EndTime: 0
+  - StartTime: 22651
+    Lane: 4
+    EndTime: 0
+  - StartTime: 23074
+    Lane: 2
+    EndTime: 0
+  - StartTime: 23496
+    Lane: 4
+    EndTime: 0
+  - StartTime: 23919
+    Lane: 4
+    EndTime: 0
+  - StartTime: 24341
+    Lane: 3
+    EndTime: 0
+  - StartTime: 24764
+    Lane: 3
+    EndTime: 0
+  - StartTime: 25187
+    Lane: 2
+    EndTime: 0
+  - StartTime: 25609
+    Lane: 2
+    EndTime: 0
+  - StartTime: 27722
+    Lane: 2
+    EndTime: 29412
+  - StartTime: 29412
+    Lane: 4
+    EndTime: 0
+  - StartTime: 29834
+    Lane: 2
+    EndTime: 0
+  - StartTime: 30257
+    Lane: 3
+    EndTime: 0
+  - StartTime: 30679
+    Lane: 4
+    EndTime: 0
+  - StartTime: 31102
+    Lane: 4
+    EndTime: 0
+  - StartTime: 31524
+    Lane: 2
+    EndTime: 0
+  - StartTime: 31947
+    Lane: 4
+    EndTime: 0
+  - StartTime: 32370
+    Lane: 4
+    EndTime: 0
+  - StartTime: 32792
+    Lane: 3
+    EndTime: 0
+  - StartTime: 33215
+    Lane: 3
+    EndTime: 0
+  - StartTime: 33637
+    Lane: 2
+    EndTime: 0
+  - StartTime: 34060
+    Lane: 2
+    EndTime: 0
+  - StartTime: 34482
+    Lane: 1
+    EndTime: 0
+  - StartTime: 34905
+    Lane: 4
+    EndTime: 0
+  - StartTime: 35327
+    Lane: 1
+    EndTime: 0
+  - StartTime: 35750
+    Lane: 4
+    EndTime: 0
+  - StartTime: 36172
+    Lane: 4
+    EndTime: 0
+  - StartTime: 36595
+    Lane: 2
+    EndTime: 0
+  - StartTime: 37017
+    Lane: 3
+    EndTime: 0
+  - StartTime: 37440
+    Lane: 4
+    EndTime: 0
+  - StartTime: 37862
+    Lane: 4
+    EndTime: 0
+  - StartTime: 38285
+    Lane: 2
+    EndTime: 0
+  - StartTime: 38708
+    Lane: 4
+    EndTime: 0
+  - StartTime: 39130
+    Lane: 4
+    EndTime: 0
+  - StartTime: 39553
+    Lane: 3
+    EndTime: 0
+  - StartTime: 39975
+    Lane: 3
+    EndTime: 0
+  - StartTime: 40398
+    Lane: 2
+    EndTime: 0
+  - StartTime: 40820
+    Lane: 2
+    EndTime: 0
+  - StartTime: 41243
+    Lane: 4
+    EndTime: 0
+  - StartTime: 41665
+    Lane: 3
+    EndTime: 0
+  - StartTime: 42088
+    Lane: 1
+    EndTime: 0
+  - StartTime: 42510
+    Lane: 1
+    EndTime: 0
+  - StartTime: 42933
+    Lane: 4
+    EndTime: 0
+  - StartTime: 43355
+    Lane: 2
+    EndTime: 0
+  - StartTime: 43778
+    Lane: 3
+    EndTime: 0
+  - StartTime: 44201
+    Lane: 4
+    EndTime: 0
+  - StartTime: 44623
+    Lane: 4
+    EndTime: 0
+  - StartTime: 45046
+    Lane: 2
+    EndTime: 0
+  - StartTime: 45468
+    Lane: 4
+    EndTime: 0
+  - StartTime: 45891
+    Lane: 4
+    EndTime: 0
+  - StartTime: 46313
+    Lane: 3
+    EndTime: 0
+  - StartTime: 46736
+    Lane: 3
+    EndTime: 0
+  - StartTime: 47158
+    Lane: 2
+    EndTime: 0
+  - StartTime: 47581
+    Lane: 2
+    EndTime: 0
+  - StartTime: 48003
+    Lane: 1
+    EndTime: 0
+  - StartTime: 48426
+    Lane: 4
+    EndTime: 0
+  - StartTime: 48848
+    Lane: 1
+    EndTime: 0
+  - StartTime: 49271
+    Lane: 4
+    EndTime: 0
+  - StartTime: 49693
+    Lane: 4
+    EndTime: 0
+  - StartTime: 50116
+    Lane: 2
+    EndTime: 0
+  - StartTime: 50539
+    Lane: 3
+    EndTime: 0
+  - StartTime: 50961
+    Lane: 4
+    EndTime: 0
+  - StartTime: 51384
+    Lane: 4
+    EndTime: 0
+  - StartTime: 51806
+    Lane: 2
+    EndTime: 0
+  - StartTime: 52229
+    Lane: 4
+    EndTime: 0
+  - StartTime: 52651
+    Lane: 4
+    EndTime: 0
+  - StartTime: 53074
+    Lane: 3
+    EndTime: 0
+  - StartTime: 53496
+    Lane: 3
+    EndTime: 0
+  - StartTime: 53919
+    Lane: 2
+    EndTime: 0
+  - StartTime: 54341
+    Lane: 2
+    EndTime: 0
+  - StartTime: 54764
+    Lane: 1
+    EndTime: 0
+  - StartTime: 55186
+    Lane: 2
+    EndTime: 0
+  - StartTime: 55609
+    Lane: 4
+    EndTime: 0
+  - StartTime: 56031
+    Lane: 4
+    EndTime: 0
+  - StartTime: 56454
+    Lane: 4
+    EndTime: 56876
+  - StartTime: 56454
+    Lane: 3
+    EndTime: 0
+  - StartTime: 56665
+    Lane: 1
+    EndTime: 0
+  - StartTime: 56876
+    Lane: 2
+    EndTime: 0
+  - StartTime: 57087
+    Lane: 4
+    EndTime: 0
+  - StartTime: 57299
+    Lane: 2
+    EndTime: 0
+  - StartTime: 57299
+    Lane: 1
+    EndTime: 0
+  - StartTime: 57510
+    Lane: 3
+    EndTime: 0
+  - StartTime: 57510
+    Lane: 4
+    EndTime: 0
+  - StartTime: 57615
+    Lane: 1
+    EndTime: 0
+  - StartTime: 57615
+    Lane: 2
+    EndTime: 0
+  - StartTime: 57721
+    Lane: 1
+    EndTime: 0
+  - StartTime: 57721
+    Lane: 4
+    EndTime: 0
+  - StartTime: 57721
+    Lane: 3
+    EndTime: 0
+  - StartTime: 57932
+    Lane: 2
+    EndTime: 0
+  - StartTime: 58144
+    Lane: 1
+    EndTime: 0
+  - StartTime: 58144
+    Lane: 3
+    EndTime: 0
+  - StartTime: 58355
+    Lane: 4
+    EndTime: 0
+  - StartTime: 58566
+    Lane: 2
+    EndTime: 0
+  - StartTime: 58566
+    Lane: 1
+    EndTime: 0
+  - StartTime: 58777
+    Lane: 3
+    EndTime: 0
+  - StartTime: 58989
+    Lane: 4
+    EndTime: 0
+  - StartTime: 59200
+    Lane: 1
+    EndTime: 0
+  - StartTime: 59200
+    Lane: 2
+    EndTime: 0
+  - StartTime: 59306
+    Lane: 3
+    EndTime: 0
+  - StartTime: 59306
+    Lane: 4
+    EndTime: 0
+  - StartTime: 59411
+    Lane: 1
+    EndTime: 0
+  - StartTime: 59411
+    Lane: 4
+    EndTime: 0
+  - StartTime: 59411
+    Lane: 2
+    EndTime: 0
+  - StartTime: 59623
+    Lane: 3
+    EndTime: 0
+  - StartTime: 59834
+    Lane: 1
+    EndTime: 0
+  - StartTime: 59834
+    Lane: 4
+    EndTime: 0
+  - StartTime: 60045
+    Lane: 3
+    EndTime: 0
+  - StartTime: 60256
+    Lane: 2
+    EndTime: 0
+  - StartTime: 60256
+    Lane: 4
+    EndTime: 0
+  - StartTime: 60468
+    Lane: 1
+    EndTime: 0
+  - StartTime: 60679
+    Lane: 4
+    EndTime: 0
+  - StartTime: 60890
+    Lane: 2
+    EndTime: 0
+  - StartTime: 60890
+    Lane: 3
+    EndTime: 0
+  - StartTime: 60996
+    Lane: 1
+    EndTime: 0
+  - StartTime: 60996
+    Lane: 4
+    EndTime: 0
+  - StartTime: 61101
+    Lane: 3
+    EndTime: 0
+  - StartTime: 61101
+    Lane: 1
+    EndTime: 0
+  - StartTime: 61101
+    Lane: 2
+    EndTime: 0
+  - StartTime: 61313
+    Lane: 3
+    EndTime: 0
+  - StartTime: 61524
+    Lane: 2
+    EndTime: 0
+  - StartTime: 61524
+    Lane: 4
+    EndTime: 0
+  - StartTime: 61735
+    Lane: 1
+    EndTime: 0
+  - StartTime: 61946
+    Lane: 2
+    EndTime: 0
+  - StartTime: 61946
+    Lane: 4
+    EndTime: 0
+  - StartTime: 62158
+    Lane: 3
+    EndTime: 0
+  - StartTime: 62369
+    Lane: 4
+    EndTime: 0
+  - StartTime: 62580
+    Lane: 3
+    EndTime: 0
+  - StartTime: 62580
+    Lane: 1
+    EndTime: 0
+  - StartTime: 62686
+    Lane: 2
+    EndTime: 0
+  - StartTime: 62686
+    Lane: 4
+    EndTime: 0
+  - StartTime: 62792
+    Lane: 4
+    EndTime: 0
+  - StartTime: 62792
+    Lane: 1
+    EndTime: 0
+  - StartTime: 62792
+    Lane: 3
+    EndTime: 0
+  - StartTime: 63003
+    Lane: 2
+    EndTime: 0
+  - StartTime: 63214
+    Lane: 4
+    EndTime: 0
+  - StartTime: 63214
+    Lane: 3
+    EndTime: 0
+  - StartTime: 63425
+    Lane: 1
+    EndTime: 0
+  - StartTime: 63637
+    Lane: 4
+    EndTime: 0
+  - StartTime: 63637
+    Lane: 2
+    EndTime: 0
+  - StartTime: 63848
+    Lane: 3
+    EndTime: 0
+  - StartTime: 64059
+    Lane: 4
+    EndTime: 0
+  - StartTime: 64270
+    Lane: 2
+    EndTime: 0
+  - StartTime: 64270
+    Lane: 3
+    EndTime: 0
+  - StartTime: 64376
+    Lane: 4
+    EndTime: 0
+  - StartTime: 64376
+    Lane: 1
+    EndTime: 0
+  - StartTime: 64482
+    Lane: 2
+    EndTime: 0
+  - StartTime: 64482
+    Lane: 3
+    EndTime: 0
+  - StartTime: 64482
+    Lane: 1
+    EndTime: 0
+  - StartTime: 64693
+    Lane: 4
+    EndTime: 0
+  - StartTime: 64904
+    Lane: 1
+    EndTime: 0
+  - StartTime: 64904
+    Lane: 3
+    EndTime: 0
+  - StartTime: 65115
+    Lane: 4
+    EndTime: 0
+  - StartTime: 65327
+    Lane: 2
+    EndTime: 0
+  - StartTime: 65327
+    Lane: 1
+    EndTime: 0
+  - StartTime: 65538
+    Lane: 4
+    EndTime: 0
+  - StartTime: 65749
+    Lane: 2
+    EndTime: 0
+  - StartTime: 65961
+    Lane: 3
+    EndTime: 0
+  - StartTime: 65961
+    Lane: 1
+    EndTime: 0
+  - StartTime: 66066
+    Lane: 2
+    EndTime: 0
+  - StartTime: 66066
+    Lane: 4
+    EndTime: 0
+  - StartTime: 66172
+    Lane: 4
+    EndTime: 0
+  - StartTime: 66172
+    Lane: 3
+    EndTime: 0
+  - StartTime: 66172
+    Lane: 1
+    EndTime: 0
+  - StartTime: 66383
+    Lane: 3
+    EndTime: 0
+  - StartTime: 66594
+    Lane: 2
+    EndTime: 0
+  - StartTime: 66594
+    Lane: 1
+    EndTime: 0
+  - StartTime: 66806
+    Lane: 4
+    EndTime: 0
+  - StartTime: 67017
+    Lane: 4
+    EndTime: 0
+  - StartTime: 67017
+    Lane: 2
+    EndTime: 0
+  - StartTime: 67228
+    Lane: 1
+    EndTime: 0
+  - StartTime: 67439
+    Lane: 3
+    EndTime: 0
+  - StartTime: 67651
+    Lane: 4
+    EndTime: 0
+  - StartTime: 67651
+    Lane: 2
+    EndTime: 0
+  - StartTime: 67756
+    Lane: 3
+    EndTime: 0
+  - StartTime: 67756
+    Lane: 1
+    EndTime: 0
+  - StartTime: 67862
+    Lane: 1
+    EndTime: 0
+  - StartTime: 67862
+    Lane: 4
+    EndTime: 0
+  - StartTime: 67862
+    Lane: 2
+    EndTime: 0
+  - StartTime: 68073
+    Lane: 3
+    EndTime: 0
+  - StartTime: 68284
+    Lane: 4
+    EndTime: 0
+  - StartTime: 68284
+    Lane: 2
+    EndTime: 0
+  - StartTime: 68496
+    Lane: 1
+    EndTime: 0
+  - StartTime: 68496
+    Lane: 3
+    EndTime: 0
+  - StartTime: 68707
+    Lane: 4
+    EndTime: 0
+  - StartTime: 68707
+    Lane: 2
+    EndTime: 0
+  - StartTime: 68918
+    Lane: 1
+    EndTime: 0
+  - StartTime: 68918
+    Lane: 3
+    EndTime: 0
+  - StartTime: 69130
+    Lane: 2
+    EndTime: 0
+  - StartTime: 69130
+    Lane: 4
+    EndTime: 0
+  - StartTime: 69235
+    Lane: 3
+    EndTime: 0
+  - StartTime: 69341
+    Lane: 2
+    EndTime: 0
+  - StartTime: 69446
+    Lane: 3
+    EndTime: 0
+  - StartTime: 69552
+    Lane: 1
+    EndTime: 0
+  - StartTime: 69552
+    Lane: 2
+    EndTime: 0
+  - StartTime: 69658
+    Lane: 4
+    EndTime: 0
+  - StartTime: 69763
+    Lane: 1
+    EndTime: 0
+  - StartTime: 69869
+    Lane: 4
+    EndTime: 0
+  - StartTime: 69975
+    Lane: 3
+    EndTime: 0
+  - StartTime: 69975
+    Lane: 1
+    EndTime: 0
+  - StartTime: 69975
+    Lane: 2
+    EndTime: 0
+  - StartTime: 70186
+    Lane: 1
+    EndTime: 0
+  - StartTime: 70186
+    Lane: 4
+    EndTime: 0
+  - StartTime: 70397
+    Lane: 2
+    EndTime: 0
+  - StartTime: 70397
+    Lane: 3
+    EndTime: 0
+  - StartTime: 70608
+    Lane: 1
+    EndTime: 0
+  - StartTime: 70714
+    Lane: 1
+    EndTime: 0
+  - StartTime: 70714
+    Lane: 2
+    EndTime: 0
+  - StartTime: 70925
+    Lane: 4
+    EndTime: 0
+  - StartTime: 71031
+    Lane: 4
+    EndTime: 0
+  - StartTime: 71031
+    Lane: 3
+    EndTime: 0
+  - StartTime: 71242
+    Lane: 2
+    EndTime: 0
+  - StartTime: 71242
+    Lane: 3
+    EndTime: 0
+  - StartTime: 71453
+    Lane: 2
+    EndTime: 0
+  - StartTime: 71453
+    Lane: 1
+    EndTime: 0
+  - StartTime: 71665
+    Lane: 1
+    EndTime: 0
+  - StartTime: 71665
+    Lane: 3
+    EndTime: 0
+  - StartTime: 71876
+    Lane: 2
+    EndTime: 0
+  - StartTime: 71876
+    Lane: 4
+    EndTime: 0
+  - StartTime: 72087
+    Lane: 3
+    EndTime: 0
+  - StartTime: 72087
+    Lane: 2
+    EndTime: 0
+  - StartTime: 72298
+    Lane: 1
+    EndTime: 0
+  - StartTime: 72404
+    Lane: 1
+    EndTime: 0
+  - StartTime: 72404
+    Lane: 3
+    EndTime: 0
+  - StartTime: 72615
+    Lane: 4
+    EndTime: 0
+  - StartTime: 72721
+    Lane: 4
+    EndTime: 0
+  - StartTime: 72721
+    Lane: 2
+    EndTime: 0
+  - StartTime: 72932
+    Lane: 3
+    EndTime: 0
+  - StartTime: 72932
+    Lane: 4
+    EndTime: 0
+  - StartTime: 73144
+    Lane: 1
+    EndTime: 0
+  - StartTime: 73144
+    Lane: 2
+    EndTime: 0
+  - StartTime: 73355
+    Lane: 2
+    EndTime: 0
+  - StartTime: 73355
+    Lane: 4
+    EndTime: 0
+  - StartTime: 73566
+    Lane: 1
+    EndTime: 0
+  - StartTime: 73566
+    Lane: 3
+    EndTime: 0
+  - StartTime: 73777
+    Lane: 1
+    EndTime: 0
+  - StartTime: 73777
+    Lane: 2
+    EndTime: 0
+  - StartTime: 73989
+    Lane: 3
+    EndTime: 0
+  - StartTime: 74094
+    Lane: 4
+    EndTime: 0
+  - StartTime: 74094
+    Lane: 3
+    EndTime: 0
+  - StartTime: 74305
+    Lane: 2
+    EndTime: 0
+  - StartTime: 74411
+    Lane: 1
+    EndTime: 0
+  - StartTime: 74411
+    Lane: 2
+    EndTime: 0
+  - StartTime: 74622
+    Lane: 3
+    EndTime: 0
+  - StartTime: 74622
+    Lane: 1
+    EndTime: 0
+  - StartTime: 74834
+    Lane: 4
+    EndTime: 0
+  - StartTime: 74834
+    Lane: 3
+    EndTime: 0
+  - StartTime: 75045
+    Lane: 4
+    EndTime: 0
+  - StartTime: 75045
+    Lane: 2
+    EndTime: 0
+  - StartTime: 75256
+    Lane: 1
+    EndTime: 0
+  - StartTime: 75256
+    Lane: 2
+    EndTime: 0
+  - StartTime: 75467
+    Lane: 3
+    EndTime: 0
+  - StartTime: 75467
+    Lane: 4
+    EndTime: 0
+  - StartTime: 75679
+    Lane: 4
+    EndTime: 0
+  - StartTime: 75784
+    Lane: 4
+    EndTime: 0
+  - StartTime: 75784
+    Lane: 1
+    EndTime: 0
+  - StartTime: 75996
+    Lane: 2
+    EndTime: 0
+  - StartTime: 76101
+    Lane: 3
+    EndTime: 0
+  - StartTime: 76101
+    Lane: 2
+    EndTime: 0
+  - StartTime: 76313
+    Lane: 1
+    EndTime: 0
+  - StartTime: 76313
+    Lane: 3
+    EndTime: 0
+  - StartTime: 76524
+    Lane: 2
+    EndTime: 0
+  - StartTime: 76524
+    Lane: 4
+    EndTime: 0
+  - StartTime: 76735
+    Lane: 1
+    EndTime: 0
+  - StartTime: 76735
+    Lane: 3
+    EndTime: 0
+  - StartTime: 76946
+    Lane: 2
+    EndTime: 0
+  - StartTime: 76946
+    Lane: 3
+    EndTime: 0
+  - StartTime: 77158
+    Lane: 1
+    EndTime: 0
+  - StartTime: 77158
+    Lane: 2
+    EndTime: 0
+  - StartTime: 77369
+    Lane: 4
+    EndTime: 0
+  - StartTime: 77475
+    Lane: 4
+    EndTime: 0
+  - StartTime: 77475
+    Lane: 2
+    EndTime: 0
+  - StartTime: 77686
+    Lane: 1
+    EndTime: 0
+  - StartTime: 77791
+    Lane: 3
+    EndTime: 0
+  - StartTime: 77791
+    Lane: 1
+    EndTime: 0
+  - StartTime: 78003
+    Lane: 4
+    EndTime: 0
+  - StartTime: 78003
+    Lane: 2
+    EndTime: 0
+  - StartTime: 78214
+    Lane: 1
+    EndTime: 0
+  - StartTime: 78214
+    Lane: 4
+    EndTime: 0
+  - StartTime: 78425
+    Lane: 1
+    EndTime: 0
+  - StartTime: 78425
+    Lane: 2
+    EndTime: 0
+  - StartTime: 78636
+    Lane: 2
+    EndTime: 0
+  - StartTime: 78636
+    Lane: 3
+    EndTime: 0
+  - StartTime: 78848
+    Lane: 3
+    EndTime: 0
+  - StartTime: 78848
+    Lane: 4
+    EndTime: 0
+  - StartTime: 79059
+    Lane: 2
+    EndTime: 0
+  - StartTime: 79165
+    Lane: 2
+    EndTime: 0
+  - StartTime: 79165
+    Lane: 1
+    EndTime: 0
+  - StartTime: 79376
+    Lane: 3
+    EndTime: 0
+  - StartTime: 79482
+    Lane: 3
+    EndTime: 0
+  - StartTime: 79482
+    Lane: 4
+    EndTime: 0
+  - StartTime: 79693
+    Lane: 1
+    EndTime: 0
+  - StartTime: 79693
+    Lane: 4
+    EndTime: 0
+  - StartTime: 79693
+    Lane: 2
+    EndTime: 0
+  - StartTime: 79904
+    Lane: 3
+    EndTime: 0
+  - StartTime: 79904
+    Lane: 2
+    EndTime: 0
+  - StartTime: 79904
+    Lane: 1
+    EndTime: 0
+  - StartTime: 80115
+    Lane: 4
+    EndTime: 0
+  - StartTime: 80115
+    Lane: 1
+    EndTime: 0
+  - StartTime: 80115
+    Lane: 3
+    EndTime: 0
+  - StartTime: 80327
+    Lane: 3
+    EndTime: 0
+  - StartTime: 80327
+    Lane: 2
+    EndTime: 0
+  - StartTime: 80538
+    Lane: 3
+    EndTime: 0
+  - StartTime: 80538
+    Lane: 1
+    EndTime: 0
+  - StartTime: 80749
+    Lane: 4
+    EndTime: 0
+  - StartTime: 80855
+    Lane: 2
+    EndTime: 0
+  - StartTime: 80855
+    Lane: 4
+    EndTime: 0
+  - StartTime: 81066
+    Lane: 1
+    EndTime: 0
+  - StartTime: 81172
+    Lane: 1
+    EndTime: 0
+  - StartTime: 81172
+    Lane: 3
+    EndTime: 0
+  - StartTime: 81383
+    Lane: 2
+    EndTime: 81594
+  - StartTime: 81383
+    Lane: 4
+    EndTime: 0
+  - StartTime: 81594
+    Lane: 3
+    EndTime: 0
+  - StartTime: 81594
+    Lane: 1
+    EndTime: 0
+  - StartTime: 81806
+    Lane: 4
+    EndTime: 0
+  - StartTime: 82228
+    Lane: 3
+    EndTime: 0
+  - StartTime: 82651
+    Lane: 2
+    EndTime: 0
+  - StartTime: 83073
+    Lane: 1
+    EndTime: 0
+  - StartTime: 83496
+    Lane: 4
+    EndTime: 0
+  - StartTime: 83918
+    Lane: 2
+    EndTime: 0
+  - StartTime: 84763
+    Lane: 3
+    EndTime: 0
+  - StartTime: 84763
+    Lane: 4
+    EndTime: 0
+  - StartTime: 85186
+    Lane: 1
+    EndTime: 0
+  - StartTime: 85186
+    Lane: 2
+    EndTime: 0
+  - StartTime: 85608
+    Lane: 2
+    EndTime: 0
+  - StartTime: 85608
+    Lane: 3
+    EndTime: 0
+  - StartTime: 86031
+    Lane: 1
+    EndTime: 0
+  - StartTime: 86031
+    Lane: 4
+    EndTime: 0
+  - StartTime: 86454
+    Lane: 2
+    EndTime: 0
+  - StartTime: 86454
+    Lane: 4
+    EndTime: 0
+  - StartTime: 86876
+    Lane: 3
+    EndTime: 0
+  - StartTime: 87299
+    Lane: 3
+    EndTime: 0
+  - StartTime: 87721
+    Lane: 2
+    EndTime: 0
+  - StartTime: 88144
+    Lane: 1
+    EndTime: 0
+  - StartTime: 88144
+    Lane: 2
+    EndTime: 0
+  - StartTime: 88566
+    Lane: 1
+    EndTime: 0
+  - StartTime: 88566
+    Lane: 4
+    EndTime: 0
+  - StartTime: 88989
+    Lane: 1
+    EndTime: 0
+  - StartTime: 88989
+    Lane: 3
+    EndTime: 0
+  - StartTime: 89411
+    Lane: 2
+    EndTime: 0
+  - StartTime: 89411
+    Lane: 4
+    EndTime: 0
+  - StartTime: 89834
+    Lane: 1
+    EndTime: 0
+  - StartTime: 89834
+    Lane: 2
+    EndTime: 0
+  - StartTime: 90256
+    Lane: 4
+    EndTime: 0
+  - StartTime: 90679
+    Lane: 2
+    EndTime: 0
+  - StartTime: 91101
+    Lane: 3
+    EndTime: 0
+  - StartTime: 91524
+    Lane: 4
+    EndTime: 0
+  - StartTime: 91946
+    Lane: 1
+    EndTime: 0
+  - StartTime: 91946
+    Lane: 2
+    EndTime: 0
+  - StartTime: 92369
+    Lane: 2
+    EndTime: 0
+  - StartTime: 92369
+    Lane: 3
+    EndTime: 0
+  - StartTime: 92792
+    Lane: 1
+    EndTime: 0
+  - StartTime: 92792
+    Lane: 4
+    EndTime: 0
+  - StartTime: 93214
+    Lane: 2
+    EndTime: 0
+  - StartTime: 93214
+    Lane: 4
+    EndTime: 0
+  - StartTime: 93637
+    Lane: 3
+    EndTime: 0
+  - StartTime: 94059
+    Lane: 3
+    EndTime: 0
+  - StartTime: 94482
+    Lane: 2
+    EndTime: 0
+  - StartTime: 94904
+    Lane: 2
+    EndTime: 0
+  - StartTime: 95327
+    Lane: 4
+    EndTime: 0
+  - StartTime: 95749
+    Lane: 2
+    EndTime: 0
+  - StartTime: 96172
+    Lane: 1
+    EndTime: 0
+  - StartTime: 96594
+    Lane: 1
+    EndTime: 0
+  - StartTime: 97017
+    Lane: 4
+    EndTime: 0
+  - StartTime: 97439
+    Lane: 2
+    EndTime: 0
+  - StartTime: 98284
+    Lane: 3
+    EndTime: 0
+  - StartTime: 98284
+    Lane: 4
+    EndTime: 0
+  - StartTime: 98707
+    Lane: 1
+    EndTime: 0
+  - StartTime: 98707
+    Lane: 2
+    EndTime: 0
+  - StartTime: 99130
+    Lane: 2
+    EndTime: 0
+  - StartTime: 99130
+    Lane: 3
+    EndTime: 0
+  - StartTime: 99552
+    Lane: 1
+    EndTime: 0
+  - StartTime: 99552
+    Lane: 4
+    EndTime: 0
+  - StartTime: 99975
+    Lane: 2
+    EndTime: 0
+  - StartTime: 99975
+    Lane: 4
+    EndTime: 0
+  - StartTime: 100397
+    Lane: 3
+    EndTime: 0
+  - StartTime: 100820
+    Lane: 3
+    EndTime: 0
+  - StartTime: 101242
+    Lane: 2
+    EndTime: 0
+  - StartTime: 101665
+    Lane: 1
+    EndTime: 0
+  - StartTime: 101665
+    Lane: 2
+    EndTime: 0
+  - StartTime: 102087
+    Lane: 1
+    EndTime: 0
+  - StartTime: 102087
+    Lane: 4
+    EndTime: 0
+  - StartTime: 102510
+    Lane: 1
+    EndTime: 0
+  - StartTime: 102510
+    Lane: 3
+    EndTime: 0
+  - StartTime: 102932
+    Lane: 2
+    EndTime: 0
+  - StartTime: 102932
+    Lane: 4
+    EndTime: 0
+  - StartTime: 103355
+    Lane: 1
+    EndTime: 0
+  - StartTime: 103355
+    Lane: 2
+    EndTime: 0
+  - StartTime: 103777
+    Lane: 4
+    EndTime: 0
+  - StartTime: 104200
+    Lane: 2
+    EndTime: 0
+  - StartTime: 104623
+    Lane: 3
+    EndTime: 0
+  - StartTime: 105045
+    Lane: 4
+    EndTime: 0
+  - StartTime: 105468
+    Lane: 1
+    EndTime: 0
+  - StartTime: 105468
+    Lane: 2
+    EndTime: 0
+  - StartTime: 105890
+    Lane: 2
+    EndTime: 0
+  - StartTime: 105890
+    Lane: 3
+    EndTime: 0
+  - StartTime: 106313
+    Lane: 1
+    EndTime: 0
+  - StartTime: 106313
+    Lane: 4
+    EndTime: 0
+  - StartTime: 106735
+    Lane: 2
+    EndTime: 0
+  - StartTime: 106735
+    Lane: 4
+    EndTime: 0
+  - StartTime: 107158
+    Lane: 3
+    EndTime: 0
+  - StartTime: 107580
+    Lane: 3
+    EndTime: 0
+  - StartTime: 108003
+    Lane: 2
+    EndTime: 0
+  - StartTime: 108425
+    Lane: 2
+    EndTime: 0
+  - StartTime: 108848
+    Lane: 4
+    EndTime: 0
+  - StartTime: 110538
+    Lane: 4
+    EndTime: 0
+  - StartTime: 110960
+    Lane: 2
+    EndTime: 0
+  - StartTime: 111383
+    Lane: 3
+    EndTime: 0
+  - StartTime: 111805
+    Lane: 1
+    EndTime: 0
+  - StartTime: 112228
+    Lane: 4
+    EndTime: 112650
+  - StartTime: 112228
+    Lane: 3
+    EndTime: 0
+  - StartTime: 112439
+    Lane: 1
+    EndTime: 0
+  - StartTime: 112650
+    Lane: 2
+    EndTime: 0
+  - StartTime: 112861
+    Lane: 4
+    EndTime: 0
+  - StartTime: 113073
+    Lane: 2
+    EndTime: 0
+  - StartTime: 113073
+    Lane: 1
+    EndTime: 0
+  - StartTime: 113284
+    Lane: 3
+    EndTime: 0
+  - StartTime: 113284
+    Lane: 4
+    EndTime: 0
+  - StartTime: 113389
+    Lane: 1
+    EndTime: 0
+  - StartTime: 113389
+    Lane: 2
+    EndTime: 0
+  - StartTime: 113495
+    Lane: 1
+    EndTime: 0
+  - StartTime: 113495
+    Lane: 4
+    EndTime: 0
+  - StartTime: 113495
+    Lane: 3
+    EndTime: 0
+  - StartTime: 113706
+    Lane: 2
+    EndTime: 0
+  - StartTime: 113918
+    Lane: 1
+    EndTime: 0
+  - StartTime: 113918
+    Lane: 3
+    EndTime: 0
+  - StartTime: 114129
+    Lane: 4
+    EndTime: 0
+  - StartTime: 114340
+    Lane: 2
+    EndTime: 0
+  - StartTime: 114340
+    Lane: 1
+    EndTime: 0
+  - StartTime: 114551
+    Lane: 3
+    EndTime: 0
+  - StartTime: 114763
+    Lane: 4
+    EndTime: 0
+  - StartTime: 114974
+    Lane: 1
+    EndTime: 0
+  - StartTime: 114974
+    Lane: 2
+    EndTime: 0
+  - StartTime: 115080
+    Lane: 3
+    EndTime: 0
+  - StartTime: 115080
+    Lane: 4
+    EndTime: 0
+  - StartTime: 115185
+    Lane: 1
+    EndTime: 0
+  - StartTime: 115185
+    Lane: 4
+    EndTime: 0
+  - StartTime: 115185
+    Lane: 2
+    EndTime: 0
+  - StartTime: 115397
+    Lane: 3
+    EndTime: 0
+  - StartTime: 115608
+    Lane: 1
+    EndTime: 0
+  - StartTime: 115608
+    Lane: 4
+    EndTime: 0
+  - StartTime: 115819
+    Lane: 3
+    EndTime: 0
+  - StartTime: 116030
+    Lane: 2
+    EndTime: 0
+  - StartTime: 116030
+    Lane: 4
+    EndTime: 0
+  - StartTime: 116242
+    Lane: 1
+    EndTime: 0
+  - StartTime: 116453
+    Lane: 2
+    EndTime: 0
+  - StartTime: 116664
+    Lane: 4
+    EndTime: 0
+  - StartTime: 116664
+    Lane: 3
+    EndTime: 0
+  - StartTime: 116770
+    Lane: 2
+    EndTime: 0
+  - StartTime: 116770
+    Lane: 1
+    EndTime: 0
+  - StartTime: 116875
+    Lane: 1
+    EndTime: 0
+  - StartTime: 116875
+    Lane: 4
+    EndTime: 0
+  - StartTime: 116875
+    Lane: 3
+    EndTime: 0
+  - StartTime: 117087
+    Lane: 3
+    EndTime: 0
+  - StartTime: 117298
+    Lane: 2
+    EndTime: 0
+  - StartTime: 117298
+    Lane: 4
+    EndTime: 0
+  - StartTime: 117509
+    Lane: 1
+    EndTime: 0
+  - StartTime: 117720
+    Lane: 2
+    EndTime: 0
+  - StartTime: 117720
+    Lane: 4
+    EndTime: 0
+  - StartTime: 117932
+    Lane: 3
+    EndTime: 0
+  - StartTime: 118143
+    Lane: 4
+    EndTime: 0
+  - StartTime: 118354
+    Lane: 3
+    EndTime: 0
+  - StartTime: 118354
+    Lane: 1
+    EndTime: 0
+  - StartTime: 118460
+    Lane: 2
+    EndTime: 0
+  - StartTime: 118460
+    Lane: 4
+    EndTime: 0
+  - StartTime: 118566
+    Lane: 4
+    EndTime: 0
+  - StartTime: 118566
+    Lane: 1
+    EndTime: 0
+  - StartTime: 118566
+    Lane: 3
+    EndTime: 0
+  - StartTime: 118777
+    Lane: 2
+    EndTime: 0
+  - StartTime: 118988
+    Lane: 4
+    EndTime: 0
+  - StartTime: 118988
+    Lane: 3
+    EndTime: 0
+  - StartTime: 119199
+    Lane: 1
+    EndTime: 0
+  - StartTime: 119411
+    Lane: 4
+    EndTime: 0
+  - StartTime: 119411
+    Lane: 2
+    EndTime: 0
+  - StartTime: 119622
+    Lane: 3
+    EndTime: 0
+  - StartTime: 119833
+    Lane: 4
+    EndTime: 0
+  - StartTime: 120044
+    Lane: 2
+    EndTime: 0
+  - StartTime: 120044
+    Lane: 3
+    EndTime: 0
+  - StartTime: 120150
+    Lane: 4
+    EndTime: 0
+  - StartTime: 120150
+    Lane: 1
+    EndTime: 0
+  - StartTime: 120256
+    Lane: 2
+    EndTime: 0
+  - StartTime: 120256
+    Lane: 3
+    EndTime: 0
+  - StartTime: 120256
+    Lane: 1
+    EndTime: 0
+  - StartTime: 120467
+    Lane: 4
+    EndTime: 0
+  - StartTime: 120678
+    Lane: 1
+    EndTime: 0
+  - StartTime: 120678
+    Lane: 3
+    EndTime: 0
+  - StartTime: 120889
+    Lane: 4
+    EndTime: 0
+  - StartTime: 121101
+    Lane: 2
+    EndTime: 0
+  - StartTime: 121101
+    Lane: 1
+    EndTime: 0
+  - StartTime: 121312
+    Lane: 4
+    EndTime: 0
+  - StartTime: 121523
+    Lane: 3
+    EndTime: 0
+  - StartTime: 121735
+    Lane: 1
+    EndTime: 0
+  - StartTime: 121735
+    Lane: 2
+    EndTime: 0
+  - StartTime: 121840
+    Lane: 3
+    EndTime: 0
+  - StartTime: 121840
+    Lane: 4
+    EndTime: 0
+  - StartTime: 121946
+    Lane: 1
+    EndTime: 0
+  - StartTime: 121946
+    Lane: 4
+    EndTime: 0
+  - StartTime: 121946
+    Lane: 2
+    EndTime: 0
+  - StartTime: 122157
+    Lane: 3
+    EndTime: 0
+  - StartTime: 122368
+    Lane: 2
+    EndTime: 0
+  - StartTime: 122368
+    Lane: 1
+    EndTime: 0
+  - StartTime: 122580
+    Lane: 4
+    EndTime: 0
+  - StartTime: 122791
+    Lane: 4
+    EndTime: 0
+  - StartTime: 122791
+    Lane: 2
+    EndTime: 0
+  - StartTime: 123002
+    Lane: 1
+    EndTime: 0
+  - StartTime: 123213
+    Lane: 3
+    EndTime: 0
+  - StartTime: 123425
+    Lane: 4
+    EndTime: 0
+  - StartTime: 123425
+    Lane: 2
+    EndTime: 0
+  - StartTime: 123530
+    Lane: 3
+    EndTime: 0
+  - StartTime: 123530
+    Lane: 1
+    EndTime: 0
+  - StartTime: 123636
+    Lane: 1
+    EndTime: 0
+  - StartTime: 123636
+    Lane: 4
+    EndTime: 0
+  - StartTime: 123636
+    Lane: 2
+    EndTime: 0
+  - StartTime: 123847
+    Lane: 3
+    EndTime: 0
+  - StartTime: 124058
+    Lane: 4
+    EndTime: 0
+  - StartTime: 124058
+    Lane: 2
+    EndTime: 0
+  - StartTime: 124270
+    Lane: 1
+    EndTime: 0
+  - StartTime: 124270
+    Lane: 3
+    EndTime: 0
+  - StartTime: 124481
+    Lane: 4
+    EndTime: 0
+  - StartTime: 124481
+    Lane: 2
+    EndTime: 0
+  - StartTime: 124692
+    Lane: 1
+    EndTime: 0
+  - StartTime: 124692
+    Lane: 3
+    EndTime: 0
+  - StartTime: 124904
+    Lane: 1
+    EndTime: 0
+  - StartTime: 124904
+    Lane: 4
+    EndTime: 0
+  - StartTime: 125009
+    Lane: 3
+    EndTime: 0
+  - StartTime: 125115
+    Lane: 1
+    EndTime: 0
+  - StartTime: 125220
+    Lane: 3
+    EndTime: 0
+  - StartTime: 125326
+    Lane: 4
+    EndTime: 0
+  - StartTime: 125326
+    Lane: 1
+    EndTime: 0
+  - StartTime: 125432
+    Lane: 2
+    EndTime: 0
+  - StartTime: 125537
+    Lane: 4
+    EndTime: 0
+  - StartTime: 125643
+    Lane: 2
+    EndTime: 0
+  - StartTime: 125749
+    Lane: 4
+    EndTime: 0
+  - StartTime: 125749
+    Lane: 1
+    EndTime: 0
+  - StartTime: 125749
+    Lane: 3
+    EndTime: 0
+  - StartTime: 125854
+    Lane: 1
+    EndTime: 0
+  - StartTime: 126065
+    Lane: 2
+    EndTime: 0
+  - StartTime: 126065
+    Lane: 4
+    EndTime: 0
+  - StartTime: 126065
+    Lane: 3
+    EndTime: 0
+  - StartTime: 126277
+    Lane: 1
+    EndTime: 0
+  - StartTime: 126277
+    Lane: 3
+    EndTime: 0
+  - StartTime: 126277
+    Lane: 4
+    EndTime: 0
+  - StartTime: 126488
+    Lane: 2
+    EndTime: 0
+  - StartTime: 126488
+    Lane: 3
+    EndTime: 0
+  - StartTime: 126488
+    Lane: 1
+    EndTime: 0
+  - StartTime: 126699
+    Lane: 4
+    EndTime: 0
+  - StartTime: 126699
+    Lane: 3
+    EndTime: 0
+  - StartTime: 126805
+    Lane: 4
+    EndTime: 0
+  - StartTime: 126805
+    Lane: 1
+    EndTime: 0
+  - StartTime: 126910
+    Lane: 2
+    EndTime: 0
+  - StartTime: 126910
+    Lane: 1
+    EndTime: 0
+  - StartTime: 127122
+    Lane: 3
+    EndTime: 0
+  - StartTime: 127122
+    Lane: 1
+    EndTime: 0
+  - StartTime: 127122
+    Lane: 4
+    EndTime: 0
+  - StartTime: 127333
+    Lane: 3
+    EndTime: 0
+  - StartTime: 127333
+    Lane: 2
+    EndTime: 0
+  - StartTime: 127439
+    Lane: 3
+    EndTime: 0
+  - StartTime: 127439
+    Lane: 1
+    EndTime: 0
+  - StartTime: 127544
+    Lane: 1
+    EndTime: 0
+  - StartTime: 127544
+    Lane: 2
+    EndTime: 0
+  - StartTime: 127756
+    Lane: 4
+    EndTime: 0
+  - StartTime: 127756
+    Lane: 1
+    EndTime: 0
+  - StartTime: 127756
+    Lane: 2
+    EndTime: 0
+  - StartTime: 127967
+    Lane: 2
+    EndTime: 0
+  - StartTime: 127967
+    Lane: 4
+    EndTime: 0
+  - StartTime: 127967
+    Lane: 3
+    EndTime: 0
+  - StartTime: 128178
+    Lane: 1
+    EndTime: 0
+  - StartTime: 128178
+    Lane: 3
+    EndTime: 0
+  - StartTime: 128178
+    Lane: 4
+    EndTime: 0
+  - StartTime: 128389
+    Lane: 3
+    EndTime: 0
+  - StartTime: 128389
+    Lane: 2
+    EndTime: 0
+  - StartTime: 128495
+    Lane: 4
+    EndTime: 0
+  - StartTime: 128495
+    Lane: 2
+    EndTime: 0
+  - StartTime: 128601
+    Lane: 1
+    EndTime: 0
+  - StartTime: 128601
+    Lane: 3
+    EndTime: 0
+  - StartTime: 128706
+    Lane: 3
+    EndTime: 0
+  - StartTime: 128706
+    Lane: 2
+    EndTime: 0
+  - StartTime: 128812
+    Lane: 1
+    EndTime: 0
+  - StartTime: 128812
+    Lane: 4
+    EndTime: 0
+  - StartTime: 128918
+    Lane: 1
+    EndTime: 0
+  - StartTime: 128918
+    Lane: 2
+    EndTime: 0
+  - StartTime: 129023
+    Lane: 4
+    EndTime: 0
+  - StartTime: 129023
+    Lane: 3
+    EndTime: 0
+  - StartTime: 129129
+    Lane: 2
+    EndTime: 0
+  - StartTime: 129129
+    Lane: 4
+    EndTime: 0
+  - StartTime: 129234
+    Lane: 1
+    EndTime: 0
+  - StartTime: 129234
+    Lane: 3
+    EndTime: 0
+  - StartTime: 129446
+    Lane: 1
+    EndTime: 0
+  - StartTime: 129446
+    Lane: 3
+    EndTime: 0
+  - StartTime: 129446
+    Lane: 2
+    EndTime: 0
+  - StartTime: 129657
+    Lane: 2
+    EndTime: 0
+  - StartTime: 129657
+    Lane: 1
+    EndTime: 0
+  - StartTime: 129657
+    Lane: 4
+    EndTime: 0
+  - StartTime: 129868
+    Lane: 4
+    EndTime: 0
+  - StartTime: 129868
+    Lane: 2
+    EndTime: 0
+  - StartTime: 129868
+    Lane: 3
+    EndTime: 0
+  - StartTime: 130079
+    Lane: 4
+    EndTime: 0
+  - StartTime: 130079
+    Lane: 1
+    EndTime: 0
+  - StartTime: 130185
+    Lane: 1
+    EndTime: 0
+  - StartTime: 130185
+    Lane: 3
+    EndTime: 0
+  - StartTime: 130291
+    Lane: 2
+    EndTime: 0
+  - StartTime: 130291
+    Lane: 3
+    EndTime: 0
+  - StartTime: 130502
+    Lane: 1
+    EndTime: 0
+  - StartTime: 130502
+    Lane: 2
+    EndTime: 0
+  - StartTime: 130502
+    Lane: 4
+    EndTime: 0
+  - StartTime: 130713
+    Lane: 2
+    EndTime: 0
+  - StartTime: 130713
+    Lane: 3
+    EndTime: 0
+  - StartTime: 130819
+    Lane: 4
+    EndTime: 0
+  - StartTime: 130819
+    Lane: 2
+    EndTime: 0
+  - StartTime: 130925
+    Lane: 1
+    EndTime: 0
+  - StartTime: 130925
+    Lane: 4
+    EndTime: 0
+  - StartTime: 131136
+    Lane: 1
+    EndTime: 0
+  - StartTime: 131136
+    Lane: 2
+    EndTime: 0
+  - StartTime: 131136
+    Lane: 3
+    EndTime: 0
+  - StartTime: 131347
+    Lane: 4
+    EndTime: 0
+  - StartTime: 131347
+    Lane: 3
+    EndTime: 0
+  - StartTime: 131347
+    Lane: 2
+    EndTime: 0
+  - StartTime: 131558
+    Lane: 1
+    EndTime: 0
+  - StartTime: 131558
+    Lane: 2
+    EndTime: 0
+  - StartTime: 131558
+    Lane: 4
+    EndTime: 0
+  - StartTime: 131770
+    Lane: 1
+    EndTime: 0
+  - StartTime: 131770
+    Lane: 4
+    EndTime: 0
+  - StartTime: 131875
+    Lane: 4
+    EndTime: 0
+  - StartTime: 131875
+    Lane: 2
+    EndTime: 0
+  - StartTime: 131981
+    Lane: 1
+    EndTime: 0
+  - StartTime: 131981
+    Lane: 3
+    EndTime: 0
+  - StartTime: 132087
+    Lane: 4
+    EndTime: 0
+  - StartTime: 132087
+    Lane: 3
+    EndTime: 0
+  - StartTime: 132192
+    Lane: 2
+    EndTime: 0
+  - StartTime: 132192
+    Lane: 1
+    EndTime: 0
+  - StartTime: 132298
+    Lane: 2
+    EndTime: 0
+  - StartTime: 132298
+    Lane: 4
+    EndTime: 0
+  - StartTime: 132403
+    Lane: 1
+    EndTime: 0
+  - StartTime: 132403
+    Lane: 3
+    EndTime: 0
+  - StartTime: 132509
+    Lane: 1
+    EndTime: 0
+  - StartTime: 132509
+    Lane: 4
+    EndTime: 0
+  - StartTime: 132615
+    Lane: 2
+    EndTime: 0
+  - StartTime: 132615
+    Lane: 4
+    EndTime: 0
+  - StartTime: 132826
+    Lane: 4
+    EndTime: 0
+  - StartTime: 132826
+    Lane: 1
+    EndTime: 0
+  - StartTime: 132826
+    Lane: 2
+    EndTime: 0
+  - StartTime: 133037
+    Lane: 1
+    EndTime: 0
+  - StartTime: 133037
+    Lane: 3
+    EndTime: 0
+  - StartTime: 133037
+    Lane: 4
+    EndTime: 0
+  - StartTime: 133249
+    Lane: 2
+    EndTime: 0
+  - StartTime: 133249
+    Lane: 4
+    EndTime: 0
+  - StartTime: 133249
+    Lane: 3
+    EndTime: 0
+  - StartTime: 133460
+    Lane: 1
+    EndTime: 0
+  - StartTime: 133460
+    Lane: 3
+    EndTime: 0
+  - StartTime: 133565
+    Lane: 4
+    EndTime: 0
+  - StartTime: 133565
+    Lane: 2
+    EndTime: 0
+  - StartTime: 133671
+    Lane: 3
+    EndTime: 0
+  - StartTime: 133671
+    Lane: 2
+    EndTime: 0
+  - StartTime: 133882
+    Lane: 1
+    EndTime: 0
+  - StartTime: 133882
+    Lane: 2
+    EndTime: 0
+  - StartTime: 133882
+    Lane: 4
+    EndTime: 0
+  - StartTime: 134094
+    Lane: 4
+    EndTime: 0
+  - StartTime: 134094
+    Lane: 1
+    EndTime: 0
+  - StartTime: 134199
+    Lane: 1
+    EndTime: 0
+  - StartTime: 134199
+    Lane: 3
+    EndTime: 0
+  - StartTime: 134305
+    Lane: 2
+    EndTime: 0
+  - StartTime: 134305
+    Lane: 3
+    EndTime: 0
+  - StartTime: 134516
+    Lane: 3
+    EndTime: 0
+  - StartTime: 134516
+    Lane: 2
+    EndTime: 0
+  - StartTime: 134516
+    Lane: 1
+    EndTime: 0
+  - StartTime: 134727
+    Lane: 4
+    EndTime: 0
+  - StartTime: 134727
+    Lane: 2
+    EndTime: 0
+  - StartTime: 134727
+    Lane: 3
+    EndTime: 0
+  - StartTime: 134939
+    Lane: 2
+    EndTime: 0
+  - StartTime: 134939
+    Lane: 4
+    EndTime: 0
+  - StartTime: 134939
+    Lane: 1
+    EndTime: 0
+  - StartTime: 135150
+    Lane: 1
+    EndTime: 0
+  - StartTime: 135150
+    Lane: 3
+    EndTime: 0
+  - StartTime: 135256
+    Lane: 3
+    EndTime: 0
+  - StartTime: 135256
+    Lane: 2
+    EndTime: 0
+  - StartTime: 135361
+    Lane: 4
+    EndTime: 0
+  - StartTime: 135361
+    Lane: 1
+    EndTime: 0
+  - StartTime: 135467
+    Lane: 1
+    EndTime: 0
+  - StartTime: 135467
+    Lane: 3
+    EndTime: 0
+  - StartTime: 135572
+    Lane: 2
+    EndTime: 0
+  - StartTime: 135572
+    Lane: 4
+    EndTime: 0
+  - StartTime: 135678
+    Lane: 4
+    EndTime: 0
+  - StartTime: 135678
+    Lane: 3
+    EndTime: 0
+  - StartTime: 135784
+    Lane: 1
+    EndTime: 0
+  - StartTime: 135784
+    Lane: 2
+    EndTime: 0
+  - StartTime: 135889
+    Lane: 4
+    EndTime: 138425
+  - StartTime: 135889
+    Lane: 1
+    EndTime: 0
+  - StartTime: 135995
+    Lane: 2
+    EndTime: 0
+  - StartTime: 135995
+    Lane: 3
+    EndTime: 0
+  - StartTime: 136206
+    Lane: 3
+    EndTime: 0
+  - StartTime: 136206
+    Lane: 1
+    EndTime: 0
+  - StartTime: 136418
+    Lane: 2
+    EndTime: 0
+  - StartTime: 136418
+    Lane: 3
+    EndTime: 0
+  - StartTime: 136629
+    Lane: 2
+    EndTime: 0
+  - StartTime: 136629
+    Lane: 1
+    EndTime: 0
+  - StartTime: 136840
+    Lane: 3
+    EndTime: 0
+  - StartTime: 136946
+    Lane: 1
+    EndTime: 0
+  - StartTime: 136946
+    Lane: 3
+    EndTime: 0
+  - StartTime: 137051
+    Lane: 1
+    EndTime: 0
+  - StartTime: 137263
+    Lane: 2
+    EndTime: 0
+  - StartTime: 137263
+    Lane: 3
+    EndTime: 0
+  - StartTime: 137474
+    Lane: 1
+    EndTime: 0
+  - StartTime: 137579
+    Lane: 1
+    EndTime: 0
+  - StartTime: 137579
+    Lane: 3
+    EndTime: 0
+  - StartTime: 137685
+    Lane: 3
+    EndTime: 0
+  - StartTime: 137896
+    Lane: 1
+    EndTime: 0
+  - StartTime: 138108
+    Lane: 2
+    EndTime: 0
+  - StartTime: 138319
+    Lane: 3
+    EndTime: 0
+  - StartTime: 138530
+    Lane: 2
+    EndTime: 0
+  - StartTime: 138530
+    Lane: 3
+    EndTime: 0
+  - StartTime: 138636
+    Lane: 1
+    EndTime: 0
+  - StartTime: 138636
+    Lane: 4
+    EndTime: 0
+  - StartTime: 138741
+    Lane: 2
+    EndTime: 0
+  - StartTime: 138741
+    Lane: 3
+    EndTime: 0
+  - StartTime: 138953
+    Lane: 1
+    EndTime: 0
+  - StartTime: 138953
+    Lane: 2
+    EndTime: 0
+  - StartTime: 139058
+    Lane: 3
+    EndTime: 0
+  - StartTime: 139058
+    Lane: 4
+    EndTime: 0
+  - StartTime: 139164
+    Lane: 1
+    EndTime: 0
+  - StartTime: 139164
+    Lane: 4
+    EndTime: 0
+  - StartTime: 139164
+    Lane: 2
+    EndTime: 0
+  - StartTime: 139481
+    Lane: 4
+    EndTime: 0
+  - StartTime: 139587
+    Lane: 3
+    EndTime: 0
+  - StartTime: 139692
+    Lane: 4
+    EndTime: 0
+  - StartTime: 139692
+    Lane: 1
+    EndTime: 0
+  - StartTime: 139692
+    Lane: 2
+    EndTime: 0
+  - StartTime: 139798
+    Lane: 3
+    EndTime: 0
+  - StartTime: 139903
+    Lane: 2
+    EndTime: 0
+  - StartTime: 140115
+    Lane: 3
+    EndTime: 0
+  - StartTime: 140115
+    Lane: 1
+    EndTime: 0
+  - StartTime: 140326
+    Lane: 4
+    EndTime: 0
+  - StartTime: 140537
+    Lane: 1
+    EndTime: 0
+  - StartTime: 140537
+    Lane: 2
+    EndTime: 0
+  - StartTime: 140960
+    Lane: 2
+    EndTime: 0
+  - StartTime: 140960
+    Lane: 3
+    EndTime: 0
+  - StartTime: 141065
+    Lane: 1
+    EndTime: 0
+  - StartTime: 141171
+    Lane: 2
+    EndTime: 0
+  - StartTime: 141277
+    Lane: 3
+    EndTime: 0
+  - StartTime: 141277
+    Lane: 4
+    EndTime: 0
+  - StartTime: 141382
+    Lane: 2
+    EndTime: 0
+  - StartTime: 141594
+    Lane: 3
+    EndTime: 0
+  - StartTime: 141805
+    Lane: 1
+    EndTime: 142650
+  - StartTime: 141805
+    Lane: 4
+    EndTime: 142650
+  - StartTime: 142650
+    Lane: 3
+    EndTime: 0
+  - StartTime: 142966
+    Lane: 2
+    EndTime: 0
+  - StartTime: 143072
+    Lane: 1
+    EndTime: 0
+  - StartTime: 143072
+    Lane: 4
+    EndTime: 0
+  - StartTime: 143178
+    Lane: 3
+    EndTime: 0
+  - StartTime: 143283
+    Lane: 4
+    EndTime: 0
+  - StartTime: 143389
+    Lane: 1
+    EndTime: 0
+  - StartTime: 143442
+    Lane: 2
+    EndTime: 0
+  - StartTime: 143495
+    Lane: 3
+    EndTime: 0
+  - StartTime: 143600
+    Lane: 2
+    EndTime: 0
+  - StartTime: 143706
+    Lane: 1
+    EndTime: 0
+  - StartTime: 143776
+    Lane: 3
+    EndTime: 0
+  - StartTime: 143847
+    Lane: 4
+    EndTime: 0
+  - StartTime: 143917
+    Lane: 1
+    EndTime: 0
+  - StartTime: 144023
+    Lane: 2
+    EndTime: 0
+  - StartTime: 144128
+    Lane: 3
+    EndTime: 0
+  - StartTime: 144234
+    Lane: 1
+    EndTime: 0
+  - StartTime: 144340
+    Lane: 4
+    EndTime: 0
+  - StartTime: 144445
+    Lane: 3
+    EndTime: 0
+  - StartTime: 144551
+    Lane: 2
+    EndTime: 0
+  - StartTime: 144657
+    Lane: 1
+    EndTime: 0
+  - StartTime: 144762
+    Lane: 1
+    EndTime: 0
+  - StartTime: 144868
+    Lane: 2
+    EndTime: 0
+  - StartTime: 145026
+    Lane: 3
+    EndTime: 0
+  - StartTime: 145185
+    Lane: 1
+    EndTime: 146030
+  - StartTime: 145185
+    Lane: 4
+    EndTime: 146030
+  - StartTime: 146030
+    Lane: 3
+    EndTime: 0
+  - StartTime: 146135
+    Lane: 2
+    EndTime: 0
+  - StartTime: 146241
+    Lane: 4
+    EndTime: 0
+  - StartTime: 146346
+    Lane: 1
+    EndTime: 0
+  - StartTime: 146875
+    Lane: 4
+    EndTime: 0
+  - StartTime: 147086
+    Lane: 2
+    EndTime: 0
+  - StartTime: 147720
+    Lane: 1
+    EndTime: 0
+  - StartTime: 147931
+    Lane: 2
+    EndTime: 0
+  - StartTime: 148565
+    Lane: 2
+    EndTime: 0
+  - StartTime: 148776
+    Lane: 4
+    EndTime: 0
+  - StartTime: 149410
+    Lane: 4
+    EndTime: 0
+  - StartTime: 149515
+    Lane: 2
+    EndTime: 0
+  - StartTime: 149621
+    Lane: 3
+    EndTime: 0
+  - StartTime: 149727
+    Lane: 2
+    EndTime: 0
+  - StartTime: 149832
+    Lane: 4
+    EndTime: 0
+  - StartTime: 150044
+    Lane: 3
+    EndTime: 0
+  - StartTime: 150149
+    Lane: 1
+    EndTime: 0
+  - StartTime: 150202
+    Lane: 2
+    EndTime: 0
+  - StartTime: 150308
+    Lane: 4
+    EndTime: 0
+  - StartTime: 150360
+    Lane: 3
+    EndTime: 0
+  - StartTime: 150572
+    Lane: 3
+    EndTime: 0
+  - StartTime: 151100
+    Lane: 4
+    EndTime: 151312
+  - StartTime: 151101
+    Lane: 1
+    EndTime: 151312
+  - StartTime: 151945
+    Lane: 1
+    EndTime: 0
+  - StartTime: 152367
+    Lane: 1
+    EndTime: 0
+  - StartTime: 152790
+    Lane: 1
+    EndTime: 0
+  - StartTime: 153212
+    Lane: 1
+    EndTime: 0
+  - StartTime: 153635
+    Lane: 4
+    EndTime: 0
+  - StartTime: 153635
+    Lane: 3
+    EndTime: 0
+  - StartTime: 153846
+    Lane: 1
+    EndTime: 0
+  - StartTime: 154058
+    Lane: 2
+    EndTime: 0
+  - StartTime: 154058
+    Lane: 3
+    EndTime: 0
+  - StartTime: 154269
+    Lane: 4
+    EndTime: 0
+  - StartTime: 154481
+    Lane: 1
+    EndTime: 0
+  - StartTime: 154481
+    Lane: 2
+    EndTime: 0
+  - StartTime: 154692
+    Lane: 3
+    EndTime: 0
+  - StartTime: 154904
+    Lane: 4
+    EndTime: 0
+  - StartTime: 154904
+    Lane: 2
+    EndTime: 0
+  - StartTime: 155115
+    Lane: 1
+    EndTime: 0
+  - StartTime: 155327
+    Lane: 4
+    EndTime: 0
+  - StartTime: 155327
+    Lane: 3
+    EndTime: 0
+  - StartTime: 155538
+    Lane: 2
+    EndTime: 0
+  - StartTime: 155750
+    Lane: 1
+    EndTime: 0
+  - StartTime: 155750
+    Lane: 4
+    EndTime: 0
+  - StartTime: 155961
+    Lane: 2
+    EndTime: 0
+  - StartTime: 156173
+    Lane: 3
+    EndTime: 0
+  - StartTime: 156173
+    Lane: 4
+    EndTime: 0
+  - StartTime: 156384
+    Lane: 2
+    EndTime: 0
+  - StartTime: 156596
+    Lane: 3
+    EndTime: 0
+  - StartTime: 156596
+    Lane: 4
+    EndTime: 0
+  - StartTime: 156807
+    Lane: 1
+    EndTime: 0
+  - StartTime: 157019
+    Lane: 4
+    EndTime: 0
+  - StartTime: 157019
+    Lane: 2
+    EndTime: 0
+  - StartTime: 157230
+    Lane: 3
+    EndTime: 0
+  - StartTime: 157442
+    Lane: 1
+    EndTime: 0
+  - StartTime: 157442
+    Lane: 4
+    EndTime: 0
+  - StartTime: 157653
+    Lane: 2
+    EndTime: 0
+  - StartTime: 157865
+    Lane: 3
+    EndTime: 0
+  - StartTime: 157865
+    Lane: 1
+    EndTime: 0
+  - StartTime: 158076
+    Lane: 2
+    EndTime: 0
+  - StartTime: 158288
+    Lane: 4
+    EndTime: 0
+  - StartTime: 158288
+    Lane: 3
+    EndTime: 0
+  - StartTime: 158499
+    Lane: 2
+    EndTime: 0
+  - StartTime: 158711
+    Lane: 1
+    EndTime: 0
+  - StartTime: 158711
+    Lane: 4
+    EndTime: 0
+  - StartTime: 158922
+    Lane: 3
+    EndTime: 0
+  - StartTime: 159134
+    Lane: 1
+    EndTime: 0
+  - StartTime: 159134
+    Lane: 2
+    EndTime: 0
+  - StartTime: 159345
+    Lane: 3
+    EndTime: 0
+  - StartTime: 159557
+    Lane: 4
+    EndTime: 0
+  - StartTime: 159557
+    Lane: 1
+    EndTime: 0
+  - StartTime: 159768
+    Lane: 2
+    EndTime: 0
+  - StartTime: 159980
+    Lane: 4
+    EndTime: 0
+  - StartTime: 159980
+    Lane: 3
+    EndTime: 0
+  - StartTime: 160191
+    Lane: 1
+    EndTime: 0
+  - StartTime: 160403
+    Lane: 4
+    EndTime: 0
+  - StartTime: 160403
+    Lane: 3
+    EndTime: 0
+  - StartTime: 160614
+    Lane: 2
+    EndTime: 0
+  - StartTime: 160826
+    Lane: 1
+    EndTime: 0
+  - StartTime: 160826
+    Lane: 3
+    EndTime: 0
+  - StartTime: 161037
+    Lane: 2
+    EndTime: 0
+  - StartTime: 161249
+    Lane: 4
+    EndTime: 0
+  - StartTime: 161249
+    Lane: 1
+    EndTime: 0
+  - StartTime: 161460
+    Lane: 3
+    EndTime: 0
+  - StartTime: 161672
+    Lane: 2
+    EndTime: 0
+  - StartTime: 161672
+    Lane: 1
+    EndTime: 0
+  - StartTime: 161883
+    Lane: 4
+    EndTime: 0
+  - StartTime: 162095
+    Lane: 1
+    EndTime: 0
+  - StartTime: 162095
+    Lane: 3
+    EndTime: 0
+  - StartTime: 162306
+    Lane: 4
+    EndTime: 0
+  - StartTime: 162518
+    Lane: 2
+    EndTime: 0
+  - StartTime: 162518
+    Lane: 1
+    EndTime: 0
+  - StartTime: 162729
+    Lane: 3
+    EndTime: 0
+  - StartTime: 162941
+    Lane: 1
+    EndTime: 0
+  - StartTime: 162941
+    Lane: 4
+    EndTime: 0
+  - StartTime: 163152
+    Lane: 2
+    EndTime: 0
+  - StartTime: 163364
+    Lane: 3
+    EndTime: 0
+  - StartTime: 163364
+    Lane: 1
+    EndTime: 0
+  - StartTime: 163575
+    Lane: 2
+    EndTime: 0
+  - StartTime: 163787
+    Lane: 3
+    EndTime: 0
+  - StartTime: 163787
+    Lane: 4
+    EndTime: 0
+  - StartTime: 163998
+    Lane: 2
+    EndTime: 0
+  - StartTime: 164210
+    Lane: 1
+    EndTime: 0
+  - StartTime: 164210
+    Lane: 4
+    EndTime: 0
+  - StartTime: 164421
+    Lane: 3
+    EndTime: 0
+  - StartTime: 164633
+    Lane: 4
+    EndTime: 0
+  - StartTime: 164633
+    Lane: 1
+    EndTime: 0
+  - StartTime: 164844
+    Lane: 2
+    EndTime: 0
+  - StartTime: 165055
+    Lane: 1
+    EndTime: 0
+  - StartTime: 165055
+    Lane: 4
+    EndTime: 0
+  - StartTime: 165266
+    Lane: 3
+    EndTime: 0
+  - StartTime: 165466
+    Lane: 1
+    EndTime: 0
+  - StartTime: 165888
+    Lane: 1
+    EndTime: 0
+  - StartTime: 166311
+    Lane: 1
+    EndTime: 0
+  - StartTime: 166733
+    Lane: 1
+    EndTime: 0
+  - StartTime: 167157
+    Lane: 4
+    EndTime: 0
+  - StartTime: 167368
+    Lane: 2
+    EndTime: 0
+  - StartTime: 167368
+    Lane: 3
+    EndTime: 0
+  - StartTime: 167579
+    Lane: 1
+    EndTime: 0
+  - StartTime: 167790
+    Lane: 2
+    EndTime: 0
+  - StartTime: 167790
+    Lane: 4
+    EndTime: 0
+  - StartTime: 168002
+    Lane: 3
+    EndTime: 0
+  - StartTime: 168213
+    Lane: 1
+    EndTime: 0
+  - StartTime: 168213
+    Lane: 2
+    EndTime: 0
+  - StartTime: 168424
+    Lane: 3
+    EndTime: 0
+  - StartTime: 168635
+    Lane: 2
+    EndTime: 0
+  - StartTime: 168635
+    Lane: 1
+    EndTime: 0
+  - StartTime: 168847
+    Lane: 4
+    EndTime: 0
+  - StartTime: 169058
+    Lane: 3
+    EndTime: 0
+  - StartTime: 169058
+    Lane: 4
+    EndTime: 0
+  - StartTime: 169269
+    Lane: 2
+    EndTime: 0
+  - StartTime: 169481
+    Lane: 1
+    EndTime: 0
+  - StartTime: 169481
+    Lane: 2
+    EndTime: 0
+  - StartTime: 169692
+    Lane: 1
+    EndTime: 0
+  - StartTime: 169692
+    Lane: 4
+    EndTime: 0
+  - StartTime: 169903
+    Lane: 3
+    EndTime: 0
+  - StartTime: 170114
+    Lane: 1
+    EndTime: 0
+  - StartTime: 170114
+    Lane: 3
+    EndTime: 0
+  - StartTime: 170326
+    Lane: 4
+    EndTime: 0
+  - StartTime: 170537
+    Lane: 2
+    EndTime: 0
+  - StartTime: 170748
+    Lane: 1
+    EndTime: 0
+  - StartTime: 170748
+    Lane: 2
+    EndTime: 0
+  - StartTime: 170959
+    Lane: 3
+    EndTime: 0
+  - StartTime: 171170
+    Lane: 2
+    EndTime: 0
+  - StartTime: 171170
+    Lane: 3
+    EndTime: 0
+  - StartTime: 171382
+    Lane: 4
+    EndTime: 0
+  - StartTime: 171593
+    Lane: 4
+    EndTime: 0
+  - StartTime: 171593
+    Lane: 3
+    EndTime: 0
+  - StartTime: 171804
+    Lane: 2
+    EndTime: 0
+  - StartTime: 172015
+    Lane: 1
+    EndTime: 0
+  - StartTime: 172015
+    Lane: 4
+    EndTime: 0
+  - StartTime: 172227
+    Lane: 3
+    EndTime: 0
+  - StartTime: 172438
+    Lane: 3
+    EndTime: 0
+  - StartTime: 172649
+    Lane: 2
+    EndTime: 0
+  - StartTime: 172860
+    Lane: 2
+    EndTime: 0
+  - StartTime: 173072
+    Lane: 1
+    EndTime: 0
+  - StartTime: 173283
+    Lane: 4
+    EndTime: 0
+  - StartTime: 173494
+    Lane: 4
+    EndTime: 0
+  - StartTime: 173494
+    Lane: 1
+    EndTime: 0
+  - StartTime: 173706
+    Lane: 1
+    EndTime: 0
+  - StartTime: 173706
+    Lane: 3
+    EndTime: 0
+  - StartTime: 173917
+    Lane: 4
+    EndTime: 0
+  - StartTime: 173917
+    Lane: 2
+    EndTime: 0
+  - StartTime: 174128
+    Lane: 3
+    EndTime: 0
+  - StartTime: 174339
+    Lane: 1
+    EndTime: 0
+  - StartTime: 174339
+    Lane: 3
+    EndTime: 0
+  - StartTime: 174550
+    Lane: 2
+    EndTime: 0
+  - StartTime: 174762
+    Lane: 4
+    EndTime: 0
+  - StartTime: 174762
+    Lane: 3
+    EndTime: 0
+  - StartTime: 174973
+    Lane: 2
+    EndTime: 0
+  - StartTime: 175184
+    Lane: 4
+    EndTime: 0
+  - StartTime: 175184
+    Lane: 3
+    EndTime: 0
+  - StartTime: 175395
+    Lane: 1
+    EndTime: 0
+  - StartTime: 175607
+    Lane: 3
+    EndTime: 0
+  - StartTime: 175607
+    Lane: 2
+    EndTime: 0
+  - StartTime: 175607
+    Lane: 1
+    EndTime: 0
+  - StartTime: 176030
+    Lane: 3
+    EndTime: 0
+  - StartTime: 176030
+    Lane: 2
+    EndTime: 0
+  - StartTime: 176030
+    Lane: 4
+    EndTime: 0
+  - StartTime: 176452
+    Lane: 2
+    EndTime: 0
+  - StartTime: 176452
+    Lane: 1
+    EndTime: 0
+  - StartTime: 176664
+    Lane: 3
+    EndTime: 0
+  - StartTime: 176664
+    Lane: 4
+    EndTime: 0
+  - StartTime: 176875
+    Lane: 1
+    EndTime: 0
+  - StartTime: 176875
+    Lane: 4
+    EndTime: 0
+  - StartTime: 177086
+    Lane: 3
+    EndTime: 0
+  - StartTime: 177086
+    Lane: 1
+    EndTime: 0
+  - StartTime: 177297
+    Lane: 4
+    EndTime: 0
+  - StartTime: 177297
+    Lane: 2
+    EndTime: 0
+  - StartTime: 177720
+    Lane: 2
+    EndTime: 0
+  - StartTime: 177720
+    Lane: 3
+    EndTime: 0
+  - StartTime: 178143
+    Lane: 4
+    EndTime: 0
+  - StartTime: 178565
+    Lane: 1
+    EndTime: 0
+  - StartTime: 178988
+    Lane: 2
+    EndTime: 180678
+  - StartTime: 178988
+    Lane: 3
+    EndTime: 180678
+  - StartTime: 180678
+    Lane: 4
+    EndTime: 0
+  - StartTime: 180678
+    Lane: 1
+    EndTime: 0
+  - StartTime: 180889
+    Lane: 4
+    EndTime: 0
+  - StartTime: 181100
+    Lane: 2
+    EndTime: 0
+  - StartTime: 181311
+    Lane: 3
+    EndTime: 0
+  - StartTime: 181523
+    Lane: 1
+    EndTime: 0
+  - StartTime: 181523
+    Lane: 4
+    EndTime: 0
+  - StartTime: 181734
+    Lane: 2
+    EndTime: 0
+  - StartTime: 181839
+    Lane: 4
+    EndTime: 0
+  - StartTime: 182156
+    Lane: 2
+    EndTime: 0
+  - StartTime: 182156
+    Lane: 3
+    EndTime: 0
+  - StartTime: 182156
+    Lane: 1
+    EndTime: 0
+  - StartTime: 182368
+    Lane: 2
+    EndTime: 0
+  - StartTime: 182368
+    Lane: 3
+    EndTime: 0
+  - StartTime: 182368
+    Lane: 4
+    EndTime: 0
+  - StartTime: 182579
+    Lane: 1
+    EndTime: 0
+  - StartTime: 182790
+    Lane: 2
+    EndTime: 0
+  - StartTime: 183001
+    Lane: 3
+    EndTime: 0
+  - StartTime: 183001
+    Lane: 1
+    EndTime: 0
+  - StartTime: 183213
+    Lane: 4
+    EndTime: 0
+  - StartTime: 183213
+    Lane: 2
+    EndTime: 0
+  - StartTime: 183424
+    Lane: 3
+    EndTime: 0
+  - StartTime: 183530
+    Lane: 4
+    EndTime: 0
+  - StartTime: 183635
+    Lane: 1
+    EndTime: 0
+  - StartTime: 183635
+    Lane: 2
+    EndTime: 0
+  - StartTime: 183635
+    Lane: 3
+    EndTime: 0
+  - StartTime: 183847
+    Lane: 4
+    EndTime: 0
+  - StartTime: 183847
+    Lane: 1
+    EndTime: 0
+  - StartTime: 183847
+    Lane: 2
+    EndTime: 0
+  - StartTime: 184058
+    Lane: 1
+    EndTime: 0
+  - StartTime: 184058
+    Lane: 3
+    EndTime: 0
+  - StartTime: 184058
+    Lane: 4
+    EndTime: 0
+  - StartTime: 184269
+    Lane: 2
+    EndTime: 0
+  - StartTime: 184480
+    Lane: 3
+    EndTime: 0
+  - StartTime: 184692
+    Lane: 2
+    EndTime: 0
+  - StartTime: 184903
+    Lane: 1
+    EndTime: 0
+  - StartTime: 184903
+    Lane: 3
+    EndTime: 0
+  - StartTime: 185114
+    Lane: 4
+    EndTime: 0
+  - StartTime: 185220
+    Lane: 2
+    EndTime: 0
+  - StartTime: 185325
+    Lane: 1
+    EndTime: 0
+  - StartTime: 185325
+    Lane: 3
+    EndTime: 0
+  - StartTime: 185325
+    Lane: 4
+    EndTime: 0
+  - StartTime: 185537
+    Lane: 4
+    EndTime: 0
+  - StartTime: 185537
+    Lane: 1
+    EndTime: 0
+  - StartTime: 185537
+    Lane: 2
+    EndTime: 0
+  - StartTime: 185642
+    Lane: 3
+    EndTime: 0
+  - StartTime: 185748
+    Lane: 1
+    EndTime: 0
+  - StartTime: 185748
+    Lane: 4
+    EndTime: 0
+  - StartTime: 185748
+    Lane: 2
+    EndTime: 0
+  - StartTime: 185959
+    Lane: 3
+    EndTime: 0
+  - StartTime: 186170
+    Lane: 2
+    EndTime: 0
+  - StartTime: 186170
+    Lane: 4
+    EndTime: 0
+  - StartTime: 186382
+    Lane: 1
+    EndTime: 0
+  - StartTime: 186593
+    Lane: 4
+    EndTime: 0
+  - StartTime: 186804
+    Lane: 2
+    EndTime: 0
+  - StartTime: 186910
+    Lane: 1
+    EndTime: 0
+  - StartTime: 187016
+    Lane: 4
+    EndTime: 0
+  - StartTime: 187068
+    Lane: 3
+    EndTime: 0
+  - StartTime: 187121
+    Lane: 1
+    EndTime: 0
+  - StartTime: 187174
+    Lane: 2
+    EndTime: 0
+  - StartTime: 187227
+    Lane: 4
+    EndTime: 0
+  - StartTime: 187280
+    Lane: 3
+    EndTime: 0
+  - StartTime: 187332
+    Lane: 1
+    EndTime: 0
+  - StartTime: 187385
+    Lane: 2
+    EndTime: 0
+  - StartTime: 187438
+    Lane: 4
+    EndTime: 0
+  - StartTime: 187438
+    Lane: 3
+    EndTime: 0
+  - StartTime: 187544
+    Lane: 2
+    EndTime: 0
+  - StartTime: 187649
+    Lane: 1
+    EndTime: 0
+  - StartTime: 187649
+    Lane: 3
+    EndTime: 0
+  - StartTime: 187755
+    Lane: 2
+    EndTime: 0
+  - StartTime: 187861
+    Lane: 4
+    EndTime: 0
+  - StartTime: 187861
+    Lane: 3
+    EndTime: 0
+  - StartTime: 187966
+    Lane: 2
+    EndTime: 0
+  - StartTime: 188072
+    Lane: 4
+    EndTime: 0
+  - StartTime: 188072
+    Lane: 1
+    EndTime: 0
+  - StartTime: 188178
+    Lane: 3
+    EndTime: 0
+  - StartTime: 188283
+    Lane: 2
+    EndTime: 0
+  - StartTime: 188283
+    Lane: 4
+    EndTime: 0
+  - StartTime: 188389
+    Lane: 1
+    EndTime: 0
+  - StartTime: 188494
+    Lane: 4
+    EndTime: 0
+  - StartTime: 188494
+    Lane: 2
+    EndTime: 0
+  - StartTime: 188600
+    Lane: 1
+    EndTime: 0
+  - StartTime: 188600
+    Lane: 3
+    EndTime: 0
+  - StartTime: 188706
+    Lane: 2
+    EndTime: 0
+  - StartTime: 188706
+    Lane: 1
+    EndTime: 0
+  - StartTime: 188706
+    Lane: 4
+    EndTime: 0
+  - StartTime: 188917
+    Lane: 2
+    EndTime: 0
+  - StartTime: 188917
+    Lane: 3
+    EndTime: 0
+  - StartTime: 188917
+    Lane: 1
+    EndTime: 0
+  - StartTime: 189128
+    Lane: 2
+    EndTime: 0
+  - StartTime: 189128
+    Lane: 4
+    EndTime: 0
+  - StartTime: 189128
+    Lane: 3
+    EndTime: 0
+  - StartTime: 189234
+    Lane: 1
+    EndTime: 0
+  - StartTime: 189339
+    Lane: 3
+    EndTime: 0
+  - StartTime: 189339
+    Lane: 4
+    EndTime: 0
+  - StartTime: 189445
+    Lane: 2
+    EndTime: 0
+  - StartTime: 189551
+    Lane: 4
+    EndTime: 0
+  - StartTime: 189551
+    Lane: 1
+    EndTime: 0
+  - StartTime: 189656
+    Lane: 3
+    EndTime: 0
+  - StartTime: 189762
+    Lane: 4
+    EndTime: 0
+  - StartTime: 189762
+    Lane: 1
+    EndTime: 0
+  - StartTime: 189868
+    Lane: 2
+    EndTime: 0
+  - StartTime: 189973
+    Lane: 3
+    EndTime: 0
+  - StartTime: 189973
+    Lane: 1
+    EndTime: 0
+  - StartTime: 190079
+    Lane: 4
+    EndTime: 0
+  - StartTime: 190185
+    Lane: 1
+    EndTime: 0
+  - StartTime: 190185
+    Lane: 3
+    EndTime: 0
+  - StartTime: 190290
+    Lane: 4
+    EndTime: 0
+  - StartTime: 190290
+    Lane: 2
+    EndTime: 0
+  - StartTime: 190396
+    Lane: 1
+    EndTime: 0
+  - StartTime: 190396
+    Lane: 3
+    EndTime: 0
+  - StartTime: 190396
+    Lane: 4
+    EndTime: 0
+  - StartTime: 190607
+    Lane: 1
+    EndTime: 0
+  - StartTime: 190607
+    Lane: 4
+    EndTime: 0
+  - StartTime: 190607
+    Lane: 2
+    EndTime: 0
+  - StartTime: 190818
+    Lane: 3
+    EndTime: 0
+  - StartTime: 190818
+    Lane: 2
+    EndTime: 0
+  - StartTime: 190818
+    Lane: 4
+    EndTime: 0
+  - StartTime: 190924
+    Lane: 1
+    EndTime: 0
+  - StartTime: 191030
+    Lane: 3
+    EndTime: 0
+  - StartTime: 191030
+    Lane: 4
+    EndTime: 0
+  - StartTime: 191135
+    Lane: 2
+    EndTime: 0
+  - StartTime: 191241
+    Lane: 1
+    EndTime: 0
+  - StartTime: 191241
+    Lane: 3
+    EndTime: 0
+  - StartTime: 191347
+    Lane: 4
+    EndTime: 0
+  - StartTime: 191452
+    Lane: 2
+    EndTime: 0
+  - StartTime: 191452
+    Lane: 3
+    EndTime: 0
+  - StartTime: 191558
+    Lane: 1
+    EndTime: 0
+  - StartTime: 191663
+    Lane: 2
+    EndTime: 0
+  - StartTime: 191663
+    Lane: 3
+    EndTime: 0
+  - StartTime: 191769
+    Lane: 4
+    EndTime: 0
+  - StartTime: 191875
+    Lane: 1
+    EndTime: 0
+  - StartTime: 191875
+    Lane: 3
+    EndTime: 0
+  - StartTime: 191980
+    Lane: 2
+    EndTime: 0
+  - StartTime: 192086
+    Lane: 1
+    EndTime: 0
+  - StartTime: 192086
+    Lane: 3
+    EndTime: 0
+  - StartTime: 192192
+    Lane: 4
+    EndTime: 0
+  - StartTime: 192297
+    Lane: 1
+    EndTime: 0
+  - StartTime: 192297
+    Lane: 3
+    EndTime: 0
+  - StartTime: 192508
+    Lane: 1
+    EndTime: 0
+  - StartTime: 192508
+    Lane: 2
+    EndTime: 0
+  - StartTime: 192508
+    Lane: 3
+    EndTime: 0
+  - StartTime: 192720
+    Lane: 4
+    EndTime: 0
+  - StartTime: 192720
+    Lane: 3
+    EndTime: 0
+  - StartTime: 192720
+    Lane: 2
+    EndTime: 0
+  - StartTime: 192931
+    Lane: 1
+    EndTime: 0
+  - StartTime: 192931
+    Lane: 2
+    EndTime: 0
+  - StartTime: 192931
+    Lane: 4
+    EndTime: 0
+  - StartTime: 193142
+    Lane: 4
+    EndTime: 0
+  - StartTime: 193142
+    Lane: 3
+    EndTime: 0
+  - StartTime: 193142
+    Lane: 1
+    EndTime: 0
+  - StartTime: 193354
+    Lane: 1
+    EndTime: 0
+  - StartTime: 193354
+    Lane: 4
+    EndTime: 0
+  - StartTime: 193459
+    Lane: 3
+    EndTime: 0
+  - StartTime: 193459
+    Lane: 2
+    EndTime: 0
+  - StartTime: 193565
+    Lane: 1
+    EndTime: 0
+  - StartTime: 193565
+    Lane: 4
+    EndTime: 0
+  - StartTime: 193670
+    Lane: 2
+    EndTime: 0
+  - StartTime: 193670
+    Lane: 3
+    EndTime: 0
+  - StartTime: 193776
+    Lane: 4
+    EndTime: 0
+  - StartTime: 193776
+    Lane: 1
+    EndTime: 0
+  - StartTime: 193882
+    Lane: 3
+    EndTime: 0
+  - StartTime: 193882
+    Lane: 2
+    EndTime: 0
+  - StartTime: 193987
+    Lane: 1
+    EndTime: 0
+  - StartTime: 193987
+    Lane: 4
+    EndTime: 0
+  - StartTime: 194093
+    Lane: 2
+    EndTime: 0
+  - StartTime: 194093
+    Lane: 3
+    EndTime: 0
+  - StartTime: 194199
+    Lane: 1
+    EndTime: 0
+  - StartTime: 194199
+    Lane: 4
+    EndTime: 0
+  - StartTime: 194304
+    Lane: 3
+    EndTime: 0
+  - StartTime: 194410
+    Lane: 2
+    EndTime: 0
+  - StartTime: 194410
+    Lane: 4
+    EndTime: 0
+  - StartTime: 194515
+    Lane: 1
+    EndTime: 0
+  - StartTime: 194621
+    Lane: 2
+    EndTime: 0
+  - StartTime: 194621
+    Lane: 3
+    EndTime: 0
+  - StartTime: 194621
+    Lane: 4
+    EndTime: 0
+  - StartTime: 194727
+    Lane: 1
+    EndTime: 0
+  - StartTime: 194832
+    Lane: 2
+    EndTime: 0
+  - StartTime: 194832
+    Lane: 4
+    EndTime: 0
+  - StartTime: 194938
+    Lane: 3
+    EndTime: 0
+  - StartTime: 195044
+    Lane: 2
+    EndTime: 0
+  - StartTime: 195044
+    Lane: 4
+    EndTime: 0
+  - StartTime: 195149
+    Lane: 1
+    EndTime: 0
+  - StartTime: 195255
+    Lane: 3
+    EndTime: 0
+  - StartTime: 195255
+    Lane: 4
+    EndTime: 0
+  - StartTime: 195360
+    Lane: 1
+    EndTime: 0
+  - StartTime: 195360
+    Lane: 2
+    EndTime: 0
+  - StartTime: 195466
+    Lane: 3
+    EndTime: 0
+  - StartTime: 195466
+    Lane: 1
+    EndTime: 0
+  - StartTime: 195466
+    Lane: 4
+    EndTime: 0
+  - StartTime: 195572
+    Lane: 2
+    EndTime: 0
+  - StartTime: 195677
+    Lane: 1
+    EndTime: 0
+  - StartTime: 195677
+    Lane: 4
+    EndTime: 0
+  - StartTime: 195783
+    Lane: 3
+    EndTime: 0
+  - StartTime: 195889
+    Lane: 2
+    EndTime: 0
+  - StartTime: 195889
+    Lane: 4
+    EndTime: 0
+  - StartTime: 195994
+    Lane: 1
+    EndTime: 0
+  - StartTime: 196100
+    Lane: 2
+    EndTime: 0
+  - StartTime: 196100
+    Lane: 3
+    EndTime: 0
+  - StartTime: 196206
+    Lane: 4
+    EndTime: 0
+  - StartTime: 196311
+    Lane: 1
+    EndTime: 0
+  - StartTime: 196311
+    Lane: 2
+    EndTime: 0
+  - StartTime: 196311
+    Lane: 3
+    EndTime: 0
+  - StartTime: 196417
+    Lane: 4
+    EndTime: 0
+  - StartTime: 196522
+    Lane: 2
+    EndTime: 0
+  - StartTime: 196522
+    Lane: 1
+    EndTime: 0
+  - StartTime: 196628
+    Lane: 3
+    EndTime: 0
+  - StartTime: 196734
+    Lane: 4
+    EndTime: 0
+  - StartTime: 196734
+    Lane: 1
+    EndTime: 0
+  - StartTime: 196839
+    Lane: 3
+    EndTime: 0
+  - StartTime: 196945
+    Lane: 1
+    EndTime: 0
+  - StartTime: 196945
+    Lane: 2
+    EndTime: 0
+  - StartTime: 197051
+    Lane: 3
+    EndTime: 0
+  - StartTime: 197051
+    Lane: 4
+    EndTime: 0
+  - StartTime: 197156
+    Lane: 2
+    EndTime: 0
+  - StartTime: 197156
+    Lane: 4
+    EndTime: 0
+  - StartTime: 197156
+    Lane: 1
+    EndTime: 0
+  - StartTime: 197262
+    Lane: 3
+    EndTime: 0
+  - StartTime: 197368
+    Lane: 1
+    EndTime: 0
+  - StartTime: 197368
+    Lane: 2
+    EndTime: 0
+  - StartTime: 197473
+    Lane: 4
+    EndTime: 0
+  - StartTime: 197579
+    Lane: 3
+    EndTime: 0
+  - StartTime: 197579
+    Lane: 2
+    EndTime: 0
+  - StartTime: 197684
+    Lane: 4
+    EndTime: 0
+  - StartTime: 197790
+    Lane: 1
+    EndTime: 0
+  - StartTime: 197790
+    Lane: 2
+    EndTime: 0
+  - StartTime: 197896
+    Lane: 3
+    EndTime: 0
+  - StartTime: 198001
+    Lane: 4
+    EndTime: 0
+  - StartTime: 198001
+    Lane: 1
+    EndTime: 0
+  - StartTime: 198001
+    Lane: 2
+    EndTime: 0
+  - StartTime: 198107
+    Lane: 3
+    EndTime: 0
+  - StartTime: 198213
+    Lane: 1
+    EndTime: 0
+  - StartTime: 198213
+    Lane: 2
+    EndTime: 0
+  - StartTime: 198318
+    Lane: 4
+    EndTime: 0
+  - StartTime: 198424
+    Lane: 1
+    EndTime: 0
+  - StartTime: 198424
+    Lane: 3
+    EndTime: 0
+  - StartTime: 198529
+    Lane: 2
+    EndTime: 0
+  - StartTime: 198635
+    Lane: 1
+    EndTime: 0
+  - StartTime: 198635
+    Lane: 3
+    EndTime: 0
+  - StartTime: 198741
+    Lane: 2
+    EndTime: 0
+  - StartTime: 198741
+    Lane: 4
+    EndTime: 0
+  - StartTime: 198846
+    Lane: 3
+    EndTime: 0
+  - StartTime: 198846
+    Lane: 1
+    EndTime: 0
+  - StartTime: 198846
+    Lane: 4
+    EndTime: 0
+  - StartTime: 198952
+    Lane: 2
+    EndTime: 0
+  - StartTime: 199058
+    Lane: 3
+    EndTime: 0
+  - StartTime: 199058
+    Lane: 4
+    EndTime: 0
+  - StartTime: 199163
+    Lane: 1
+    EndTime: 0
+  - StartTime: 199269
+    Lane: 2
+    EndTime: 0
+  - StartTime: 199269
+    Lane: 4
+    EndTime: 0
+  - StartTime: 199375
+    Lane: 3
+    EndTime: 0
+  - StartTime: 199480
+    Lane: 1
+    EndTime: 0
+  - StartTime: 199480
+    Lane: 4
+    EndTime: 0
+  - StartTime: 199586
+    Lane: 3
+    EndTime: 0
+  - StartTime: 199691
+    Lane: 1
+    EndTime: 0
+  - StartTime: 199691
+    Lane: 2
+    EndTime: 0
+  - StartTime: 199797
+    Lane: 4
+    EndTime: 0
+  - StartTime: 199903
+    Lane: 1
+    EndTime: 0
+  - StartTime: 199903
+    Lane: 3
+    EndTime: 0
+  - StartTime: 200008
+    Lane: 2
+    EndTime: 0
+  - StartTime: 200114
+    Lane: 4
+    EndTime: 0
+  - StartTime: 200114
+    Lane: 3
+    EndTime: 0
+  - StartTime: 200220
+    Lane: 2
+    EndTime: 0
+  - StartTime: 200325
+    Lane: 3
+    EndTime: 0
+  - StartTime: 200325
+    Lane: 1
+    EndTime: 0
+  - StartTime: 200431
+    Lane: 2
+    EndTime: 0
+  - StartTime: 200431
+    Lane: 4
+    EndTime: 0
+  - StartTime: 200537
+    Lane: 1
+    EndTime: 0
+  - StartTime: 200537
+    Lane: 3
+    EndTime: 0
+  - StartTime: 200537
+    Lane: 4
+    EndTime: 0
+  - StartTime: 200642
+    Lane: 2
+    EndTime: 0
+  - StartTime: 200748
+    Lane: 3
+    EndTime: 0
+  - StartTime: 200748
+    Lane: 4
+    EndTime: 0
+  - StartTime: 200853
+    Lane: 1
+    EndTime: 0
+  - StartTime: 200959
+    Lane: 4
+    EndTime: 0
+  - StartTime: 200959
+    Lane: 2
+    EndTime: 0
+  - StartTime: 200959
+    Lane: 3
+    EndTime: 0
+  - StartTime: 201065
+    Lane: 1
+    EndTime: 0
+  - StartTime: 201170
+    Lane: 2
+    EndTime: 0
+  - StartTime: 201170
+    Lane: 3
+    EndTime: 0
+  - StartTime: 201276
+    Lane: 4
+    EndTime: 0
+  - StartTime: 201382
+    Lane: 1
+    EndTime: 0
+  - StartTime: 201382
+    Lane: 2
+    EndTime: 0
+  - StartTime: 201487
+    Lane: 3
+    EndTime: 0
+  - StartTime: 201593
+    Lane: 4
+    EndTime: 0
+  - StartTime: 201593
+    Lane: 2
+    EndTime: 0
+  - StartTime: 201699
+    Lane: 3
+    EndTime: 0
+  - StartTime: 201804
+    Lane: 1
+    EndTime: 0
+  - StartTime: 201804
+    Lane: 4
+    EndTime: 0
+  - StartTime: 201910
+    Lane: 2
+    EndTime: 0
+  - StartTime: 202015
+    Lane: 3
+    EndTime: 0
+  - StartTime: 202015
+    Lane: 4
+    EndTime: 0
+  - StartTime: 202121
+    Lane: 1
+    EndTime: 0
+  - StartTime: 202121
+    Lane: 2
+    EndTime: 0
+  - StartTime: 202227
+    Lane: 4
+    EndTime: 0
+  - StartTime: 202227
+    Lane: 1
+    EndTime: 0
+  - StartTime: 202227
+    Lane: 3
+    EndTime: 0
+  - StartTime: 202332
+    Lane: 2
+    EndTime: 0
+  - StartTime: 202438
+    Lane: 1
+    EndTime: 0
+  - StartTime: 202438
+    Lane: 4
+    EndTime: 0
+  - StartTime: 202544
+    Lane: 3
+    EndTime: 0
+  - StartTime: 202649
+    Lane: 2
+    EndTime: 0
+  - StartTime: 202649
+    Lane: 4
+    EndTime: 0
+  - StartTime: 202755
+    Lane: 1
+    EndTime: 0
+  - StartTime: 202860
+    Lane: 2
+    EndTime: 0
+  - StartTime: 202860
+    Lane: 4
+    EndTime: 0
+  - StartTime: 202966
+    Lane: 3
+    EndTime: 0
+  - StartTime: 203072
+    Lane: 1
+    EndTime: 0
+  - StartTime: 203072
+    Lane: 2
+    EndTime: 0
+  - StartTime: 203177
+    Lane: 4
+    EndTime: 0
+  - StartTime: 203283
+    Lane: 1
+    EndTime: 0
+  - StartTime: 203283
+    Lane: 3
+    EndTime: 0
+  - StartTime: 203389
+    Lane: 2
+    EndTime: 0
+  - StartTime: 203494
+    Lane: 3
+    EndTime: 0
+  - StartTime: 203494
+    Lane: 4
+    EndTime: 0
+  - StartTime: 203600
+    Lane: 1
+    EndTime: 0
+  - StartTime: 203600
+    Lane: 2
+    EndTime: 0
+  - StartTime: 203706
+    Lane: 3
+    EndTime: 0
+  - StartTime: 203706
+    Lane: 4
+    EndTime: 0
+  - StartTime: 203811
+    Lane: 1
+    EndTime: 0
+  - StartTime: 203811
+    Lane: 4
+    EndTime: 0
+  - StartTime: 203811
+    Lane: 2
+    EndTime: 0
+  - StartTime: 203917
+    Lane: 3
+    EndTime: 0
+  - StartTime: 204022
+    Lane: 2
+    EndTime: 0
+  - StartTime: 204128
+    Lane: 1
+    EndTime: 0
+  - StartTime: 204128
+    Lane: 3
+    EndTime: 0
+  - StartTime: 204234
+    Lane: 4
+    EndTime: 0
+  - StartTime: 204339
+    Lane: 2
+    EndTime: 0
+  - StartTime: 204445
+    Lane: 3
+    EndTime: 0
+  - StartTime: 204551
+    Lane: 1
+    EndTime: 0
+  - StartTime: 204551
+    Lane: 2
+    EndTime: 0
+  - StartTime: 204656
+    Lane: 4
+    EndTime: 0
+  - StartTime: 204762
+    Lane: 2
+    EndTime: 0
+  - StartTime: 204762
+    Lane: 3
+    EndTime: 0
+  - StartTime: 204762
+    Lane: 1
+    EndTime: 0
+  - StartTime: 204868
+    Lane: 4
+    EndTime: 0
+  - StartTime: 204973
+    Lane: 3
+    EndTime: 0
+  - StartTime: 204973
+    Lane: 1
+    EndTime: 0
+  - StartTime: 205079
+    Lane: 2
+    EndTime: 0
+  - StartTime: 205184
+    Lane: 3
+    EndTime: 0
+  - StartTime: 205184
+    Lane: 4
+    EndTime: 0
+  - StartTime: 205290
+    Lane: 2
+    EndTime: 0
+  - StartTime: 205396
+    Lane: 3
+    EndTime: 0
+  - StartTime: 205396
+    Lane: 4
+    EndTime: 0
+  - StartTime: 205501
+    Lane: 2
+    EndTime: 0
+  - StartTime: 205501
+    Lane: 1
+    EndTime: 0
+  - StartTime: 205607
+    Lane: 1
+    EndTime: 0
+  - StartTime: 205607
+    Lane: 3
+    EndTime: 0
+  - StartTime: 205607
+    Lane: 4
+    EndTime: 0
+  - StartTime: 205713
+    Lane: 2
+    EndTime: 0
+  - StartTime: 205818
+    Lane: 1
+    EndTime: 0
+  - StartTime: 205818
+    Lane: 4
+    EndTime: 0
+  - StartTime: 205924
+    Lane: 3
+    EndTime: 0
+  - StartTime: 206029
+    Lane: 1
+    EndTime: 0
+  - StartTime: 206029
+    Lane: 2
+    EndTime: 0
+  - StartTime: 206029
+    Lane: 4
+    EndTime: 0
+  - StartTime: 206241
+    Lane: 4
+    EndTime: 0
+  - StartTime: 206241
+    Lane: 3
+    EndTime: 0
+  - StartTime: 206241
+    Lane: 1
+    EndTime: 0
+  - StartTime: 206452
+    Lane: 2
+    EndTime: 0
+  - StartTime: 206452
+    Lane: 3
+    EndTime: 0
+  - StartTime: 206452
+    Lane: 4
+    EndTime: 0
+  - StartTime: 206663
+    Lane: 1
+    EndTime: 0
+  - StartTime: 206663
+    Lane: 2
+    EndTime: 0
+  - StartTime: 206663
+    Lane: 4
+    EndTime: 0
+  - StartTime: 206875
+    Lane: 1
+    EndTime: 0
+  - StartTime: 206875
+    Lane: 2
+    EndTime: 0
+  - StartTime: 206980
+    Lane: 3
+    EndTime: 0
+  - StartTime: 206980
+    Lane: 1
+    EndTime: 0
+  - StartTime: 207086
+    Lane: 3
+    EndTime: 0
+  - StartTime: 207086
+    Lane: 4
+    EndTime: 0
+  - StartTime: 207191
+    Lane: 1
+    EndTime: 0
+  - StartTime: 207191
+    Lane: 2
+    EndTime: 0
+  - StartTime: 207297
+    Lane: 2
+    EndTime: 0
+  - StartTime: 207403
+    Lane: 3
+    EndTime: 0
+  - StartTime: 207403
+    Lane: 4
+    EndTime: 0
+  - StartTime: 207508
+    Lane: 1
+    EndTime: 0
+  - StartTime: 207508
+    Lane: 2
+    EndTime: 0
+  - StartTime: 207508
+    Lane: 4
+    EndTime: 0
+  - StartTime: 207614
+    Lane: 1
+    EndTime: 0
+  - StartTime: 207720
+    Lane: 4
+    EndTime: 0
+  - StartTime: 208143
+    Lane: 2
+    EndTime: 0
+  - StartTime: 208565
+    Lane: 3
+    EndTime: 0
+  - StartTime: 208988
+    Lane: 4
+    EndTime: 0
+  - StartTime: 209410
+    Lane: 4
+    EndTime: 0
+  - StartTime: 209833
+    Lane: 2
+    EndTime: 0
+  - StartTime: 210255
+    Lane: 4
+    EndTime: 0
+  - StartTime: 210678
+    Lane: 4
+    EndTime: 0
+  - StartTime: 211100
+    Lane: 3
+    EndTime: 0
+  - StartTime: 211523
+    Lane: 3
+    EndTime: 0
+  - StartTime: 211945
+    Lane: 2
+    EndTime: 0
+  - StartTime: 212368
+    Lane: 2
+    EndTime: 0
+  - StartTime: 212790
+    Lane: 1
+    EndTime: 0
+  - StartTime: 213213
+    Lane: 4
+    EndTime: 0
+  - StartTime: 213636
+    Lane: 1
+    EndTime: 0
+  - StartTime: 214058
+    Lane: 4
+    EndTime: 0
+  - StartTime: 214481
+    Lane: 4
+    EndTime: 0
+  - StartTime: 214903
+    Lane: 2
+    EndTime: 0
+  - StartTime: 215326
+    Lane: 3
+    EndTime: 0
+  - StartTime: 215748
+    Lane: 4
+    EndTime: 0
+  - StartTime: 216171
+    Lane: 4
+    EndTime: 0
+  - StartTime: 216593
+    Lane: 2
+    EndTime: 0
+  - StartTime: 217016
+    Lane: 4
+    EndTime: 0
+  - StartTime: 217438
+    Lane: 4
+    EndTime: 0
+  - StartTime: 217861
+    Lane: 3
+    EndTime: 0
+  - StartTime: 218283
+    Lane: 3
+    EndTime: 0
+  - StartTime: 218706
+    Lane: 2
+    EndTime: 0
+  - StartTime: 219128
+    Lane: 2
+    EndTime: 0
+  - StartTime: 219551
+    Lane: 1
+    EndTime: 0
+  - StartTime: 219974
+    Lane: 4
+    EndTime: 0
+  - StartTime: 220396
+    Lane: 1
+    EndTime: 0
+  - StartTime: 220819
+    Lane: 4
+    EndTime: 0
+  - StartTime: 221241
+    Lane: 4
+    EndTime: 221927
+  - StartTime: 221241
+    Lane: 2
+    EndTime: 222033
+  - StartTime: 221241
+    Lane: 3
+    EndTime: 221980
+  - StartTime: 221241
+    Lane: 1
+    EndTime: 222086

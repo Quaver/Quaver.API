@@ -1,0 +1,175 @@
+---
+Mode: Keys4
+Title: ~
+Artist: ~
+Creator: ~
+DifficultyName: ~
+AudioFile: ~
+BPMDoesNotAffectScrollVelocity: false
+InitialScrollVelocity: 0.0
+TimingPoints:
+  - StartTime: -98800.0
+    Bpm: 128.0
+    Signature: 227
+  - StartTime: -91100.0
+    Bpm: 128.0
+    Signature: 179
+  - StartTime: -88500.0
+    Bpm: 128.0
+    Signature: 198
+  - StartTime: -79000.0
+    Bpm: 64.0
+    Signature: 70
+  - StartTime: -70700.0
+    Bpm: 128.0
+    Signature: 68
+  - StartTime: -62600.0
+    Bpm: 128.0
+    Signature: 75
+  - StartTime: -60000.0
+    Bpm: 128.0
+    Signature: 82
+  - StartTime: -58300.0
+    Bpm: 64.0
+    Signature: 180
+  - StartTime: -50400.0
+    Bpm: 64.0
+    Signature: 137
+  - StartTime: -45400.0
+    Bpm: 64.0
+    Signature: 99
+  - StartTime: -45300.0
+    Bpm: 64.0
+    Signature: 89
+  - StartTime: -43500.0
+    Bpm: 64.0
+    Signature: 1
+  - StartTime: -40900.0
+    Bpm: 64.0
+    Signature: 33
+  - StartTime: -39000.0
+    Bpm: 64.0
+    Signature: 32
+  - StartTime: -38800.0
+    Bpm: 128.0
+    Signature: 104
+  - StartTime: -36300.0
+    Bpm: 64.0
+    Signature: 173
+  - StartTime: -32800.0
+    Bpm: 64.0
+    Signature: 71
+  - StartTime: -29800.0
+    Bpm: 64.0
+    Signature: 202
+  - StartTime: -28400.0
+    Bpm: 64.0
+    Signature: 240
+  - StartTime: -18700.0
+    Bpm: 64.0
+    Signature: 115
+  - StartTime: -17700.0
+    Bpm: 64.0
+    Signature: 36
+  - StartTime: 4700.0
+    Bpm: 64.0
+    Signature: 199
+  - StartTime: 6300.0
+    Bpm: 128.0
+    Signature: 231
+  - StartTime: 6900.0
+    Bpm: 128.0
+    Signature: 106
+  - StartTime: 14400.0
+    Bpm: 128.0
+    Signature: 131
+  - StartTime: 16200.0
+    Bpm: 64.0
+    Signature: 3
+  - StartTime: 16700.0
+    Bpm: 128.0
+    Signature: 29
+  - StartTime: 39300.0
+    Bpm: 64.0
+    Signature: 157
+  - StartTime: 39400.0
+    Bpm: 128.0
+    Signature: 18
+  - StartTime: 46000.0
+    Bpm: 64.0
+    Signature: 112
+  - StartTime: 55900.0
+    Bpm: 64.0
+    Signature: 168
+  - StartTime: 62600.0
+    Bpm: 64.0
+    Signature: 53
+  - StartTime: 66900.0
+    Bpm: 64.0
+    Signature: 206
+  - StartTime: 84800.0
+    Bpm: 64.0
+    Signature: 167
+  - StartTime: 89300.0
+    Bpm: 128.0
+    Signature: 129
+  - StartTime: 92500.0
+    Bpm: 128.0
+    Signature: 16
+  - StartTime: 94500.0
+    Bpm: 64.0
+    Signature: 92
+  - StartTime: 98400.0
+    Bpm: 64.0
+    Signature: 211
+SliderVelocities:
+  - StartTime: 46000.0
+    Multiplier: -8.0
+  - StartTime: 55900.0
+    Multiplier: 1.0
+HitObjects:
+  - StartTime: 202462
+    Lane: 1
+    EndTime: 0
+  - StartTime: 970163
+    Lane: 1
+    EndTime: 15680283
+  - StartTime: 2506236
+    Lane: 3
+    EndTime: 19481258
+  - StartTime: 2852464
+    Lane: 1
+    EndTime: 20351517
+  - StartTime: 3544150
+    Lane: 3
+    EndTime: 20464567
+  - StartTime: 7072036
+    Lane: 1
+    EndTime: 0
+  - StartTime: 8092560
+    Lane: 2
+    EndTime: 0
+  - StartTime: 8228738
+    Lane: 4
+    EndTime: 12197545
+  - StartTime: 8636771
+    Lane: 3
+    EndTime: 9902122
+  - StartTime: 9678597
+    Lane: 4
+    EndTime: 12003914
+  - StartTime: 11177954
+    Lane: 4
+    EndTime: 0
+  - StartTime: 17004952
+    Lane: 2
+    EndTime: 19753175
+  - StartTime: 19669830
+    Lane: 1
+    EndTime: 0
+  - StartTime: 20457648
+    Lane: 1
+    EndTime: 0
+  - StartTime: 21287804
+    Lane: 3
+    EndTime: 21458135
