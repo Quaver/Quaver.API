@@ -549,11 +549,33 @@ namespace Quaver.API.Maps
 
             var qua = WithNormalizedSVs();
 
+            // Create a list of important timestamps from the perspective of playing the map.
+            var importantTimestamps = new List<float>();
+            foreach (var hitObject in HitObjects)
+            {
+                importantTimestamps.Add(hitObject.StartTime);
+                if (hitObject.IsLongNote)
+                    importantTimestamps.Add(hitObject.EndTime);
+            }
+            importantTimestamps.Sort();
+            var nextImportantTimestampIndex = 0;
+
             var sum = 0d;
             for (var i = 1; i < qua.SliderVelocities.Count; i++)
             {
                 var prevSv = qua.SliderVelocities[i - 1];
                 var sv = qua.SliderVelocities[i];
+
+                // Find the first important timestamp after the SV.
+                while (nextImportantTimestampIndex < importantTimestamps.Count &&
+                       importantTimestamps[nextImportantTimestampIndex] < sv.StartTime)
+                    nextImportantTimestampIndex++;
+
+                // Don't count the SV if there's nothing important within 1 second after it.
+                // This is to prevent line art from contributing to the SV-ness.
+                if (nextImportantTimestampIndex >= importantTimestamps.Count ||
+                    importantTimestamps[nextImportantTimestampIndex] > sv.StartTime + 1000)
+                    continue;
 
                 // The idea behind capping the time difference from below is to not differentiate between different
                 // time steps of a smooth SV change generator. For example, an SV change from 1× to 0.1× over 1 second
