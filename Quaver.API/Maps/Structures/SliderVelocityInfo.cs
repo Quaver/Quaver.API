@@ -56,9 +56,7 @@ namespace Quaver.API.Maps.Structures
         /// <exception cref="InvalidOperationException"></exception>
         public void SetStartTime(float time)
         {
-            if (!IsEditableInLuaScript)
-                throw new InvalidOperationException("StartTime is not allowed to be edited in lua scripts. If calling from C#, use `StartTime = `");
-
+            ThrowUneditableException();
             StartTime = time;
         }
 
@@ -70,10 +68,17 @@ namespace Quaver.API.Maps.Structures
         /// <exception cref="InvalidOperationException"></exception>
         public void SetMultiplier(float multiplier)
         {
-            if (!IsEditableInLuaScript)
-                throw new InvalidOperationException("Multiplier is not allowed to be edited in lua scripts. If calling from C#, use `Multiplier = `");
-
+            ThrowUneditableException();
             Multiplier = multiplier;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
+        private void ThrowUneditableException()
+        {
+            if (!IsEditableInLuaScript)
+                throw new InvalidOperationException("Value is not allowed to be edited in lua scripts.");
         }
 
         /// <summary>

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Interop;
 using Quaver.API.Enums;
 using YamlDotNet.Serialization;
 
@@ -16,22 +18,42 @@ namespace Quaver.API.Maps.Structures
     ///     TimingPoints section of the .qua
     /// </summary>
     [Serializable]
+    [MoonSharpUserData]
     public class TimingPointInfo
     {
         /// <summary>
         ///     The time in milliseconds for when this timing point begins
         /// </summary>
-        public float StartTime { get; set; }
+        public float StartTime
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     The BPM during this timing point
         /// </summary>
-        public float Bpm { get; set; }
+        public float Bpm
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     The signature during this timing point
         /// </summary>
-        public TimeSignature Signature { get; set; }
+        public TimeSignature Signature
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
+
+        [YamlIgnore]
+        public bool IsEditableInLuaScript
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
 
         /// <summary>
         ///     The amount of milliseconds per beat this one takes up.
