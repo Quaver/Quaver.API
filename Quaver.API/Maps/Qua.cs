@@ -543,9 +543,9 @@ namespace Quaver.API.Maps
             // Time between SVs in milliseconds is max()'d with this number.
             const float MIN_SV_TIME_DIFFERENCE = 250;
             // SVs below this are considered the same. "Basically stationary."
-            const float MIN_MULTIPLIER = 1e-4f;
+            const float MIN_MULTIPLIER = 1e-3f;
             // SVs above this are considered the same. "Basically teleport."
-            const float MAX_MULTIPLIER = 1e4f;
+            const float MAX_MULTIPLIER = 1e2f;
 
             var qua = WithNormalizedSVs();
 
