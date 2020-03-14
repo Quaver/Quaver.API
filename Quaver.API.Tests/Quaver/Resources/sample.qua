@@ -1,0 +1,58 @@
+---
+Mode: Keys4
+Title: Sample Map
+Artist: Unknown
+Creator: YaLTeR
+DifficultyName: Easy
+AudioFile: song.mp3
+BPMDoesNotAffectScrollVelocity: false
+InitialScrollVelocity: 0.0
+TimingPoints:
+  - StartTime: 0.0
+    Bpm: 100.0
+    Signature: 4
+  - StartTime: 200.0
+    Bpm: 200.0
+    Signature: 3
+  - StartTime: 400.0
+    Bpm: 200.0
+    Signature: 4
+  - StartTime: 500.0
+    Bpm: 200.0
+    Signature: 3
+  - StartTime: 10000.0
+    Bpm: 0.0
+    Signature: 4
+SliderVelocities:
+  - StartTime: 300.0
+    Multiplier: 2.0
+  - StartTime: 600.0
+    Multiplier: 0.0
+HitObjects:
+  - StartTime: 0
+    Lane: 4
+    EndTime: 0
+  - StartTime: 601
+    Lane: 2
+    EndTime: 0
+  - StartTime: 601
+    Lane: 1
+    EndTime: 0
+  - StartTime: 601
+    Lane: 4
+    EndTime: 939
+  - StartTime: 601
+    Lane: 3
+    EndTime: 939
+  - StartTime: 939
+    Lane: 2
+    EndTime: 1278
+  - StartTime: 939
+    Lane: 1
+    EndTime: 0
+  - StartTime: 1194
+    Lane: 4
+    EndTime: 1363
+  - StartTime: 1278
+    Lane: 3
+    EndTime: 0

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -102,6 +103,25 @@ namespace Quaver.API.Maps
         public string Genre { get; set; }
 
         /// <summary>
+        ///     Indicates if the BPM changes in affect scroll velocity.
+        ///
+        ///     If this is set to false, SliderVelocities are in the denormalized format (BPM affects SV),
+        ///     and if this is set to true, SliderVelocities are in the normalized format (BPM does not affect SV).
+        ///
+        ///     Use NormalizeSVs and DenormalizeSVs to change this value.
+        ///
+        ///     It's "does not affect" rather than "affects" so that the "affects" value (in this case, false) serializes to nothing to support old maps.
+        /// </summary>
+        public bool BPMDoesNotAffectScrollVelocity { get; private set; }
+
+        /// <summary>
+        ///    The initial scroll velocity before the first SV change.
+        ///
+        ///    Only matters if BPMDoesNotAffectScrollVelocity is true.
+        /// </summary>
+        public float InitialScrollVelocity { get; set; }
+
+        /// <summary>
         ///     EditorLayer .qua data
         /// </summary>
         public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
@@ -123,6 +143,9 @@ namespace Quaver.API.Maps
 
         /// <summary>
         ///     Slider Velocity .qua data
+        ///
+        ///     Note that SVs can be both in normalized and denormalized form, depending on BPMDoesNotAffectSV.
+        ///     Check WithNormalizedSVs if you need normalized SVs.
         /// </summary>
         public List<SliderVelocityInfo> SliderVelocities { get; private set; } = new List<SliderVelocityInfo>();
 
@@ -174,6 +197,9 @@ namespace Quaver.API.Maps
                    && Genre == other.Genre
                    && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
                    && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
+                   // ReSharper disable once CompareOfFloatsByEqualityOperator
+                   && InitialScrollVelocity == other.InitialScrollVelocity
+                   && BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity
                    && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
                    && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
                    && SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer)
@@ -231,7 +257,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public string Serialize()
         {
-           // Sort the object before saving.
+            // Sort the object before saving.
             Sort();
 
             // Set default values to zero so they don't waste space in the .qua file.
@@ -415,6 +441,10 @@ namespace Quaver.API.Maps
             if (TimingPoints.Count == 0)
                 return 0;
 
+            // This fallback isn't really justified, but it's only used for tests.
+            if (HitObjects.Count == 0)
+                return TimingPoints[0].Bpm;
+
             var lastObject = HitObjects.OrderByDescending(x => x.IsLongNote ? x.EndTime : x.StartTime).First();
             double lastTime = lastObject.IsLongNote ? lastObject.EndTime : lastObject.StartTime;
 
@@ -498,6 +528,64 @@ namespace Quaver.API.Maps
                 default:
                     throw new InvalidEnumArgumentException();
             }
+        }
+
+        /// <summary>
+        ///     Computes the "SV-ness" of a map.
+        ///
+        ///     SliderVelocities, TimingPoints and HitObjects must be sorted by time before calling this function.
+        /// </summary>
+        /// <returns></returns>
+        public double SVFactor()
+        {
+            // SVs below this are considered the same. "Basically stationary."
+            const float MIN_MULTIPLIER = 1e-3f;
+            // SVs above this are considered the same. "Basically teleport."
+            const float MAX_MULTIPLIER = 1e2f;
+
+            var qua = WithNormalizedSVs();
+
+            // Create a list of important timestamps from the perspective of playing the map.
+            var importantTimestamps = new List<float>();
+            foreach (var hitObject in HitObjects)
+            {
+                importantTimestamps.Add(hitObject.StartTime);
+                if (hitObject.IsLongNote)
+                    importantTimestamps.Add(hitObject.EndTime);
+            }
+            importantTimestamps.Sort();
+            var nextImportantTimestampIndex = 0;
+
+            var sum = 0d;
+            for (var i = 1; i < qua.SliderVelocities.Count; i++)
+            {
+                var prevSv = qua.SliderVelocities[i - 1];
+                var sv = qua.SliderVelocities[i];
+
+                // Find the first important timestamp after the SV.
+                while (nextImportantTimestampIndex < importantTimestamps.Count &&
+                       importantTimestamps[nextImportantTimestampIndex] < sv.StartTime)
+                    nextImportantTimestampIndex++;
+
+                // Don't count the SV if there's nothing important within 1 second after it.
+                // This is to prevent line art from contributing to the SV-ness.
+                if (nextImportantTimestampIndex >= importantTimestamps.Count ||
+                    importantTimestamps[nextImportantTimestampIndex] > sv.StartTime + 1000)
+                    continue;
+
+                var prevMultiplier = Math.Min(Math.Max(Math.Abs(prevSv.Multiplier), MIN_MULTIPLIER), MAX_MULTIPLIER);
+                var multiplier = Math.Min(Math.Max(Math.Abs(sv.Multiplier), MIN_MULTIPLIER), MAX_MULTIPLIER);
+
+                // The difference between SV multipliers is computed under a log, because it matters that the SV multiplier
+                // changed, for example, ten-fold (from 0.1× to 1× or from 1× to 10×), and not that it changed _by_ some value (e.g. by 0.9 or by 9).
+                var prevLogMultiplier = Math.Log(prevMultiplier);
+                var logMultiplier = Math.Log(multiplier);
+
+                var difference = Math.Abs(logMultiplier - prevLogMultiplier);
+                sum += difference;
+            }
+
+            return sum;
         }
 
         public override string ToString() => $"{Artist} - {Title} [{DifficultyName}]";
@@ -861,6 +949,272 @@ namespace Quaver.API.Maps
 
             // Try to sort the Qua before returning.
             qua.Sort();
+        }
+
+        /// <summary>
+        ///     Converts SVs to the normalized format (BPM does not affect SV).
+        ///
+        ///     Must be done after sorting TimingPoints and SliderVelocities.
+        /// </summary>
+        public void NormalizeSVs()
+        {
+            if (BPMDoesNotAffectScrollVelocity)
+                // Already normalized.
+                return;
+
+            var baseBpm = GetCommonBpm();
+
+            var normalizedScrollVelocities = new List<SliderVelocityInfo>();
+
+            var currentBpm = TimingPoints[0].Bpm;
+            var currentSvIndex = 0;
+            float? currentSvStartTime = null;
+            var currentSvMultiplier = 1f;
+            float? currentAdjustedSvMultiplier = null;
+            float? initialSvMultiplier = null;
+
+            foreach (var timingPoint in TimingPoints)
+            {
+                while (true)
+                {
+                    if (currentSvIndex >= SliderVelocities.Count)
+                        break;
+
+                    var sv = SliderVelocities[currentSvIndex];
+                    if (sv.StartTime > timingPoint.StartTime)
+                        break;
+
+                    if (sv.StartTime < timingPoint.StartTime)
+                    {
+                        var multiplier = sv.Multiplier * (currentBpm / baseBpm);
+
+                        if (currentAdjustedSvMultiplier == null)
+                        {
+                            currentAdjustedSvMultiplier = multiplier;
+                            initialSvMultiplier = multiplier;
+                        }
+
+                        // ReSharper disable once CompareOfFloatsByEqualityOperator
+                        if (multiplier != currentAdjustedSvMultiplier.Value)
+                        {
+                            normalizedScrollVelocities.Add(new SliderVelocityInfo
+                            {
+                                StartTime = sv.StartTime,
+                                Multiplier = multiplier,
+                            });
+                            currentAdjustedSvMultiplier = multiplier;
+                        }
+                    }
+
+                    currentSvStartTime = sv.StartTime;
+                    currentSvMultiplier = sv.Multiplier;
+                    currentSvIndex += 1;
+                }
+
+                // Timing points reset the previous SV multiplier.
+                if (currentSvStartTime == null || currentSvStartTime.Value < timingPoint.StartTime)
+                    currentSvMultiplier = 1;
+
+                currentBpm = timingPoint.Bpm;
+
+                // C# is stupid.
+                var multiplierToo = currentSvMultiplier * (currentBpm / baseBpm);
+
+                if (currentAdjustedSvMultiplier == null)
+                {
+                    currentAdjustedSvMultiplier = multiplierToo;
+                    initialSvMultiplier = multiplierToo;
+                }
+
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (multiplierToo != currentAdjustedSvMultiplier.Value)
+                {
+                    normalizedScrollVelocities.Add(new SliderVelocityInfo
+                    {
+                        StartTime = timingPoint.StartTime,
+                        Multiplier = multiplierToo,
+                    });
+                    currentAdjustedSvMultiplier = multiplierToo;
+                }
+            }
+
+            for (; currentSvIndex < SliderVelocities.Count; currentSvIndex++)
+            {
+                var sv = SliderVelocities[currentSvIndex];
+                var multiplier = sv.Multiplier * (currentBpm / baseBpm);
+
+                Debug.Assert(currentAdjustedSvMultiplier != null, nameof(currentAdjustedSvMultiplier) + " != null");
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (multiplier != currentAdjustedSvMultiplier.Value)
+                {
+                    normalizedScrollVelocities.Add(new SliderVelocityInfo
+                    {
+                        StartTime = sv.StartTime,
+                        Multiplier = multiplier,
+                    });
+                    currentAdjustedSvMultiplier = multiplier;
+                }
+            }
+
+            BPMDoesNotAffectScrollVelocity = true;
+            InitialScrollVelocity = initialSvMultiplier ?? 1;
+            SliderVelocities = normalizedScrollVelocities;
+        }
+
+        /// <summary>
+        ///     Converts SVs to the denormalized format (BPM affects SV).
+        ///
+        ///     Must be done after sorting TimingPoints and SliderVelocities.
+        /// </summary>
+        public void DenormalizeSVs()
+        {
+            if (!BPMDoesNotAffectScrollVelocity)
+                // Already denormalized.
+                return;
+
+            var baseBpm = GetCommonBpm();
+
+            var denormalizedScrollVelocities = new List<SliderVelocityInfo>();
+            var currentBpm = TimingPoints[0].Bpm;
+
+            // For the purposes of this conversion, 0 and +inf should be handled like max value.
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (currentBpm == 0 || float.IsPositiveInfinity(currentBpm))
+                currentBpm = float.MaxValue;
+
+            var currentSvIndex = 0;
+            var currentSvMultiplier = InitialScrollVelocity;
+            float? currentAdjustedSvMultiplier = null;
+
+            for (var i = 0; i < TimingPoints.Count; i++)
+            {
+                var timingPoint = TimingPoints[i];
+                while (true)
+                {
+                    if (currentSvIndex >= SliderVelocities.Count)
+                        break;
+
+                    var sv = SliderVelocities[currentSvIndex];
+                    if (sv.StartTime > timingPoint.StartTime)
+                        break;
+
+                    if (sv.StartTime < timingPoint.StartTime)
+                    {
+                        var multiplier = sv.Multiplier / (currentBpm / baseBpm);
+
+                        // ReSharper disable once CompareOfFloatsByEqualityOperator
+                        if (currentAdjustedSvMultiplier == null || multiplier != currentAdjustedSvMultiplier)
+                        {
+                            // ReSharper disable once CompareOfFloatsByEqualityOperator
+                            if (currentAdjustedSvMultiplier == null && sv.Multiplier != InitialScrollVelocity)
+                            {
+                                // Insert an SV 1 ms earlier to simulate the initial scroll speed multiplier.
+                                denormalizedScrollVelocities.Add(new SliderVelocityInfo
+                                {
+                                    StartTime = sv.StartTime - 1,
+                                    Multiplier = InitialScrollVelocity / (currentBpm / baseBpm),
+                                });
+                            }
+
+                            denormalizedScrollVelocities.Add(new SliderVelocityInfo
+                            {
+                                StartTime = sv.StartTime,
+                                Multiplier = multiplier,
+                            });
+                            currentAdjustedSvMultiplier = multiplier;
+                        }
+                    }
+
+                    currentSvMultiplier = sv.Multiplier;
+                    currentSvIndex += 1;
+                }
+
+                currentBpm = timingPoint.Bpm;
+
+                // For the purposes of this conversion, 0 and +inf should be handled like max value.
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (currentBpm == 0 || float.IsPositiveInfinity(currentBpm))
+                    currentBpm = float.MaxValue;
+
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (currentAdjustedSvMultiplier == null && currentSvMultiplier != InitialScrollVelocity)
+                {
+                    // Insert an SV 1 ms earlier to simulate the initial scroll speed multiplier.
+                    denormalizedScrollVelocities.Add(new SliderVelocityInfo
+                    {
+                        StartTime = timingPoint.StartTime - 1,
+                        Multiplier = InitialScrollVelocity / (currentBpm / baseBpm),
+                    });
+                }
+
+                // Timing points reset the SV multiplier.
+                currentAdjustedSvMultiplier = 1;
+
+                // Skip over multiple timing points at the same timestamp.
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (i + 1 < TimingPoints.Count && TimingPoints[i + 1].StartTime == timingPoint.StartTime)
+                    continue;
+
+                // C# is stupid.
+                var multiplierToo = currentSvMultiplier / (currentBpm / baseBpm);
+
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (multiplierToo != currentAdjustedSvMultiplier.Value)
+                {
+                    denormalizedScrollVelocities.Add(new SliderVelocityInfo
+                    {
+                        StartTime = timingPoint.StartTime,
+                        Multiplier = multiplierToo,
+                    });
+                    currentAdjustedSvMultiplier = multiplierToo;
+                }
+            }
+
+            for (; currentSvIndex < SliderVelocities.Count; currentSvIndex++)
+            {
+                var sv = SliderVelocities[currentSvIndex];
+                var multiplier = sv.Multiplier / (currentBpm / baseBpm);
+
+                Debug.Assert(currentAdjustedSvMultiplier != null, nameof(currentAdjustedSvMultiplier) + " != null");
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (multiplier != currentAdjustedSvMultiplier.Value)
+                {
+                    denormalizedScrollVelocities.Add(new SliderVelocityInfo
+                    {
+                        StartTime = sv.StartTime,
+                        Multiplier = multiplier,
+                    });
+                    currentAdjustedSvMultiplier = multiplier;
+                }
+            }
+
+            BPMDoesNotAffectScrollVelocity = false;
+            InitialScrollVelocity = 0;
+            SliderVelocities = denormalizedScrollVelocities;
+        }
+
+        /// <summary>
+        ///     Returns a Qua with normalized SVs.
+        /// </summary>
+        /// <returns></returns>
+        public Qua WithNormalizedSVs()
+        {
+            var qua = (Qua) MemberwiseClone();
+            // Relies on NormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
+            qua.NormalizeSVs();
+            return qua;
+        }
+
+        /// <summary>
+        ///     Returns a Qua with denormalized SVs.
+        /// </summary>
+        /// <returns></returns>
+        public Qua WithDenormalizedSVs()
+        {
+            var qua = (Qua) MemberwiseClone();
+            // Relies on DenormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
+            qua.DenormalizeSVs();
+            return qua;
         }
     }
 }
