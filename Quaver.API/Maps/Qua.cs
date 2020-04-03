@@ -490,6 +490,21 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
+        ///     Gets a scroll velocity at a particular time in the map
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public SliderVelocityInfo GetScrollVelocityAt(double time)
+        {
+            var index = SliderVelocities.FindLastIndex(x => x.StartTime <= time);
+
+            if (index == -1)
+                return SliderVelocities.Count == 0 ? null : SliderVelocities.First();
+
+            return SliderVelocities[index];
+        }
+
+        /// <summary>
         ///    Finds the length of a timing point.
         /// </summary>
         /// <param name="point"></param>
