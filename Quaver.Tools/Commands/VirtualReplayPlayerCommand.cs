@@ -66,6 +66,14 @@ namespace Quaver.Tools.Commands
             var virtualPlayer = new VirtualReplayPlayer(Replay, Map);
             virtualPlayer.Replay.Frames.ForEach(x => virtualPlayer.PlayNextFrame());
 
+            var hits = new List<string>();
+
+            foreach (var stat in virtualPlayer.ScoreProcessor.Stats)
+            {
+                var val = $"{stat.HitDifference}{(stat.HitObject.IsLongNote ? "L" : "")}";
+                hits.Add(val);
+            }
+
             Console.WriteLine(JObject.FromObject(new
             {
                 Map = new
@@ -119,7 +127,7 @@ namespace Quaver.Tools.Commands
                     CountGood = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Good],
                     CountOkay = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Okay],
                     CountMiss = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Miss],
-                    Hits = virtualPlayer.ScoreProcessor.Stats.Select(x => x.HitDifference).ToList()
+                    Hits = hits
                 },
             }));
         }
