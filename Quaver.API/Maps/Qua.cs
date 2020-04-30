@@ -122,6 +122,11 @@ namespace Quaver.API.Maps
         public float InitialScrollVelocity { get; set; }
 
         /// <summary>
+        ///     If true, the map will have a +1 scratch key, allowing for 5/8 key play
+        /// </summary>
+        public bool HasScratchKey { get; set; }
+
+        /// <summary>
         ///     EditorLayer .qua data
         /// </summary>
         public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
@@ -200,6 +205,7 @@ namespace Quaver.API.Maps
                    // ReSharper disable once CompareOfFloatsByEqualityOperator
                    && InitialScrollVelocity == other.InitialScrollVelocity
                    && BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity
+                   && HasScratchKey == other.HasScratchKey
                    && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
                    && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
                    && SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer)
@@ -419,17 +425,26 @@ namespace Quaver.API.Maps
         ///    This translates mode to key count.
         /// </summary>
         /// <returns></returns>
-        public int GetKeyCount()
+        public int GetKeyCount(bool includeScratch = true)
         {
+            int count;
+
             switch (Mode)
             {
                 case GameMode.Keys4:
-                    return 4;
+                    count = 4;
+                    break;
                 case GameMode.Keys7:
-                    return 7;
+                    count = 7;
+                    break;
                 default:
                     throw new InvalidEnumArgumentException();
             }
+
+            if (HasScratchKey && includeScratch)
+                count++;
+
+            return count;
         }
 
         /// <summary>

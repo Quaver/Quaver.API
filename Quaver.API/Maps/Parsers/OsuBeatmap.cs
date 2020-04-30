@@ -292,7 +292,8 @@ namespace Quaver.API.Maps.Parsers
                                     break;
                                 case "CircleSize":
                                     KeyCount = int.Parse(value, CultureInfo.InvariantCulture);
-                                    if (KeyCount != 4 && KeyCount != 7)
+
+                                    if (KeyCount != 4 && KeyCount != 7 && KeyCount != 5 && KeyCount != 8)
                                         IsValid = false;
                                     break;
                                 case "OverallDifficulty":
@@ -484,8 +485,16 @@ namespace Quaver.API.Maps.Parsers
                 case 4:
                     qua.Mode = GameMode.Keys4;
                     break;
+                case 5:
+                    qua.Mode = GameMode.Keys4;
+                    qua.HasScratchKey = true;
+                    break;
                 case 7:
                     qua.Mode = GameMode.Keys7;
+                    break;
+                case 8:
+                    qua.Mode = GameMode.Keys7;
+                    qua.HasScratchKey = true;
                     break;
                 default:
                     qua.Mode = (GameMode)(-1);
