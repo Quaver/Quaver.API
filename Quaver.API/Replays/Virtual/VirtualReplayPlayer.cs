@@ -108,6 +108,7 @@ namespace Quaver.API.Replays.Virtual
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K2),
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K3),
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K4),
+                        new VirtualReplayKeyBinding(ReplayKeyPressState.K5),
                     };
                     break;
                 case GameMode.Keys7:
@@ -120,6 +121,7 @@ namespace Quaver.API.Replays.Virtual
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K5),
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K6),
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K7),
+                        new VirtualReplayKeyBinding(ReplayKeyPressState.K8),
                     };
                     break;
                 default:
