@@ -184,6 +184,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // Add hit objects from qua map to qssData
             for (var i = 0; i < Map.HitObjects.Count; i++)
             {
+                if (Map.HitObjects[i].Lane == 5 || Map.HitObjects[i].Lane == 8)
+                    continue;
+
                 var curHitOb = new StrainSolverHitObject(Map.HitObjects[i]);
                 var curStrainData = new StrainSolverData(curHitOb, rate);
 
