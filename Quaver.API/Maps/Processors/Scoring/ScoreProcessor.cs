@@ -64,6 +64,26 @@ namespace Quaver.API.Maps.Processors.Scoring
         public List<HitStat> Stats { get; set; }
 
         /// <summary>
+        ///     The judgement window preset used for the score
+        /// </summary>
+        public JudgementWindows Windows { get; set; }
+
+        /// <summary>
+        ///     The username of the player achieving the score
+        /// </summary>
+        public string PlayerName { get; set; } = "";
+
+        /// <summary>
+        ///     The date and time the score was set
+        /// </summary>
+        public DateTime Date { get; set; }
+
+        /// <summary>
+        ///     For a standardized scoring reference. Should be manually set. Null by default
+        /// </summary>
+        public ScoreProcessor StandardizedProcessor { get; set; }
+
+        /// <summary>
         ///     The judgement count for each judgement, initialized to 0 by default.
         ///
         ///     Note: Not sure if modes will use different judgements, probably not.
@@ -136,6 +156,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="map"></param>
         /// <param name="mods"></param>
+        /// <param name="windows"></param>
         public ScoreProcessor(Qua map, ModIdentifier mods, JudgementWindows windows = null)
         {
             Map = map;
@@ -153,7 +174,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="mods"></param>
         /// <param name="multiplayerProcessor"></param>
         /// <param name="windows"></param>
-        public ScoreProcessor(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayerProcessor, JudgementWindows windows = null) : this(map, mods, windows)
+        public ScoreProcessor(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayerProcessor, JudgementWindows windows = null)
+            : this(map, mods, windows)
         {
             MultiplayerProcessor = multiplayerProcessor;
             MultiplayerProcessor.Processor = this;
@@ -170,6 +192,8 @@ namespace Quaver.API.Maps.Processors.Scoring
             Score = replay.Score;
             Accuracy = replay.Accuracy;
             MaxCombo = replay.MaxCombo;
+            PlayerName = replay.PlayerName ?? "";
+            Date = replay.Date;
             CurrentJudgements[Judgement.Marv] = replay.CountMarv;
             CurrentJudgements[Judgement.Perf] = replay.CountPerf;
             CurrentJudgements[Judgement.Great] = replay.CountGreat;
@@ -197,15 +221,18 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         private void InitializeJudgementWindows(JudgementWindows windows)
         {
-            if (windows == null)
-                return;
+            Windows = windows ?? new JudgementWindows
+            {
+                Name = "Standard*",
+                IsDefault = true
+            };
 
-            JudgementWindow[Judgement.Marv] = windows.Marvelous;
-            JudgementWindow[Judgement.Perf] = windows.Perfect;
-            JudgementWindow[Judgement.Great] = windows.Great;
-            JudgementWindow[Judgement.Good] = windows.Good;
-            JudgementWindow[Judgement.Okay] = windows.Okay;
-            JudgementWindow[Judgement.Miss] = windows.Miss;
+            JudgementWindow[Judgement.Marv] = Windows.Marvelous;
+            JudgementWindow[Judgement.Perf] = Windows.Perfect;
+            JudgementWindow[Judgement.Great] = Windows.Great;
+            JudgementWindow[Judgement.Good] = Windows.Good;
+            JudgementWindow[Judgement.Okay] = Windows.Okay;
+            JudgementWindow[Judgement.Miss] = Windows.Miss;
         }
 
         /// <summary>
