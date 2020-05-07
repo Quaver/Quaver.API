@@ -56,7 +56,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     If the score is currently failed.
         /// </summary>
-        public bool Failed => Health <= 0;
+        public bool Failed => Health <= 0 && !Mods.HasFlag(ModIdentifier.NoFail);
 
         /// <summary>
         ///     The user's stats per object.
