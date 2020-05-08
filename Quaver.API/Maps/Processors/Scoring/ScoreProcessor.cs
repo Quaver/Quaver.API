@@ -79,6 +79,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         public DateTime Date { get; set; }
 
         /// <summary>
+        ///     The Steam id of the user who set the score - typically used for online scores.
+        /// </summary>
+        public ulong SteamId { get; set; }
+
+        /// <summary>
         ///     For a standardized scoring reference. Should be manually set. Null by default
         /// </summary>
         public ScoreProcessor StandardizedProcessor { get; set; }
