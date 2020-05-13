@@ -485,10 +485,6 @@ namespace Quaver.API.Maps.Parsers
                 case 4:
                     qua.Mode = GameMode.Keys4;
                     break;
-                case 5:
-                    qua.Mode = GameMode.Keys4;
-                    qua.HasScratchKey = true;
-                    break;
                 case 7:
                     qua.Mode = GameMode.Keys7;
                     break;
@@ -500,6 +496,9 @@ namespace Quaver.API.Maps.Parsers
                     qua.Mode = (GameMode)(-1);
                     break;
             }
+
+            if (qua.HasScratchKey && SpecialStyle != 1)
+                throw new ArgumentException("Cannot convert non-special style beatmap for this key count!");
 
             foreach (var path in CustomAudioSamples)
             {
