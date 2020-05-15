@@ -84,6 +84,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         public ulong SteamId { get; set; }
 
         /// <summary>
+        ///     The online id of the user
+        /// </summary>
+        public int UserId { get; set; }
+
+        /// <summary>
         ///     For a standardized scoring reference. Should be manually set. Null by default
         /// </summary>
         public ScoreProcessor StandardizedProcessor { get; set; }
