@@ -26,7 +26,7 @@ namespace Quaver.API.Maps.Processors.Rating
         ///     Calculates the rating of a given score w/ raw accuracy
         /// </summary>
         /// <returns></returns>
-        public abstract double CalculateRating(double accuracy);
+        public abstract double CalculateRating(double accuracy, bool failed = false);
 
         /// <summary>
         ///     Calculates the rating of a given score with a score processor.
