@@ -332,10 +332,8 @@ namespace Quaver.API.Replays.Virtual
                 if (!(Time > hitObject.EndTime + releaseWindow))
                     continue;
 
-                var missedReleaseJudgement = Judgement.Okay;
-
-                if (ScoreProcessor.Mods.HasFlag(ModIdentifier.HeatlthAdjust))
-                    missedReleaseJudgement = Judgement.Good;
+                // Judgement when a user doesn't release an LN.
+                var missedReleaseJudgement = Judgement.Good;
 
                 ScoreProcessor.CalculateScore(missedReleaseJudgement, true);
 
