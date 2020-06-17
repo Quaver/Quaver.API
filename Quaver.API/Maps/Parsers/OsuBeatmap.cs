@@ -41,7 +41,6 @@ namespace Quaver.API.Maps.Parsers
         public float StackLeniency { get; set; }
         public int Mode { get; set; }
         public int LetterboxInBreaks { get; set; }
-        public int SpecialStyle { get; set; }
         public int WidescreenStoryboard { get; set; }
 
         // [Editor]
@@ -186,9 +185,6 @@ namespace Quaver.API.Maps.Parsers
                                     break;
                                 case "LetterboxInBreaks":
                                     LetterboxInBreaks = int.Parse(value, CultureInfo.InvariantCulture);
-                                    break;
-                                case "SpecialStyle":
-                                    SpecialStyle = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "WidescreenStoryboard":
                                     WidescreenStoryboard = int.Parse(value, CultureInfo.InvariantCulture);
@@ -497,7 +493,7 @@ namespace Quaver.API.Maps.Parsers
                     break;
             }
 
-            if (qua.HasScratchKey && SpecialStyle != 1)
+            if (qua.HasScratchKey)
                 throw new ArgumentException("Cannot convert non-special style beatmap for this key count!");
 
             foreach (var path in CustomAudioSamples)
@@ -565,7 +561,7 @@ namespace Quaver.API.Maps.Parsers
 
                 // osu! considers objects in lane 1 to be the special key, Quaver considers it to be the last lane.
                 // Lane 8 on 7K+1
-                if (qua.HasScratchKey && SpecialStyle == 1)
+                if (qua.HasScratchKey)
                 {
                     if (keyLane == 1)
                         keyLane = KeyCount;
