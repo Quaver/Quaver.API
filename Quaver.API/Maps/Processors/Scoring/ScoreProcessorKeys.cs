@@ -195,14 +195,11 @@ namespace Quaver.API.Maps.Processors.Scoring
                 if (!(absoluteDifference <= window))
                     continue;
 
-                // With HealthAdjust, okays are no longer possible on releases
-                if (Mods.HasFlag(ModIdentifier.HeatlthAdjust))
+                // Make Okays no longer possible on releases (good window increases)
+                if (keyPressType == KeyPressType.Release && j == Judgement.Okay)
                 {
-                    if (keyPressType == KeyPressType.Release && j == Judgement.Okay)
-                    {
-                        judgement = Judgement.Good;
-                        break;
-                    }
+                    judgement = Judgement.Good;
+                    break;
                 }
 
                 judgement = j;
