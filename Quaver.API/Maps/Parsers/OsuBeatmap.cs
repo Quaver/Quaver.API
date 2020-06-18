@@ -497,9 +497,6 @@ namespace Quaver.API.Maps.Parsers
                     break;
             }
 
-            if (qua.HasScratchKey && SpecialStyle != 1)
-                throw new ArgumentException("Cannot convert non-special style beatmap for this key count!");
-
             foreach (var path in CustomAudioSamples)
             {
                 qua.CustomAudioSamples.Add(new CustomAudioSampleInfo()
@@ -565,7 +562,7 @@ namespace Quaver.API.Maps.Parsers
 
                 // osu! considers objects in lane 1 to be the special key, Quaver considers it to be the last lane.
                 // Lane 8 on 7K+1
-                if (qua.HasScratchKey && SpecialStyle == 1)
+                if (qua.HasScratchKey)
                 {
                     if (keyLane == 1)
                         keyLane = KeyCount;
