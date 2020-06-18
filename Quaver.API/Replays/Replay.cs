@@ -407,6 +407,8 @@ namespace Quaver.API.Replays
                     return ReplayKeyPressState.K7;
                 case 8:
                     return ReplayKeyPressState.K8;
+                case 9:
+                    return ReplayKeyPressState.K9;
                 default:
                     throw new ArgumentException("Lane specified must be between 1 and 7");
             }
@@ -437,6 +439,8 @@ namespace Quaver.API.Replays
                 lanes.Add(6);
             if (keys.HasFlag(ReplayKeyPressState.K8))
                 lanes.Add(7);
+            if (keys.HasFlag(ReplayKeyPressState.K9))
+                lanes.Add(8);
 
              return lanes;
         }

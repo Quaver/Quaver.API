@@ -122,6 +122,7 @@ namespace Quaver.API.Replays.Virtual
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K6),
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K7),
                         new VirtualReplayKeyBinding(ReplayKeyPressState.K8),
+                        new VirtualReplayKeyBinding(ReplayKeyPressState.K9),
                     };
                     break;
                 default:
@@ -219,11 +220,17 @@ namespace Quaver.API.Replays.Virtual
             // Go through each frame and handle key presses/releases.
             foreach (var key in keyDifferences)
             {
+                var inputLane = key;
+
+                // Allow scratch key to be dual-binded to lane 8
+                if (Map.HasScratchKey && Map.Mode == GameMode.Keys7 && key + 1 == 9)
+                    inputLane--;
+
                 // This key was uniquely pressed during this frame.
                 if (currentFramePressed.Contains(key))
                 {
                     // Find the nearest object in the lane that the user has pressed.
-                    var nearestObjectIndex = GetIndexOfNearestLaneObject(key + 1, Time);
+                    var nearestObjectIndex = GetIndexOfNearestLaneObject(inputLane + 1, Time);
 
                     if (nearestObjectIndex == -1)
                         continue;
@@ -277,7 +284,7 @@ namespace Quaver.API.Replays.Virtual
                     foreach (var hitObject in ActiveHeldLongNotes)
                     {
                         // Handle the release of the note.
-                        if (hitObject.Lane != key + 1)
+                        if (hitObject.Lane != inputLane + 1)
                             continue;
 
                         // Calculate the hit difference.
