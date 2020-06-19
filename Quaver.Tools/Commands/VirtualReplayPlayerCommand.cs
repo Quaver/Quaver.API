@@ -57,6 +57,8 @@ namespace Quaver.Tools.Commands
 
             if (MapMd5 != Replay.MapMd5 && !readHeaderLess)
                 throw new ArgumentException("The specified replay doesn't match the map.");
+
+            Map.ApplyMods(Replay.Mods);
         }
 
         /// <summary>
