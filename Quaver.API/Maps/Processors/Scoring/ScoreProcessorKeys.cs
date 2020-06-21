@@ -16,7 +16,7 @@ using Quaver.API.Replays;
 
 namespace Quaver.API.Maps.Processors.Scoring
 {
-    public class ScoreProcessorKeys : ScoreProcessor
+    public sealed class ScoreProcessorKeys : ScoreProcessor
     {
         /// <summary>
         ///     The version of the processor.
@@ -142,6 +142,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
+            InitializeHealthWeighting();
         }
 
         /// <inheritdoc />
@@ -155,6 +156,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             TotalJudgements = GetTotalJudgementCount();
             SummedScore = CalculateSummedScore();
+            InitializeHealthWeighting();
         }
 
         /// <summary>
@@ -172,7 +174,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="calculateAllStats"></param>
         public Judgement CalculateScore(int hitDifference, KeyPressType keyPressType, bool calculateAllStats = true)
         {
-            int absoluteDifference = 0;
+            var absoluteDifference = 0;
 
             if (hitDifference != int.MinValue)
                 absoluteDifference = Math.Abs(hitDifference);
@@ -299,6 +301,40 @@ namespace Quaver.API.Maps.Processors.Scoring
                 accuracy += item.Value * JudgementAccuracyWeighting[item.Key];
 
             return Math.Max(accuracy / (TotalJudgementCount * JudgementAccuracyWeighting[Judgement.Marv]), 0) * JudgementAccuracyWeighting[Judgement.Marv];
+        }
+
+        /// <summary>
+        ///     Calculates the final health weighting values for each judgement from
+        ///     level 1-20 difficulty (beginner-hard).
+        ///     Resource: https://www.desmos.com/calculator/bu8yfrpgep
+        /// </summary>
+        protected override void InitializeHealthWeighting()
+        {
+            if (Mods.HasFlag(ModIdentifier.Autoplay) || !Mods.HasFlag(ModIdentifier.HeatlthAdjust))
+                return;
+
+            var difficulty = Map.SolveDifficulty(Mods).OverallDifficulty;
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (difficulty == 0 || difficulty >= 20 || double.IsNaN(difficulty))
+                return;
+            
+            var values = new Dictionary<Judgement, Tuple<float, float>>
+            {
+                {Judgement.Marv, new Tuple<float, float>(-0.073f, 2.474f)},
+                {Judgement.Perf, new Tuple<float, float>(-0.105f, 3.105f)},
+                {Judgement.Great, new Tuple<float, float>(-0.073f, 2.474f)},
+                {Judgement.Good, new Tuple<float, float>(0.044f, 0.116f)}
+            };
+
+            foreach (var item in values)
+            {
+                var val = values[item.Key];
+                var multiplier = val.Item1 * difficulty + val.Item2;
+
+                var weight = JudgementHealthWeighting[item.Key];
+                JudgementHealthWeighting[item.Key] = (float) Math.Round(multiplier * weight, 2, MidpointRounding.ToEven);
+            }
         }
 
         /// <summary>

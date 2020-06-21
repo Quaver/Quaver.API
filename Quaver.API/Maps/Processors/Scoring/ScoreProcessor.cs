@@ -253,17 +253,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             for (var i = 0; i < JudgementWindow.Count; i++)
                 JudgementWindow[(Judgement) i] *= ModHelper.GetRateFromMods(Mods);
-
-            if (Mods.HasFlag(ModIdentifier.HeatlthAdjust))
-            {
-                JudgementHealthWeighting[Judgement.Marv] = 0.65f;
-                JudgementHealthWeighting[Judgement.Perf] = 0.45f;
-                JudgementHealthWeighting[Judgement.Great] = 0.3f;
-                JudgementHealthWeighting[Judgement.Good] = 0.1f;
-                JudgementHealthWeighting[Judgement.Okay] = -2.5f;
-                JudgementHealthWeighting[Judgement.Miss] = -5.0f;
-            }
         }
+
+        /// <summary>
+        ///     Initializes the health weighting of the map
+        /// </summary>
+        protected abstract void InitializeHealthWeighting();
 
         /// <summary>
         ///     Gets the judgement breakdown from hit data.
