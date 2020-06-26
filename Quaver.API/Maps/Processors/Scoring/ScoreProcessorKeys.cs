@@ -318,13 +318,14 @@ namespace Quaver.API.Maps.Processors.Scoring
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (difficulty == 0 || difficulty >= 20 || double.IsNaN(difficulty))
                 return;
-            
+
             var values = new Dictionary<Judgement, Tuple<float, float>>
             {
                 {Judgement.Marv, new Tuple<float, float>(-0.073f, 2.474f)},
                 {Judgement.Perf, new Tuple<float, float>(-0.105f, 3.105f)},
                 {Judgement.Great, new Tuple<float, float>(-0.073f, 2.474f)},
-                {Judgement.Good, new Tuple<float, float>(0.044f, 0.116f)}
+                {Judgement.Good, new Tuple<float, float>(0.044f, 0.116f)},
+                {Judgement.Okay, new Tuple<float, float>(0.042f, 0.147f)}
             };
 
             foreach (var item in values)
