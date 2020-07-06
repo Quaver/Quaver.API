@@ -421,6 +421,59 @@ namespace Quaver.API.Maps
         public float AverageNotesPerSecond(float rate = 1.0f) => HitObjects.Count / (Length / (1000f * rate));
 
         /// <summary>
+        ///     Calculates and returns the map's actions per second.
+        ///
+        ///     Actions per second is defined as:
+        ///         - The amount of presses and long note releases the player performs a second
+        ///         - Excludes break and intro times.
+        ///
+        ///     * Should be used instead of <see cref="AverageNotesPerSecond"/> for a more accurate
+        ///     representation of density.
+        /// </summary>
+        /// <param name="rate"></param>
+        /// <returns></returns>
+        public float GetActionsPerSecond(float rate = 1.0f)
+        {
+            var actions = new List<int>();
+
+            foreach (var ho in HitObjects)
+            {
+                actions.Add(ho.StartTime);
+
+                if (ho.IsLongNote)
+                    actions.Add(ho.EndTime);
+            }
+
+            if (actions.Count == 0)
+                return 0;
+
+            actions.Sort();
+
+            var length = actions.Last();
+
+            // Remove empty intro time
+            length -= actions.First();
+
+            // Exclude break times from the total length
+            for (var i = 0; i < actions.Count; i++)
+            {
+                var action = actions[i];
+
+                if (i == 0)
+                    continue;
+
+                var previousAction = actions[i - 1];
+
+                var difference = action - previousAction;
+
+                if (difference >= 1000)
+                    length -= difference;
+            }
+
+            return actions.Count / (length / (1000f * rate));
+        }
+
+        /// <summary>
         ///    In Quaver, the key count is defined by the game mode.
         ///    This translates mode to key count.
         /// </summary>

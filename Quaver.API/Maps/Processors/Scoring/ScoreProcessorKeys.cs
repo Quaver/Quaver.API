@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using osu.Shared;
 using Quaver.API.Enums;
+using Quaver.API.Helpers;
 using Quaver.API.Maps.Processors.Scoring.Data;
 using Quaver.API.Maps.Processors.Scoring.Multiplayer;
 using Quaver.API.Replays;
@@ -305,33 +306,38 @@ namespace Quaver.API.Maps.Processors.Scoring
 
         /// <summary>
         ///     Calculates the final health weighting values for each judgement from
-        ///     level 1-20 difficulty (beginner-hard).
-        ///     Resource: https://www.desmos.com/calculator/bu8yfrpgep
+        ///     average actions per second. <see cref="Qua.GetActionsPerSecond"/>
+        ///
+        ///     Resource: https://www.desmos.com/calculator/veeobxirvz
         /// </summary>
         protected override void InitializeHealthWeighting()
         {
-            if (Mods.HasFlag(ModIdentifier.Autoplay) || !Mods.HasFlag(ModIdentifier.HeatlthAdjust))
+            if (Mods.HasFlag(ModIdentifier.Autoplay))
                 return;
 
-            var difficulty = Map.SolveDifficulty(Mods).OverallDifficulty;
+            var density = Map.GetActionsPerSecond(ModHelper.GetRateFromMods(Mods));
 
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (difficulty == 0 || difficulty >= 20 || double.IsNaN(difficulty))
+            if (density == 0 || density >= 12 || double.IsNaN(density))
                 return;
+
+            // Set baseline density to 2
+            if (density > 0 && density < 2)
+                density = 2;
 
             var values = new Dictionary<Judgement, Tuple<float, float>>
             {
-                {Judgement.Marv, new Tuple<float, float>(-0.073f, 2.474f)},
-                {Judgement.Perf, new Tuple<float, float>(-0.105f, 3.105f)},
-                {Judgement.Great, new Tuple<float, float>(-0.073f, 2.474f)},
-                {Judgement.Good, new Tuple<float, float>(0.044f, 0.116f)},
-                {Judgement.Okay, new Tuple<float, float>(0.042f, 0.147f)}
+                {Judgement.Marv, new Tuple<float, float>(-0.14f, 2.68f)},
+                {Judgement.Perf, new Tuple<float, float>(-0.2f, 3.4f)},
+                {Judgement.Great, new Tuple<float, float>(-0.14f, 2.68f)},
+                {Judgement.Good, new Tuple<float, float>(0.084f, -0.008f)},
+                {Judgement.Okay, new Tuple<float, float>(0.081f, 0.028f)}
             };
 
             foreach (var item in values)
             {
                 var val = values[item.Key];
-                var multiplier = val.Item1 * difficulty + val.Item2;
+                var multiplier = val.Item1 * density + val.Item2;
 
                 var weight = JudgementHealthWeighting[item.Key];
                 JudgementHealthWeighting[item.Key] = (float) Math.Round(multiplier * weight, 2, MidpointRounding.ToEven);
