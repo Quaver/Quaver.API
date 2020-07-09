@@ -37,7 +37,7 @@ namespace Quaver.API.Maps.Parsers
         public int AudioLeadIn { get; set; }
         public int PreviewTime { get; set; }
         public int Countdown { get; set; }
-        public string SampleSet { get; set; }
+        public SampleSetType SampleSet { get; set; }
         public float StackLeniency { get; set; }
         public int Mode { get; set; }
         public int LetterboxInBreaks { get; set; }
@@ -174,7 +174,12 @@ namespace Quaver.API.Maps.Parsers
                                     Countdown = int.Parse(value, CultureInfo.InvariantCulture);
                                     break;
                                 case "SampleSet":
-                                    SampleSet = Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value)); ;
+                                    SampleSet = SampleSetType.Normal;
+                                    if (Enum.TryParse(Encoding.ASCII.GetString(Encoding.ASCII.GetBytes(value)), true,
+                                        out SampleSetType sampleSet))
+                                    {
+                                        SampleSet = sampleSet;
+                                    }
                                     break;
                                 case "StackLeniency":
                                     StackLeniency = float.Parse(value, CultureInfo.InvariantCulture);
@@ -655,6 +660,17 @@ namespace Quaver.API.Maps.Parsers
         Spinner = 1 << 3,
         ComboOffset = 1 << 4 | 1 << 5 | 1 << 6,
         Hold = 1 << 7
+    }
+
+    /// <summary>
+    ///     Enumeration of sample sets.
+    /// </summary>
+    [Flags]
+    public enum SampleSetType
+    {
+        Normal = 1,
+        Soft = 2,
+        Drum = 4
     }
 
     /// <summary>
