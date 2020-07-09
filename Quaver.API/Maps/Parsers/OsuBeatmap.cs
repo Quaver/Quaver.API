@@ -420,7 +420,11 @@ namespace Quaver.API.Maps.Parsers
                                 if (additions.Length > additionSetField && additions[additionSetField].Length > 0)
                                     osuHitObject.AdditionSet = (SampleSetType) int.Parse(additions[additionSetField], CultureInfo.InvariantCulture);
 
-                                var volumeField = additionSetField + 1;
+                                var sampleIndexField = additionSetField + 1;
+                                if (additions.Length > sampleIndexField && additions[sampleIndexField].Length > 0)
+                                    osuHitObject.SampleIndex = int.Parse(additions[sampleIndexField], CultureInfo.InvariantCulture);
+
+                                var volumeField = sampleIndexField + 1;
                                 if (additions.Length > volumeField && additions[volumeField].Length > 0)
                                     osuHitObject.Volume = Math.Max(0, int.Parse(additions[volumeField], CultureInfo.InvariantCulture));
 
@@ -673,13 +677,12 @@ namespace Quaver.API.Maps.Parsers
     /// <summary>
     ///     Enumeration of sample sets.
     /// </summary>
-    [Flags]
     public enum SampleSetType
     {
         Inherited = 0,
         Normal = 1,
         Soft = 2,
-        Drum = 4
+        Drum = 3
     }
 
     /// <summary>
@@ -753,6 +756,7 @@ namespace Quaver.API.Maps.Parsers
 
         public SampleSetType SampleSet { get; set; }
         public SampleSetType AdditionSet { get; set; }
+        public int SampleIndex { get; set; }
 
         /// <summary>
         ///     Index into the CustomAudioSamples array.
