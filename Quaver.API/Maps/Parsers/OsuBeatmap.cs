@@ -363,7 +363,7 @@ namespace Quaver.API.Maps.Parsers
                                     Offset = float.Parse(values[0], CultureInfo.InvariantCulture),
                                     MillisecondsPerBeat = (float) msecPerBeat,
                                     Signature = values[2][0] == '0' ? TimeSignature.Quadruple : (TimeSignature) int.Parse(values[2], CultureInfo.InvariantCulture),
-                                    SampleSet = int.Parse(values[3], CultureInfo.InvariantCulture),
+                                    SampleSet = (SampleSetType) int.Parse(values[3], CultureInfo.InvariantCulture),
                                     SampleIndex = int.Parse(values[4], CultureInfo.InvariantCulture),
                                     Volume = Math.Max(0, int.Parse(values[5], CultureInfo.InvariantCulture)),
                                     Inherited = int.Parse(values[6], CultureInfo.InvariantCulture),
@@ -412,7 +412,15 @@ namespace Quaver.API.Maps.Parsers
                             {
                                 var additions = values[5].Split(':');
 
-                                var volumeField = osuHitObject.Type.HasFlag(HitObjectType.Hold) ? 4 : 3;
+                                var sampleSetField = osuHitObject.Type.HasFlag(HitObjectType.Hold) ? 1 : 0;
+                                if (additions.Length > sampleSetField && additions[sampleSetField].Length > 0)
+                                    osuHitObject.SampleSet = (SampleSetType) int.Parse(additions[sampleSetField], CultureInfo.InvariantCulture);
+
+                                var additionSetField = sampleSetField + 1;
+                                if (additions.Length > additionSetField && additions[additionSetField].Length > 0)
+                                    osuHitObject.AdditionSet = (SampleSetType) int.Parse(additions[additionSetField], CultureInfo.InvariantCulture);
+
+                                var volumeField = additionSetField + 1;
                                 if (additions.Length > volumeField && additions[volumeField].Length > 0)
                                     osuHitObject.Volume = Math.Max(0, int.Parse(additions[volumeField], CultureInfo.InvariantCulture));
 
@@ -668,6 +676,7 @@ namespace Quaver.API.Maps.Parsers
     [Flags]
     public enum SampleSetType
     {
+        Inherited = 0,
         Normal = 1,
         Soft = 2,
         Drum = 4
@@ -714,7 +723,7 @@ namespace Quaver.API.Maps.Parsers
         public float MillisecondsPerBeat { get; set; }
         public TimeSignature Signature { get; set; }
 
-        public int SampleSet { get; set; }
+        public SampleSetType SampleSet { get; set; }
         public int SampleIndex { get; set; }
         public int Volume { get; set; }
         public int Inherited { get; set; }
@@ -741,6 +750,9 @@ namespace Quaver.API.Maps.Parsers
         public bool Key6 { get; set; }
         public bool Key7 { get; set; }
         public int Volume { get; set; }
+
+        public SampleSetType SampleSet { get; set; }
+        public SampleSetType AdditionSet { get; set; }
 
         /// <summary>
         ///     Index into the CustomAudioSamples array.
