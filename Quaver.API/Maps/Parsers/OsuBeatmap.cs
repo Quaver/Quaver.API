@@ -605,33 +605,21 @@ namespace Quaver.API.Maps.Parsers
 
                 var keySounds = new List<KeySoundInfo>();
 
-                Console.WriteLine(string.Format(parseString, localSampleSet.ToString().ToLower(), "normal"));
-                keySounds.Add(new KeySoundInfo
+                //Normal hitsound is always being played
+                var hitSoundWithNormal = hitObject.HitSound | HitSoundType.Normal;
+
+                foreach(HitSoundType hitSound in Enum.GetValues(typeof(HitSoundType)))
                 {
-                    Sample = CustomAudioSampleIndex(string.Format(parseString, localSampleSet.ToString().ToLower(), "normal")) + 1,
-                    Volume = sampleVolume
-                });
-
-                if ((hitObject.HitSound & HitSoundType.Clap) != 0)
-                    keySounds.Add(new KeySoundInfo
+                    if (( hitSound & hitSoundWithNormal ) != 0)
                     {
-                        Sample = CustomAudioSampleIndex(string.Format(parseString, localAdditionSet.ToString().ToLower(), "clap")) + 1,
-                        Volume = sampleVolume
-                    });
-
-                if ((hitObject.HitSound & HitSoundType.Whistle) != 0)
-                    keySounds.Add(new KeySoundInfo
-                    {
-                        Sample = CustomAudioSampleIndex(string.Format(parseString, localAdditionSet.ToString().ToLower(), "whistle")) + 1,
-                        Volume = sampleVolume
-                    });
-
-                if ((hitObject.HitSound & HitSoundType.Finish) != 0)
-                    keySounds.Add(new KeySoundInfo
-                    {
-                        Sample = CustomAudioSampleIndex(string.Format(parseString, localAdditionSet.ToString().ToLower(), "finish")) + 1,
-                        Volume = sampleVolume
-                    });
+                        var hitSoundSet = hitSound == HitSoundType.Normal ? localSampleSet : localAdditionSet;
+                        keySounds.Add(new KeySoundInfo
+                        {
+                            Sample = CustomAudioSampleIndex(string.Format(parseString, hitSoundSet.ToString().ToLower(), hitSound.ToString().ToLower())) + 1,
+                            Volume = sampleVolume
+                        });
+                    }
+                }
 
                 if (hitObject.KeySound != -1)
                 {
@@ -781,7 +769,6 @@ namespace Quaver.API.Maps.Parsers
         public float Offset { get; set; }
         public float MillisecondsPerBeat { get; set; }
         public TimeSignature Signature { get; set; }
-
         public SampleSetType SampleSet { get; set; }
         public int SampleIndex { get; set; }
         public int Volume { get; set; }
@@ -809,7 +796,6 @@ namespace Quaver.API.Maps.Parsers
         public bool Key6 { get; set; }
         public bool Key7 { get; set; }
         public int Volume { get; set; }
-
         public SampleSetType SampleSet { get; set; }
         public SampleSetType AdditionSet { get; set; }
         public int SampleIndex { get; set; }
