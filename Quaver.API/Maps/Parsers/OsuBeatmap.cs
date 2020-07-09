@@ -596,7 +596,6 @@ namespace Quaver.API.Maps.Parsers
                         sampleIndex = TimingPoints[timingPointIndex].SampleIndex;
                 }
 
-
                 var localSampleSet = hitObject.SampleSet == SampleSetType.Inherited ? sampleSet : hitObject.SampleSet;
                 var localAdditionSet = hitObject.AdditionSet == SampleSetType.Inherited ? localSampleSet : hitObject.AdditionSet;
                 var localSampleIndex = hitObject.SampleIndex == 0 ? sampleIndex : hitObject.SampleIndex;
