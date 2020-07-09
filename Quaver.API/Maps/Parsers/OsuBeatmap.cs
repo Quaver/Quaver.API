@@ -571,6 +571,11 @@ namespace Quaver.API.Maps.Parsers
                 }
             }
 
+            var timingPointIndex = 0;
+            var sampleVolume = TimingPoints[timingPointIndex].Volume;
+            var sampleSet = SampleSetType.Normal;
+            var sampleIndex = 1;
+
             // Get HitObject Info
             foreach (var hitObject in HitObjects)
             {
@@ -587,6 +592,63 @@ namespace Quaver.API.Maps.Parsers
                         keyLane--;
                 }
 
+                while (timingPointIndex < TimingPoints.Count - 1 &&
+                       TimingPoints[timingPointIndex + 1].Offset <= hitObject.StartTime)
+                {
+                    timingPointIndex++;
+                    sampleVolume = TimingPoints[timingPointIndex].Volume;
+
+                    if (TimingPoints[timingPointIndex].SampleSet != SampleSetType.Inherited)
+                        sampleSet = TimingPoints[timingPointIndex].SampleSet;
+
+                    if (TimingPoints[timingPointIndex].SampleIndex != 0)
+                        sampleIndex = TimingPoints[timingPointIndex].SampleIndex;
+                }
+
+
+                var localSampleSet = hitObject.SampleSet == SampleSetType.Inherited ? sampleSet : hitObject.SampleSet;
+                var localAdditionSet = hitObject.AdditionSet == SampleSetType.Inherited ? localSampleSet : hitObject.AdditionSet;
+                var localSampleIndex = hitObject.SampleIndex == 0 ? sampleIndex : hitObject.SampleIndex;
+
+                var parseString = "{0}-hit{1}" + (localSampleIndex > 1 ? localSampleIndex.ToString() : "");
+
+                var keySounds = new List<KeySoundInfo>();
+
+                Console.WriteLine(string.Format(parseString, localSampleSet.ToString().ToLower(), "normal"));
+                keySounds.Add(new KeySoundInfo
+                {
+                    Sample = CustomAudioSampleIndex(string.Format(parseString, localSampleSet.ToString().ToLower(), "normal")) + 1,
+                    Volume = sampleVolume
+                });
+
+                if ((hitObject.HitSound & HitSoundType.Clap) != 0)
+                    keySounds.Add(new KeySoundInfo
+                    {
+                        Sample = CustomAudioSampleIndex(string.Format(parseString, localAdditionSet.ToString().ToLower(), "clap")) + 1,
+                        Volume = sampleVolume
+                    });
+
+                if ((hitObject.HitSound & HitSoundType.Whistle) != 0)
+                    keySounds.Add(new KeySoundInfo
+                    {
+                        Sample = CustomAudioSampleIndex(string.Format(parseString, localAdditionSet.ToString().ToLower(), "whistle")) + 1,
+                        Volume = sampleVolume
+                    });
+
+                if ((hitObject.HitSound & HitSoundType.Finish) != 0)
+                    keySounds.Add(new KeySoundInfo
+                    {
+                        Sample = CustomAudioSampleIndex(string.Format(parseString, localAdditionSet.ToString().ToLower(), "finish")) + 1,
+                        Volume = sampleVolume
+                    });
+
+                if (hitObject.KeySound != -1)
+                {
+                    keySounds.Add(
+                        new KeySoundInfo { Sample = hitObject.KeySound + 1, Volume = hitObject.Volume }
+                    );
+                }
+
                 // Add HitObjects to the list depending on the object type
                 if (hitObject.Type.HasFlag(HitObjectType.Circle))
                 {
@@ -596,10 +658,7 @@ namespace Quaver.API.Maps.Parsers
                         Lane = keyLane,
                         EndTime = 0,
                         HitSound = hitObject.HitSound.ToQuaverHitSounds(),
-                        KeySounds = hitObject.KeySound == -1 ? new List<KeySoundInfo>() : new List<KeySoundInfo>
-                        {
-                            new KeySoundInfo { Sample = hitObject.KeySound + 1, Volume = hitObject.Volume }
-                        }
+                        KeySounds = keySounds
                     });
                 }
                 else if (hitObject.Type.HasFlag(HitObjectType.Hold))
@@ -610,10 +669,7 @@ namespace Quaver.API.Maps.Parsers
                         Lane = keyLane,
                         EndTime = hitObject.EndTime,
                         HitSound = hitObject.HitSound.ToQuaverHitSounds(),
-                        KeySounds = hitObject.KeySound == -1 ? new List<KeySoundInfo>() : new List<KeySoundInfo>
-                        {
-                            new KeySoundInfo { Sample = hitObject.KeySound + 1, Volume = hitObject.Volume }
-                        }
+                        KeySounds = keySounds
                     });
                 }
             }
@@ -624,7 +680,7 @@ namespace Quaver.API.Maps.Parsers
             if (TimingPoints.Count > 0)
             {
                 // If the individual object key sound volume is zero, we need to set it to the timing point sample volume.
-                var timingPointIndex = 0;
+                timingPointIndex = 0;
                 var volume = TimingPoints[timingPointIndex].Volume;
 
                 // Assumption: hit objects and timing points are sorted by start time (enforced by qua.Sort() above).
