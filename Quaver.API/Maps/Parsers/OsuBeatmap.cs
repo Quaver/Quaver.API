@@ -358,8 +358,8 @@ namespace Quaver.API.Maps.Parsers
                                     Offset = float.Parse(values[0], CultureInfo.InvariantCulture),
                                     MillisecondsPerBeat = (float) msecPerBeat,
                                     Signature = values[2][0] == '0' ? TimeSignature.Quadruple : (TimeSignature) int.Parse(values[2], CultureInfo.InvariantCulture),
-                                    SampleType = int.Parse(values[3], CultureInfo.InvariantCulture),
-                                    SampleSet = int.Parse(values[4], CultureInfo.InvariantCulture),
+                                    SampleSet = int.Parse(values[3], CultureInfo.InvariantCulture),
+                                    SampleIndex = int.Parse(values[4], CultureInfo.InvariantCulture),
                                     Volume = Math.Max(0, int.Parse(values[5], CultureInfo.InvariantCulture)),
                                     Inherited = int.Parse(values[6], CultureInfo.InvariantCulture),
                                     KiaiMode = int.Parse(values[7], CultureInfo.InvariantCulture)
@@ -697,8 +697,9 @@ namespace Quaver.API.Maps.Parsers
         public float Offset { get; set; }
         public float MillisecondsPerBeat { get; set; }
         public TimeSignature Signature { get; set; }
-        public int SampleType { get; set; }
+
         public int SampleSet { get; set; }
+        public int SampleIndex { get; set; }
         public int Volume { get; set; }
         public int Inherited { get; set; }
         public int KiaiMode { get; set; }
