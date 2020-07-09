@@ -514,15 +514,6 @@ namespace Quaver.API.Maps.Parsers
                     break;
             }
 
-            foreach (var path in CustomAudioSamples)
-            {
-                qua.CustomAudioSamples.Add(new CustomAudioSampleInfo()
-                {
-                    Path = path,
-                    UnaffectedByRate = false
-                });
-            }
-
             // Get custom audio samples and sound effects.
             foreach (var info in SoundEffects)
             {
@@ -672,6 +663,15 @@ namespace Quaver.API.Maps.Parsers
                         KeySounds = keySounds
                     });
                 }
+            }
+
+            foreach (var path in CustomAudioSamples)
+            {
+                qua.CustomAudioSamples.Add(new CustomAudioSampleInfo()
+                {
+                    Path = path,
+                    UnaffectedByRate = false
+                });
             }
 
             // Sort the various lists.
