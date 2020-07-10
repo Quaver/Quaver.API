@@ -28594,7 +28594,7 @@ SliderVelocities:
 - StartTime: 182969
   Multiplier: 4.5842104
 - StartTime: 182982
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 183102
   Multiplier: 9.10000038
 - StartTime: 183108
@@ -28686,7 +28686,7 @@ SliderVelocities:
 - StartTime: 184502
   Multiplier: 2.28352046
 - StartTime: 184528
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 184769
   Multiplier: 9.2378788
 - StartTime: 184775
@@ -28770,7 +28770,7 @@ SliderVelocities:
 - StartTime: 186102
   Multiplier: 2.28352046
 - StartTime: 186128
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 186369
   Multiplier: 9.2378788
 - StartTime: 186375
@@ -28790,7 +28790,7 @@ SliderVelocities:
 - StartTime: 186635
   Multiplier: 4.55000019
 - StartTime: 186648
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 186769
   Multiplier: 9.2378788
 - StartTime: 186775
@@ -28806,7 +28806,7 @@ SliderVelocities:
 - StartTime: 186969
   Multiplier: 3.04850006
 - StartTime: 186989
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 187169
   Multiplier: 9.2378788
 - StartTime: 187175
@@ -28826,7 +28826,7 @@ SliderVelocities:
 - StartTime: 187435
   Multiplier: 4.55000019
 - StartTime: 187448
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 187569
   Multiplier: 9.2378788
 - StartTime: 187575
@@ -28842,7 +28842,7 @@ SliderVelocities:
 - StartTime: 187769
   Multiplier: 3.04850006
 - StartTime: 187789
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 187969
   Multiplier: 9.2378788
 - StartTime: 187975
@@ -28858,7 +28858,7 @@ SliderVelocities:
 - StartTime: 188169
   Multiplier: 3.04850006
 - StartTime: 188189
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 188369
   Multiplier: 9.2378788
 - StartTime: 188375
@@ -28874,15 +28874,15 @@ SliderVelocities:
 - StartTime: 188569
   Multiplier: 4.5842104
 - StartTime: 188582
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 188702
   Multiplier: 4.5842104
 - StartTime: 188715
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 188835
   Multiplier: 4.55000019
 - StartTime: 188848
-  Multiplier: 0.100000001
+  Multiplier: 0.010000000
 - StartTime: 189770
   Multiplier: 2
 - StartTime: 189820
