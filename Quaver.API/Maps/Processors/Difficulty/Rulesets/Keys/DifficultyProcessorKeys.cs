@@ -26,7 +26,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     The version of the processor.
         /// </summary>
-        public static string Version { get; } = "0.0.1";
+        public static string Version { get; } = "0.0.2";
 
         /// <summary>
         ///     Constants used for solving
@@ -453,12 +453,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForLnMultiplier()
         {
+            const float shortLnThreshold = 60000f / 170 / 4;
+
             foreach (var data in StrainSolverData)
             {
                 // Check if data is LN
                 if (data.EndTime > data.StartTime)
                 {
-                    var durationValue = 1 - Math.Min(1, Math.Max(0, ((StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs) - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
+                    if (Map.Mode == GameMode.Keys4 && Math.Abs(data.EndTime - data.StartTime) < shortLnThreshold)
+                        continue;
+
+                    var durationValue = 1 - Math.Min(1, Math.Max(0, ((StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs)
+                                                                     - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
+
                     var baseMultiplier = 1 + (float)((1 - durationValue) * StrainConstants.LnBaseMultiplier);
                     foreach (var k in data.HitObjects)
                         k.LnStrainMultiplier = baseMultiplier;
