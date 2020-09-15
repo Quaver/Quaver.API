@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Interop;
 using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
 {
     [Serializable]
+    [MoonSharpUserData]
     public class EditorLayerInfo
     {
         /// <summary>
