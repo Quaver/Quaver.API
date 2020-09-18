@@ -14,22 +14,23 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     The name of the layer
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; [MoonSharpVisible(false)] set; }
 
         /// <summary>
         ///     Is the layer hidden in the editor?
         /// </summary>
-        public bool Hidden { get; set; }
+        public bool Hidden { get; [MoonSharpVisible(false)] set; }
 
         /// <summary>
         ///     The color of the layer (default is white)
         /// </summary>
-        public string ColorRgb { get; set; }
+        public string ColorRgb { get; [MoonSharpVisible(false)] set; }
 
         /// <summary>
         ///     Converts the stringified color to a System.Drawing color
         /// </summary>
         /// <returns></returns>
+        [MoonSharpVisible(false)]
         public Color GetColor()
         {
             if (ColorRgb == null)
