@@ -170,5 +170,29 @@
     <None Update="Quaver\Resources\cheat-normalized.qua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Bms\Resources\Hammer Switch - Lots of Spices - 778_LOSmineds.bml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Bms\Resources\Hammer Switch - Lots of Spices - 77_LOS_Abusive.bml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Bms\Resources\Is-m - reflective moment - _44_11.bme">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Bms\Resources\Kuon - Genealogy of Lives - _gol_7h.bme">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Bms\Resources\Kuon - Genealogy of Lives - _gol_7h.qua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Bms\Resources\LeaF - Aleph0 - _7INSANE.bms">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Bms\Resources\LeaF - Calamity Fortune - _S.bms">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Bms\Resources\Hammer Switch - Lots of Spices - 03_LOS_Another.bms">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

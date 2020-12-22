@@ -1,0 +1,9545 @@
+﻿AudioFile: virtual
+SongPreviewTime: -1
+MapId: -1
+MapSetId: -1
+Mode: Keys7
+Title: Genealogy of Lives [SPH]
+Artist: Kuon
+Source: BMS
+Tags: Progressive House
+Creator: Kuon
+DifficultyName: Lv. 7
+Description: 'This is a BMS map converted to Quaver (original creator: $Kuon)'
+HasScratchKey: true
+EditorLayers: []
+CustomAudioSamples:
+- Path: dr_kick.ogg
+- Path: dr_kick_s.ogg
+- Path: dr_kick_verb.ogg
+- Path: dr_snare.ogg
+- Path: dr_clap.ogg
+- Path: dr_hh_1.ogg
+- Path: dr_hh_2.ogg
+- Path: dr_hh_3.ogg
+- Path: dr_hh_4.ogg
+- Path: dr_hh_5.ogg
+- Path: dr_ride.ogg
+- Path: dr_ride.ogg
+- Path: dr_crash_sc.ogg
+- Path: fx_bassdown.ogg
+- Path: fx_down_sc.ogg
+- Path: fx_up.ogg
+- Path: fx_up_rev.ogg
+- Path: fx_cha.ogg
+- Path: fx_pi.ogg
+- Path: fx_pi.ogg
+- Path: fx_noise_1.ogg
+- Path: fx_noise_2.ogg
+- Path: fx_mcm_1.ogg
+- Path: fx_mcm_2.ogg
+- Path: fx_break_rev.ogg
+- Path: fx_corn_sc.ogg
+- Path: fx_porn.ogg
+- Path: pad_1.ogg
+- Path: pad_2.ogg
+- Path: pad_2.ogg
+- Path: pad_3.ogg
+- Path: pad_4.ogg
+- Path: synthA_1_001.ogg
+- Path: synthA_1_001.ogg
+- Path: synthA_1_002.ogg
+- Path: synthA_1_003.ogg
+- Path: synthA_1_003.ogg
+- Path: synthA_1_003.ogg
+- Path: synthA_2_001.ogg
+- Path: synthA_2_001.ogg
+- Path: synthA_2_002.ogg
+- Path: synthA_2_002.ogg
+- Path: synthA_2_003.ogg
+- Path: synthA_2_003.ogg
+- Path: synthA_2_004.ogg
+- Path: synthA_2_004.ogg
+- Path: synthA_3_001.ogg
+- Path: synthA_3_001.ogg
+- Path: synthA_3_001.ogg
+- Path: synthA_3_001.ogg
+- Path: synthA_3_002.ogg
+- Path: synthA_3_002.ogg
+- Path: synthA_3_002.ogg
+- Path: synthA_3_002.ogg
+- Path: synthA_3_003.ogg
+- Path: synthA_3_003.ogg
+- Path: synthA_3_003.ogg
+- Path: synthA_3_003.ogg
+- Path: synthA_3_004.ogg
+- Path: synthA_3_004.ogg
+- Path: synthA_3_004.ogg
+- Path: synthA_3_004.ogg
+- Path: synthA_3_005.ogg
+- Path: synthA_3_005.ogg
+- Path: synthA_3_005.ogg
+- Path: synthA_3_005.ogg
+- Path: synthA_3_006.ogg
+- Path: synthA_3_006.ogg
+- Path: synthA_3_006.ogg
+- Path: synthA_3_006.ogg
+- Path: synthA_3_007.ogg
+- Path: synthA_3_007.ogg
+- Path: synthA_3_007.ogg
+- Path: synthA_3_007.ogg
+- Path: synthA_4_001.ogg
+- Path: synthA_4_001.ogg
+- Path: synthA_4_002.ogg
+- Path: synthA_4_002.ogg
+- Path: synthA_4_003.ogg
+- Path: synthA_4_004.ogg
+- Path: synthA_4_004.ogg
+- Path: synthA_4_005.ogg
+- Path: synthA_4_005.ogg
+- Path: synthA_4_006.ogg
+- Path: synthA_4_006.ogg
+- Path: synthA_4_007.ogg
+- Path: synthA_4_007.ogg
+- Path: synthA_4_008.ogg
+- Path: synthA_4_008.ogg
+- Path: synthA_5_001.ogg
+- Path: synthA_5_001.ogg
+- Path: synthA_5_002.ogg
+- Path: synthA_5_002.ogg
+- Path: synthA_5_003.ogg
+- Path: synthA_5_003.ogg
+- Path: synthA_5_004.ogg
+- Path: synthA_5_004.ogg
+- Path: synthA_5_005.ogg
+- Path: synthA_5_005.ogg
+- Path: synthA_5_006.ogg
+- Path: synthA_5_006.ogg
+- Path: synthA_5_007.ogg
+- Path: synthA_5_007.ogg
+- Path: synthA_6_001.ogg
+- Path: synthA_6_001.ogg
+- Path: synthA_6_002.ogg
+- Path: synthA_6_002.ogg
+- Path: synthA_6_003.ogg
+- Path: synthA_6_003.ogg
+- Path: synthA_6_004.ogg
+- Path: synthA_6_005.ogg
+- Path: synthA_6_005.ogg
+- Path: synthA_6_006.ogg
+- Path: synthA_6_006.ogg
+- Path: synthA_6_006.ogg
+- Path: synthA_6_007.ogg
+- Path: synthA_6_007.ogg
+- Path: synthA_6_007.ogg
+- Path: synthA_6_008.ogg
+- Path: synthA_6_009.ogg
+- Path: synthA_6_010.ogg
+- Path: bass_001.ogg
+- Path: bass_002.ogg
+- Path: bass_003.ogg
+- Path: bass_004.ogg
+- Path: bass_005.ogg
+- Path: bass_006.ogg
+- Path: bass_007.ogg
+- Path: bass_008.ogg
+- Path: bass_009.ogg
+- Path: bass_010.ogg
+- Path: bass_011.ogg
+- Path: bass_013.ogg
+- Path: bass_014.ogg
+- Path: bass_016.ogg
+- Path: bass_017.ogg
+- Path: bass_018.ogg
+- Path: bass_019.ogg
+- Path: bass_020.ogg
+- Path: bass_021.ogg
+- Path: bass_021.ogg
+- Path: bass_022.ogg
+- Path: bass_022.ogg
+- Path: bass_023.ogg
+- Path: bass_023.ogg
+- Path: bass_024.ogg
+- Path: bass_025.ogg
+- Path: bass_025.ogg
+- Path: bass_026.ogg
+- Path: bass_026.ogg
+- Path: bass_027.ogg
+- Path: bass_027.ogg
+- Path: bass_028.ogg
+- Path: bass_029.ogg
+- Path: bass_030.ogg
+- Path: bass_031.ogg
+- Path: bass_032.ogg
+- Path: bass_033.ogg
+- Path: bass_034.ogg
+- Path: bass_035.ogg
+- Path: bass_fil_1.ogg
+- Path: bass_fil_2.ogg
+- Path: bass_fil_3_001.ogg
+- Path: bass_fil_3_002.ogg
+- Path: bass_fil_3_003.ogg
+- Path: bass_fil_3_004.ogg
+- Path: bass_fil_3_005.ogg
+- Path: synthB_001.ogg
+- Path: synthB_001.ogg
+- Path: synthB_001.ogg
+- Path: synthB_001.ogg
+- Path: synthB_001.ogg
+- Path: synthB_002.ogg
+- Path: synthB_002.ogg
+- Path: synthB_002.ogg
+- Path: synthB_003.ogg
+- Path: synthB_003.ogg
+- Path: synthB_003.ogg
+- Path: synthB_004.ogg
+- Path: synthB_005.ogg
+- Path: synthB_005.ogg
+- Path: synthB_006.ogg
+- Path: synthB_006.ogg
+- Path: synthB_006.ogg
+- Path: synthB_006.ogg
+- Path: synthB_006.ogg
+- Path: synthB_007.ogg
+- Path: synthB_007.ogg
+- Path: synthB_007.ogg
+- Path: synthB_008.ogg
+- Path: synthB_009.ogg
+- Path: synthB_009.ogg
+- Path: synthB_010.ogg
+- Path: synthB_010.ogg
+- Path: synthB_010.ogg
+- Path: synthB_010.ogg
+- Path: synthB_011.ogg
+- Path: synthB_012.ogg
+- Path: synthC_1_001.ogg
+- Path: synthC_1_001.ogg
+- Path: synthC_1_001.ogg
+- Path: synthC_1_001.ogg
+- Path: synthC_1_001.ogg
+- Path: synthC_1_001.ogg
+- Path: synthC_1_002.ogg
+- Path: synthC_1_002.ogg
+- Path: synthC_1_002.ogg
+- Path: synthC_1_002.ogg
+- Path: synthC_1_002.ogg
+- Path: synthC_1_002.ogg
+- Path: synthC_1_003.ogg
+- Path: synthC_1_003.ogg
+- Path: synthC_1_003.ogg
+- Path: synthC_1_003.ogg
+- Path: synthC_1_003.ogg
+- Path: synthC_1_003.ogg
+- Path: synthC_1_004.ogg
+- Path: synthC_1_004.ogg
+- Path: synthC_1_004.ogg
+- Path: synthC_1_004.ogg
+- Path: synthC_1_004.ogg
+- Path: synthC_1_004.ogg
+- Path: synthC_2_001.ogg
+- Path: synthC_2_001.ogg
+- Path: synthC_2_001.ogg
+- Path: synthC_2_001.ogg
+- Path: synthC_2_001.ogg
+- Path: synthC_2_001.ogg
+- Path: synthC_2_002.ogg
+- Path: synthC_2_002.ogg
+- Path: synthC_2_003.ogg
+- Path: synthC_2_003.ogg
+- Path: synthC_2_003.ogg
+- Path: synthC_2_003.ogg
+- Path: synthC_2_003.ogg
+- Path: synthC_2_003.ogg
+- Path: synthC_2_004.ogg
+- Path: synthC_2_004.ogg
+- Path: synthC_2_004.ogg
+- Path: synthC_2_004.ogg
+- Path: synthC_2_004.ogg
+- Path: synthC_2_004.ogg
+- Path: synthC_2_005.ogg
+- Path: synthC_2_005.ogg
+- Path: synthC_2_005.ogg
+- Path: synthC_2_005.ogg
+- Path: synthC_2_005.ogg
+- Path: synthC_2_005.ogg
+- Path: synthC_2_006.ogg
+- Path: synthC_2_006.ogg
+- Path: synthC_2_006.ogg
+- Path: synthC_2_006.ogg
+- Path: synthC_2_006.ogg
+- Path: synthC_2_006.ogg
+- Path: synthC_2_007.ogg
+- Path: synthC_2_007.ogg
+- Path: synthC_2_007.ogg
+- Path: synthC_2_007.ogg
+- Path: synthC_2_007.ogg
+- Path: synthC_2_007.ogg
+- Path: synthC_2_008.ogg
+- Path: synthC_2_008.ogg
+- Path: synthC_2_008.ogg
+- Path: synthC_2_008.ogg
+- Path: synthC_2_008.ogg
+- Path: synthC_2_009.ogg
+- Path: synthC_2_010.ogg
+- Path: synthC_2_010.ogg
+- Path: synthC_2_010.ogg
+- Path: synthC_3_000.ogg
+- Path: synthC_3_001.ogg
+- Path: synthC_3_002.ogg
+- Path: synthC_3_003.ogg
+- Path: synthC_3_004.ogg
+- Path: synthC_3_005.ogg
+- Path: synthC_3_006.ogg
+- Path: synthC_3_007.ogg
+- Path: synthC_3_008.ogg
+- Path: synthC_3_009.ogg
+- Path: synthC_3_010.ogg
+- Path: synthC_3_011.ogg
+- Path: synthC_3_012.ogg
+- Path: synthC_3_013.ogg
+- Path: synthC_3_014.ogg
+- Path: synthC_3_015.ogg
+- Path: synthC_3_016.ogg
+- Path: synthC_3_017.ogg
+- Path: synthC_3_018.ogg
+- Path: synthC_3_019.ogg
+- Path: synthC_3_020.ogg
+- Path: synthC_3_021.ogg
+- Path: synthC_3_022.ogg
+- Path: synthC_3_023.ogg
+- Path: synthC_3_024.ogg
+- Path: synthC_3_025.ogg
+- Path: synthC_3_026.ogg
+- Path: synthC_3_027.ogg
+- Path: synthC_3_028.ogg
+- Path: synthC_3_029.ogg
+- Path: synthC_3_030.ogg
+- Path: synthC_3_031.ogg
+- Path: synthC_3_032.ogg
+- Path: synthC_3_033.ogg
+- Path: synthC_3_034.ogg
+- Path: synthC_3_035.ogg
+- Path: synthC_3_036.ogg
+- Path: synthC_3_037.ogg
+- Path: synthC_3_038.ogg
+- Path: synthC_3_039.ogg
+- Path: synthC_3_040.ogg
+- Path: synthC_3_041.ogg
+- Path: synthC_3_042.ogg
+- Path: synthC_3_043.ogg
+- Path: synthC_3_044.ogg
+- Path: synthC_3_045.ogg
+- Path: synthC_3_046.ogg
+- Path: synthA_fil_1_000.ogg
+- Path: synthA_fil_1_001.ogg
+- Path: synthA_fil_1_002.ogg
+- Path: synthA_fil_1_003.ogg
+- Path: synthA_fil_1_004.ogg
+- Path: synthA_fil_1_005.ogg
+- Path: synthA_fil_2_000.ogg
+- Path: synthA_fil_2_001.ogg
+- Path: synthA_fil_2_002.ogg
+- Path: synthA_fil_2_003.ogg
+- Path: synthA_fil_2_004.ogg
+- Path: synthA_fil_2_005.ogg
+- Path: synthA_fil_2_006.ogg
+- Path: synthA_fil_2_007.ogg
+- Path: synthA_fil_3_000.ogg
+- Path: synthA_fil_3_001.ogg
+- Path: synthA_fil_3_002.ogg
+- Path: synthA_fil_3_003.ogg
+- Path: synthA_fil_3_004.ogg
+- Path: synthA_fil_3_005.ogg
+- Path: synthA_fil_3_006.ogg
+- Path: synthA_fil_3_007.ogg
+- Path: synthA_fil_4_000.ogg
+- Path: synthA_fil_4_001.ogg
+- Path: synthA_fil_4_002.ogg
+- Path: synthA_fil_4_003.ogg
+- Path: synthA_fil_4_004.ogg
+- Path: synthA_fil_4_005.ogg
+- Path: synthA_fil_5_000.ogg
+- Path: synthA_fil_5_001.ogg
+- Path: synthA_fil_5_002.ogg
+- Path: synthA_fil_5_003.ogg
+- Path: synthA_fil_5_004.ogg
+- Path: synthA_fil_5_005.ogg
+- Path: synthA_fil_6_000.ogg
+- Path: synthA_fil_6_001.ogg
+- Path: synthA_fil_6_002.ogg
+- Path: synthA_fil_6_003.ogg
+- Path: synthB_fil_1_000.ogg
+- Path: synthB_fil_1_001.ogg
+- Path: synthB_fil_1_002.ogg
+- Path: synthB_fil_1_003.ogg
+- Path: synthB_fil_1_004.ogg
+- Path: synthB_fil_1_005.ogg
+- Path: synthB_fil_1_006.ogg
+- Path: synthB_fil_1_007.ogg
+- Path: synthB_fil_1_008.ogg
+- Path: synthB_fil_1_009.ogg
+- Path: synthB_fil_1_010.ogg
+- Path: synthB_fil_1_011.ogg
+- Path: synthB_fil_1_012.ogg
+- Path: synthB_fil_1_013.ogg
+- Path: synthB_fil_1_014.ogg
+- Path: synthB_fil_1_015.ogg
+- Path: synthC_fil_1_000.ogg
+- Path: synthC_fil_1_001.ogg
+- Path: synthC_fil_1_002.ogg
+- Path: synthC_fil_1_003.ogg
+- Path: synthC_fil_1_004.ogg
+- Path: synthC_fil_1_005.ogg
+- Path: synthC_fil_2_000.ogg
+- Path: synthC_fil_2_001.ogg
+- Path: synthC_fil_2_002.ogg
+- Path: synthC_fil_2_003.ogg
+- Path: synthC_fil_2_004.ogg
+- Path: synthC_fil_2_005.ogg
+- Path: synthC_fil_3_000.ogg
+- Path: synthC_fil_3_001.ogg
+- Path: synthC_fil_3_002.ogg
+- Path: synthC_fil_3_003.ogg
+- Path: synthC_fil_3_004.ogg
+- Path: synthC_fil_4_000.ogg
+- Path: synthC_fil_4_001.ogg
+- Path: synthC_fil_4_002.ogg
+- Path: synthC_fil_4_003.ogg
+- Path: synthC_fil_4_004.ogg
+- Path: synthC_fil_5_000.ogg
+- Path: synthC_fil_5_001.ogg
+- Path: synthC_fil_5_002.ogg
+- Path: synthC_fil_5_003.ogg
+- Path: synthC_fil_5_004.ogg
+- Path: synthC_fil_5_005.ogg
+- Path: synthC_fil_6_000.ogg
+- Path: synthC_fil_6_001.ogg
+- Path: synthC_fil_6_002.ogg
+- Path: synthC_fil_6_003.ogg
+- Path: synthC_fil_6_004.ogg
+- Path: synthC_fil_6_005.ogg
+- Path: synthD_1_001.ogg
+- Path: synthD_1_001.ogg
+- Path: synthD_1_002.ogg
+- Path: synthD_1_002.ogg
+- Path: synthD_1_002.ogg
+- Path: synthD_1_003.ogg
+- Path: synthD_1_004.ogg
+- Path: synthD_1_005.ogg
+- Path: synthD_1_005.ogg
+- Path: synthD_1_006.ogg
+- Path: synthD_1_007.ogg
+- Path: synthD_1_007.ogg
+- Path: synthD_1_008.ogg
+- Path: synthD_1_009.ogg
+- Path: synthD_1_010.ogg
+- Path: synthD_1_011.ogg
+- Path: synthD_1_012.ogg
+- Path: synthD_1_012.ogg
+- Path: synthD_1_013.ogg
+- Path: synthD_2_001.ogg
+- Path: synthD_2_001.ogg
+- Path: synthD_2_001.ogg
+- Path: synthD_2_001.ogg
+- Path: synthD_2_002.ogg
+- Path: synthD_2_002.ogg
+- Path: synthD_2_002.ogg
+- Path: synthD_2_002.ogg
+- Path: synthD_2_003.ogg
+- Path: synthD_2_003.ogg
+- Path: synthD_2_003.ogg
+- Path: synthD_2_004.ogg
+- Path: synthD_2_004.ogg
+- Path: synthD_2_004.ogg
+- Path: synthD_2_004.ogg
+- Path: synthD_2_004.ogg
+- Path: synthD_2_005.ogg
+- Path: synthD_2_006.ogg
+- Path: synthD_2_006.ogg
+- Path: synthD_2_006.ogg
+- Path: synthD_2_007.ogg
+- Path: synthD_2_007.ogg
+- Path: synthD_2_007.ogg
+- Path: synthD_2_007.ogg
+- Path: synthD_2_008.ogg
+- Path: synthD_2_008.ogg
+- Path: synthD_2_008.ogg
+- Path: synthD_2_008.ogg
+- Path: synthD_2_009.ogg
+- Path: synthD_2_009.ogg
+- Path: synthD_2_009.ogg
+- Path: synthD_2_009.ogg
+- Path: synthD_2_010.ogg
+- Path: synthD_2_011.ogg
+- Path: synthD_2_011.ogg
+- Path: synthD_2_011.ogg
+- Path: synthD_2_011.ogg
+- Path: synthD_2_012.ogg
+- Path: synthD_2_013.ogg
+- Path: synthE_001.ogg
+- Path: synthE_002.ogg
+- Path: synthE_003.ogg
+- Path: synthE_004.ogg
+- Path: synthE_005.ogg
+- Path: synthD_fil_000.ogg
+- Path: synthD_fil_001.ogg
+- Path: synthD_fil_002.ogg
+- Path: synthD_fil_003.ogg
+- Path: synthD_fil_004.ogg
+- Path: synthD_fil_005.ogg
+- Path: synthD_fil_006.ogg
+- Path: synthD_fil_007.ogg
+- Path: synthD_fil_008.ogg
+- Path: synthD_fil_009.ogg
+- Path: synthD_fil_010.ogg
+- Path: synthD_fil_011.ogg
+- Path: synthD_fil_012.ogg
+- Path: synthD_fil_013.ogg
+- Path: synthD_fil_014.ogg
+- Path: synthD_fil_015.ogg
+- Path: synthD_fil_016.ogg
+- Path: synthD_fil_017.ogg
+- Path: synthD_fil_018.ogg
+- Path: synthD_fil_019.ogg
+- Path: synthD_fil_020.ogg
+- Path: synthD_fil_021.ogg
+- Path: synthD_fil_022.ogg
+- Path: synthD_fil_023.ogg
+- Path: synthD_fil_024.ogg
+- Path: synthD_fil_025.ogg
+- Path: synthD_fil_026.ogg
+- Path: synthD_fil_027.ogg
+- Path: synthD_fil_028.ogg
+- Path: synthD_fil_029.ogg
+- Path: synthD_fil_030.ogg
+- Path: synthD_fil_031.ogg
+- Path: synthD_fil_032.ogg
+- Path: synthD_fil_033.ogg
+- Path: synthD_fil_034.ogg
+- Path: synthD_fil_035.ogg
+- Path: synthD_fil_036.ogg
+- Path: synthD_fil_037.ogg
+- Path: synthD_fil_038.ogg
+- Path: synthD_fil_039.ogg
+- Path: synthD_fil_040.ogg
+- Path: synthD_fil_041.ogg
+- Path: synthD_fil_042.ogg
+- Path: synthD_fil_043.ogg
+- Path: synthD_fil_044.ogg
+- Path: synthD_fil_045.ogg
+- Path: synthD_fil_046.ogg
+- Path: synthD_fil_047.ogg
+- Path: synthD_fil_048.ogg
+- Path: synthD_fil_049.ogg
+- Path: synthD_fil_050.ogg
+- Path: synthD_fil_051.ogg
+- Path: synthD_fil_052.ogg
+- Path: synthD_fil_053.ogg
+- Path: synthD_fil_054.ogg
+- Path: synthD_fil_055.ogg
+- Path: synthD_fil_056.ogg
+- Path: synthD_fil_057.ogg
+- Path: synthD_fil_058.ogg
+- Path: synthD_fil_059.ogg
+- Path: synthD_fil_060.ogg
+- Path: synthD_fil_061.ogg
+- Path: synthD_fil_062.ogg
+- Path: synthD_fil_063.ogg
+- Path: synthD_fil_064.ogg
+- Path: synthD_fil_065.ogg
+- Path: synthD_fil_066.ogg
+- Path: synthD_fil_067.ogg
+- Path: synthD_fil_068.ogg
+- Path: synthD_fil_069.ogg
+- Path: synthD_fil_070.ogg
+- Path: synthD_fil_071.ogg
+- Path: synthD_fil_072.ogg
+- Path: synthD_fil_073.ogg
+- Path: synthD_fil_074.ogg
+- Path: synthD_fil_075.ogg
+- Path: synthD_fil_076.ogg
+- Path: synthD_fil_077.ogg
+- Path: synthF_1_001.ogg
+- Path: synthF_1_002.ogg
+- Path: synthF_1_003.ogg
+- Path: synthF_1_004.ogg
+- Path: synthF_1_005.ogg
+- Path: synthF_1_006.ogg
+- Path: synthF_1_007.ogg
+- Path: synthF_1_008.ogg
+- Path: synthF_1_009.ogg
+- Path: synthF_1_009.ogg
+- Path: synthF_1_010.ogg
+- Path: synthF_1_011.ogg
+- Path: synthF_1_012.ogg
+- Path: synthF_1_013.ogg
+- Path: synthF_1_014.ogg
+- Path: synthF_2_001.ogg
+- Path: synthF_2_002.ogg
+- Path: synthF_2_002.ogg
+- Path: synthF_2_003.ogg
+- Path: synthF_2_003.ogg
+- Path: synthF_2_004.ogg
+- Path: synthF_2_005.ogg
+- Path: synthF_2_005.ogg
+- Path: synthF_2_006.ogg
+- Path: synthF_2_007.ogg
+- Path: synthF_2_007.ogg
+- Path: synthF_2_008.ogg
+- Path: synthF_2_008.ogg
+- Path: synthF_2_008.ogg
+- Path: synthF_2_009.ogg
+- Path: synthF_3_001.ogg
+- Path: synthF_3_001.ogg
+- Path: synthF_3_002.ogg
+- Path: synthF_3_003.ogg
+- Path: synthF_3_003.ogg
+- Path: synthF_3_004.ogg
+- Path: synthF_3_005.ogg
+- Path: synthF_3_006.ogg
+- Path: synthF_3_007.ogg
+- Path: synthF_3_007.ogg
+- Path: synthF_3_008.ogg
+- Path: synthF_3_009.ogg
+- Path: synthF_3_010.ogg
+- Path: synthF_3_011.ogg
+- Path: fil_break_001.ogg
+- Path: fil_break_002.ogg
+- Path: fil_break_003.ogg
+- Path: fil_break_004.ogg
+- Path: fil_break_005.ogg
+- Path: fil_break_006.ogg
+- Path: fil_break_007.ogg
+- Path: fil_break_008.ogg
+- Path: fil_break_009.ogg
+- Path: fil_break_010.ogg
+- Path: pianoA_001.ogg
+- Path: pianoA_002.ogg
+- Path: pianoA_002.ogg
+- Path: pianoA_003.ogg
+- Path: pianoA_003.ogg
+- Path: pianoA_004.ogg
+- Path: pianoA_005.ogg
+- Path: pianoA_005.ogg
+- Path: pianoA_006.ogg
+- Path: pianoA_006.ogg
+- Path: pianoA_007.ogg
+- Path: pianoA_008.ogg
+- Path: pianoA_008.ogg
+- Path: pianoA_009.ogg
+- Path: pianoA_010.ogg
+- Path: pianoA_011.ogg
+- Path: pianoA_011.ogg
+- Path: pianoA_012.ogg
+- Path: pianoA_013.ogg
+- Path: pianoA_014.ogg
+- Path: pianoA_015.ogg
+- Path: pianoB_001.ogg
+- Path: pianoB_002.ogg
+- Path: pianoB_002.ogg
+- Path: pianoB_003.ogg
+- Path: pianoB_003.ogg
+- Path: pianoB_004.ogg
+- Path: pianoB_004.ogg
+- Path: pianoB_005.ogg
+- Path: pianoB_005.ogg
+- Path: pianoB_006.ogg
+- Path: pianoB_006.ogg
+- Path: pianoB_007.ogg
+- Path: pianoB_008.ogg
+- Path: pianoB_008.ogg
+- Path: pianoB_009.ogg
+- Path: pianoB_009.ogg
+- Path: pianoB_010.ogg
+- Path: pianoB_011.ogg
+- Path: pianoB_011.ogg
+- Path: pianoB_012.ogg
+- Path: pianoB_013.ogg
+- Path: pianoB_014.ogg
+- Path: pianoB_015.ogg
+- Path: pianoB_016.ogg
+- Path: pianoB_016.ogg
+- Path: pianoB_017.ogg
+- Path: pianoB_018.ogg
+- Path: guitarA_001.ogg
+- Path: guitarA_002.ogg
+- Path: guitarA_002.ogg
+- Path: guitarA_003.ogg
+- Path: guitarA_004.ogg
+- Path: guitarA_005.ogg
+- Path: guitarA_006.ogg
+- Path: guitarA_007.ogg
+- Path: guitarA_007.ogg
+- Path: guitarA_008.ogg
+- Path: guitarA_008.ogg
+- Path: guitarA_009.ogg
+- Path: guitarA_010.ogg
+- Path: guitarA_011.ogg
+- Path: guitarA_012.ogg
+- Path: guitarA_013.ogg
+- Path: guitarA_014.ogg
+- Path: guitarA_015.ogg
+- Path: guitarA_016.ogg
+- Path: guitarA_017.ogg
+- Path: guitarA_018.ogg
+- Path: guitarA_019.ogg
+- Path: guitarA_020.ogg
+- Path: guitarA_021.ogg
+- Path: guitarA_022.ogg
+- Path: guitarA_023.ogg
+- Path: guitarA_024.ogg
+- Path: guitarA_025.ogg
+- Path: guitarA_026.ogg
+- Path: guitarA_027.ogg
+- Path: guitarA_028.ogg
+- Path: guitarA_029.ogg
+- Path: guitarA_030.ogg
+- Path: guitarA_031.ogg
+- Path: guitarA_031.ogg
+- Path: guitarA_032.ogg
+- Path: guitarA_033.ogg
+- Path: guitarA_034.ogg
+- Path: guitarA_035.ogg
+- Path: guitarA_036.ogg
+- Path: guitarB_001.ogg
+- Path: guitarB_002.ogg
+- Path: guitarB_003.ogg
+- Path: guitarB_004.ogg
+- Path: guitarB_005.ogg
+- Path: guitarB_006.ogg
+- Path: guitarB_007.ogg
+- Path: guitarB_008.ogg
+- Path: guitarB_009.ogg
+- Path: guitarB_010.ogg
+- Path: guitarB_010.ogg
+- Path: guitarB_011.ogg
+- Path: guitarB_011.ogg
+- Path: guitarB_012.ogg
+- Path: guitarB_013.ogg
+- Path: guitarB_013.ogg
+- Path: guitarB_014.ogg
+- Path: guitarB_015.ogg
+- Path: guitarB_016.ogg
+- Path: guitarB_017.ogg
+- Path: guitarB_018.ogg
+- Path: guitarB_019.ogg
+- Path: guitarB_020.ogg
+- Path: guitarB_021.ogg
+- Path: guitarB_022.ogg
+- Path: guitarB_023.ogg
+- Path: guitarB_024.ogg
+- Path: guitarB_025.ogg
+- Path: guitarB_026.ogg
+- Path: guitarB_027.ogg
+- Path: synthG_000.ogg
+- Path: synthG_001.ogg
+- Path: synthG_002.ogg
+- Path: synthG_003.ogg
+- Path: synthG_004.ogg
+- Path: synthG_005.ogg
+- Path: synthG_006.ogg
+- Path: synthG_007.ogg
+- Path: synthG_008.ogg
+- Path: synthG_009.ogg
+- Path: synthG_010.ogg
+- Path: synthG_011.ogg
+- Path: synthG_012.ogg
+- Path: synthG_013.ogg
+- Path: synthG_014.ogg
+- Path: synthG_015.ogg
+- Path: synthG_016.ogg
+- Path: synthG_017.ogg
+- Path: synthG_018.ogg
+- Path: synthG_019.ogg
+- Path: synthG_022.ogg
+- Path: synthG_023.ogg
+- Path: synthG_024.ogg
+- Path: synthG_025.ogg
+- Path: synthG_026.ogg
+- Path: synthG_027.ogg
+- Path: synthG_028.ogg
+- Path: synthG_029.ogg
+- Path: synthG_030.ogg
+- Path: synthG_031.ogg
+- Path: synthG_032.ogg
+- Path: synthG_033.ogg
+- Path: synthG_034.ogg
+- Path: synthG_035.ogg
+- Path: synthG_036.ogg
+- Path: synthG_037.ogg
+- Path: synthG_038.ogg
+- Path: synthG_039.ogg
+- Path: synthG_040.ogg
+- Path: synthG_041.ogg
+- Path: synthG_042.ogg
+- Path: synthG_043.ogg
+- Path: synthG_044.ogg
+- Path: synthG_045.ogg
+- Path: synthG_046.ogg
+- Path: synthG_047.ogg
+- Path: synthG_048.ogg
+- Path: synthG_049.ogg
+- Path: synthG_050.ogg
+- Path: synthG_051.ogg
+- Path: synthG_052.ogg
+- Path: synthH_001.ogg
+- Path: synthH_001.ogg
+- Path: synthH_001.ogg
+- Path: synthH_002.ogg
+- Path: synthH_002.ogg
+- Path: synthH_003.ogg
+- Path: synthH_003.ogg
+- Path: synthH_003.ogg
+- Path: synthH_004.ogg
+- Path: synthH_004.ogg
+- Path: synthH_004.ogg
+- Path: synthH_005.ogg
+- Path: synthH_005.ogg
+- Path: synthH_006.ogg
+- Path: synthH_006.ogg
+- Path: synthH_007.ogg
+- Path: synthH_008.ogg
+- Path: synthH_008.ogg
+- Path: synthH_009.ogg
+- Path: synthH_010.ogg
+- Path: synthH_011.ogg
+- Path: synthH_012.ogg
+- Path: fx_mcm_synthE_001.ogg
+- Path: fx_mcm_synthE_002.ogg
+- Path: fx_mcm_synthE_003.ogg
+- Path: fx_noise_synthE_001.ogg
+- Path: fx_noise_synthE_002.ogg
+SoundEffects:
+- StartTime: 1889
+  Sample: 1
+- StartTime: 1889
+  Sample: 28
+- StartTime: 2047
+  Sample: 7
+- StartTime: 2125
+  Sample: 6
+- StartTime: 2125
+  Sample: 33
+- StartTime: 2125
+  Sample: 36
+- StartTime: 2283
+  Sample: 8
+- StartTime: 2283
+  Sample: 18
+- StartTime: 2362
+  Sample: 1
+- StartTime: 2480
+  Sample: 37
+- StartTime: 2598
+  Sample: 9
+- StartTime: 2598
+  Sample: 34
+- StartTime: 2716
+  Sample: 38
+- StartTime: 2755
+  Sample: 7
+- StartTime: 2834
+  Sample: 1
+- StartTime: 2992
+  Sample: 7
+- StartTime: 3070
+  Sample: 6
+- StartTime: 3070
+  Sample: 21
+- StartTime: 3070
+  Sample: 33
+- StartTime: 3070
+  Sample: 36
+- StartTime: 3307
+  Sample: 1
+- StartTime: 3464
+  Sample: 8
+- StartTime: 3543
+  Sample: 9
+- StartTime: 3543
+  Sample: 34
+- StartTime: 3543
+  Sample: 37
+- StartTime: 3543
+  Sample: 19
+- StartTime: 3661
+  Sample: 20
+- StartTime: 3700
+  Sample: 8
+- StartTime: 3779
+  Sample: 1
+- StartTime: 3937
+  Sample: 7
+- StartTime: 4015
+  Sample: 6
+- StartTime: 4015
+  Sample: 33
+- StartTime: 4015
+  Sample: 38
+- StartTime: 4173
+  Sample: 8
+- StartTime: 4173
+  Sample: 18
+- StartTime: 4251
+  Sample: 1
+- StartTime: 4370
+  Sample: 36
+- StartTime: 4488
+  Sample: 9
+- StartTime: 4488
+  Sample: 34
+- StartTime: 4606
+  Sample: 37
+- StartTime: 4645
+  Sample: 7
+- StartTime: 4724
+  Sample: 1
+- StartTime: 4881
+  Sample: 7
+- StartTime: 4960
+  Sample: 10
+- StartTime: 4960
+  Sample: 21
+- StartTime: 4960
+  Sample: 33
+- StartTime: 4960
+  Sample: 38
+- StartTime: 4960
+  Sample: 19
+- StartTime: 5196
+  Sample: 1
+- StartTime: 5314
+  Sample: 36
+- StartTime: 5354
+  Sample: 8
+- StartTime: 5433
+  Sample: 6
+- StartTime: 5433
+  Sample: 35
+- StartTime: 5433
+  Sample: 20
+- StartTime: 5590
+  Sample: 8
+- StartTime: 5669
+  Sample: 1
+- StartTime: 5826
+  Sample: 7
+- StartTime: 5905
+  Sample: 6
+- StartTime: 5905
+  Sample: 33
+- StartTime: 5905
+  Sample: 37
+- StartTime: 6062
+  Sample: 8
+- StartTime: 6062
+  Sample: 18
+- StartTime: 6141
+  Sample: 1
+- StartTime: 6259
+  Sample: 38
+- StartTime: 6377
+  Sample: 9
+- StartTime: 6377
+  Sample: 34
+- StartTime: 6496
+  Sample: 36
+- StartTime: 6535
+  Sample: 7
+- StartTime: 6614
+  Sample: 1
+- StartTime: 6771
+  Sample: 7
+- StartTime: 6850
+  Sample: 6
+- StartTime: 6850
+  Sample: 21
+- StartTime: 6850
+  Sample: 33
+- StartTime: 6850
+  Sample: 37
+- StartTime: 7086
+  Sample: 1
+- StartTime: 7244
+  Sample: 8
+- StartTime: 7322
+  Sample: 9
+- StartTime: 7322
+  Sample: 34
+- StartTime: 7322
+  Sample: 38
+- StartTime: 7322
+  Sample: 19
+- StartTime: 7440
+  Sample: 20
+- StartTime: 7480
+  Sample: 8
+- StartTime: 7559
+  Sample: 1
+- StartTime: 7716
+  Sample: 7
+- StartTime: 7795
+  Sample: 6
+- StartTime: 7795
+  Sample: 33
+- StartTime: 7795
+  Sample: 36
+- StartTime: 7952
+  Sample: 8
+- StartTime: 7952
+  Sample: 18
+- StartTime: 8031
+  Sample: 1
+- StartTime: 8149
+  Sample: 37
+- StartTime: 8267
+  Sample: 9
+- StartTime: 8267
+  Sample: 34
+- StartTime: 8385
+  Sample: 38
+- StartTime: 8425
+  Sample: 7
+- StartTime: 8503
+  Sample: 1
+- StartTime: 8661
+  Sample: 7
+- StartTime: 8740
+  Sample: 10
+- StartTime: 8740
+  Sample: 21
+- StartTime: 8740
+  Sample: 33
+- StartTime: 8740
+  Sample: 36
+- StartTime: 8740
+  Sample: 19
+- StartTime: 8976
+  Sample: 1
+- StartTime: 9094
+  Sample: 37
+- StartTime: 9133
+  Sample: 8
+- StartTime: 9212
+  Sample: 6
+- StartTime: 9212
+  Sample: 35
+- StartTime: 9212
+  Sample: 20
+- StartTime: 9370
+  Sample: 8
+- StartTime: 9448
+  Sample: 1
+- StartTime: 9606
+  Sample: 7
+- StartTime: 9685
+  Sample: 6
+- StartTime: 9685
+  Sample: 33
+- StartTime: 9685
+  Sample: 38
+- StartTime: 9842
+  Sample: 8
+- StartTime: 9842
+  Sample: 18
+- StartTime: 9921
+  Sample: 1
+- StartTime: 10039
+  Sample: 36
+- StartTime: 10157
+  Sample: 9
+- StartTime: 10157
+  Sample: 34
+- StartTime: 10275
+  Sample: 37
+- StartTime: 10314
+  Sample: 7
+- StartTime: 10393
+  Sample: 1
+- StartTime: 10551
+  Sample: 7
+- StartTime: 10629
+  Sample: 6
+- StartTime: 10629
+  Sample: 21
+- StartTime: 10629
+  Sample: 33
+- StartTime: 10629
+  Sample: 38
+- StartTime: 10866
+  Sample: 1
+- StartTime: 11023
+  Sample: 8
+- StartTime: 11102
+  Sample: 9
+- StartTime: 11102
+  Sample: 34
+- StartTime: 11102
+  Sample: 36
+- StartTime: 11102
+  Sample: 19
+- StartTime: 11220
+  Sample: 20
+- StartTime: 11259
+  Sample: 8
+- StartTime: 11338
+  Sample: 1
+- StartTime: 11496
+  Sample: 7
+- StartTime: 11574
+  Sample: 6
+- StartTime: 11574
+  Sample: 33
+- StartTime: 11574
+  Sample: 38
+- StartTime: 11732
+  Sample: 8
+- StartTime: 11732
+  Sample: 18
+- StartTime: 11811
+  Sample: 1
+- StartTime: 11929
+  Sample: 36
+- StartTime: 12047
+  Sample: 9
+- StartTime: 12047
+  Sample: 34
+- StartTime: 12165
+  Sample: 37
+- StartTime: 12204
+  Sample: 7
+- StartTime: 12283
+  Sample: 1
+- StartTime: 12440
+  Sample: 7
+- StartTime: 12519
+  Sample: 10
+- StartTime: 12519
+  Sample: 21
+- StartTime: 12519
+  Sample: 33
+- StartTime: 12519
+  Sample: 38
+- StartTime: 12519
+  Sample: 19
+- StartTime: 12755
+  Sample: 1
+- StartTime: 12874
+  Sample: 36
+- StartTime: 12913
+  Sample: 8
+- StartTime: 12992
+  Sample: 6
+- StartTime: 12992
+  Sample: 35
+- StartTime: 12992
+  Sample: 20
+- StartTime: 13149
+  Sample: 8
+- StartTime: 13228
+  Sample: 1
+- StartTime: 13385
+  Sample: 7
+- StartTime: 13464
+  Sample: 6
+- StartTime: 13464
+  Sample: 33
+- StartTime: 13464
+  Sample: 37
+- StartTime: 13622
+  Sample: 8
+- StartTime: 13622
+  Sample: 18
+- StartTime: 13700
+  Sample: 1
+- StartTime: 13818
+  Sample: 38
+- StartTime: 13937
+  Sample: 9
+- StartTime: 13937
+  Sample: 34
+- StartTime: 14055
+  Sample: 36
+- StartTime: 14094
+  Sample: 7
+- StartTime: 14173
+  Sample: 1
+- StartTime: 14330
+  Sample: 7
+- StartTime: 14409
+  Sample: 6
+- StartTime: 14409
+  Sample: 21
+- StartTime: 14409
+  Sample: 33
+- StartTime: 14409
+  Sample: 37
+- StartTime: 14645
+  Sample: 1
+- StartTime: 14803
+  Sample: 8
+- StartTime: 14881
+  Sample: 9
+- StartTime: 14881
+  Sample: 34
+- StartTime: 14881
+  Sample: 38
+- StartTime: 14881
+  Sample: 19
+- StartTime: 15000
+  Sample: 20
+- StartTime: 15039
+  Sample: 8
+- StartTime: 15118
+  Sample: 14
+- StartTime: 15275
+  Sample: 7
+- StartTime: 15354
+  Sample: 6
+- StartTime: 15354
+  Sample: 591
+- StartTime: 15511
+  Sample: 8
+- StartTime: 15511
+  Sample: 592
+- StartTime: 15826
+  Sample: 9
+- StartTime: 15826
+  Sample: 591
+- StartTime: 15984
+  Sample: 7
+- StartTime: 15984
+  Sample: 592
+- StartTime: 16220
+  Sample: 7
+- StartTime: 16220
+  Sample: 595
+- StartTime: 16299
+  Sample: 19
+- StartTime: 16299
+  Sample: 10
+- StartTime: 16299
+  Sample: 21
+- StartTime: 16299
+  Sample: 591
+- StartTime: 16456
+  Sample: 592
+- StartTime: 17007
+  Sample: 122
+- StartTime: 17007
+  Sample: 1
+- StartTime: 17007
+  Sample: 26
+- StartTime: 17007
+  Sample: 29
+- StartTime: 17165
+  Sample: 7
+- StartTime: 17244
+  Sample: 6
+- StartTime: 17244
+  Sample: 39
+- StartTime: 17401
+  Sample: 123
+- StartTime: 17401
+  Sample: 8
+- StartTime: 17401
+  Sample: 18
+- StartTime: 17480
+  Sample: 1
+- StartTime: 17480
+  Sample: 4
+- StartTime: 17716
+  Sample: 124
+- StartTime: 17716
+  Sample: 9
+- StartTime: 17716
+  Sample: 40
+- StartTime: 17874
+  Sample: 7
+- StartTime: 17952
+  Sample: 1
+- StartTime: 18110
+  Sample: 125
+- StartTime: 18110
+  Sample: 7
+- StartTime: 18188
+  Sample: 6
+- StartTime: 18188
+  Sample: 21
+- StartTime: 18188
+  Sample: 39
+- StartTime: 18346
+  Sample: 126
+- StartTime: 18425
+  Sample: 1
+- StartTime: 18425
+  Sample: 4
+- StartTime: 18582
+  Sample: 8
+- StartTime: 18661
+  Sample: 124
+- StartTime: 18661
+  Sample: 9
+- StartTime: 18661
+  Sample: 40
+- StartTime: 18818
+  Sample: 8
+- StartTime: 18897
+  Sample: 122
+- StartTime: 18897
+  Sample: 1
+- StartTime: 19055
+  Sample: 7
+- StartTime: 19133
+  Sample: 6
+- StartTime: 19133
+  Sample: 39
+- StartTime: 19291
+  Sample: 123
+- StartTime: 19291
+  Sample: 8
+- StartTime: 19291
+  Sample: 18
+- StartTime: 19370
+  Sample: 1
+- StartTime: 19370
+  Sample: 4
+- StartTime: 19606
+  Sample: 124
+- StartTime: 19606
+  Sample: 9
+- StartTime: 19606
+  Sample: 40
+- StartTime: 19763
+  Sample: 7
+- StartTime: 19842
+  Sample: 1
+- StartTime: 20000
+  Sample: 125
+- StartTime: 20000
+  Sample: 7
+- StartTime: 20078
+  Sample: 10
+- StartTime: 20078
+  Sample: 21
+- StartTime: 20078
+  Sample: 39
+- StartTime: 20236
+  Sample: 126
+- StartTime: 20314
+  Sample: 1
+- StartTime: 20314
+  Sample: 4
+- StartTime: 20472
+  Sample: 8
+- StartTime: 20551
+  Sample: 124
+- StartTime: 20551
+  Sample: 6
+- StartTime: 20551
+  Sample: 40
+- StartTime: 20708
+  Sample: 8
+- StartTime: 20787
+  Sample: 122
+- StartTime: 20787
+  Sample: 1
+- StartTime: 20944
+  Sample: 7
+- StartTime: 21023
+  Sample: 6
+- StartTime: 21023
+  Sample: 39
+- StartTime: 21181
+  Sample: 123
+- StartTime: 21181
+  Sample: 8
+- StartTime: 21181
+  Sample: 18
+- StartTime: 21259
+  Sample: 1
+- StartTime: 21259
+  Sample: 4
+- StartTime: 21496
+  Sample: 124
+- StartTime: 21496
+  Sample: 9
+- StartTime: 21496
+  Sample: 40
+- StartTime: 21653
+  Sample: 7
+- StartTime: 21732
+  Sample: 1
+- StartTime: 21889
+  Sample: 125
+- StartTime: 21889
+  Sample: 7
+- StartTime: 21968
+  Sample: 6
+- StartTime: 21968
+  Sample: 21
+- StartTime: 21968
+  Sample: 39
+- StartTime: 22125
+  Sample: 126
+- StartTime: 22204
+  Sample: 1
+- StartTime: 22204
+  Sample: 4
+- StartTime: 22362
+  Sample: 8
+- StartTime: 22440
+  Sample: 124
+- StartTime: 22440
+  Sample: 9
+- StartTime: 22440
+  Sample: 40
+- StartTime: 22598
+  Sample: 8
+- StartTime: 22677
+  Sample: 122
+- StartTime: 22677
+  Sample: 1
+- StartTime: 22834
+  Sample: 7
+- StartTime: 22913
+  Sample: 6
+- StartTime: 22913
+  Sample: 39
+- StartTime: 23070
+  Sample: 123
+- StartTime: 23070
+  Sample: 8
+- StartTime: 23070
+  Sample: 18
+- StartTime: 23149
+  Sample: 1
+- StartTime: 23149
+  Sample: 4
+- StartTime: 23385
+  Sample: 124
+- StartTime: 23385
+  Sample: 9
+- StartTime: 23385
+  Sample: 40
+- StartTime: 23543
+  Sample: 7
+- StartTime: 23622
+  Sample: 1
+- StartTime: 23779
+  Sample: 125
+- StartTime: 23779
+  Sample: 7
+- StartTime: 23858
+  Sample: 10
+- StartTime: 23858
+  Sample: 21
+- StartTime: 23858
+  Sample: 39
+- StartTime: 24015
+  Sample: 126
+- StartTime: 24094
+  Sample: 1
+- StartTime: 24094
+  Sample: 4
+- StartTime: 24251
+  Sample: 8
+- StartTime: 24330
+  Sample: 124
+- StartTime: 24330
+  Sample: 6
+- StartTime: 24330
+  Sample: 40
+- StartTime: 24488
+  Sample: 8
+- StartTime: 24566
+  Sample: 122
+- StartTime: 24566
+  Sample: 1
+- StartTime: 24724
+  Sample: 7
+- StartTime: 24803
+  Sample: 6
+- StartTime: 24803
+  Sample: 39
+- StartTime: 24960
+  Sample: 123
+- StartTime: 24960
+  Sample: 8
+- StartTime: 24960
+  Sample: 18
+- StartTime: 25039
+  Sample: 1
+- StartTime: 25039
+  Sample: 4
+- StartTime: 25275
+  Sample: 124
+- StartTime: 25275
+  Sample: 9
+- StartTime: 25275
+  Sample: 40
+- StartTime: 25433
+  Sample: 7
+- StartTime: 25511
+  Sample: 1
+- StartTime: 25669
+  Sample: 125
+- StartTime: 25669
+  Sample: 7
+- StartTime: 25748
+  Sample: 6
+- StartTime: 25748
+  Sample: 21
+- StartTime: 25748
+  Sample: 39
+- StartTime: 25905
+  Sample: 126
+- StartTime: 25984
+  Sample: 1
+- StartTime: 25984
+  Sample: 4
+- StartTime: 26141
+  Sample: 8
+- StartTime: 26220
+  Sample: 124
+- StartTime: 26220
+  Sample: 9
+- StartTime: 26220
+  Sample: 40
+- StartTime: 26377
+  Sample: 8
+- StartTime: 26456
+  Sample: 122
+- StartTime: 26456
+  Sample: 1
+- StartTime: 26614
+  Sample: 7
+- StartTime: 26692
+  Sample: 6
+- StartTime: 26692
+  Sample: 39
+- StartTime: 26850
+  Sample: 123
+- StartTime: 26850
+  Sample: 8
+- StartTime: 26850
+  Sample: 18
+- StartTime: 26929
+  Sample: 1
+- StartTime: 26929
+  Sample: 4
+- StartTime: 27165
+  Sample: 124
+- StartTime: 27165
+  Sample: 9
+- StartTime: 27165
+  Sample: 40
+- StartTime: 27322
+  Sample: 7
+- StartTime: 27401
+  Sample: 1
+- StartTime: 27559
+  Sample: 125
+- StartTime: 27559
+  Sample: 7
+- StartTime: 27637
+  Sample: 10
+- StartTime: 27637
+  Sample: 21
+- StartTime: 27637
+  Sample: 39
+- StartTime: 27795
+  Sample: 126
+- StartTime: 27874
+  Sample: 1
+- StartTime: 27874
+  Sample: 4
+- StartTime: 28031
+  Sample: 8
+- StartTime: 28110
+  Sample: 124
+- StartTime: 28110
+  Sample: 6
+- StartTime: 28110
+  Sample: 40
+- StartTime: 28267
+  Sample: 8
+- StartTime: 28346
+  Sample: 122
+- StartTime: 28346
+  Sample: 1
+- StartTime: 28503
+  Sample: 7
+- StartTime: 28582
+  Sample: 6
+- StartTime: 28582
+  Sample: 39
+- StartTime: 28740
+  Sample: 123
+- StartTime: 28740
+  Sample: 8
+- StartTime: 28740
+  Sample: 18
+- StartTime: 28818
+  Sample: 1
+- StartTime: 28818
+  Sample: 4
+- StartTime: 29055
+  Sample: 124
+- StartTime: 29055
+  Sample: 9
+- StartTime: 29055
+  Sample: 40
+- StartTime: 29212
+  Sample: 7
+- StartTime: 29291
+  Sample: 1
+- StartTime: 29448
+  Sample: 125
+- StartTime: 29448
+  Sample: 7
+- StartTime: 29527
+  Sample: 6
+- StartTime: 29527
+  Sample: 21
+- StartTime: 29527
+  Sample: 39
+- StartTime: 29685
+  Sample: 126
+- StartTime: 29763
+  Sample: 1
+- StartTime: 29763
+  Sample: 4
+- StartTime: 29921
+  Sample: 8
+- StartTime: 30000
+  Sample: 124
+- StartTime: 30000
+  Sample: 9
+- StartTime: 30000
+  Sample: 40
+- StartTime: 30157
+  Sample: 8
+- StartTime: 30236
+  Sample: 127
+- StartTime: 30236
+  Sample: 1
+- StartTime: 30393
+  Sample: 7
+- StartTime: 30472
+  Sample: 6
+- StartTime: 30472
+  Sample: 41
+- StartTime: 30472
+  Sample: 591
+- StartTime: 30629
+  Sample: 128
+- StartTime: 30629
+  Sample: 8
+- StartTime: 30629
+  Sample: 18
+- StartTime: 30629
+  Sample: 592
+- StartTime: 30708
+  Sample: 1
+- StartTime: 30708
+  Sample: 4
+- StartTime: 30944
+  Sample: 129
+- StartTime: 30944
+  Sample: 9
+- StartTime: 30944
+  Sample: 42
+- StartTime: 30944
+  Sample: 591
+- StartTime: 31102
+  Sample: 2
+- StartTime: 31102
+  Sample: 7
+- StartTime: 31102
+  Sample: 592
+- StartTime: 31181
+  Sample: 1
+- StartTime: 31338
+  Sample: 130
+- StartTime: 31338
+  Sample: 7
+- StartTime: 31338
+  Sample: 595
+- StartTime: 31417
+  Sample: 2
+- StartTime: 31417
+  Sample: 10
+- StartTime: 31417
+  Sample: 21
+- StartTime: 31417
+  Sample: 43
+- StartTime: 31417
+  Sample: 591
+- StartTime: 31574
+  Sample: 131
+- StartTime: 31574
+  Sample: 592
+- StartTime: 31653
+  Sample: 4
+- StartTime: 31811
+  Sample: 1
+- StartTime: 31811
+  Sample: 8
+- StartTime: 31811
+  Sample: 597
+- StartTime: 31889
+  Sample: 129
+- StartTime: 31889
+  Sample: 6
+- StartTime: 31889
+  Sample: 44
+- StartTime: 31889
+  Sample: 598
+- StartTime: 32047
+  Sample: 8
+- StartTime: 32047
+  Sample: 599
+- StartTime: 32125
+  Sample: 122
+- StartTime: 32125
+  Sample: 1
+- StartTime: 32125
+  Sample: 223
+- StartTime: 32125
+  Sample: 199
+- StartTime: 32125
+  Sample: 30
+- StartTime: 32125
+  Sample: 27
+- StartTime: 32283
+  Sample: 7
+- StartTime: 32362
+  Sample: 9
+- StartTime: 32362
+  Sample: 39
+- StartTime: 32480
+  Sample: 224
+- StartTime: 32480
+  Sample: 200
+- StartTime: 32519
+  Sample: 135
+- StartTime: 32519
+  Sample: 8
+- StartTime: 32519
+  Sample: 18
+- StartTime: 32598
+  Sample: 1
+- StartTime: 32598
+  Sample: 4
+- StartTime: 32834
+  Sample: 124
+- StartTime: 32834
+  Sample: 9
+- StartTime: 32834
+  Sample: 40
+- StartTime: 32834
+  Sample: 225
+- StartTime: 32834
+  Sample: 201
+- StartTime: 32992
+  Sample: 7
+- StartTime: 33070
+  Sample: 1
+- StartTime: 33188
+  Sample: 226
+- StartTime: 33188
+  Sample: 202
+- StartTime: 33228
+  Sample: 125
+- StartTime: 33228
+  Sample: 7
+- StartTime: 33307
+  Sample: 9
+- StartTime: 33307
+  Sample: 21
+- StartTime: 33307
+  Sample: 39
+- StartTime: 33464
+  Sample: 136
+- StartTime: 33543
+  Sample: 1
+- StartTime: 33543
+  Sample: 4
+- StartTime: 33543
+  Sample: 229
+- StartTime: 33543
+  Sample: 203
+- StartTime: 33700
+  Sample: 137
+- StartTime: 33700
+  Sample: 8
+- StartTime: 33779
+  Sample: 127
+- StartTime: 33779
+  Sample: 9
+- StartTime: 33779
+  Sample: 40
+- StartTime: 33779
+  Sample: 230
+- StartTime: 33779
+  Sample: 205
+- StartTime: 33937
+  Sample: 8
+- StartTime: 34015
+  Sample: 1
+- StartTime: 34015
+  Sample: 223
+- StartTime: 34015
+  Sample: 199
+- StartTime: 34173
+  Sample: 122
+- StartTime: 34173
+  Sample: 7
+- StartTime: 34251
+  Sample: 9
+- StartTime: 34251
+  Sample: 39
+- StartTime: 34370
+  Sample: 224
+- StartTime: 34370
+  Sample: 200
+- StartTime: 34409
+  Sample: 135
+- StartTime: 34409
+  Sample: 8
+- StartTime: 34409
+  Sample: 18
+- StartTime: 34488
+  Sample: 1
+- StartTime: 34488
+  Sample: 4
+- StartTime: 34724
+  Sample: 124
+- StartTime: 34724
+  Sample: 9
+- StartTime: 34724
+  Sample: 40
+- StartTime: 34724
+  Sample: 225
+- StartTime: 34724
+  Sample: 201
+- StartTime: 34881
+  Sample: 7
+- StartTime: 34960
+  Sample: 1
+- StartTime: 35078
+  Sample: 226
+- StartTime: 35078
+  Sample: 202
+- StartTime: 35118
+  Sample: 125
+- StartTime: 35118
+  Sample: 7
+- StartTime: 35196
+  Sample: 10
+- StartTime: 35196
+  Sample: 21
+- StartTime: 35196
+  Sample: 39
+- StartTime: 35354
+  Sample: 136
+- StartTime: 35433
+  Sample: 1
+- StartTime: 35433
+  Sample: 4
+- StartTime: 35433
+  Sample: 231
+- StartTime: 35433
+  Sample: 203
+- StartTime: 35590
+  Sample: 137
+- StartTime: 35590
+  Sample: 8
+- StartTime: 35669
+  Sample: 127
+- StartTime: 35669
+  Sample: 6
+- StartTime: 35669
+  Sample: 40
+- StartTime: 35669
+  Sample: 555
+- StartTime: 35669
+  Sample: 232
+- StartTime: 35669
+  Sample: 204
+- StartTime: 35826
+  Sample: 8
+- StartTime: 35905
+  Sample: 132
+- StartTime: 35905
+  Sample: 1
+- StartTime: 35905
+  Sample: 556
+- StartTime: 35905
+  Sample: 237
+- StartTime: 35905
+  Sample: 199
+- StartTime: 36062
+  Sample: 7
+- StartTime: 36141
+  Sample: 9
+- StartTime: 36141
+  Sample: 45
+- StartTime: 36259
+  Sample: 557
+- StartTime: 36259
+  Sample: 238
+- StartTime: 36259
+  Sample: 200
+- StartTime: 36299
+  Sample: 138
+- StartTime: 36299
+  Sample: 8
+- StartTime: 36299
+  Sample: 18
+- StartTime: 36377
+  Sample: 1
+- StartTime: 36377
+  Sample: 4
+- StartTime: 36614
+  Sample: 133
+- StartTime: 36614
+  Sample: 9
+- StartTime: 36614
+  Sample: 46
+- StartTime: 36614
+  Sample: 558
+- StartTime: 36614
+  Sample: 239
+- StartTime: 36614
+  Sample: 201
+- StartTime: 36771
+  Sample: 7
+- StartTime: 36850
+  Sample: 1
+- StartTime: 36968
+  Sample: 240
+- StartTime: 36968
+  Sample: 202
+- StartTime: 37007
+  Sample: 134
+- StartTime: 37007
+  Sample: 7
+- StartTime: 37086
+  Sample: 9
+- StartTime: 37086
+  Sample: 21
+- StartTime: 37086
+  Sample: 45
+- StartTime: 37244
+  Sample: 136
+- StartTime: 37322
+  Sample: 1
+- StartTime: 37322
+  Sample: 4
+- StartTime: 37322
+  Sample: 241
+- StartTime: 37322
+  Sample: 203
+- StartTime: 37480
+  Sample: 137
+- StartTime: 37480
+  Sample: 8
+- StartTime: 37559
+  Sample: 132
+- StartTime: 37559
+  Sample: 9
+- StartTime: 37559
+  Sample: 46
+- StartTime: 37559
+  Sample: 242
+- StartTime: 37559
+  Sample: 204
+- StartTime: 37716
+  Sample: 8
+- StartTime: 37795
+  Sample: 1
+- StartTime: 37795
+  Sample: 231
+- StartTime: 37795
+  Sample: 199
+- StartTime: 37952
+  Sample: 127
+- StartTime: 37952
+  Sample: 7
+- StartTime: 38031
+  Sample: 9
+- StartTime: 38031
+  Sample: 41
+- StartTime: 38149
+  Sample: 232
+- StartTime: 38149
+  Sample: 200
+- StartTime: 38188
+  Sample: 139
+- StartTime: 38188
+  Sample: 8
+- StartTime: 38188
+  Sample: 18
+- StartTime: 38267
+  Sample: 1
+- StartTime: 38267
+  Sample: 4
+- StartTime: 38503
+  Sample: 129
+- StartTime: 38503
+  Sample: 9
+- StartTime: 38503
+  Sample: 42
+- StartTime: 38503
+  Sample: 551
+- StartTime: 38503
+  Sample: 233
+- StartTime: 38503
+  Sample: 201
+- StartTime: 38661
+  Sample: 7
+- StartTime: 38740
+  Sample: 1
+- StartTime: 38858
+  Sample: 234
+- StartTime: 38858
+  Sample: 205
+- StartTime: 38897
+  Sample: 130
+- StartTime: 38897
+  Sample: 7
+- StartTime: 38976
+  Sample: 10
+- StartTime: 38976
+  Sample: 21
+- StartTime: 38976
+  Sample: 43
+- StartTime: 38976
+  Sample: 559
+- StartTime: 39133
+  Sample: 136
+- StartTime: 39212
+  Sample: 1
+- StartTime: 39212
+  Sample: 4
+- StartTime: 39212
+  Sample: 235
+- StartTime: 39212
+  Sample: 206
+- StartTime: 39370
+  Sample: 137
+- StartTime: 39370
+  Sample: 8
+- StartTime: 39448
+  Sample: 127
+- StartTime: 39448
+  Sample: 6
+- StartTime: 39448
+  Sample: 44
+- StartTime: 39448
+  Sample: 553
+- StartTime: 39448
+  Sample: 236
+- StartTime: 39448
+  Sample: 207
+- StartTime: 39606
+  Sample: 8
+- StartTime: 39685
+  Sample: 122
+- StartTime: 39685
+  Sample: 1
+- StartTime: 39685
+  Sample: 223
+- StartTime: 39685
+  Sample: 199
+- StartTime: 39842
+  Sample: 7
+- StartTime: 39921
+  Sample: 9
+- StartTime: 39921
+  Sample: 39
+- StartTime: 40039
+  Sample: 224
+- StartTime: 40039
+  Sample: 200
+- StartTime: 40078
+  Sample: 135
+- StartTime: 40078
+  Sample: 8
+- StartTime: 40078
+  Sample: 18
+- StartTime: 40157
+  Sample: 1
+- StartTime: 40157
+  Sample: 4
+- StartTime: 40393
+  Sample: 124
+- StartTime: 40393
+  Sample: 9
+- StartTime: 40393
+  Sample: 40
+- StartTime: 40393
+  Sample: 552
+- StartTime: 40393
+  Sample: 225
+- StartTime: 40393
+  Sample: 201
+- StartTime: 40551
+  Sample: 7
+- StartTime: 40629
+  Sample: 1
+- StartTime: 40748
+  Sample: 226
+- StartTime: 40748
+  Sample: 202
+- StartTime: 40787
+  Sample: 125
+- StartTime: 40787
+  Sample: 7
+- StartTime: 40866
+  Sample: 9
+- StartTime: 40866
+  Sample: 21
+- StartTime: 40866
+  Sample: 39
+- StartTime: 41023
+  Sample: 136
+- StartTime: 41102
+  Sample: 1
+- StartTime: 41102
+  Sample: 4
+- StartTime: 41102
+  Sample: 229
+- StartTime: 41102
+  Sample: 203
+- StartTime: 41259
+  Sample: 137
+- StartTime: 41259
+  Sample: 8
+- StartTime: 41338
+  Sample: 127
+- StartTime: 41338
+  Sample: 9
+- StartTime: 41338
+  Sample: 40
+- StartTime: 41338
+  Sample: 230
+- StartTime: 41338
+  Sample: 205
+- StartTime: 41496
+  Sample: 8
+- StartTime: 41574
+  Sample: 1
+- StartTime: 41574
+  Sample: 223
+- StartTime: 41574
+  Sample: 199
+- StartTime: 41732
+  Sample: 122
+- StartTime: 41732
+  Sample: 7
+- StartTime: 41811
+  Sample: 9
+- StartTime: 41811
+  Sample: 39
+- StartTime: 41929
+  Sample: 224
+- StartTime: 41929
+  Sample: 200
+- StartTime: 41968
+  Sample: 135
+- StartTime: 41968
+  Sample: 8
+- StartTime: 41968
+  Sample: 18
+- StartTime: 42047
+  Sample: 1
+- StartTime: 42047
+  Sample: 4
+- StartTime: 42283
+  Sample: 124
+- StartTime: 42283
+  Sample: 9
+- StartTime: 42283
+  Sample: 40
+- StartTime: 42283
+  Sample: 225
+- StartTime: 42283
+  Sample: 201
+- StartTime: 42440
+  Sample: 7
+- StartTime: 42519
+  Sample: 1
+- StartTime: 42637
+  Sample: 226
+- StartTime: 42637
+  Sample: 202
+- StartTime: 42677
+  Sample: 125
+- StartTime: 42677
+  Sample: 7
+- StartTime: 42755
+  Sample: 10
+- StartTime: 42755
+  Sample: 21
+- StartTime: 42755
+  Sample: 39
+- StartTime: 42913
+  Sample: 136
+- StartTime: 42992
+  Sample: 1
+- StartTime: 42992
+  Sample: 4
+- StartTime: 42992
+  Sample: 231
+- StartTime: 42992
+  Sample: 203
+- StartTime: 43149
+  Sample: 137
+- StartTime: 43149
+  Sample: 8
+- StartTime: 43228
+  Sample: 127
+- StartTime: 43228
+  Sample: 6
+- StartTime: 43228
+  Sample: 40
+- StartTime: 43228
+  Sample: 232
+- StartTime: 43228
+  Sample: 204
+- StartTime: 43385
+  Sample: 8
+- StartTime: 43464
+  Sample: 132
+- StartTime: 43464
+  Sample: 1
+- StartTime: 43464
+  Sample: 560
+- StartTime: 43464
+  Sample: 237
+- StartTime: 43464
+  Sample: 199
+- StartTime: 43622
+  Sample: 7
+- StartTime: 43700
+  Sample: 9
+- StartTime: 43700
+  Sample: 45
+- StartTime: 43818
+  Sample: 238
+- StartTime: 43818
+  Sample: 200
+- StartTime: 43858
+  Sample: 138
+- StartTime: 43858
+  Sample: 8
+- StartTime: 43858
+  Sample: 18
+- StartTime: 43937
+  Sample: 1
+- StartTime: 43937
+  Sample: 4
+- StartTime: 44173
+  Sample: 133
+- StartTime: 44173
+  Sample: 9
+- StartTime: 44173
+  Sample: 46
+- StartTime: 44173
+  Sample: 239
+- StartTime: 44173
+  Sample: 201
+- StartTime: 44330
+  Sample: 7
+- StartTime: 44409
+  Sample: 1
+- StartTime: 44409
+  Sample: 558
+- StartTime: 44527
+  Sample: 240
+- StartTime: 44527
+  Sample: 202
+- StartTime: 44566
+  Sample: 134
+- StartTime: 44566
+  Sample: 7
+- StartTime: 44645
+  Sample: 9
+- StartTime: 44645
+  Sample: 21
+- StartTime: 44645
+  Sample: 45
+- StartTime: 44803
+  Sample: 136
+- StartTime: 44881
+  Sample: 1
+- StartTime: 44881
+  Sample: 4
+- StartTime: 44881
+  Sample: 241
+- StartTime: 44881
+  Sample: 203
+- StartTime: 45039
+  Sample: 137
+- StartTime: 45039
+  Sample: 8
+- StartTime: 45118
+  Sample: 132
+- StartTime: 45118
+  Sample: 9
+- StartTime: 45118
+  Sample: 46
+- StartTime: 45118
+  Sample: 559
+- StartTime: 45118
+  Sample: 242
+- StartTime: 45118
+  Sample: 204
+- StartTime: 45275
+  Sample: 8
+- StartTime: 45354
+  Sample: 14
+- StartTime: 45354
+  Sample: 323
+- StartTime: 45354
+  Sample: 590
+- StartTime: 45354
+  Sample: 377
+- StartTime: 45354
+  Sample: 371
+- StartTime: 45511
+  Sample: 161
+- StartTime: 45511
+  Sample: 7
+- StartTime: 45590
+  Sample: 591
+- StartTime: 45590
+  Sample: 6
+- StartTime: 45590
+  Sample: 324
+- StartTime: 45708
+  Sample: 378
+- StartTime: 45708
+  Sample: 372
+- StartTime: 45748
+  Sample: 592
+- StartTime: 45748
+  Sample: 8
+- StartTime: 45826
+  Sample: 4
+- StartTime: 45826
+  Sample: 325
+- StartTime: 45826
+  Sample: 593
+- StartTime: 46063
+  Sample: 591
+- StartTime: 46063
+  Sample: 9
+- StartTime: 46063
+  Sample: 326
+- StartTime: 46063
+  Sample: 557
+- StartTime: 46063
+  Sample: 379
+- StartTime: 46063
+  Sample: 373
+- StartTime: 46063
+  Sample: 18
+- StartTime: 46220
+  Sample: 592
+- StartTime: 46220
+  Sample: 7
+- StartTime: 46299
+  Sample: 327
+- StartTime: 46299
+  Sample: 594
+- StartTime: 46417
+  Sample: 380
+- StartTime: 46417
+  Sample: 374
+- StartTime: 46456
+  Sample: 595
+- StartTime: 46456
+  Sample: 7
+- StartTime: 46535
+  Sample: 591
+- StartTime: 46535
+  Sample: 6
+- StartTime: 46535
+  Sample: 21
+- StartTime: 46535
+  Sample: 328
+- StartTime: 46692
+  Sample: 592
+- StartTime: 46771
+  Sample: 4
+- StartTime: 46771
+  Sample: 329
+- StartTime: 46771
+  Sample: 596
+- StartTime: 46771
+  Sample: 381
+- StartTime: 46771
+  Sample: 375
+- StartTime: 46929
+  Sample: 597
+- StartTime: 46929
+  Sample: 8
+- StartTime: 47007
+  Sample: 599
+- StartTime: 47007
+  Sample: 2
+- StartTime: 47007
+  Sample: 6
+- StartTime: 47007
+  Sample: 330
+- StartTime: 47007
+  Sample: 382
+- StartTime: 47007
+  Sample: 376
+- StartTime: 47007
+  Sample: 18
+- StartTime: 47165
+  Sample: 8
+- StartTime: 47244
+  Sample: 47
+- StartTime: 47244
+  Sample: 31
+- StartTime: 47244
+  Sample: 3
+- StartTime: 47480
+  Sample: 48
+- StartTime: 47716
+  Sample: 49
+- StartTime: 47952
+  Sample: 50
+- StartTime: 48188
+  Sample: 47
+- StartTime: 48425
+  Sample: 48
+- StartTime: 48425
+  Sample: 648
+- StartTime: 48661
+  Sample: 49
+- StartTime: 48661
+  Sample: 649
+- StartTime: 48897
+  Sample: 50
+- StartTime: 48897
+  Sample: 651
+- StartTime: 49133
+  Sample: 51
+- StartTime: 49133
+  Sample: 652
+- StartTime: 49370
+  Sample: 52
+- StartTime: 49606
+  Sample: 53
+- StartTime: 49842
+  Sample: 54
+- StartTime: 49842
+  Sample: 653
+- StartTime: 50078
+  Sample: 55
+- StartTime: 50314
+  Sample: 56
+- StartTime: 50551
+  Sample: 57
+- StartTime: 50551
+  Sample: 654
+- StartTime: 50787
+  Sample: 58
+- StartTime: 50787
+  Sample: 655
+- StartTime: 51023
+  Sample: 47
+- StartTime: 51023
+  Sample: 657
+- StartTime: 51259
+  Sample: 48
+- StartTime: 51259
+  Sample: 659
+- StartTime: 51496
+  Sample: 49
+- StartTime: 51732
+  Sample: 50
+- StartTime: 51968
+  Sample: 47
+- StartTime: 52204
+  Sample: 48
+- StartTime: 52204
+  Sample: 648
+- StartTime: 52440
+  Sample: 49
+- StartTime: 52440
+  Sample: 649
+- StartTime: 52677
+  Sample: 50
+- StartTime: 52677
+  Sample: 651
+- StartTime: 52913
+  Sample: 47
+- StartTime: 52913
+  Sample: 652
+- StartTime: 53149
+  Sample: 48
+- StartTime: 53385
+  Sample: 49
+- StartTime: 53622
+  Sample: 50
+- StartTime: 53622
+  Sample: 660
+- StartTime: 53858
+  Sample: 59
+- StartTime: 54094
+  Sample: 60
+- StartTime: 54094
+  Sample: 650
+- StartTime: 54330
+  Sample: 61
+- StartTime: 54330
+  Sample: 656
+- StartTime: 54566
+  Sample: 62
+- StartTime: 54566
+  Sample: 654
+- StartTime: 54803
+  Sample: 63
+- StartTime: 54803
+  Sample: 661
+- StartTime: 55039
+  Sample: 64
+- StartTime: 55275
+  Sample: 65
+- StartTime: 55511
+  Sample: 66
+- StartTime: 55748
+  Sample: 63
+- StartTime: 55984
+  Sample: 64
+- StartTime: 55984
+  Sample: 655
+- StartTime: 56220
+  Sample: 65
+- StartTime: 56220
+  Sample: 657
+- StartTime: 56456
+  Sample: 66
+- StartTime: 56456
+  Sample: 662
+- StartTime: 56692
+  Sample: 67
+- StartTime: 56692
+  Sample: 663
+- StartTime: 56929
+  Sample: 68
+- StartTime: 57165
+  Sample: 69
+- StartTime: 57165
+  Sample: 561
+- StartTime: 57401
+  Sample: 70
+- StartTime: 57637
+  Sample: 71
+- StartTime: 57637
+  Sample: 658
+- StartTime: 57637
+  Sample: 562
+- StartTime: 57874
+  Sample: 72
+- StartTime: 57952
+  Sample: 664
+- StartTime: 57952
+  Sample: 564
+- StartTime: 58110
+  Sample: 73
+- StartTime: 58267
+  Sample: 649
+- StartTime: 58267
+  Sample: 566
+- StartTime: 58346
+  Sample: 74
+- StartTime: 58582
+  Sample: 47
+- StartTime: 58582
+  Sample: 665
+- StartTime: 58582
+  Sample: 567
+- StartTime: 58818
+  Sample: 48
+- StartTime: 58897
+  Sample: 569
+- StartTime: 59055
+  Sample: 49
+- StartTime: 59212
+  Sample: 565
+- StartTime: 59291
+  Sample: 50
+- StartTime: 59527
+  Sample: 47
+- StartTime: 59527
+  Sample: 666
+- StartTime: 59527
+  Sample: 568
+- StartTime: 59763
+  Sample: 48
+- StartTime: 59842
+  Sample: 563
+- StartTime: 60000
+  Sample: 49
+- StartTime: 60157
+  Sample: 564
+- StartTime: 60236
+  Sample: 50
+- StartTime: 60472
+  Sample: 331
+- StartTime: 60472
+  Sample: 667
+- StartTime: 60472
+  Sample: 570
+- StartTime: 60708
+  Sample: 332
+- StartTime: 60787
+  Sample: 562
+- StartTime: 60944
+  Sample: 333
+- StartTime: 61102
+  Sample: 572
+- StartTime: 61181
+  Sample: 334
+- StartTime: 61181
+  Sample: 668
+- StartTime: 61417
+  Sample: 335
+- StartTime: 61417
+  Sample: 571
+- StartTime: 61574
+  Sample: 669
+- StartTime: 61653
+  Sample: 336
+- StartTime: 61732
+  Sample: 670
+- StartTime: 61732
+  Sample: 575
+- StartTime: 61889
+  Sample: 337
+- StartTime: 61889
+  Sample: 671
+- StartTime: 62047
+  Sample: 672
+- StartTime: 62047
+  Sample: 573
+- StartTime: 62126
+  Sample: 338
+- StartTime: 62204
+  Sample: 673
+- StartTime: 62362
+  Sample: 270
+- StartTime: 62362
+  Sample: 574
+- StartTime: 62362
+  Sample: 15
+- StartTime: 62362
+  Sample: 674
+- StartTime: 62440
+  Sample: 563
+- StartTime: 62480
+  Sample: 468
+- StartTime: 62519
+  Sample: 7
+- StartTime: 62598
+  Sample: 271
+- StartTime: 62598
+  Sample: 75
+- StartTime: 62598
+  Sample: 6
+- StartTime: 62598
+  Sample: 469
+- StartTime: 62755
+  Sample: 8
+- StartTime: 62834
+  Sample: 470
+- StartTime: 62952
+  Sample: 272
+- StartTime: 63070
+  Sample: 76
+- StartTime: 63070
+  Sample: 9
+- StartTime: 63070
+  Sample: 471
+- StartTime: 63070
+  Sample: 18
+- StartTime: 63228
+  Sample: 7
+- StartTime: 63307
+  Sample: 273
+- StartTime: 63307
+  Sample: 472
+- StartTime: 63464
+  Sample: 7
+- StartTime: 63543
+  Sample: 75
+- StartTime: 63543
+  Sample: 6
+- StartTime: 63543
+  Sample: 21
+- StartTime: 63543
+  Sample: 473
+- StartTime: 63661
+  Sample: 274
+- StartTime: 63661
+  Sample: 474
+- StartTime: 63897
+  Sample: 475
+- StartTime: 63937
+  Sample: 8
+- StartTime: 64015
+  Sample: 275
+- StartTime: 64015
+  Sample: 76
+- StartTime: 64015
+  Sample: 9
+- StartTime: 64015
+  Sample: 476
+- StartTime: 64015
+  Sample: 19
+- StartTime: 64133
+  Sample: 477
+- StartTime: 64133
+  Sample: 20
+- StartTime: 64173
+  Sample: 8
+- StartTime: 64252
+  Sample: 276
+- StartTime: 64252
+  Sample: 675
+- StartTime: 64370
+  Sample: 478
+- StartTime: 64409
+  Sample: 7
+- StartTime: 64488
+  Sample: 277
+- StartTime: 64488
+  Sample: 77
+- StartTime: 64488
+  Sample: 6
+- StartTime: 64488
+  Sample: 479
+- StartTime: 64645
+  Sample: 8
+- StartTime: 64724
+  Sample: 480
+- StartTime: 64842
+  Sample: 278
+- StartTime: 64960
+  Sample: 78
+- StartTime: 64960
+  Sample: 9
+- StartTime: 64960
+  Sample: 481
+- StartTime: 64960
+  Sample: 18
+- StartTime: 64960
+  Sample: 676
+- StartTime: 65118
+  Sample: 7
+- StartTime: 65196
+  Sample: 279
+- StartTime: 65196
+  Sample: 482
+- StartTime: 65354
+  Sample: 7
+- StartTime: 65433
+  Sample: 79
+- StartTime: 65433
+  Sample: 10
+- StartTime: 65433
+  Sample: 21
+- StartTime: 65433
+  Sample: 483
+- StartTime: 65433
+  Sample: 19
+- StartTime: 65551
+  Sample: 280
+- StartTime: 65551
+  Sample: 484
+- StartTime: 65669
+  Sample: 677
+- StartTime: 65787
+  Sample: 485
+- StartTime: 65826
+  Sample: 8
+- StartTime: 65905
+  Sample: 281
+- StartTime: 65905
+  Sample: 80
+- StartTime: 65905
+  Sample: 6
+- StartTime: 65905
+  Sample: 486
+- StartTime: 65905
+  Sample: 20
+- StartTime: 66023
+  Sample: 487
+- StartTime: 66063
+  Sample: 8
+- StartTime: 66141
+  Sample: 282
+- StartTime: 66141
+  Sample: 678
+- StartTime: 66259
+  Sample: 488
+- StartTime: 66299
+  Sample: 7
+- StartTime: 66377
+  Sample: 283
+- StartTime: 66377
+  Sample: 82
+- StartTime: 66377
+  Sample: 6
+- StartTime: 66377
+  Sample: 489
+- StartTime: 66535
+  Sample: 8
+- StartTime: 66614
+  Sample: 490
+- StartTime: 66732
+  Sample: 284
+- StartTime: 66850
+  Sample: 83
+- StartTime: 66850
+  Sample: 9
+- StartTime: 66850
+  Sample: 491
+- StartTime: 66850
+  Sample: 18
+- StartTime: 67007
+  Sample: 7
+- StartTime: 67086
+  Sample: 285
+- StartTime: 67086
+  Sample: 492
+- StartTime: 67244
+  Sample: 7
+- StartTime: 67322
+  Sample: 82
+- StartTime: 67322
+  Sample: 6
+- StartTime: 67322
+  Sample: 21
+- StartTime: 67322
+  Sample: 493
+- StartTime: 67440
+  Sample: 286
+- StartTime: 67440
+  Sample: 494
+- StartTime: 67677
+  Sample: 495
+- StartTime: 67716
+  Sample: 8
+- StartTime: 67716
+  Sample: 679
+- StartTime: 67795
+  Sample: 287
+- StartTime: 67795
+  Sample: 83
+- StartTime: 67795
+  Sample: 9
+- StartTime: 67795
+  Sample: 496
+- StartTime: 67795
+  Sample: 19
+- StartTime: 67874
+  Sample: 680
+- StartTime: 67913
+  Sample: 497
+- StartTime: 67913
+  Sample: 20
+- StartTime: 67952
+  Sample: 8
+- StartTime: 68031
+  Sample: 288
+- StartTime: 68031
+  Sample: 681
+- StartTime: 68149
+  Sample: 498
+- StartTime: 68189
+  Sample: 7
+- StartTime: 68267
+  Sample: 289
+- StartTime: 68267
+  Sample: 84
+- StartTime: 68267
+  Sample: 6
+- StartTime: 68267
+  Sample: 499
+- StartTime: 68425
+  Sample: 8
+- StartTime: 68503
+  Sample: 500
+- StartTime: 68622
+  Sample: 290
+- StartTime: 68740
+  Sample: 85
+- StartTime: 68740
+  Sample: 9
+- StartTime: 68740
+  Sample: 501
+- StartTime: 68740
+  Sample: 18
+- StartTime: 68897
+  Sample: 7
+- StartTime: 68976
+  Sample: 291
+- StartTime: 68976
+  Sample: 502
+- StartTime: 68976
+  Sample: 683
+- StartTime: 69133
+  Sample: 7
+- StartTime: 69212
+  Sample: 77
+- StartTime: 69212
+  Sample: 10
+- StartTime: 69212
+  Sample: 21
+- StartTime: 69212
+  Sample: 503
+- StartTime: 69212
+  Sample: 19
+- StartTime: 69291
+  Sample: 684
+- StartTime: 69330
+  Sample: 292
+- StartTime: 69330
+  Sample: 504
+- StartTime: 69566
+  Sample: 505
+- StartTime: 69606
+  Sample: 8
+- StartTime: 69606
+  Sample: 685
+- StartTime: 69685
+  Sample: 293
+- StartTime: 69685
+  Sample: 78
+- StartTime: 69685
+  Sample: 6
+- StartTime: 69685
+  Sample: 506
+- StartTime: 69685
+  Sample: 20
+- StartTime: 69803
+  Sample: 507
+- StartTime: 69842
+  Sample: 8
+- StartTime: 69921
+  Sample: 294
+- StartTime: 69921
+  Sample: 676
+- StartTime: 70039
+  Sample: 508
+- StartTime: 70078
+  Sample: 7
+- StartTime: 70157
+  Sample: 295
+- StartTime: 70157
+  Sample: 75
+- StartTime: 70157
+  Sample: 6
+- StartTime: 70157
+  Sample: 509
+- StartTime: 70315
+  Sample: 8
+- StartTime: 70393
+  Sample: 510
+- StartTime: 70511
+  Sample: 296
+- StartTime: 70629
+  Sample: 76
+- StartTime: 70629
+  Sample: 9
+- StartTime: 70629
+  Sample: 511
+- StartTime: 70629
+  Sample: 18
+- StartTime: 70787
+  Sample: 7
+- StartTime: 70866
+  Sample: 297
+- StartTime: 70866
+  Sample: 512
+- StartTime: 70866
+  Sample: 682
+- StartTime: 71023
+  Sample: 7
+- StartTime: 71102
+  Sample: 75
+- StartTime: 71102
+  Sample: 6
+- StartTime: 71102
+  Sample: 21
+- StartTime: 71102
+  Sample: 513
+- StartTime: 71220
+  Sample: 298
+- StartTime: 71220
+  Sample: 514
+- StartTime: 71456
+  Sample: 515
+- StartTime: 71496
+  Sample: 8
+- StartTime: 71574
+  Sample: 299
+- StartTime: 71574
+  Sample: 76
+- StartTime: 71574
+  Sample: 9
+- StartTime: 71574
+  Sample: 516
+- StartTime: 71574
+  Sample: 19
+- StartTime: 71692
+  Sample: 517
+- StartTime: 71692
+  Sample: 20
+- StartTime: 71732
+  Sample: 8
+- StartTime: 71811
+  Sample: 300
+- StartTime: 71811
+  Sample: 686
+- StartTime: 71929
+  Sample: 518
+- StartTime: 71968
+  Sample: 7
+- StartTime: 72047
+  Sample: 301
+- StartTime: 72047
+  Sample: 86
+- StartTime: 72047
+  Sample: 6
+- StartTime: 72047
+  Sample: 519
+- StartTime: 72204
+  Sample: 8
+- StartTime: 72283
+  Sample: 520
+- StartTime: 72401
+  Sample: 302
+- StartTime: 72519
+  Sample: 87
+- StartTime: 72519
+  Sample: 9
+- StartTime: 72519
+  Sample: 521
+- StartTime: 72519
+  Sample: 18
+- StartTime: 72519
+  Sample: 677
+- StartTime: 72677
+  Sample: 7
+- StartTime: 72755
+  Sample: 303
+- StartTime: 72755
+  Sample: 522
+- StartTime: 72913
+  Sample: 7
+- StartTime: 72992
+  Sample: 88
+- StartTime: 72992
+  Sample: 10
+- StartTime: 72992
+  Sample: 21
+- StartTime: 72992
+  Sample: 523
+- StartTime: 72992
+  Sample: 19
+- StartTime: 73110
+  Sample: 304
+- StartTime: 73110
+  Sample: 524
+- StartTime: 73228
+  Sample: 675
+- StartTime: 73346
+  Sample: 525
+- StartTime: 73385
+  Sample: 8
+- StartTime: 73464
+  Sample: 305
+- StartTime: 73464
+  Sample: 89
+- StartTime: 73464
+  Sample: 6
+- StartTime: 73464
+  Sample: 526
+- StartTime: 73464
+  Sample: 20
+- StartTime: 73582
+  Sample: 527
+- StartTime: 73622
+  Sample: 8
+- StartTime: 73700
+  Sample: 306
+- StartTime: 73700
+  Sample: 678
+- StartTime: 73818
+  Sample: 528
+- StartTime: 73858
+  Sample: 7
+- StartTime: 73937
+  Sample: 307
+- StartTime: 73937
+  Sample: 80
+- StartTime: 73937
+  Sample: 6
+- StartTime: 73937
+  Sample: 529
+- StartTime: 74094
+  Sample: 8
+- StartTime: 74173
+  Sample: 530
+- StartTime: 74291
+  Sample: 308
+- StartTime: 74409
+  Sample: 81
+- StartTime: 74409
+  Sample: 9
+- StartTime: 74409
+  Sample: 531
+- StartTime: 74409
+  Sample: 18
+- StartTime: 74566
+  Sample: 7
+- StartTime: 74645
+  Sample: 309
+- StartTime: 74645
+  Sample: 532
+- StartTime: 74803
+  Sample: 7
+- StartTime: 74881
+  Sample: 80
+- StartTime: 74881
+  Sample: 6
+- StartTime: 74881
+  Sample: 21
+- StartTime: 74881
+  Sample: 533
+- StartTime: 75000
+  Sample: 310
+- StartTime: 75000
+  Sample: 534
+- StartTime: 75236
+  Sample: 535
+- StartTime: 75275
+  Sample: 8
+- StartTime: 75275
+  Sample: 687
+- StartTime: 75354
+  Sample: 311
+- StartTime: 75354
+  Sample: 81
+- StartTime: 75354
+  Sample: 9
+- StartTime: 75354
+  Sample: 536
+- StartTime: 75354
+  Sample: 19
+- StartTime: 75433
+  Sample: 680
+- StartTime: 75472
+  Sample: 537
+- StartTime: 75472
+  Sample: 20
+- StartTime: 75511
+  Sample: 8
+- StartTime: 75590
+  Sample: 312
+- StartTime: 75590
+  Sample: 339
+- StartTime: 75590
+  Sample: 14
+- StartTime: 75590
+  Sample: 674
+- StartTime: 75708
+  Sample: 538
+- StartTime: 75748
+  Sample: 7
+- StartTime: 75826
+  Sample: 313
+- StartTime: 75826
+  Sample: 340
+- StartTime: 75826
+  Sample: 6
+- StartTime: 75826
+  Sample: 539
+- StartTime: 75826
+  Sample: 591
+- StartTime: 75984
+  Sample: 8
+- StartTime: 75984
+  Sample: 592
+- StartTime: 76063
+  Sample: 341
+- StartTime: 76063
+  Sample: 540
+- StartTime: 76181
+  Sample: 314
+- StartTime: 76299
+  Sample: 342
+- StartTime: 76299
+  Sample: 9
+- StartTime: 76299
+  Sample: 541
+- StartTime: 76299
+  Sample: 591
+- StartTime: 76456
+  Sample: 7
+- StartTime: 76456
+  Sample: 592
+- StartTime: 76535
+  Sample: 315
+- StartTime: 76535
+  Sample: 343
+- StartTime: 76535
+  Sample: 542
+- StartTime: 76692
+  Sample: 7
+- StartTime: 76692
+  Sample: 595
+- StartTime: 76771
+  Sample: 344
+- StartTime: 76771
+  Sample: 9
+- StartTime: 76771
+  Sample: 21
+- StartTime: 76771
+  Sample: 543
+- StartTime: 76771
+  Sample: 591
+- StartTime: 76889
+  Sample: 316
+- StartTime: 76889
+  Sample: 544
+- StartTime: 76929
+  Sample: 592
+- StartTime: 77007
+  Sample: 19
+- StartTime: 77007
+  Sample: 545
+- StartTime: 77007
+  Sample: 18
+- StartTime: 77165
+  Sample: 8
+- StartTime: 77165
+  Sample: 597
+- StartTime: 77244
+  Sample: 10
+- StartTime: 77244
+  Sample: 598
+- StartTime: 77401
+  Sample: 599
+- StartTime: 77480
+  Sample: 140
+- StartTime: 77480
+  Sample: 32
+- StartTime: 77598
+  Sample: 424
+- StartTime: 77598
+  Sample: 436
+- StartTime: 77716
+  Sample: 428
+- StartTime: 77716
+  Sample: 452
+- StartTime: 77952
+  Sample: 141
+- StartTime: 77952
+  Sample: 1
+- StartTime: 77952
+  Sample: 4
+- StartTime: 77952
+  Sample: 432
+- StartTime: 77952
+  Sample: 448
+- StartTime: 77952
+  Sample: 12
+- StartTime: 78070
+  Sample: 245
+- StartTime: 78070
+  Sample: 201
+- StartTime: 78189
+  Sample: 9
+- StartTime: 78189
+  Sample: 91
+- StartTime: 78189
+  Sample: 425
+- StartTime: 78189
+  Sample: 437
+- StartTime: 78346
+  Sample: 7
+- StartTime: 78425
+  Sample: 140
+- StartTime: 78425
+  Sample: 1
+- StartTime: 78425
+  Sample: 246
+- StartTime: 78425
+  Sample: 202
+- StartTime: 78425
+  Sample: 429
+- StartTime: 78425
+  Sample: 453
+- StartTime: 78425
+  Sample: 11
+- StartTime: 78582
+  Sample: 7
+- StartTime: 78661
+  Sample: 21
+- StartTime: 78661
+  Sample: 9
+- StartTime: 78661
+  Sample: 90
+- StartTime: 78661
+  Sample: 426
+- StartTime: 78661
+  Sample: 438
+- StartTime: 78779
+  Sample: 247
+- StartTime: 78779
+  Sample: 203
+- StartTime: 78779
+  Sample: 430
+- StartTime: 78779
+  Sample: 454
+- StartTime: 78897
+  Sample: 141
+- StartTime: 78897
+  Sample: 1
+- StartTime: 78897
+  Sample: 4
+- StartTime: 78897
+  Sample: 12
+- StartTime: 79015
+  Sample: 431
+- StartTime: 79015
+  Sample: 455
+- StartTime: 79055
+  Sample: 8
+- StartTime: 79133
+  Sample: 9
+- StartTime: 79133
+  Sample: 248
+- StartTime: 79133
+  Sample: 204
+- StartTime: 79133
+  Sample: 91
+- StartTime: 79133
+  Sample: 427
+- StartTime: 79133
+  Sample: 439
+- StartTime: 79133
+  Sample: 19
+- StartTime: 79252
+  Sample: 435
+- StartTime: 79252
+  Sample: 456
+- StartTime: 79252
+  Sample: 20
+- StartTime: 79291
+  Sample: 8
+- StartTime: 79370
+  Sample: 142
+- StartTime: 79370
+  Sample: 1
+- StartTime: 79370
+  Sample: 249
+- StartTime: 79370
+  Sample: 211
+- StartTime: 79370
+  Sample: 11
+- StartTime: 79488
+  Sample: 424
+- StartTime: 79488
+  Sample: 436
+- StartTime: 79527
+  Sample: 7
+- StartTime: 79606
+  Sample: 9
+- StartTime: 79606
+  Sample: 250
+- StartTime: 79606
+  Sample: 212
+- StartTime: 79606
+  Sample: 92
+- StartTime: 79606
+  Sample: 428
+- StartTime: 79606
+  Sample: 452
+- StartTime: 79763
+  Sample: 8
+- StartTime: 79763
+  Sample: 18
+- StartTime: 79842
+  Sample: 143
+- StartTime: 79842
+  Sample: 1
+- StartTime: 79842
+  Sample: 4
+- StartTime: 79842
+  Sample: 432
+- StartTime: 79842
+  Sample: 448
+- StartTime: 79842
+  Sample: 12
+- StartTime: 79960
+  Sample: 251
+- StartTime: 79960
+  Sample: 213
+- StartTime: 80078
+  Sample: 9
+- StartTime: 80078
+  Sample: 93
+- StartTime: 80078
+  Sample: 425
+- StartTime: 80078
+  Sample: 437
+- StartTime: 80236
+  Sample: 7
+- StartTime: 80315
+  Sample: 142
+- StartTime: 80315
+  Sample: 1
+- StartTime: 80315
+  Sample: 252
+- StartTime: 80315
+  Sample: 214
+- StartTime: 80315
+  Sample: 429
+- StartTime: 80315
+  Sample: 453
+- StartTime: 80315
+  Sample: 11
+- StartTime: 80472
+  Sample: 7
+- StartTime: 80551
+  Sample: 21
+- StartTime: 80551
+  Sample: 10
+- StartTime: 80551
+  Sample: 92
+- StartTime: 80551
+  Sample: 426
+- StartTime: 80551
+  Sample: 438
+- StartTime: 80551
+  Sample: 19
+- StartTime: 80669
+  Sample: 253
+- StartTime: 80669
+  Sample: 215
+- StartTime: 80669
+  Sample: 430
+- StartTime: 80669
+  Sample: 454
+- StartTime: 80787
+  Sample: 143
+- StartTime: 80787
+  Sample: 1
+- StartTime: 80787
+  Sample: 4
+- StartTime: 80787
+  Sample: 12
+- StartTime: 80905
+  Sample: 427
+- StartTime: 80905
+  Sample: 439
+- StartTime: 80944
+  Sample: 8
+- StartTime: 81023
+  Sample: 9
+- StartTime: 81023
+  Sample: 254
+- StartTime: 81023
+  Sample: 216
+- StartTime: 81023
+  Sample: 93
+- StartTime: 81023
+  Sample: 431
+- StartTime: 81023
+  Sample: 455
+- StartTime: 81023
+  Sample: 20
+- StartTime: 81141
+  Sample: 433
+- StartTime: 81141
+  Sample: 449
+- StartTime: 81181
+  Sample: 8
+- StartTime: 81259
+  Sample: 144
+- StartTime: 81259
+  Sample: 1
+- StartTime: 81259
+  Sample: 255
+- StartTime: 81259
+  Sample: 205
+- StartTime: 81259
+  Sample: 11
+- StartTime: 81377
+  Sample: 424
+- StartTime: 81377
+  Sample: 436
+- StartTime: 81417
+  Sample: 7
+- StartTime: 81496
+  Sample: 9
+- StartTime: 81496
+  Sample: 256
+- StartTime: 81496
+  Sample: 206
+- StartTime: 81496
+  Sample: 94
+- StartTime: 81496
+  Sample: 428
+- StartTime: 81496
+  Sample: 452
+- StartTime: 81653
+  Sample: 8
+- StartTime: 81653
+  Sample: 18
+- StartTime: 81732
+  Sample: 145
+- StartTime: 81732
+  Sample: 1
+- StartTime: 81732
+  Sample: 4
+- StartTime: 81732
+  Sample: 432
+- StartTime: 81732
+  Sample: 448
+- StartTime: 81732
+  Sample: 12
+- StartTime: 81850
+  Sample: 257
+- StartTime: 81850
+  Sample: 207
+- StartTime: 81968
+  Sample: 9
+- StartTime: 81968
+  Sample: 95
+- StartTime: 81968
+  Sample: 425
+- StartTime: 81968
+  Sample: 437
+- StartTime: 82126
+  Sample: 7
+- StartTime: 82204
+  Sample: 144
+- StartTime: 82204
+  Sample: 1
+- StartTime: 82204
+  Sample: 258
+- StartTime: 82204
+  Sample: 208
+- StartTime: 82204
+  Sample: 429
+- StartTime: 82204
+  Sample: 453
+- StartTime: 82204
+  Sample: 11
+- StartTime: 82362
+  Sample: 7
+- StartTime: 82440
+  Sample: 21
+- StartTime: 82440
+  Sample: 9
+- StartTime: 82440
+  Sample: 94
+- StartTime: 82440
+  Sample: 426
+- StartTime: 82440
+  Sample: 438
+- StartTime: 82559
+  Sample: 259
+- StartTime: 82559
+  Sample: 209
+- StartTime: 82559
+  Sample: 430
+- StartTime: 82559
+  Sample: 454
+- StartTime: 82677
+  Sample: 145
+- StartTime: 82677
+  Sample: 1
+- StartTime: 82677
+  Sample: 4
+- StartTime: 82677
+  Sample: 12
+- StartTime: 82795
+  Sample: 431
+- StartTime: 82795
+  Sample: 455
+- StartTime: 82834
+  Sample: 8
+- StartTime: 82913
+  Sample: 9
+- StartTime: 82913
+  Sample: 260
+- StartTime: 82913
+  Sample: 210
+- StartTime: 82913
+  Sample: 95
+- StartTime: 82913
+  Sample: 427
+- StartTime: 82913
+  Sample: 439
+- StartTime: 82913
+  Sample: 19
+- StartTime: 83031
+  Sample: 435
+- StartTime: 83031
+  Sample: 456
+- StartTime: 83031
+  Sample: 20
+- StartTime: 83070
+  Sample: 8
+- StartTime: 83149
+  Sample: 146
+- StartTime: 83149
+  Sample: 1
+- StartTime: 83149
+  Sample: 243
+- StartTime: 83149
+  Sample: 205
+- StartTime: 83149
+  Sample: 11
+- StartTime: 83267
+  Sample: 424
+- StartTime: 83267
+  Sample: 436
+- StartTime: 83307
+  Sample: 7
+- StartTime: 83385
+  Sample: 9
+- StartTime: 83385
+  Sample: 244
+- StartTime: 83385
+  Sample: 206
+- StartTime: 83385
+  Sample: 96
+- StartTime: 83385
+  Sample: 428
+- StartTime: 83385
+  Sample: 452
+- StartTime: 83543
+  Sample: 8
+- StartTime: 83543
+  Sample: 18
+- StartTime: 83622
+  Sample: 147
+- StartTime: 83622
+  Sample: 1
+- StartTime: 83622
+  Sample: 4
+- StartTime: 83622
+  Sample: 432
+- StartTime: 83622
+  Sample: 448
+- StartTime: 83622
+  Sample: 12
+- StartTime: 83740
+  Sample: 245
+- StartTime: 83740
+  Sample: 207
+- StartTime: 83858
+  Sample: 9
+- StartTime: 83858
+  Sample: 97
+- StartTime: 83858
+  Sample: 425
+- StartTime: 83858
+  Sample: 437
+- StartTime: 84015
+  Sample: 7
+- StartTime: 84094
+  Sample: 149
+- StartTime: 84094
+  Sample: 1
+- StartTime: 84094
+  Sample: 258
+- StartTime: 84094
+  Sample: 220
+- StartTime: 84094
+  Sample: 429
+- StartTime: 84094
+  Sample: 453
+- StartTime: 84094
+  Sample: 11
+- StartTime: 84252
+  Sample: 7
+- StartTime: 84330
+  Sample: 21
+- StartTime: 84330
+  Sample: 10
+- StartTime: 84330
+  Sample: 92
+- StartTime: 84330
+  Sample: 426
+- StartTime: 84330
+  Sample: 438
+- StartTime: 84330
+  Sample: 19
+- StartTime: 84448
+  Sample: 259
+- StartTime: 84448
+  Sample: 221
+- StartTime: 84448
+  Sample: 430
+- StartTime: 84448
+  Sample: 454
+- StartTime: 84566
+  Sample: 144
+- StartTime: 84566
+  Sample: 1
+- StartTime: 84566
+  Sample: 4
+- StartTime: 84566
+  Sample: 12
+- StartTime: 84685
+  Sample: 440
+- StartTime: 84685
+  Sample: 462
+- StartTime: 84724
+  Sample: 8
+- StartTime: 84803
+  Sample: 9
+- StartTime: 84803
+  Sample: 260
+- StartTime: 84803
+  Sample: 222
+- StartTime: 84803
+  Sample: 93
+- StartTime: 84803
+  Sample: 441
+- StartTime: 84803
+  Sample: 434
+- StartTime: 84803
+  Sample: 20
+- StartTime: 84921
+  Sample: 433
+- StartTime: 84921
+  Sample: 449
+- StartTime: 84960
+  Sample: 8
+- StartTime: 85039
+  Sample: 149
+- StartTime: 85039
+  Sample: 1
+- StartTime: 85039
+  Sample: 243
+- StartTime: 85039
+  Sample: 199
+- StartTime: 85039
+  Sample: 11
+- StartTime: 85157
+  Sample: 424
+- StartTime: 85157
+  Sample: 436
+- StartTime: 85196
+  Sample: 7
+- StartTime: 85275
+  Sample: 9
+- StartTime: 85275
+  Sample: 244
+- StartTime: 85275
+  Sample: 200
+- StartTime: 85275
+  Sample: 90
+- StartTime: 85275
+  Sample: 428
+- StartTime: 85275
+  Sample: 452
+- StartTime: 85433
+  Sample: 8
+- StartTime: 85433
+  Sample: 18
+- StartTime: 85511
+  Sample: 150
+- StartTime: 85511
+  Sample: 1
+- StartTime: 85511
+  Sample: 4
+- StartTime: 85511
+  Sample: 432
+- StartTime: 85511
+  Sample: 448
+- StartTime: 85511
+  Sample: 12
+- StartTime: 85629
+  Sample: 245
+- StartTime: 85629
+  Sample: 201
+- StartTime: 85748
+  Sample: 9
+- StartTime: 85748
+  Sample: 91
+- StartTime: 85748
+  Sample: 425
+- StartTime: 85748
+  Sample: 437
+- StartTime: 85905
+  Sample: 7
+- StartTime: 85984
+  Sample: 149
+- StartTime: 85984
+  Sample: 1
+- StartTime: 85984
+  Sample: 246
+- StartTime: 85984
+  Sample: 202
+- StartTime: 85984
+  Sample: 429
+- StartTime: 85984
+  Sample: 453
+- StartTime: 85984
+  Sample: 11
+- StartTime: 86141
+  Sample: 7
+- StartTime: 86220
+  Sample: 21
+- StartTime: 86220
+  Sample: 9
+- StartTime: 86220
+  Sample: 90
+- StartTime: 86220
+  Sample: 426
+- StartTime: 86220
+  Sample: 438
+- StartTime: 86338
+  Sample: 247
+- StartTime: 86338
+  Sample: 203
+- StartTime: 86338
+  Sample: 430
+- StartTime: 86338
+  Sample: 454
+- StartTime: 86456
+  Sample: 150
+- StartTime: 86456
+  Sample: 1
+- StartTime: 86456
+  Sample: 4
+- StartTime: 86456
+  Sample: 12
+- StartTime: 86574
+  Sample: 431
+- StartTime: 86574
+  Sample: 455
+- StartTime: 86614
+  Sample: 8
+- StartTime: 86692
+  Sample: 9
+- StartTime: 86692
+  Sample: 248
+- StartTime: 86692
+  Sample: 204
+- StartTime: 86692
+  Sample: 91
+- StartTime: 86692
+  Sample: 427
+- StartTime: 86692
+  Sample: 439
+- StartTime: 86692
+  Sample: 19
+- StartTime: 86811
+  Sample: 435
+- StartTime: 86811
+  Sample: 456
+- StartTime: 86811
+  Sample: 20
+- StartTime: 86850
+  Sample: 8
+- StartTime: 86929
+  Sample: 151
+- StartTime: 86929
+  Sample: 1
+- StartTime: 86929
+  Sample: 255
+- StartTime: 86929
+  Sample: 217
+- StartTime: 86929
+  Sample: 11
+- StartTime: 87047
+  Sample: 424
+- StartTime: 87047
+  Sample: 436
+- StartTime: 87086
+  Sample: 7
+- StartTime: 87165
+  Sample: 9
+- StartTime: 87165
+  Sample: 256
+- StartTime: 87165
+  Sample: 218
+- StartTime: 87165
+  Sample: 98
+- StartTime: 87165
+  Sample: 428
+- StartTime: 87165
+  Sample: 452
+- StartTime: 87322
+  Sample: 8
+- StartTime: 87322
+  Sample: 18
+- StartTime: 87401
+  Sample: 152
+- StartTime: 87401
+  Sample: 1
+- StartTime: 87401
+  Sample: 4
+- StartTime: 87401
+  Sample: 432
+- StartTime: 87401
+  Sample: 448
+- StartTime: 87401
+  Sample: 12
+- StartTime: 87519
+  Sample: 257
+- StartTime: 87519
+  Sample: 219
+- StartTime: 87637
+  Sample: 9
+- StartTime: 87637
+  Sample: 99
+- StartTime: 87637
+  Sample: 425
+- StartTime: 87637
+  Sample: 437
+- StartTime: 87795
+  Sample: 7
+- StartTime: 87874
+  Sample: 151
+- StartTime: 87874
+  Sample: 1
+- StartTime: 87874
+  Sample: 258
+- StartTime: 87874
+  Sample: 220
+- StartTime: 87874
+  Sample: 429
+- StartTime: 87874
+  Sample: 453
+- StartTime: 87874
+  Sample: 11
+- StartTime: 88031
+  Sample: 7
+- StartTime: 88110
+  Sample: 21
+- StartTime: 88110
+  Sample: 10
+- StartTime: 88110
+  Sample: 98
+- StartTime: 88110
+  Sample: 426
+- StartTime: 88110
+  Sample: 438
+- StartTime: 88110
+  Sample: 19
+- StartTime: 88228
+  Sample: 259
+- StartTime: 88228
+  Sample: 221
+- StartTime: 88228
+  Sample: 430
+- StartTime: 88228
+  Sample: 454
+- StartTime: 88346
+  Sample: 152
+- StartTime: 88346
+  Sample: 1
+- StartTime: 88346
+  Sample: 4
+- StartTime: 88346
+  Sample: 12
+- StartTime: 88464
+  Sample: 427
+- StartTime: 88464
+  Sample: 439
+- StartTime: 88503
+  Sample: 8
+- StartTime: 88582
+  Sample: 9
+- StartTime: 88582
+  Sample: 260
+- StartTime: 88582
+  Sample: 222
+- StartTime: 88582
+  Sample: 99
+- StartTime: 88582
+  Sample: 431
+- StartTime: 88582
+  Sample: 455
+- StartTime: 88582
+  Sample: 20
+- StartTime: 88700
+  Sample: 433
+- StartTime: 88700
+  Sample: 449
+- StartTime: 88740
+  Sample: 8
+- StartTime: 88818
+  Sample: 144
+- StartTime: 88818
+  Sample: 1
+- StartTime: 88818
+  Sample: 243
+- StartTime: 88818
+  Sample: 205
+- StartTime: 88818
+  Sample: 11
+- StartTime: 88937
+  Sample: 424
+- StartTime: 88937
+  Sample: 436
+- StartTime: 88976
+  Sample: 7
+- StartTime: 89055
+  Sample: 9
+- StartTime: 89055
+  Sample: 244
+- StartTime: 89055
+  Sample: 206
+- StartTime: 89055
+  Sample: 100
+- StartTime: 89055
+  Sample: 428
+- StartTime: 89055
+  Sample: 452
+- StartTime: 89212
+  Sample: 8
+- StartTime: 89212
+  Sample: 18
+- StartTime: 89291
+  Sample: 145
+- StartTime: 89291
+  Sample: 1
+- StartTime: 89291
+  Sample: 4
+- StartTime: 89291
+  Sample: 432
+- StartTime: 89291
+  Sample: 448
+- StartTime: 89291
+  Sample: 12
+- StartTime: 89409
+  Sample: 245
+- StartTime: 89409
+  Sample: 207
+- StartTime: 89527
+  Sample: 9
+- StartTime: 89527
+  Sample: 101
+- StartTime: 89527
+  Sample: 425
+- StartTime: 89527
+  Sample: 437
+- StartTime: 89685
+  Sample: 7
+- StartTime: 89763
+  Sample: 144
+- StartTime: 89763
+  Sample: 1
+- StartTime: 89763
+  Sample: 246
+- StartTime: 89763
+  Sample: 208
+- StartTime: 89763
+  Sample: 429
+- StartTime: 89763
+  Sample: 453
+- StartTime: 89763
+  Sample: 11
+- StartTime: 89921
+  Sample: 7
+- StartTime: 90000
+  Sample: 21
+- StartTime: 90000
+  Sample: 9
+- StartTime: 90000
+  Sample: 100
+- StartTime: 90000
+  Sample: 426
+- StartTime: 90000
+  Sample: 438
+- StartTime: 90118
+  Sample: 247
+- StartTime: 90118
+  Sample: 209
+- StartTime: 90118
+  Sample: 430
+- StartTime: 90118
+  Sample: 454
+- StartTime: 90236
+  Sample: 145
+- StartTime: 90236
+  Sample: 1
+- StartTime: 90236
+  Sample: 4
+- StartTime: 90236
+  Sample: 12
+- StartTime: 90354
+  Sample: 431
+- StartTime: 90354
+  Sample: 455
+- StartTime: 90393
+  Sample: 8
+- StartTime: 90472
+  Sample: 9
+- StartTime: 90472
+  Sample: 248
+- StartTime: 90472
+  Sample: 210
+- StartTime: 90472
+  Sample: 101
+- StartTime: 90472
+  Sample: 427
+- StartTime: 90472
+  Sample: 439
+- StartTime: 90472
+  Sample: 19
+- StartTime: 90590
+  Sample: 435
+- StartTime: 90590
+  Sample: 456
+- StartTime: 90590
+  Sample: 20
+- StartTime: 90629
+  Sample: 8
+- StartTime: 90708
+  Sample: 147
+- StartTime: 90708
+  Sample: 1
+- StartTime: 90708
+  Sample: 255
+- StartTime: 90708
+  Sample: 205
+- StartTime: 90708
+  Sample: 11
+- StartTime: 90826
+  Sample: 424
+- StartTime: 90826
+  Sample: 436
+- StartTime: 90866
+  Sample: 7
+- StartTime: 90944
+  Sample: 9
+- StartTime: 90944
+  Sample: 256
+- StartTime: 90944
+  Sample: 206
+- StartTime: 90944
+  Sample: 94
+- StartTime: 90944
+  Sample: 428
+- StartTime: 90944
+  Sample: 452
+- StartTime: 90944
+  Sample: 591
+- StartTime: 91102
+  Sample: 8
+- StartTime: 91102
+  Sample: 18
+- StartTime: 91102
+  Sample: 592
+- StartTime: 91181
+  Sample: 148
+- StartTime: 91181
+  Sample: 1
+- StartTime: 91181
+  Sample: 4
+- StartTime: 91181
+  Sample: 432
+- StartTime: 91181
+  Sample: 448
+- StartTime: 91181
+  Sample: 12
+- StartTime: 91299
+  Sample: 257
+- StartTime: 91299
+  Sample: 207
+- StartTime: 91417
+  Sample: 10
+- StartTime: 91417
+  Sample: 95
+- StartTime: 91417
+  Sample: 425
+- StartTime: 91417
+  Sample: 437
+- StartTime: 91417
+  Sample: 591
+- StartTime: 91574
+  Sample: 7
+- StartTime: 91574
+  Sample: 592
+- StartTime: 91653
+  Sample: 151
+- StartTime: 91653
+  Sample: 2
+- StartTime: 91653
+  Sample: 258
+- StartTime: 91653
+  Sample: 208
+- StartTime: 91653
+  Sample: 429
+- StartTime: 91653
+  Sample: 453
+- StartTime: 91653
+  Sample: 11
+- StartTime: 91811
+  Sample: 7
+- StartTime: 91811
+  Sample: 595
+- StartTime: 91889
+  Sample: 1
+- StartTime: 91889
+  Sample: 21
+- StartTime: 91889
+  Sample: 9
+- StartTime: 91889
+  Sample: 94
+- StartTime: 91889
+  Sample: 426
+- StartTime: 91889
+  Sample: 438
+- StartTime: 91889
+  Sample: 19
+- StartTime: 91889
+  Sample: 591
+- StartTime: 92007
+  Sample: 259
+- StartTime: 92007
+  Sample: 209
+- StartTime: 92007
+  Sample: 430
+- StartTime: 92007
+  Sample: 454
+- StartTime: 92047
+  Sample: 592
+- StartTime: 92126
+  Sample: 152
+- StartTime: 92126
+  Sample: 4
+- StartTime: 92126
+  Sample: 12
+- StartTime: 92244
+  Sample: 440
+- StartTime: 92244
+  Sample: 462
+- StartTime: 92283
+  Sample: 2
+- StartTime: 92283
+  Sample: 8
+- StartTime: 92283
+  Sample: 597
+- StartTime: 92362
+  Sample: 10
+- StartTime: 92362
+  Sample: 260
+- StartTime: 92362
+  Sample: 210
+- StartTime: 92362
+  Sample: 95
+- StartTime: 92362
+  Sample: 441
+- StartTime: 92362
+  Sample: 434
+- StartTime: 92362
+  Sample: 20
+- StartTime: 92362
+  Sample: 598
+- StartTime: 92480
+  Sample: 433
+- StartTime: 92480
+  Sample: 449
+- StartTime: 92519
+  Sample: 8
+- StartTime: 92519
+  Sample: 599
+- StartTime: 92598
+  Sample: 140
+- StartTime: 92598
+  Sample: 1
+- StartTime: 92598
+  Sample: 15
+- StartTime: 92598
+  Sample: 243
+- StartTime: 92598
+  Sample: 199
+- StartTime: 92598
+  Sample: 11
+- StartTime: 92598
+  Sample: 745
+- StartTime: 92716
+  Sample: 424
+- StartTime: 92716
+  Sample: 436
+- StartTime: 92755
+  Sample: 7
+- StartTime: 92834
+  Sample: 9
+- StartTime: 92834
+  Sample: 244
+- StartTime: 92834
+  Sample: 200
+- StartTime: 92834
+  Sample: 90
+- StartTime: 92834
+  Sample: 428
+- StartTime: 92834
+  Sample: 452
+- StartTime: 92992
+  Sample: 8
+- StartTime: 92992
+  Sample: 18
+- StartTime: 93070
+  Sample: 141
+- StartTime: 93070
+  Sample: 1
+- StartTime: 93070
+  Sample: 4
+- StartTime: 93070
+  Sample: 432
+- StartTime: 93070
+  Sample: 448
+- StartTime: 93070
+  Sample: 12
+- StartTime: 93189
+  Sample: 245
+- StartTime: 93189
+  Sample: 201
+- StartTime: 93307
+  Sample: 9
+- StartTime: 93307
+  Sample: 91
+- StartTime: 93307
+  Sample: 425
+- StartTime: 93307
+  Sample: 437
+- StartTime: 93464
+  Sample: 7
+- StartTime: 93543
+  Sample: 140
+- StartTime: 93543
+  Sample: 1
+- StartTime: 93543
+  Sample: 246
+- StartTime: 93543
+  Sample: 202
+- StartTime: 93543
+  Sample: 429
+- StartTime: 93543
+  Sample: 453
+- StartTime: 93543
+  Sample: 11
+- StartTime: 93543
+  Sample: 746
+- StartTime: 93700
+  Sample: 7
+- StartTime: 93779
+  Sample: 21
+- StartTime: 93779
+  Sample: 9
+- StartTime: 93779
+  Sample: 90
+- StartTime: 93779
+  Sample: 426
+- StartTime: 93779
+  Sample: 438
+- StartTime: 93779
+  Sample: 696
+- StartTime: 93897
+  Sample: 247
+- StartTime: 93897
+  Sample: 203
+- StartTime: 93897
+  Sample: 430
+- StartTime: 93897
+  Sample: 454
+- StartTime: 93897
+  Sample: 747
+- StartTime: 94015
+  Sample: 141
+- StartTime: 94015
+  Sample: 1
+- StartTime: 94015
+  Sample: 4
+- StartTime: 94015
+  Sample: 12
+- StartTime: 94015
+  Sample: 688
+- StartTime: 94133
+  Sample: 431
+- StartTime: 94133
+  Sample: 455
+- StartTime: 94173
+  Sample: 8
+- StartTime: 94252
+  Sample: 9
+- StartTime: 94252
+  Sample: 248
+- StartTime: 94252
+  Sample: 204
+- StartTime: 94252
+  Sample: 91
+- StartTime: 94252
+  Sample: 427
+- StartTime: 94252
+  Sample: 439
+- StartTime: 94252
+  Sample: 19
+- StartTime: 94252
+  Sample: 748
+- StartTime: 94252
+  Sample: 697
+- StartTime: 94370
+  Sample: 435
+- StartTime: 94370
+  Sample: 456
+- StartTime: 94370
+  Sample: 20
+- StartTime: 94409
+  Sample: 8
+- StartTime: 94488
+  Sample: 142
+- StartTime: 94488
+  Sample: 1
+- StartTime: 94488
+  Sample: 249
+- StartTime: 94488
+  Sample: 211
+- StartTime: 94488
+  Sample: 11
+- StartTime: 94488
+  Sample: 749
+- StartTime: 94488
+  Sample: 699
+- StartTime: 94606
+  Sample: 424
+- StartTime: 94606
+  Sample: 436
+- StartTime: 94645
+  Sample: 7
+- StartTime: 94724
+  Sample: 9
+- StartTime: 94724
+  Sample: 250
+- StartTime: 94724
+  Sample: 212
+- StartTime: 94724
+  Sample: 92
+- StartTime: 94724
+  Sample: 428
+- StartTime: 94724
+  Sample: 452
+- StartTime: 94881
+  Sample: 8
+- StartTime: 94881
+  Sample: 18
+- StartTime: 94960
+  Sample: 143
+- StartTime: 94960
+  Sample: 1
+- StartTime: 94960
+  Sample: 4
+- StartTime: 94960
+  Sample: 432
+- StartTime: 94960
+  Sample: 448
+- StartTime: 94960
+  Sample: 12
+- StartTime: 95078
+  Sample: 251
+- StartTime: 95078
+  Sample: 213
+- StartTime: 95196
+  Sample: 9
+- StartTime: 95196
+  Sample: 93
+- StartTime: 95196
+  Sample: 425
+- StartTime: 95196
+  Sample: 437
+- StartTime: 95196
+  Sample: 750
+- StartTime: 95196
+  Sample: 701
+- StartTime: 95354
+  Sample: 7
+- StartTime: 95433
+  Sample: 142
+- StartTime: 95433
+  Sample: 1
+- StartTime: 95433
+  Sample: 252
+- StartTime: 95433
+  Sample: 214
+- StartTime: 95433
+  Sample: 429
+- StartTime: 95433
+  Sample: 453
+- StartTime: 95433
+  Sample: 11
+- StartTime: 95590
+  Sample: 7
+- StartTime: 95669
+  Sample: 21
+- StartTime: 95669
+  Sample: 10
+- StartTime: 95669
+  Sample: 92
+- StartTime: 95669
+  Sample: 426
+- StartTime: 95669
+  Sample: 438
+- StartTime: 95669
+  Sample: 19
+- StartTime: 95669
+  Sample: 702
+- StartTime: 95787
+  Sample: 253
+- StartTime: 95787
+  Sample: 215
+- StartTime: 95787
+  Sample: 430
+- StartTime: 95787
+  Sample: 454
+- StartTime: 95905
+  Sample: 143
+- StartTime: 95905
+  Sample: 1
+- StartTime: 95905
+  Sample: 4
+- StartTime: 95905
+  Sample: 12
+- StartTime: 95905
+  Sample: 751
+- StartTime: 96023
+  Sample: 427
+- StartTime: 96023
+  Sample: 439
+- StartTime: 96063
+  Sample: 8
+- StartTime: 96141
+  Sample: 9
+- StartTime: 96141
+  Sample: 254
+- StartTime: 96141
+  Sample: 216
+- StartTime: 96141
+  Sample: 93
+- StartTime: 96141
+  Sample: 431
+- StartTime: 96141
+  Sample: 455
+- StartTime: 96141
+  Sample: 20
+- StartTime: 96141
+  Sample: 698
+- StartTime: 96259
+  Sample: 433
+- StartTime: 96259
+  Sample: 449
+- StartTime: 96299
+  Sample: 8
+- StartTime: 96378
+  Sample: 144
+- StartTime: 96378
+  Sample: 1
+- StartTime: 96378
+  Sample: 255
+- StartTime: 96378
+  Sample: 205
+- StartTime: 96378
+  Sample: 11
+- StartTime: 96378
+  Sample: 752
+- StartTime: 96378
+  Sample: 700
+- StartTime: 96496
+  Sample: 424
+- StartTime: 96496
+  Sample: 457
+- StartTime: 96535
+  Sample: 7
+- StartTime: 96614
+  Sample: 9
+- StartTime: 96614
+  Sample: 256
+- StartTime: 96614
+  Sample: 206
+- StartTime: 96614
+  Sample: 102
+- StartTime: 96614
+  Sample: 428
+- StartTime: 96614
+  Sample: 452
+- StartTime: 96771
+  Sample: 8
+- StartTime: 96771
+  Sample: 18
+- StartTime: 96850
+  Sample: 145
+- StartTime: 96850
+  Sample: 1
+- StartTime: 96850
+  Sample: 4
+- StartTime: 96850
+  Sample: 461
+- StartTime: 96850
+  Sample: 448
+- StartTime: 96850
+  Sample: 12
+- StartTime: 96968
+  Sample: 257
+- StartTime: 96968
+  Sample: 207
+- StartTime: 97086
+  Sample: 9
+- StartTime: 97086
+  Sample: 103
+- StartTime: 97086
+  Sample: 425
+- StartTime: 97086
+  Sample: 458
+- StartTime: 97086
+  Sample: 753
+- StartTime: 97086
+  Sample: 704
+- StartTime: 97244
+  Sample: 7
+- StartTime: 97322
+  Sample: 144
+- StartTime: 97322
+  Sample: 1
+- StartTime: 97322
+  Sample: 258
+- StartTime: 97322
+  Sample: 208
+- StartTime: 97322
+  Sample: 429
+- StartTime: 97322
+  Sample: 453
+- StartTime: 97322
+  Sample: 11
+- StartTime: 97480
+  Sample: 7
+- StartTime: 97559
+  Sample: 21
+- StartTime: 97559
+  Sample: 9
+- StartTime: 97559
+  Sample: 102
+- StartTime: 97559
+  Sample: 426
+- StartTime: 97559
+  Sample: 459
+- StartTime: 97677
+  Sample: 259
+- StartTime: 97677
+  Sample: 209
+- StartTime: 97677
+  Sample: 430
+- StartTime: 97677
+  Sample: 454
+- StartTime: 97795
+  Sample: 145
+- StartTime: 97795
+  Sample: 1
+- StartTime: 97795
+  Sample: 4
+- StartTime: 97795
+  Sample: 12
+- StartTime: 97795
+  Sample: 754
+- StartTime: 97795
+  Sample: 703
+- StartTime: 97913
+  Sample: 427
+- StartTime: 97913
+  Sample: 460
+- StartTime: 97952
+  Sample: 8
+- StartTime: 98031
+  Sample: 9
+- StartTime: 98031
+  Sample: 260
+- StartTime: 98031
+  Sample: 210
+- StartTime: 98031
+  Sample: 103
+- StartTime: 98031
+  Sample: 431
+- StartTime: 98031
+  Sample: 455
+- StartTime: 98031
+  Sample: 19
+- StartTime: 98149
+  Sample: 462
+- StartTime: 98149
+  Sample: 449
+- StartTime: 98149
+  Sample: 20
+- StartTime: 98189
+  Sample: 8
+- StartTime: 98267
+  Sample: 146
+- StartTime: 98267
+  Sample: 1
+- StartTime: 98267
+  Sample: 243
+- StartTime: 98267
+  Sample: 205
+- StartTime: 98267
+  Sample: 11
+- StartTime: 98267
+  Sample: 755
+- StartTime: 98267
+  Sample: 705
+- StartTime: 98385
+  Sample: 424
+- StartTime: 98385
+  Sample: 436
+- StartTime: 98425
+  Sample: 7
+- StartTime: 98503
+  Sample: 9
+- StartTime: 98503
+  Sample: 244
+- StartTime: 98503
+  Sample: 206
+- StartTime: 98503
+  Sample: 96
+- StartTime: 98503
+  Sample: 428
+- StartTime: 98503
+  Sample: 452
+- StartTime: 98661
+  Sample: 8
+- StartTime: 98661
+  Sample: 18
+- StartTime: 98740
+  Sample: 147
+- StartTime: 98740
+  Sample: 1
+- StartTime: 98740
+  Sample: 4
+- StartTime: 98740
+  Sample: 441
+- StartTime: 98740
+  Sample: 448
+- StartTime: 98740
+  Sample: 12
+- StartTime: 98858
+  Sample: 245
+- StartTime: 98858
+  Sample: 207
+- StartTime: 98976
+  Sample: 9
+- StartTime: 98976
+  Sample: 97
+- StartTime: 98976
+  Sample: 425
+- StartTime: 98976
+  Sample: 437
+- StartTime: 98976
+  Sample: 756
+- StartTime: 98976
+  Sample: 699
+- StartTime: 99133
+  Sample: 7
+- StartTime: 99212
+  Sample: 149
+- StartTime: 99212
+  Sample: 1
+- StartTime: 99212
+  Sample: 258
+- StartTime: 99212
+  Sample: 220
+- StartTime: 99212
+  Sample: 429
+- StartTime: 99212
+  Sample: 453
+- StartTime: 99212
+  Sample: 11
+- StartTime: 99370
+  Sample: 7
+- StartTime: 99448
+  Sample: 21
+- StartTime: 99448
+  Sample: 10
+- StartTime: 99448
+  Sample: 92
+- StartTime: 99448
+  Sample: 426
+- StartTime: 99448
+  Sample: 438
+- StartTime: 99448
+  Sample: 19
+- StartTime: 99566
+  Sample: 259
+- StartTime: 99566
+  Sample: 221
+- StartTime: 99566
+  Sample: 442
+- StartTime: 99566
+  Sample: 449
+- StartTime: 99685
+  Sample: 142
+- StartTime: 99685
+  Sample: 1
+- StartTime: 99685
+  Sample: 4
+- StartTime: 99685
+  Sample: 12
+- StartTime: 99685
+  Sample: 757
+- StartTime: 99685
+  Sample: 691
+- StartTime: 99803
+  Sample: 450
+- StartTime: 99803
+  Sample: 439
+- StartTime: 99842
+  Sample: 8
+- StartTime: 99921
+  Sample: 9
+- StartTime: 99921
+  Sample: 260
+- StartTime: 99921
+  Sample: 222
+- StartTime: 99921
+  Sample: 93
+- StartTime: 99921
+  Sample: 443
+- StartTime: 99921
+  Sample: 451
+- StartTime: 99921
+  Sample: 20
+- StartTime: 100039
+  Sample: 440
+- StartTime: 100039
+  Sample: 433
+- StartTime: 100078
+  Sample: 8
+- StartTime: 100157
+  Sample: 149
+- StartTime: 100157
+  Sample: 1
+- StartTime: 100157
+  Sample: 243
+- StartTime: 100157
+  Sample: 199
+- StartTime: 100157
+  Sample: 11
+- StartTime: 100157
+  Sample: 758
+- StartTime: 100157
+  Sample: 694
+- StartTime: 100275
+  Sample: 424
+- StartTime: 100275
+  Sample: 436
+- StartTime: 100315
+  Sample: 7
+- StartTime: 100393
+  Sample: 9
+- StartTime: 100393
+  Sample: 244
+- StartTime: 100393
+  Sample: 200
+- StartTime: 100393
+  Sample: 90
+- StartTime: 100393
+  Sample: 428
+- StartTime: 100393
+  Sample: 452
+- StartTime: 100511
+  Sample: 693
+- StartTime: 100551
+  Sample: 8
+- StartTime: 100551
+  Sample: 18
+- StartTime: 100629
+  Sample: 150
+- StartTime: 100629
+  Sample: 1
+- StartTime: 100629
+  Sample: 4
+- StartTime: 100629
+  Sample: 432
+- StartTime: 100629
+  Sample: 448
+- StartTime: 100629
+  Sample: 12
+- StartTime: 100748
+  Sample: 245
+- StartTime: 100748
+  Sample: 201
+- StartTime: 100866
+  Sample: 9
+- StartTime: 100866
+  Sample: 91
+- StartTime: 100866
+  Sample: 425
+- StartTime: 100866
+  Sample: 437
+- StartTime: 100866
+  Sample: 705
+- StartTime: 101023
+  Sample: 7
+- StartTime: 101102
+  Sample: 149
+- StartTime: 101102
+  Sample: 1
+- StartTime: 101102
+  Sample: 246
+- StartTime: 101102
+  Sample: 202
+- StartTime: 101102
+  Sample: 429
+- StartTime: 101102
+  Sample: 453
+- StartTime: 101102
+  Sample: 11
+- StartTime: 101259
+  Sample: 7
+- StartTime: 101338
+  Sample: 21
+- StartTime: 101338
+  Sample: 9
+- StartTime: 101338
+  Sample: 90
+- StartTime: 101338
+  Sample: 426
+- StartTime: 101338
+  Sample: 438
+- StartTime: 101456
+  Sample: 247
+- StartTime: 101456
+  Sample: 203
+- StartTime: 101456
+  Sample: 430
+- StartTime: 101456
+  Sample: 454
+- StartTime: 101574
+  Sample: 150
+- StartTime: 101574
+  Sample: 1
+- StartTime: 101574
+  Sample: 4
+- StartTime: 101574
+  Sample: 12
+- StartTime: 101574
+  Sample: 759
+- StartTime: 101692
+  Sample: 431
+- StartTime: 101692
+  Sample: 455
+- StartTime: 101732
+  Sample: 8
+- StartTime: 101811
+  Sample: 9
+- StartTime: 101811
+  Sample: 248
+- StartTime: 101811
+  Sample: 204
+- StartTime: 101811
+  Sample: 91
+- StartTime: 101811
+  Sample: 427
+- StartTime: 101811
+  Sample: 439
+- StartTime: 101811
+  Sample: 19
+- StartTime: 101811
+  Sample: 706
+- StartTime: 101929
+  Sample: 435
+- StartTime: 101929
+  Sample: 456
+- StartTime: 101929
+  Sample: 20
+- StartTime: 101968
+  Sample: 8
+- StartTime: 102047
+  Sample: 151
+- StartTime: 102047
+  Sample: 1
+- StartTime: 102047
+  Sample: 255
+- StartTime: 102047
+  Sample: 217
+- StartTime: 102047
+  Sample: 11
+- StartTime: 102047
+  Sample: 760
+- StartTime: 102047
+  Sample: 699
+- StartTime: 102165
+  Sample: 424
+- StartTime: 102165
+  Sample: 436
+- StartTime: 102204
+  Sample: 7
+- StartTime: 102283
+  Sample: 9
+- StartTime: 102283
+  Sample: 256
+- StartTime: 102283
+  Sample: 218
+- StartTime: 102283
+  Sample: 98
+- StartTime: 102283
+  Sample: 428
+- StartTime: 102283
+  Sample: 452
+- StartTime: 102441
+  Sample: 8
+- StartTime: 102441
+  Sample: 18
+- StartTime: 102519
+  Sample: 152
+- StartTime: 102519
+  Sample: 1
+- StartTime: 102519
+  Sample: 4
+- StartTime: 102519
+  Sample: 432
+- StartTime: 102519
+  Sample: 448
+- StartTime: 102519
+  Sample: 12
+- StartTime: 102637
+  Sample: 257
+- StartTime: 102637
+  Sample: 219
+- StartTime: 102637
+  Sample: 694
+- StartTime: 102755
+  Sample: 9
+- StartTime: 102755
+  Sample: 99
+- StartTime: 102755
+  Sample: 425
+- StartTime: 102755
+  Sample: 437
+- StartTime: 102755
+  Sample: 761
+- StartTime: 102913
+  Sample: 7
+- StartTime: 102992
+  Sample: 151
+- StartTime: 102992
+  Sample: 1
+- StartTime: 102992
+  Sample: 258
+- StartTime: 102992
+  Sample: 220
+- StartTime: 102992
+  Sample: 429
+- StartTime: 102992
+  Sample: 453
+- StartTime: 102992
+  Sample: 11
+- StartTime: 103149
+  Sample: 7
+- StartTime: 103149
+  Sample: 707
+- StartTime: 103228
+  Sample: 21
+- StartTime: 103228
+  Sample: 10
+- StartTime: 103228
+  Sample: 98
+- StartTime: 103228
+  Sample: 426
+- StartTime: 103228
+  Sample: 438
+- StartTime: 103228
+  Sample: 19
+- StartTime: 103228
+  Sample: 762
+- StartTime: 103307
+  Sample: 708
+- StartTime: 103346
+  Sample: 259
+- StartTime: 103346
+  Sample: 221
+- StartTime: 103346
+  Sample: 430
+- StartTime: 103346
+  Sample: 454
+- StartTime: 103464
+  Sample: 152
+- StartTime: 103464
+  Sample: 1
+- StartTime: 103464
+  Sample: 4
+- StartTime: 103464
+  Sample: 12
+- StartTime: 103464
+  Sample: 709
+- StartTime: 103582
+  Sample: 427
+- StartTime: 103582
+  Sample: 439
+- StartTime: 103582
+  Sample: 763
+- StartTime: 103622
+  Sample: 8
+- StartTime: 103622
+  Sample: 710
+- StartTime: 103700
+  Sample: 9
+- StartTime: 103700
+  Sample: 260
+- StartTime: 103700
+  Sample: 222
+- StartTime: 103700
+  Sample: 99
+- StartTime: 103700
+  Sample: 431
+- StartTime: 103700
+  Sample: 455
+- StartTime: 103700
+  Sample: 20
+- StartTime: 103779
+  Sample: 711
+- StartTime: 103818
+  Sample: 433
+- StartTime: 103818
+  Sample: 449
+- StartTime: 103858
+  Sample: 8
+- StartTime: 103937
+  Sample: 147
+- StartTime: 103937
+  Sample: 1
+- StartTime: 103937
+  Sample: 249
+- StartTime: 103937
+  Sample: 211
+- StartTime: 103937
+  Sample: 11
+- StartTime: 103937
+  Sample: 764
+- StartTime: 103937
+  Sample: 712
+- StartTime: 104055
+  Sample: 424
+- StartTime: 104055
+  Sample: 436
+- StartTime: 104094
+  Sample: 7
+- StartTime: 104173
+  Sample: 9
+- StartTime: 104173
+  Sample: 250
+- StartTime: 104173
+  Sample: 212
+- StartTime: 104173
+  Sample: 98
+- StartTime: 104173
+  Sample: 428
+- StartTime: 104173
+  Sample: 452
+- StartTime: 104330
+  Sample: 8
+- StartTime: 104330
+  Sample: 18
+- StartTime: 104409
+  Sample: 148
+- StartTime: 104409
+  Sample: 1
+- StartTime: 104409
+  Sample: 4
+- StartTime: 104409
+  Sample: 432
+- StartTime: 104409
+  Sample: 448
+- StartTime: 104409
+  Sample: 12
+- StartTime: 104527
+  Sample: 251
+- StartTime: 104527
+  Sample: 213
+- StartTime: 104645
+  Sample: 9
+- StartTime: 104645
+  Sample: 99
+- StartTime: 104645
+  Sample: 425
+- StartTime: 104645
+  Sample: 437
+- StartTime: 104645
+  Sample: 765
+- StartTime: 104645
+  Sample: 705
+- StartTime: 104803
+  Sample: 7
+- StartTime: 104881
+  Sample: 147
+- StartTime: 104881
+  Sample: 1
+- StartTime: 104881
+  Sample: 252
+- StartTime: 104881
+  Sample: 214
+- StartTime: 104881
+  Sample: 429
+- StartTime: 104881
+  Sample: 453
+- StartTime: 104881
+  Sample: 11
+- StartTime: 105039
+  Sample: 7
+- StartTime: 105118
+  Sample: 21
+- StartTime: 105118
+  Sample: 9
+- StartTime: 105118
+  Sample: 98
+- StartTime: 105118
+  Sample: 426
+- StartTime: 105118
+  Sample: 438
+- StartTime: 105236
+  Sample: 253
+- StartTime: 105236
+  Sample: 215
+- StartTime: 105236
+  Sample: 430
+- StartTime: 105236
+  Sample: 454
+- StartTime: 105354
+  Sample: 148
+- StartTime: 105354
+  Sample: 1
+- StartTime: 105354
+  Sample: 4
+- StartTime: 105354
+  Sample: 12
+- StartTime: 105354
+  Sample: 766
+- StartTime: 105354
+  Sample: 713
+- StartTime: 105472
+  Sample: 431
+- StartTime: 105472
+  Sample: 455
+- StartTime: 105511
+  Sample: 8
+- StartTime: 105590
+  Sample: 9
+- StartTime: 105590
+  Sample: 254
+- StartTime: 105590
+  Sample: 216
+- StartTime: 105590
+  Sample: 99
+- StartTime: 105590
+  Sample: 427
+- StartTime: 105590
+  Sample: 439
+- StartTime: 105590
+  Sample: 19
+- StartTime: 105590
+  Sample: 767
+- StartTime: 105708
+  Sample: 435
+- StartTime: 105708
+  Sample: 456
+- StartTime: 105708
+  Sample: 20
+- StartTime: 105748
+  Sample: 8
+- StartTime: 105826
+  Sample: 162
+- StartTime: 105826
+  Sample: 714
+- StartTime: 105826
+  Sample: 14
+- StartTime: 105826
+  Sample: 388
+- StartTime: 105826
+  Sample: 383
+- StartTime: 105826
+  Sample: 345
+- StartTime: 105944
+  Sample: 424
+- StartTime: 105944
+  Sample: 436
+- StartTime: 105984
+  Sample: 7
+- StartTime: 106063
+  Sample: 9
+- StartTime: 106063
+  Sample: 389
+- StartTime: 106063
+  Sample: 384
+- StartTime: 106063
+  Sample: 346
+- StartTime: 106063
+  Sample: 444
+- StartTime: 106063
+  Sample: 452
+- StartTime: 106063
+  Sample: 591
+- StartTime: 106220
+  Sample: 8
+- StartTime: 106220
+  Sample: 592
+- StartTime: 106299
+  Sample: 4
+- StartTime: 106299
+  Sample: 347
+- StartTime: 106299
+  Sample: 448
+- StartTime: 106299
+  Sample: 447
+- StartTime: 106417
+  Sample: 390
+- StartTime: 106417
+  Sample: 385
+- StartTime: 106535
+  Sample: 715
+- StartTime: 106535
+  Sample: 10
+- StartTime: 106535
+  Sample: 348
+- StartTime: 106535
+  Sample: 425
+- StartTime: 106535
+  Sample: 437
+- StartTime: 106535
+  Sample: 591
+- StartTime: 106692
+  Sample: 7
+- StartTime: 106692
+  Sample: 592
+- StartTime: 106771
+  Sample: 391
+- StartTime: 106771
+  Sample: 386
+- StartTime: 106771
+  Sample: 349
+- StartTime: 106771
+  Sample: 445
+- StartTime: 106771
+  Sample: 453
+- StartTime: 106929
+  Sample: 7
+- StartTime: 106929
+  Sample: 595
+- StartTime: 107007
+  Sample: 21
+- StartTime: 107007
+  Sample: 9
+- StartTime: 107007
+  Sample: 350
+- StartTime: 107007
+  Sample: 426
+- StartTime: 107007
+  Sample: 438
+- StartTime: 107007
+  Sample: 591
+- StartTime: 107126
+  Sample: 392
+- StartTime: 107126
+  Sample: 387
+- StartTime: 107126
+  Sample: 446
+- StartTime: 107126
+  Sample: 454
+- StartTime: 107165
+  Sample: 592
+- StartTime: 107244
+  Sample: 716
+- StartTime: 107244
+  Sample: 4
+- StartTime: 107716
+  Sample: 153
+- StartTime: 107716
+  Sample: 1
+- StartTime: 107716
+  Sample: 717
+- StartTime: 107874
+  Sample: 7
+- StartTime: 107952
+  Sample: 6
+- StartTime: 107952
+  Sample: 104
+- StartTime: 107952
+  Sample: 113
+- StartTime: 108110
+  Sample: 135
+- StartTime: 108110
+  Sample: 8
+- StartTime: 108110
+  Sample: 18
+- StartTime: 108189
+  Sample: 1
+- StartTime: 108189
+  Sample: 4
+- StartTime: 108307
+  Sample: 114
+- StartTime: 108425
+  Sample: 154
+- StartTime: 108425
+  Sample: 9
+- StartTime: 108425
+  Sample: 119
+- StartTime: 108543
+  Sample: 120
+- StartTime: 108543
+  Sample: 115
+- StartTime: 108582
+  Sample: 7
+- StartTime: 108661
+  Sample: 1
+- StartTime: 108818
+  Sample: 155
+- StartTime: 108818
+  Sample: 7
+- StartTime: 108897
+  Sample: 21
+- StartTime: 108897
+  Sample: 6
+- StartTime: 108897
+  Sample: 105
+- StartTime: 108897
+  Sample: 113
+- StartTime: 109055
+  Sample: 156
+- StartTime: 109133
+  Sample: 1
+- StartTime: 109133
+  Sample: 4
+- StartTime: 109252
+  Sample: 114
+- StartTime: 109291
+  Sample: 8
+- StartTime: 109370
+  Sample: 154
+- StartTime: 109370
+  Sample: 9
+- StartTime: 109370
+  Sample: 104
+- StartTime: 109370
+  Sample: 19
+- StartTime: 109488
+  Sample: 115
+- StartTime: 109488
+  Sample: 20
+- StartTime: 109527
+  Sample: 8
+- StartTime: 109606
+  Sample: 153
+- StartTime: 109606
+  Sample: 1
+- StartTime: 109763
+  Sample: 7
+- StartTime: 109842
+  Sample: 6
+- StartTime: 109842
+  Sample: 106
+- StartTime: 109842
+  Sample: 113
+- StartTime: 110000
+  Sample: 135
+- StartTime: 110000
+  Sample: 8
+- StartTime: 110000
+  Sample: 18
+- StartTime: 110078
+  Sample: 1
+- StartTime: 110078
+  Sample: 4
+- StartTime: 110196
+  Sample: 114
+- StartTime: 110315
+  Sample: 154
+- StartTime: 110315
+  Sample: 9
+- StartTime: 110315
+  Sample: 107
+- StartTime: 110433
+  Sample: 115
+- StartTime: 110472
+  Sample: 7
+- StartTime: 110551
+  Sample: 1
+- StartTime: 110708
+  Sample: 155
+- StartTime: 110708
+  Sample: 7
+- StartTime: 110787
+  Sample: 21
+- StartTime: 110787
+  Sample: 10
+- StartTime: 110787
+  Sample: 106
+- StartTime: 110787
+  Sample: 113
+- StartTime: 110787
+  Sample: 19
+- StartTime: 110944
+  Sample: 156
+- StartTime: 111023
+  Sample: 1
+- StartTime: 111023
+  Sample: 4
+- StartTime: 111141
+  Sample: 114
+- StartTime: 111181
+  Sample: 8
+- StartTime: 111259
+  Sample: 154
+- StartTime: 111259
+  Sample: 6
+- StartTime: 111259
+  Sample: 107
+- StartTime: 111259
+  Sample: 20
+- StartTime: 111378
+  Sample: 115
+- StartTime: 111417
+  Sample: 8
+- StartTime: 111496
+  Sample: 122
+- StartTime: 111496
+  Sample: 1
+- StartTime: 111653
+  Sample: 7
+- StartTime: 111732
+  Sample: 6
+- StartTime: 111732
+  Sample: 108
+- StartTime: 111732
+  Sample: 113
+- StartTime: 111889
+  Sample: 123
+- StartTime: 111889
+  Sample: 8
+- StartTime: 111889
+  Sample: 18
+- StartTime: 111968
+  Sample: 1
+- StartTime: 111968
+  Sample: 4
+- StartTime: 112086
+  Sample: 114
+- StartTime: 112204
+  Sample: 124
+- StartTime: 112204
+  Sample: 9
+- StartTime: 112204
+  Sample: 109
+- StartTime: 112322
+  Sample: 115
+- StartTime: 112362
+  Sample: 7
+- StartTime: 112441
+  Sample: 1
+- StartTime: 112598
+  Sample: 125
+- StartTime: 112598
+  Sample: 7
+- StartTime: 112677
+  Sample: 21
+- StartTime: 112677
+  Sample: 6
+- StartTime: 112677
+  Sample: 108
+- StartTime: 112677
+  Sample: 113
+- StartTime: 112834
+  Sample: 126
+- StartTime: 112913
+  Sample: 1
+- StartTime: 112913
+  Sample: 4
+- StartTime: 113031
+  Sample: 114
+- StartTime: 113070
+  Sample: 8
+- StartTime: 113149
+  Sample: 124
+- StartTime: 113149
+  Sample: 9
+- StartTime: 113149
+  Sample: 109
+- StartTime: 113149
+  Sample: 19
+- StartTime: 113267
+  Sample: 115
+- StartTime: 113267
+  Sample: 20
+- StartTime: 113307
+  Sample: 8
+- StartTime: 113385
+  Sample: 157
+- StartTime: 113385
+  Sample: 1
+- StartTime: 113543
+  Sample: 7
+- StartTime: 113622
+  Sample: 6
+- StartTime: 113622
+  Sample: 110
+- StartTime: 113622
+  Sample: 116
+- StartTime: 113779
+  Sample: 139
+- StartTime: 113779
+  Sample: 8
+- StartTime: 113779
+  Sample: 18
+- StartTime: 113858
+  Sample: 1
+- StartTime: 113858
+  Sample: 4
+- StartTime: 113976
+  Sample: 117
+- StartTime: 114094
+  Sample: 158
+- StartTime: 114094
+  Sample: 9
+- StartTime: 114094
+  Sample: 121
+- StartTime: 114212
+  Sample: 119
+- StartTime: 114212
+  Sample: 118
+- StartTime: 114252
+  Sample: 7
+- StartTime: 114330
+  Sample: 1
+- StartTime: 114488
+  Sample: 159
+- StartTime: 114488
+  Sample: 7
+- StartTime: 114567
+  Sample: 21
+- StartTime: 114567
+  Sample: 10
+- StartTime: 114567
+  Sample: 111
+- StartTime: 114567
+  Sample: 116
+- StartTime: 114567
+  Sample: 19
+- StartTime: 114724
+  Sample: 160
+- StartTime: 114803
+  Sample: 1
+- StartTime: 114803
+  Sample: 4
+- StartTime: 114921
+  Sample: 117
+- StartTime: 114960
+  Sample: 8
+- StartTime: 115039
+  Sample: 158
+- StartTime: 115039
+  Sample: 6
+- StartTime: 115039
+  Sample: 112
+- StartTime: 115039
+  Sample: 20
+- StartTime: 115157
+  Sample: 118
+- StartTime: 115196
+  Sample: 8
+- StartTime: 115275
+  Sample: 153
+- StartTime: 115275
+  Sample: 1
+- StartTime: 115433
+  Sample: 7
+- StartTime: 115511
+  Sample: 6
+- StartTime: 115511
+  Sample: 104
+- StartTime: 115511
+  Sample: 113
+- StartTime: 115669
+  Sample: 135
+- StartTime: 115669
+  Sample: 8
+- StartTime: 115669
+  Sample: 18
+- StartTime: 115748
+  Sample: 1
+- StartTime: 115748
+  Sample: 4
+- StartTime: 115866
+  Sample: 114
+- StartTime: 115984
+  Sample: 154
+- StartTime: 115984
+  Sample: 9
+- StartTime: 115984
+  Sample: 119
+- StartTime: 116102
+  Sample: 120
+- StartTime: 116102
+  Sample: 115
+- StartTime: 116141
+  Sample: 7
+- StartTime: 116220
+  Sample: 1
+- StartTime: 116378
+  Sample: 155
+- StartTime: 116378
+  Sample: 7
+- StartTime: 116456
+  Sample: 21
+- StartTime: 116456
+  Sample: 6
+- StartTime: 116456
+  Sample: 105
+- StartTime: 116456
+  Sample: 113
+- StartTime: 116614
+  Sample: 156
+- StartTime: 116692
+  Sample: 1
+- StartTime: 116692
+  Sample: 4
+- StartTime: 116811
+  Sample: 114
+- StartTime: 116850
+  Sample: 8
+- StartTime: 116929
+  Sample: 154
+- StartTime: 116929
+  Sample: 9
+- StartTime: 116929
+  Sample: 104
+- StartTime: 116929
+  Sample: 19
+- StartTime: 117047
+  Sample: 115
+- StartTime: 117047
+  Sample: 20
+- StartTime: 117086
+  Sample: 8
+- StartTime: 117165
+  Sample: 153
+- StartTime: 117165
+  Sample: 1
+- StartTime: 117322
+  Sample: 7
+- StartTime: 117401
+  Sample: 6
+- StartTime: 117401
+  Sample: 106
+- StartTime: 117401
+  Sample: 113
+- StartTime: 117559
+  Sample: 135
+- StartTime: 117559
+  Sample: 8
+- StartTime: 117559
+  Sample: 18
+- StartTime: 117637
+  Sample: 1
+- StartTime: 117637
+  Sample: 4
+- StartTime: 117755
+  Sample: 114
+- StartTime: 117874
+  Sample: 154
+- StartTime: 117874
+  Sample: 9
+- StartTime: 117874
+  Sample: 107
+- StartTime: 117992
+  Sample: 115
+- StartTime: 118031
+  Sample: 7
+- StartTime: 118110
+  Sample: 1
+- StartTime: 118267
+  Sample: 155
+- StartTime: 118267
+  Sample: 7
+- StartTime: 118346
+  Sample: 21
+- StartTime: 118346
+  Sample: 10
+- StartTime: 118346
+  Sample: 106
+- StartTime: 118346
+  Sample: 113
+- StartTime: 118346
+  Sample: 19
+- StartTime: 118504
+  Sample: 156
+- StartTime: 118582
+  Sample: 1
+- StartTime: 118582
+  Sample: 4
+- StartTime: 118700
+  Sample: 114
+- StartTime: 118740
+  Sample: 8
+- StartTime: 118818
+  Sample: 154
+- StartTime: 118818
+  Sample: 6
+- StartTime: 118818
+  Sample: 107
+- StartTime: 118818
+  Sample: 20
+- StartTime: 118937
+  Sample: 115
+- StartTime: 118976
+  Sample: 8
+- StartTime: 119055
+  Sample: 122
+- StartTime: 119055
+  Sample: 1
+- StartTime: 119212
+  Sample: 7
+- StartTime: 119291
+  Sample: 6
+- StartTime: 119291
+  Sample: 108
+- StartTime: 119291
+  Sample: 113
+- StartTime: 119448
+  Sample: 123
+- StartTime: 119448
+  Sample: 8
+- StartTime: 119448
+  Sample: 18
+- StartTime: 119527
+  Sample: 1
+- StartTime: 119527
+  Sample: 4
+- StartTime: 119645
+  Sample: 114
+- StartTime: 119763
+  Sample: 124
+- StartTime: 119763
+  Sample: 9
+- StartTime: 119763
+  Sample: 109
+- StartTime: 119881
+  Sample: 115
+- StartTime: 119921
+  Sample: 7
+- StartTime: 120000
+  Sample: 1
+- StartTime: 120157
+  Sample: 125
+- StartTime: 120157
+  Sample: 7
+- StartTime: 120236
+  Sample: 21
+- StartTime: 120236
+  Sample: 6
+- StartTime: 120236
+  Sample: 108
+- StartTime: 120236
+  Sample: 113
+- StartTime: 120393
+  Sample: 126
+- StartTime: 120472
+  Sample: 1
+- StartTime: 120472
+  Sample: 4
+- StartTime: 120590
+  Sample: 114
+- StartTime: 120630
+  Sample: 8
+- StartTime: 120708
+  Sample: 124
+- StartTime: 120708
+  Sample: 9
+- StartTime: 120708
+  Sample: 109
+- StartTime: 120708
+  Sample: 19
+- StartTime: 120826
+  Sample: 115
+- StartTime: 120826
+  Sample: 20
+- StartTime: 120866
+  Sample: 8
+- StartTime: 120944
+  Sample: 157
+- StartTime: 120944
+  Sample: 1
+- StartTime: 120944
+  Sample: 14
+- StartTime: 121102
+  Sample: 7
+- StartTime: 121181
+  Sample: 6
+- StartTime: 121181
+  Sample: 110
+- StartTime: 121181
+  Sample: 116
+- StartTime: 121181
+  Sample: 591
+- StartTime: 121338
+  Sample: 139
+- StartTime: 121338
+  Sample: 8
+- StartTime: 121338
+  Sample: 592
+- StartTime: 121417
+  Sample: 4
+- StartTime: 121535
+  Sample: 117
+- StartTime: 121653
+  Sample: 158
+- StartTime: 121653
+  Sample: 9
+- StartTime: 121653
+  Sample: 121
+- StartTime: 121653
+  Sample: 591
+- StartTime: 121771
+  Sample: 119
+- StartTime: 121771
+  Sample: 118
+- StartTime: 121811
+  Sample: 7
+- StartTime: 121811
+  Sample: 592
+- StartTime: 121889
+  Sample: 2
+- StartTime: 122047
+  Sample: 159
+- StartTime: 122047
+  Sample: 7
+- StartTime: 122047
+  Sample: 595
+- StartTime: 122126
+  Sample: 1
+- StartTime: 122126
+  Sample: 21
+- StartTime: 122126
+  Sample: 10
+- StartTime: 122126
+  Sample: 111
+- StartTime: 122126
+  Sample: 116
+- StartTime: 122126
+  Sample: 19
+- StartTime: 122126
+  Sample: 591
+- StartTime: 122283
+  Sample: 160
+- StartTime: 122283
+  Sample: 592
+- StartTime: 122362
+  Sample: 4
+- StartTime: 122480
+  Sample: 117
+- StartTime: 122519
+  Sample: 2
+- StartTime: 122519
+  Sample: 8
+- StartTime: 122519
+  Sample: 597
+- StartTime: 122598
+  Sample: 158
+- StartTime: 122598
+  Sample: 6
+- StartTime: 122598
+  Sample: 112
+- StartTime: 122598
+  Sample: 20
+- StartTime: 122598
+  Sample: 599
+- StartTime: 122716
+  Sample: 118
+- StartTime: 122755
+  Sample: 8
+- StartTime: 122834
+  Sample: 153
+- StartTime: 122834
+  Sample: 3
+- StartTime: 122834
+  Sample: 15
+- StartTime: 122834
+  Sample: 223
+- StartTime: 122834
+  Sample: 205
+- StartTime: 122992
+  Sample: 7
+- StartTime: 123070
+  Sample: 6
+- StartTime: 123070
+  Sample: 224
+- StartTime: 123070
+  Sample: 206
+- StartTime: 123070
+  Sample: 104
+- StartTime: 123070
+  Sample: 113
+- StartTime: 123228
+  Sample: 135
+- StartTime: 123228
+  Sample: 8
+- StartTime: 123425
+  Sample: 225
+- StartTime: 123425
+  Sample: 207
+- StartTime: 123425
+  Sample: 114
+- StartTime: 123543
+  Sample: 154
+- StartTime: 123543
+  Sample: 119
+- StartTime: 123543
+  Sample: 18
+- StartTime: 123661
+  Sample: 120
+- StartTime: 123661
+  Sample: 115
+- StartTime: 123700
+  Sample: 7
+- StartTime: 123779
+  Sample: 226
+- StartTime: 123779
+  Sample: 208
+- StartTime: 123937
+  Sample: 155
+- StartTime: 123937
+  Sample: 7
+- StartTime: 124015
+  Sample: 21
+- StartTime: 124015
+  Sample: 6
+- StartTime: 124015
+  Sample: 105
+- StartTime: 124015
+  Sample: 113
+- StartTime: 124133
+  Sample: 227
+- StartTime: 124133
+  Sample: 209
+- StartTime: 124173
+  Sample: 156
+- StartTime: 124370
+  Sample: 114
+- StartTime: 124409
+  Sample: 8
+- StartTime: 124488
+  Sample: 154
+- StartTime: 124488
+  Sample: 228
+- StartTime: 124488
+  Sample: 210
+- StartTime: 124488
+  Sample: 104
+- StartTime: 124488
+  Sample: 19
+- StartTime: 124606
+  Sample: 115
+- StartTime: 124606
+  Sample: 20
+- StartTime: 124645
+  Sample: 8
+- StartTime: 124724
+  Sample: 153
+- StartTime: 124724
+  Sample: 243
+- StartTime: 124724
+  Sample: 205
+- StartTime: 124881
+  Sample: 7
+- StartTime: 124960
+  Sample: 6
+- StartTime: 124960
+  Sample: 244
+- StartTime: 124960
+  Sample: 206
+- StartTime: 124960
+  Sample: 106
+- StartTime: 124960
+  Sample: 113
+- StartTime: 125118
+  Sample: 135
+- StartTime: 125118
+  Sample: 8
+- StartTime: 125315
+  Sample: 245
+- StartTime: 125315
+  Sample: 207
+- StartTime: 125315
+  Sample: 114
+- StartTime: 125433
+  Sample: 154
+- StartTime: 125433
+  Sample: 107
+- StartTime: 125433
+  Sample: 18
+- StartTime: 125551
+  Sample: 115
+- StartTime: 125590
+  Sample: 7
+- StartTime: 125669
+  Sample: 246
+- StartTime: 125669
+  Sample: 208
+- StartTime: 125826
+  Sample: 155
+- StartTime: 125826
+  Sample: 7
+- StartTime: 125905
+  Sample: 21
+- StartTime: 125905
+  Sample: 106
+- StartTime: 125905
+  Sample: 113
+- StartTime: 125905
+  Sample: 19
+- StartTime: 126023
+  Sample: 247
+- StartTime: 126023
+  Sample: 209
+- StartTime: 126063
+  Sample: 156
+- StartTime: 126259
+  Sample: 114
+- StartTime: 126299
+  Sample: 8
+- StartTime: 126378
+  Sample: 154
+- StartTime: 126378
+  Sample: 6
+- StartTime: 126378
+  Sample: 266
+- StartTime: 126378
+  Sample: 216
+- StartTime: 126378
+  Sample: 107
+- StartTime: 126378
+  Sample: 20
+- StartTime: 126496
+  Sample: 115
+- StartTime: 126535
+  Sample: 8
+- StartTime: 126614
+  Sample: 122
+- StartTime: 126614
+  Sample: 223
+- StartTime: 126614
+  Sample: 199
+- StartTime: 126771
+  Sample: 7
+- StartTime: 126850
+  Sample: 6
+- StartTime: 126850
+  Sample: 224
+- StartTime: 126850
+  Sample: 200
+- StartTime: 126850
+  Sample: 108
+- StartTime: 126850
+  Sample: 113
+- StartTime: 127007
+  Sample: 123
+- StartTime: 127007
+  Sample: 8
+- StartTime: 127204
+  Sample: 225
+- StartTime: 127204
+  Sample: 201
+- StartTime: 127204
+  Sample: 114
+- StartTime: 127322
+  Sample: 124
+- StartTime: 127322
+  Sample: 109
+- StartTime: 127322
+  Sample: 18
+- StartTime: 127441
+  Sample: 115
+- StartTime: 127480
+  Sample: 7
+- StartTime: 127559
+  Sample: 226
+- StartTime: 127559
+  Sample: 202
+- StartTime: 127716
+  Sample: 125
+- StartTime: 127716
+  Sample: 7
+- StartTime: 127795
+  Sample: 21
+- StartTime: 127795
+  Sample: 6
+- StartTime: 127795
+  Sample: 108
+- StartTime: 127795
+  Sample: 113
+- StartTime: 127913
+  Sample: 227
+- StartTime: 127913
+  Sample: 203
+- StartTime: 127952
+  Sample: 126
+- StartTime: 128149
+  Sample: 114
+- StartTime: 128189
+  Sample: 8
+- StartTime: 128267
+  Sample: 124
+- StartTime: 128267
+  Sample: 228
+- StartTime: 128267
+  Sample: 204
+- StartTime: 128267
+  Sample: 109
+- StartTime: 128267
+  Sample: 19
+- StartTime: 128385
+  Sample: 115
+- StartTime: 128385
+  Sample: 20
+- StartTime: 128425
+  Sample: 8
+- StartTime: 128504
+  Sample: 157
+- StartTime: 128504
+  Sample: 267
+- StartTime: 128504
+  Sample: 217
+- StartTime: 128661
+  Sample: 7
+- StartTime: 128740
+  Sample: 6
+- StartTime: 128740
+  Sample: 268
+- StartTime: 128740
+  Sample: 218
+- StartTime: 128740
+  Sample: 110
+- StartTime: 128740
+  Sample: 116
+- StartTime: 128897
+  Sample: 139
+- StartTime: 128897
+  Sample: 8
+- StartTime: 129094
+  Sample: 269
+- StartTime: 129094
+  Sample: 219
+- StartTime: 129094
+  Sample: 117
+- StartTime: 129212
+  Sample: 158
+- StartTime: 129212
+  Sample: 121
+- StartTime: 129212
+  Sample: 18
+- StartTime: 129330
+  Sample: 119
+- StartTime: 129330
+  Sample: 118
+- StartTime: 129370
+  Sample: 7
+- StartTime: 129448
+  Sample: 258
+- StartTime: 129448
+  Sample: 220
+- StartTime: 129606
+  Sample: 159
+- StartTime: 129606
+  Sample: 7
+- StartTime: 129685
+  Sample: 21
+- StartTime: 129685
+  Sample: 111
+- StartTime: 129685
+  Sample: 116
+- StartTime: 129685
+  Sample: 19
+- StartTime: 129803
+  Sample: 259
+- StartTime: 129803
+  Sample: 221
+- StartTime: 129842
+  Sample: 160
+- StartTime: 130039
+  Sample: 117
+- StartTime: 130078
+  Sample: 8
+- StartTime: 130157
+  Sample: 158
+- StartTime: 130157
+  Sample: 6
+- StartTime: 130157
+  Sample: 260
+- StartTime: 130157
+  Sample: 222
+- StartTime: 130157
+  Sample: 112
+- StartTime: 130157
+  Sample: 20
+- StartTime: 130275
+  Sample: 118
+- StartTime: 130315
+  Sample: 8
+- StartTime: 130393
+  Sample: 153
+- StartTime: 130393
+  Sample: 223
+- StartTime: 130393
+  Sample: 205
+- StartTime: 130551
+  Sample: 7
+- StartTime: 130630
+  Sample: 6
+- StartTime: 130630
+  Sample: 224
+- StartTime: 130630
+  Sample: 206
+- StartTime: 130630
+  Sample: 104
+- StartTime: 130630
+  Sample: 113
+- StartTime: 130787
+  Sample: 135
+- StartTime: 130787
+  Sample: 8
+- StartTime: 130984
+  Sample: 225
+- StartTime: 130984
+  Sample: 207
+- StartTime: 130984
+  Sample: 114
+- StartTime: 131102
+  Sample: 154
+- StartTime: 131102
+  Sample: 119
+- StartTime: 131102
+  Sample: 18
+- StartTime: 131220
+  Sample: 120
+- StartTime: 131220
+  Sample: 115
+- StartTime: 131259
+  Sample: 7
+- StartTime: 131338
+  Sample: 226
+- StartTime: 131338
+  Sample: 208
+- StartTime: 131496
+  Sample: 155
+- StartTime: 131496
+  Sample: 7
+- StartTime: 131574
+  Sample: 21
+- StartTime: 131574
+  Sample: 6
+- StartTime: 131574
+  Sample: 105
+- StartTime: 131574
+  Sample: 113
+- StartTime: 131693
+  Sample: 227
+- StartTime: 131693
+  Sample: 209
+- StartTime: 131732
+  Sample: 156
+- StartTime: 131929
+  Sample: 114
+- StartTime: 131968
+  Sample: 8
+- StartTime: 132047
+  Sample: 154
+- StartTime: 132047
+  Sample: 228
+- StartTime: 132047
+  Sample: 210
+- StartTime: 132047
+  Sample: 104
+- StartTime: 132047
+  Sample: 19
+- StartTime: 132165
+  Sample: 115
+- StartTime: 132165
+  Sample: 20
+- StartTime: 132204
+  Sample: 8
+- StartTime: 132283
+  Sample: 153
+- StartTime: 132283
+  Sample: 243
+- StartTime: 132283
+  Sample: 205
+- StartTime: 132441
+  Sample: 7
+- StartTime: 132519
+  Sample: 6
+- StartTime: 132519
+  Sample: 244
+- StartTime: 132519
+  Sample: 206
+- StartTime: 132519
+  Sample: 106
+- StartTime: 132519
+  Sample: 113
+- StartTime: 132677
+  Sample: 135
+- StartTime: 132677
+  Sample: 8
+- StartTime: 132874
+  Sample: 245
+- StartTime: 132874
+  Sample: 207
+- StartTime: 132874
+  Sample: 114
+- StartTime: 132992
+  Sample: 154
+- StartTime: 132992
+  Sample: 107
+- StartTime: 132992
+  Sample: 18
+- StartTime: 133110
+  Sample: 115
+- StartTime: 133149
+  Sample: 7
+- StartTime: 133228
+  Sample: 246
+- StartTime: 133228
+  Sample: 208
+- StartTime: 133385
+  Sample: 155
+- StartTime: 133385
+  Sample: 7
+- StartTime: 133464
+  Sample: 21
+- StartTime: 133464
+  Sample: 106
+- StartTime: 133464
+  Sample: 113
+- StartTime: 133464
+  Sample: 19
+- StartTime: 133582
+  Sample: 247
+- StartTime: 133582
+  Sample: 209
+- StartTime: 133622
+  Sample: 156
+- StartTime: 133818
+  Sample: 114
+- StartTime: 133858
+  Sample: 8
+- StartTime: 133937
+  Sample: 154
+- StartTime: 133937
+  Sample: 6
+- StartTime: 133937
+  Sample: 266
+- StartTime: 133937
+  Sample: 216
+- StartTime: 133937
+  Sample: 107
+- StartTime: 133937
+  Sample: 20
+- StartTime: 134055
+  Sample: 115
+- StartTime: 134094
+  Sample: 8
+- StartTime: 134173
+  Sample: 122
+- StartTime: 134173
+  Sample: 223
+- StartTime: 134173
+  Sample: 199
+- StartTime: 134330
+  Sample: 7
+- StartTime: 134409
+  Sample: 6
+- StartTime: 134409
+  Sample: 224
+- StartTime: 134409
+  Sample: 200
+- StartTime: 134409
+  Sample: 108
+- StartTime: 134409
+  Sample: 113
+- StartTime: 134567
+  Sample: 123
+- StartTime: 134567
+  Sample: 8
+- StartTime: 134763
+  Sample: 225
+- StartTime: 134763
+  Sample: 201
+- StartTime: 134763
+  Sample: 114
+- StartTime: 134881
+  Sample: 124
+- StartTime: 134881
+  Sample: 109
+- StartTime: 134881
+  Sample: 18
+- StartTime: 135000
+  Sample: 115
+- StartTime: 135039
+  Sample: 7
+- StartTime: 135118
+  Sample: 226
+- StartTime: 135118
+  Sample: 202
+- StartTime: 135275
+  Sample: 125
+- StartTime: 135275
+  Sample: 7
+- StartTime: 135354
+  Sample: 21
+- StartTime: 135354
+  Sample: 6
+- StartTime: 135354
+  Sample: 108
+- StartTime: 135354
+  Sample: 113
+- StartTime: 135472
+  Sample: 227
+- StartTime: 135472
+  Sample: 203
+- StartTime: 135511
+  Sample: 126
+- StartTime: 135708
+  Sample: 114
+- StartTime: 135748
+  Sample: 8
+- StartTime: 135826
+  Sample: 124
+- StartTime: 135826
+  Sample: 228
+- StartTime: 135826
+  Sample: 204
+- StartTime: 135826
+  Sample: 109
+- StartTime: 135826
+  Sample: 19
+- StartTime: 135944
+  Sample: 115
+- StartTime: 135944
+  Sample: 20
+- StartTime: 135984
+  Sample: 8
+- StartTime: 136063
+  Sample: 157
+- StartTime: 136063
+  Sample: 399
+- StartTime: 136063
+  Sample: 393
+- StartTime: 136220
+  Sample: 7
+- StartTime: 136299
+  Sample: 6
+- StartTime: 136299
+  Sample: 400
+- StartTime: 136299
+  Sample: 394
+- StartTime: 136299
+  Sample: 351
+- StartTime: 136299
+  Sample: 591
+- StartTime: 136456
+  Sample: 163
+- StartTime: 136456
+  Sample: 8
+- StartTime: 136456
+  Sample: 592
+- StartTime: 136653
+  Sample: 401
+- StartTime: 136653
+  Sample: 395
+- StartTime: 136771
+  Sample: 164
+- StartTime: 136771
+  Sample: 352
+- StartTime: 136771
+  Sample: 591
+- StartTime: 136771
+  Sample: 18
+- StartTime: 136929
+  Sample: 7
+- StartTime: 136929
+  Sample: 592
+- StartTime: 137007
+  Sample: 402
+- StartTime: 137007
+  Sample: 396
+- StartTime: 137165
+  Sample: 165
+- StartTime: 137165
+  Sample: 7
+- StartTime: 137165
+  Sample: 595
+- StartTime: 137244
+  Sample: 21
+- StartTime: 137244
+  Sample: 6
+- StartTime: 137244
+  Sample: 353
+- StartTime: 137244
+  Sample: 591
+- StartTime: 137362
+  Sample: 403
+- StartTime: 137362
+  Sample: 397
+- StartTime: 137401
+  Sample: 166
+- StartTime: 137401
+  Sample: 592
+- StartTime: 137637
+  Sample: 8
+- StartTime: 137637
+  Sample: 597
+- StartTime: 137716
+  Sample: 167
+- StartTime: 137716
+  Sample: 404
+- StartTime: 137716
+  Sample: 398
+- StartTime: 137716
+  Sample: 354
+- StartTime: 137716
+  Sample: 598
+- StartTime: 137716
+  Sample: 18
+- StartTime: 137874
+  Sample: 8
+- StartTime: 137874
+  Sample: 599
+TimingPoints:
+- Bpm: 127
+- StartTime: 1889.7637939453125
+  Bpm: 127
+- StartTime: 3779.527587890625
+  Bpm: 127
+- StartTime: 5669.29150390625
+  Bpm: 127
+- StartTime: 7559.05517578125
+  Bpm: 127
+- StartTime: 9448.8193359375
+  Bpm: 127
+- StartTime: 11338.5830078125
+  Bpm: 127
+- StartTime: 13228.3466796875
+  Bpm: 127
+- StartTime: 15118.1103515625
+  Bpm: 127
+- StartTime: 16535.43359375
+  Bpm: 63.5
+- StartTime: 17007.875
+  Bpm: 63.5
+- StartTime: 17007.875
+  Bpm: 127
+- StartTime: 18897.638671875
+  Bpm: 127
+- StartTime: 20787.40234375
+  Bpm: 127
+- StartTime: 22677.166015625
+  Bpm: 127
+- StartTime: 24566.9296875
+  Bpm: 127
+- StartTime: 26456.693359375
+  Bpm: 127
+- StartTime: 28346.45703125
+  Bpm: 127
+- StartTime: 30236.220703125
+  Bpm: 127
+- StartTime: 32125.984375
+  Bpm: 127
+- StartTime: 34015.75
+  Bpm: 127
+- StartTime: 35905.515625
+  Bpm: 127
+- StartTime: 37795.28125
+  Bpm: 127
+- StartTime: 39685.046875
+  Bpm: 127
+- StartTime: 41574.8125
+  Bpm: 127
+- StartTime: 43464.578125
+  Bpm: 127
+- StartTime: 45354.34375
+  Bpm: 127
+- StartTime: 47244.109375
+  Bpm: 127
+- StartTime: 49133.875
+  Bpm: 127
+- StartTime: 51023.640625
+  Bpm: 127
+- StartTime: 52913.40625
+  Bpm: 127
+- StartTime: 54803.171875
+  Bpm: 127
+- StartTime: 56692.9375
+  Bpm: 127
+- StartTime: 58582.703125
+  Bpm: 127
+- StartTime: 60472.46875
+  Bpm: 127
+- StartTime: 62362.234375
+  Bpm: 127
+- StartTime: 64252
+  Bpm: 127
+- StartTime: 66141.765625
+  Bpm: 127
+- StartTime: 68031.53125
+  Bpm: 127
+- StartTime: 69921.296875
+  Bpm: 127
+- StartTime: 71811.0625
+  Bpm: 127
+- StartTime: 73700.828125
+  Bpm: 127
+- StartTime: 75590.59375
+  Bpm: 127
+- StartTime: 77480.359375
+  Bpm: 127
+- StartTime: 77480.359375
+  Bpm: 63.5
+- StartTime: 77952.796875
+  Bpm: 63.5
+- StartTime: 77952.796875
+  Bpm: 127
+- StartTime: 79370.1171875
+  Bpm: 127
+- StartTime: 81259.8828125
+  Bpm: 127
+- StartTime: 83149.6484375
+  Bpm: 127
+- StartTime: 85039.4140625
+  Bpm: 127
+- StartTime: 86929.1796875
+  Bpm: 127
+- StartTime: 88818.9453125
+  Bpm: 127
+- StartTime: 90708.7109375
+  Bpm: 127
+- StartTime: 92598.4765625
+  Bpm: 127
+- StartTime: 94488.2421875
+  Bpm: 127
+- StartTime: 96378.0078125
+  Bpm: 127
+- StartTime: 98267.7734375
+  Bpm: 127
+- StartTime: 100157.5390625
+  Bpm: 127
+- StartTime: 102047.3046875
+  Bpm: 127
+- StartTime: 103937.0703125
+  Bpm: 127
+- StartTime: 105826.8359375
+  Bpm: 127
+- StartTime: 107244.15625
+  Bpm: 63.5
+- StartTime: 107716.6015625
+  Bpm: 63.5
+- StartTime: 107716.6015625
+  Bpm: 127
+- StartTime: 109606.3671875
+  Bpm: 127
+- StartTime: 111496.1328125
+  Bpm: 127
+- StartTime: 113385.8984375
+  Bpm: 127
+- StartTime: 115275.6640625
+  Bpm: 127
+- StartTime: 117165.4296875
+  Bpm: 127
+- StartTime: 119055.1953125
+  Bpm: 127
+- StartTime: 120944.9609375
+  Bpm: 127
+- StartTime: 122834.7265625
+  Bpm: 127
+- StartTime: 124724.4921875
+  Bpm: 127
+- StartTime: 126614.2578125
+  Bpm: 127
+- StartTime: 128504.0234375
+  Bpm: 127
+- StartTime: 130393.7890625
+  Bpm: 127
+- StartTime: 132283.546875
+  Bpm: 127
+- StartTime: 134173.3125
+  Bpm: 127
+- StartTime: 136063.078125
+  Bpm: 127
+- StartTime: 137952.84375
+  Bpm: 127
+- StartTime: 139842.609375
+  Bpm: 127
+SliderVelocities: []
+HitObjects:
+- StartTime: 1889
+  Lane: 8
+  KeySounds:
+  - Sample: 15
+- StartTime: 2362
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 2716
+  Lane: 3
+  KeySounds:
+  - Sample: 405
+- StartTime: 2834
+  Lane: 4
+  KeySounds:
+  - Sample: 407
+- StartTime: 3070
+  Lane: 7
+  KeySounds:
+  - Sample: 410
+- StartTime: 3188
+  Lane: 6
+  KeySounds:
+  - Sample: 411
+- StartTime: 3307
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 3307
+  Lane: 3
+  KeySounds:
+  - Sample: 412
+- StartTime: 3425
+  Lane: 2
+  KeySounds:
+  - Sample: 414
+- StartTime: 3543
+  Lane: 5
+  KeySounds:
+  - Sample: 406
+- StartTime: 3661
+  Lane: 6
+  KeySounds:
+  - Sample: 408
+- StartTime: 4251
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 4606
+  Lane: 3
+  KeySounds:
+  - Sample: 405
+- StartTime: 4724
+  Lane: 4
+  KeySounds:
+  - Sample: 407
+- StartTime: 4842
+  Lane: 2
+  KeySounds:
+  - Sample: 413
+- StartTime: 5078
+  Lane: 5
+  KeySounds:
+  - Sample: 415
+- StartTime: 5196
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 5314
+  Lane: 7
+  KeySounds:
+  - Sample: 417
+- StartTime: 5433
+  Lane: 8
+  KeySounds:
+  - Sample: 22
+- StartTime: 5433
+  Lane: 6
+  KeySounds:
+  - Sample: 418
+- StartTime: 5551
+  Lane: 4
+  KeySounds:
+  - Sample: 419
+- StartTime: 5787
+  Lane: 5
+  KeySounds:
+  - Sample: 416
+- StartTime: 5905
+  Lane: 2
+  KeySounds:
+  - Sample: 409
+- StartTime: 6141
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 6496
+  Lane: 3
+  KeySounds:
+  - Sample: 405
+- StartTime: 6614
+  Lane: 4
+  KeySounds:
+  - Sample: 407
+- StartTime: 6850
+  Lane: 7
+  KeySounds:
+  - Sample: 410
+- StartTime: 6968
+  Lane: 6
+  KeySounds:
+  - Sample: 411
+- StartTime: 7086
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 7086
+  Lane: 3
+  KeySounds:
+  - Sample: 412
+- StartTime: 7204
+  Lane: 2
+  KeySounds:
+  - Sample: 414
+- StartTime: 7322
+  Lane: 5
+  KeySounds:
+  - Sample: 406
+- StartTime: 7440
+  Lane: 6
+  KeySounds:
+  - Sample: 408
+- StartTime: 8031
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 8385
+  Lane: 6
+  KeySounds:
+  - Sample: 405
+- StartTime: 8503
+  Lane: 7
+  KeySounds:
+  - Sample: 407
+- StartTime: 8622
+  Lane: 4
+  KeySounds:
+  - Sample: 413
+- StartTime: 8740
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 8858
+  Lane: 5
+  KeySounds:
+  - Sample: 420
+- StartTime: 8976
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 8976
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 9094
+  Lane: 4
+  KeySounds:
+  - Sample: 421
+- StartTime: 9212
+  Lane: 3
+  KeySounds:
+  - Sample: 423
+- StartTime: 9212
+  Lane: 8
+  KeySounds:
+  - Sample: 791
+- StartTime: 9330
+  Lane: 4
+  KeySounds:
+  - Sample: 422
+- StartTime: 9685
+  Lane: 2
+  KeySounds:
+  - Sample: 414
+- StartTime: 9921
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 10275
+  Lane: 3
+  KeySounds:
+  - Sample: 405
+- StartTime: 10393
+  Lane: 4
+  KeySounds:
+  - Sample: 407
+- StartTime: 10629
+  Lane: 7
+  KeySounds:
+  - Sample: 410
+- StartTime: 10748
+  Lane: 6
+  KeySounds:
+  - Sample: 411
+- StartTime: 10866
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 10866
+  Lane: 3
+  KeySounds:
+  - Sample: 412
+- StartTime: 10984
+  Lane: 2
+  KeySounds:
+  - Sample: 414
+- StartTime: 11102
+  Lane: 5
+  KeySounds:
+  - Sample: 406
+- StartTime: 11220
+  Lane: 6
+  KeySounds:
+  - Sample: 408
+- StartTime: 11811
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 12165
+  Lane: 3
+  KeySounds:
+  - Sample: 405
+- StartTime: 12283
+  Lane: 4
+  KeySounds:
+  - Sample: 407
+- StartTime: 12401
+  Lane: 2
+  KeySounds:
+  - Sample: 413
+- StartTime: 12637
+  Lane: 5
+  KeySounds:
+  - Sample: 415
+- StartTime: 12755
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 12874
+  Lane: 7
+  KeySounds:
+  - Sample: 417
+- StartTime: 12992
+  Lane: 8
+  KeySounds:
+  - Sample: 22
+- StartTime: 12992
+  Lane: 6
+  KeySounds:
+  - Sample: 418
+- StartTime: 13110
+  Lane: 4
+  KeySounds:
+  - Sample: 419
+- StartTime: 13346
+  Lane: 5
+  KeySounds:
+  - Sample: 416
+- StartTime: 13464
+  Lane: 2
+  KeySounds:
+  - Sample: 409
+- StartTime: 13700
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 14055
+  Lane: 3
+  KeySounds:
+  - Sample: 405
+- StartTime: 14173
+  Lane: 4
+  KeySounds:
+  - Sample: 407
+- StartTime: 14409
+  Lane: 7
+  KeySounds:
+  - Sample: 410
+- StartTime: 14527
+  Lane: 6
+  KeySounds:
+  - Sample: 411
+- StartTime: 14645
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 14645
+  Lane: 3
+  KeySounds:
+  - Sample: 412
+- StartTime: 14763
+  Lane: 2
+  KeySounds:
+  - Sample: 414
+- StartTime: 14881
+  Lane: 5
+  KeySounds:
+  - Sample: 406
+- StartTime: 15000
+  Lane: 6
+  KeySounds:
+  - Sample: 408
+- StartTime: 15118
+  Lane: 4
+  KeySounds:
+  - Sample: 317
+- StartTime: 15118
+  Lane: 8
+  KeySounds:
+  - Sample: 590
+- StartTime: 15354
+  Lane: 4
+  KeySounds:
+  - Sample: 318
+- StartTime: 15590
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 15590
+  Lane: 4
+  KeySounds:
+  - Sample: 319
+- StartTime: 15590
+  Lane: 8
+  KeySounds:
+  - Sample: 593
+- StartTime: 15826
+  Lane: 5
+  KeySounds:
+  - Sample: 320
+- StartTime: 16062
+  Lane: 5
+  KeySounds:
+  - Sample: 321
+- StartTime: 16062
+  Lane: 8
+  KeySounds:
+  - Sample: 594
+- StartTime: 16299
+  Lane: 5
+  KeySounds:
+  - Sample: 322
+- StartTime: 16535
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 16535
+  Lane: 7
+  KeySounds:
+  - Sample: 5
+- StartTime: 17007
+  Lane: 2
+  KeySounds:
+  - Sample: 168
+- StartTime: 17007
+  Lane: 8
+  KeySounds:
+  - Sample: 13
+- StartTime: 17125
+  Lane: 4
+  KeySounds:
+  - Sample: 173
+- StartTime: 17244
+  Lane: 5
+  KeySounds:
+  - Sample: 176
+- StartTime: 17362
+  Lane: 7
+  KeySounds:
+  - Sample: 179
+- StartTime: 17598
+  Lane: 2
+  KeySounds:
+  - Sample: 169
+- StartTime: 17716
+  Lane: 4
+  KeySounds:
+  - Sample: 180
+- StartTime: 17834
+  Lane: 6
+  KeySounds:
+  - Sample: 177
+- StartTime: 18070
+  Lane: 1
+  KeySounds:
+  - Sample: 182
+- StartTime: 18188
+  Lane: 5
+  KeySounds:
+  - Sample: 170
+- StartTime: 18307
+  Lane: 1
+  KeySounds:
+  - Sample: 183
+- StartTime: 18425
+  Lane: 5
+  KeySounds:
+  - Sample: 171
+- StartTime: 18543
+  Lane: 3
+  KeySounds:
+  - Sample: 187
+- StartTime: 18661
+  Lane: 1
+  KeySounds:
+  - Sample: 184
+- StartTime: 18779
+  Lane: 5
+  KeySounds:
+  - Sample: 172
+- StartTime: 20551
+  Lane: 8
+  KeySounds:
+  - Sample: 22
+- StartTime: 24330
+  Lane: 8
+  KeySounds:
+  - Sample: 24
+- StartTime: 24566
+  Lane: 2
+  KeySounds:
+  - Sample: 168
+- StartTime: 24685
+  Lane: 4
+  KeySounds:
+  - Sample: 173
+- StartTime: 24803
+  Lane: 5
+  KeySounds:
+  - Sample: 176
+- StartTime: 24921
+  Lane: 7
+  KeySounds:
+  - Sample: 179
+- StartTime: 25157
+  Lane: 2
+  KeySounds:
+  - Sample: 169
+- StartTime: 25275
+  Lane: 4
+  KeySounds:
+  - Sample: 180
+- StartTime: 25393
+  Lane: 6
+  KeySounds:
+  - Sample: 177
+- StartTime: 25629
+  Lane: 1
+  KeySounds:
+  - Sample: 182
+- StartTime: 25748
+  Lane: 5
+  KeySounds:
+  - Sample: 170
+- StartTime: 25866
+  Lane: 1
+  KeySounds:
+  - Sample: 183
+- StartTime: 25984
+  Lane: 5
+  KeySounds:
+  - Sample: 171
+- StartTime: 26102
+  Lane: 3
+  KeySounds:
+  - Sample: 187
+- StartTime: 26220
+  Lane: 1
+  KeySounds:
+  - Sample: 184
+- StartTime: 26338
+  Lane: 5
+  KeySounds:
+  - Sample: 172
+- StartTime: 28110
+  Lane: 8
+  KeySounds:
+  - Sample: 22
+- StartTime: 28346
+  Lane: 6
+  KeySounds:
+  - Sample: 546
+- StartTime: 29055
+  Lane: 7
+  KeySounds:
+  - Sample: 547
+- StartTime: 29763
+  Lane: 5
+  KeySounds:
+  - Sample: 548
+- StartTime: 30236
+  Lane: 4
+  KeySounds:
+  - Sample: 549
+- StartTime: 30236
+  Lane: 8
+  KeySounds:
+  - Sample: 590
+- StartTime: 30708
+  Lane: 8
+  KeySounds:
+  - Sample: 593
+- StartTime: 30944
+  Lane: 2
+  KeySounds:
+  - Sample: 550
+- StartTime: 31181
+  Lane: 8
+  KeySounds:
+  - Sample: 594
+- StartTime: 31417
+  Lane: 7
+  KeySounds:
+  - Sample: 551
+- StartTime: 31653
+  Lane: 8
+  KeySounds:
+  - Sample: 596
+- StartTime: 31889
+  Lane: 5
+  KeySounds:
+  - Sample: 552
+- StartTime: 32125
+  Lane: 2
+  KeySounds:
+  - Sample: 168
+- StartTime: 32125
+  Lane: 8
+  KeySounds:
+  - Sample: 15
+- StartTime: 32125
+  Lane: 6
+  KeySounds:
+  - Sample: 553
+- StartTime: 32244
+  Lane: 4
+  KeySounds:
+  - Sample: 173
+- StartTime: 32362
+  Lane: 5
+  KeySounds:
+  - Sample: 176
+- StartTime: 32480
+  Lane: 7
+  KeySounds:
+  - Sample: 179
+- StartTime: 32716
+  Lane: 2
+  KeySounds:
+  - Sample: 169
+- StartTime: 32834
+  Lane: 4
+  KeySounds:
+  - Sample: 180
+- StartTime: 32834
+  Lane: 7
+  KeySounds:
+  - Sample: 554
+- StartTime: 32952
+  Lane: 6
+  KeySounds:
+  - Sample: 177
+- StartTime: 33188
+  Lane: 1
+  KeySounds:
+  - Sample: 182
+- StartTime: 33307
+  Lane: 5
+  KeySounds:
+  - Sample: 170
+- StartTime: 33425
+  Lane: 1
+  KeySounds:
+  - Sample: 183
+- StartTime: 33543
+  Lane: 5
+  KeySounds:
+  - Sample: 171
+- StartTime: 33661
+  Lane: 3
+  KeySounds:
+  - Sample: 187
+- StartTime: 33779
+  Lane: 1
+  KeySounds:
+  - Sample: 184
+- StartTime: 33897
+  Lane: 5
+  KeySounds:
+  - Sample: 172
+- StartTime: 34133
+  Lane: 1
+  KeySounds:
+  - Sample: 185
+- StartTime: 34251
+  Lane: 6
+  KeySounds:
+  - Sample: 174
+- StartTime: 34370
+  Lane: 1
+  KeySounds:
+  - Sample: 186
+- StartTime: 34488
+  Lane: 2
+  KeySounds:
+  - Sample: 190
+- StartTime: 34606
+  Lane: 3
+  KeySounds:
+  - Sample: 175
+- StartTime: 34724
+  Lane: 4
+  KeySounds:
+  - Sample: 180
+- StartTime: 34842
+  Lane: 6
+  KeySounds:
+  - Sample: 176
+- StartTime: 35078
+  Lane: 1
+  KeySounds:
+  - Sample: 182
+- StartTime: 35196
+  Lane: 7
+  KeySounds:
+  - Sample: 168
+- StartTime: 35314
+  Lane: 5
+  KeySounds:
+  - Sample: 188
+- StartTime: 35551
+  Lane: 5
+  KeySounds:
+  - Sample: 189
+- StartTime: 35669
+  Lane: 2
+  KeySounds:
+  - Sample: 191
+- StartTime: 35669
+  Lane: 8
+  KeySounds:
+  - Sample: 22
+- StartTime: 35787
+  Lane: 4
+  KeySounds:
+  - Sample: 183
+- StartTime: 36023
+  Lane: 1
+  KeySounds:
+  - Sample: 193
+- StartTime: 36141
+  Lane: 3
+  KeySounds:
+  - Sample: 192
+- StartTime: 36259
+  Lane: 1
+  KeySounds:
+  - Sample: 194
+- StartTime: 36377
+  Lane: 4
+  KeySounds:
+  - Sample: 184
+- StartTime: 36496
+  Lane: 1
+  KeySounds:
+  - Sample: 195
+- StartTime: 36614
+  Lane: 5
+  KeySounds:
+  - Sample: 187
+- StartTime: 36732
+  Lane: 6
+  KeySounds:
+  - Sample: 169
+- StartTime: 36968
+  Lane: 2
+  KeySounds:
+  - Sample: 185
+- StartTime: 37086
+  Lane: 7
+  KeySounds:
+  - Sample: 175
+- StartTime: 37204
+  Lane: 2
+  KeySounds:
+  - Sample: 186
+- StartTime: 37322
+  Lane: 6
+  KeySounds:
+  - Sample: 190
+- StartTime: 37440
+  Lane: 4
+  KeySounds:
+  - Sample: 188
+- StartTime: 37559
+  Lane: 1
+  KeySounds:
+  - Sample: 196
+- StartTime: 37677
+  Lane: 3
+  KeySounds:
+  - Sample: 182
+- StartTime: 37795
+  Lane: 7
+  KeySounds:
+  - Sample: 179
+- StartTime: 37913
+  Lane: 2
+  KeySounds:
+  - Sample: 170
+- StartTime: 38031
+  Lane: 3
+  KeySounds:
+  - Sample: 173
+- StartTime: 38149
+  Lane: 4
+  KeySounds:
+  - Sample: 176
+- StartTime: 38267
+  Lane: 6
+  KeySounds:
+  - Sample: 197
+- StartTime: 38385
+  Lane: 1
+  KeySounds:
+  - Sample: 189
+- StartTime: 38503
+  Lane: 2
+  KeySounds:
+  - Sample: 171
+- StartTime: 38622
+  Lane: 3
+  KeySounds:
+  - Sample: 174
+- StartTime: 38740
+  Lane: 5
+  KeySounds:
+  - Sample: 177
+- StartTime: 38858
+  Lane: 2
+  KeySounds:
+  - Sample: 183
+- StartTime: 38976
+  Lane: 4
+  KeySounds:
+  - Sample: 175
+- StartTime: 39094
+  Lane: 6
+  KeySounds:
+  - Sample: 198
+- StartTime: 39212
+  Lane: 5
+  KeySounds:
+  - Sample: 178
+- StartTime: 39330
+  Lane: 4
+  KeySounds:
+  - Sample: 181
+- StartTime: 39448
+  Lane: 3
+  KeySounds:
+  - Sample: 190
+- StartTime: 39448
+  Lane: 8
+  KeySounds:
+  - Sample: 24
+- StartTime: 39566
+  Lane: 1
+  KeySounds:
+  - Sample: 188
+- StartTime: 39685
+  Lane: 2
+  KeySounds:
+  - Sample: 168
+- StartTime: 39803
+  Lane: 4
+  KeySounds:
+  - Sample: 173
+- StartTime: 39921
+  Lane: 5
+  KeySounds:
+  - Sample: 176
+- StartTime: 40039
+  Lane: 7
+  KeySounds:
+  - Sample: 179
+- StartTime: 40275
+  Lane: 2
+  KeySounds:
+  - Sample: 169
+- StartTime: 40393
+  Lane: 4
+  KeySounds:
+  - Sample: 180
+- StartTime: 40511
+  Lane: 6
+  KeySounds:
+  - Sample: 177
+- StartTime: 40748
+  Lane: 1
+  KeySounds:
+  - Sample: 182
+- StartTime: 40866
+  Lane: 5
+  KeySounds:
+  - Sample: 170
+- StartTime: 40984
+  Lane: 1
+  KeySounds:
+  - Sample: 183
+- StartTime: 41102
+  Lane: 5
+  KeySounds:
+  - Sample: 171
+- StartTime: 41220
+  Lane: 3
+  KeySounds:
+  - Sample: 187
+- StartTime: 41338
+  Lane: 1
+  KeySounds:
+  - Sample: 184
+- StartTime: 41456
+  Lane: 5
+  KeySounds:
+  - Sample: 172
+- StartTime: 41692
+  Lane: 1
+  KeySounds:
+  - Sample: 185
+- StartTime: 41811
+  Lane: 6
+  KeySounds:
+  - Sample: 174
+- StartTime: 41929
+  Lane: 1
+  KeySounds:
+  - Sample: 186
+- StartTime: 42047
+  Lane: 2
+  KeySounds:
+  - Sample: 190
+- StartTime: 42165
+  Lane: 3
+  KeySounds:
+  - Sample: 175
+- StartTime: 42283
+  Lane: 4
+  KeySounds:
+  - Sample: 180
+- StartTime: 42401
+  Lane: 6
+  KeySounds:
+  - Sample: 176
+- StartTime: 42637
+  Lane: 1
+  KeySounds:
+  - Sample: 182
+- StartTime: 42755
+  Lane: 7
+  KeySounds:
+  - Sample: 168
+- StartTime: 42874
+  Lane: 5
+  KeySounds:
+  - Sample: 188
+- StartTime: 43110
+  Lane: 5
+  KeySounds:
+  - Sample: 189
+- StartTime: 43228
+  Lane: 2
+  KeySounds:
+  - Sample: 191
+- StartTime: 43228
+  Lane: 8
+  KeySounds:
+  - Sample: 22
+- StartTime: 43346
+  Lane: 4
+  KeySounds:
+  - Sample: 183
+- StartTime: 43582
+  Lane: 1
+  KeySounds:
+  - Sample: 193
+- StartTime: 43700
+  Lane: 3
+  KeySounds:
+  - Sample: 192
+- StartTime: 43818
+  Lane: 1
+  KeySounds:
+  - Sample: 194
+- StartTime: 43937
+  Lane: 4
+  KeySounds:
+  - Sample: 184
+- StartTime: 44055
+  Lane: 1
+  KeySounds:
+  - Sample: 195
+- StartTime: 44173
+  Lane: 5
+  KeySounds:
+  - Sample: 187
+- StartTime: 44291
+  Lane: 6
+  KeySounds:
+  - Sample: 169
+- StartTime: 44527
+  Lane: 2
+  KeySounds:
+  - Sample: 185
+- StartTime: 44645
+  Lane: 7
+  KeySounds:
+  - Sample: 175
+- StartTime: 44763
+  Lane: 2
+  KeySounds:
+  - Sample: 186
+- StartTime: 44881
+  Lane: 6
+  KeySounds:
+  - Sample: 190
+- StartTime: 45000
+  Lane: 4
+  KeySounds:
+  - Sample: 188
+- StartTime: 45118
+  Lane: 1
+  KeySounds:
+  - Sample: 196
+- StartTime: 45236
+  Lane: 3
+  KeySounds:
+  - Sample: 182
+- StartTime: 45354
+  Lane: 7
+  KeySounds:
+  - Sample: 355
+- StartTime: 45472
+  Lane: 2
+  KeySounds:
+  - Sample: 356
+- StartTime: 45590
+  Lane: 3
+  KeySounds:
+  - Sample: 357
+- StartTime: 45708
+  Lane: 4
+  KeySounds:
+  - Sample: 358
+- StartTime: 45826
+  Lane: 6
+  KeySounds:
+  - Sample: 359
+- StartTime: 45944
+  Lane: 1
+  KeySounds:
+  - Sample: 360
+- StartTime: 46063
+  Lane: 2
+  KeySounds:
+  - Sample: 361
+- StartTime: 46181
+  Lane: 3
+  KeySounds:
+  - Sample: 362
+- StartTime: 46299
+  Lane: 5
+  KeySounds:
+  - Sample: 363
+- StartTime: 46417
+  Lane: 2
+  KeySounds:
+  - Sample: 364
+- StartTime: 46535
+  Lane: 4
+  KeySounds:
+  - Sample: 365
+- StartTime: 46653
+  Lane: 6
+  KeySounds:
+  - Sample: 366
+- StartTime: 46771
+  Lane: 5
+  KeySounds:
+  - Sample: 367
+- StartTime: 46889
+  Lane: 4
+  KeySounds:
+  - Sample: 368
+- StartTime: 47007
+  Lane: 3
+  KeySounds:
+  - Sample: 369
+- StartTime: 47125
+  Lane: 1
+  KeySounds:
+  - Sample: 370
+- StartTime: 47244
+  Lane: 2
+  KeySounds:
+  - Sample: 601
+- StartTime: 47244
+  Lane: 8
+  KeySounds:
+  - Sample: 13
+- StartTime: 47244
+  Lane: 7
+  KeySounds:
+  - Sample: 600
+- StartTime: 49133
+  Lane: 1
+  KeySounds:
+  - Sample: 605
+- StartTime: 49133
+  Lane: 6
+  KeySounds:
+  - Sample: 603
+- StartTime: 50078
+  Lane: 4
+  KeySounds:
+  - Sample: 606
+- StartTime: 51023
+  Lane: 2
+  KeySounds:
+  - Sample: 602
+- StartTime: 51023
+  Lane: 4
+  KeySounds:
+  - Sample: 607
+- StartTime: 51732
+  Lane: 5
+  KeySounds:
+  - Sample: 608
+- StartTime: 52913
+  Lane: 1
+  KeySounds:
+  - Sample: 605
+- StartTime: 53858
+  Lane: 2
+  KeySounds:
+  - Sample: 606
+- StartTime: 53858
+  Lane: 5
+  KeySounds:
+  - Sample: 603
+- StartTime: 54803
+  Lane: 3
+  KeySounds:
+  - Sample: 609
+- StartTime: 54803
+  Lane: 6
+  KeySounds:
+  - Sample: 600
+- StartTime: 56220
+  Lane: 3
+  KeySounds:
+  - Sample: 608
+- StartTime: 56220
+  Lane: 7
+  KeySounds:
+  - Sample: 611
+- StartTime: 56692
+  Lane: 4
+  KeySounds:
+  - Sample: 603
+- StartTime: 56692
+  Lane: 6
+  KeySounds:
+  - Sample: 610
+- StartTime: 57165
+  Lane: 2
+  KeySounds:
+  - Sample: 602
+- StartTime: 57637
+  Lane: 4
+  KeySounds:
+  - Sample: 604
+- StartTime: 57637
+  Lane: 6
+  KeySounds:
+  - Sample: 612
+- StartTime: 58110
+  Lane: 1
+  KeySounds:
+  - Sample: 605
+- StartTime: 58110
+  Lane: 7
+  KeySounds:
+  - Sample: 613
+- StartTime: 58582
+  Lane: 3
+  KeySounds:
+  - Sample: 609
+- StartTime: 58582
+  Lane: 5
+  KeySounds:
+  - Sample: 600
+- StartTime: 59527
+  Lane: 2
+  KeySounds:
+  - Sample: 601
+- StartTime: 59527
+  Lane: 4
+  KeySounds:
+  - Sample: 603
+- StartTime: 60472
+  Lane: 1
+  KeySounds:
+  - Sample: 614
+- StartTime: 60472
+  Lane: 7
+  KeySounds:
+  - Sample: 609
+- StartTime: 61417
+  Lane: 3
+  KeySounds:
+  - Sample: 605
+- StartTime: 61417
+  Lane: 5
+  KeySounds:
+  - Sample: 615
+- StartTime: 61653
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 61889
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 62126
+  Lane: 8
+  KeySounds:
+  - Sample: 792
+- StartTime: 62362
+  Lane: 4
+  KeySounds:
+  - Sample: 602
+- StartTime: 62362
+  Lane: 6
+  KeySounds:
+  - Sample: 606
+- StartTime: 62834
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 63779
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 64252
+  Lane: 3
+  KeySounds:
+  - Sample: 605
+- StartTime: 64252
+  Lane: 5
+  KeySounds:
+  - Sample: 615
+- StartTime: 64724
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 65196
+  Lane: 5
+  KeySounds:
+  - Sample: 616
+- StartTime: 65196
+  Lane: 7
+  KeySounds:
+  - Sample: 608
+- StartTime: 65433
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 65669
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 65669
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 65905
+  Lane: 8
+  KeySounds:
+  - Sample: 465
+- StartTime: 66141
+  Lane: 4
+  KeySounds:
+  - Sample: 601
+- StartTime: 66141
+  Lane: 7
+  KeySounds:
+  - Sample: 609
+- StartTime: 66614
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 67559
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 68031
+  Lane: 2
+  KeySounds:
+  - Sample: 614
+- StartTime: 68031
+  Lane: 6
+  KeySounds:
+  - Sample: 606
+- StartTime: 68503
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 68976
+  Lane: 3
+  KeySounds:
+  - Sample: 605
+- StartTime: 68976
+  Lane: 5
+  KeySounds:
+  - Sample: 615
+- StartTime: 69212
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 69448
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 69448
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 69685
+  Lane: 8
+  KeySounds:
+  - Sample: 793
+- StartTime: 69921
+  Lane: 2
+  KeySounds:
+  - Sample: 617
+- StartTime: 69921
+  Lane: 4
+  KeySounds:
+  - Sample: 602
+- StartTime: 70393
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 70866
+  Lane: 7
+  KeySounds:
+  - Sample: 603
+- StartTime: 71338
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 71811
+  Lane: 3
+  KeySounds:
+  - Sample: 605
+- StartTime: 71811
+  Lane: 5
+  KeySounds:
+  - Sample: 615
+- StartTime: 72283
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 72755
+  Lane: 6
+  KeySounds:
+  - Sample: 608
+- StartTime: 72992
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 73228
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 73228
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 73464
+  Lane: 8
+  KeySounds:
+  - Sample: 467
+- StartTime: 73700
+  Lane: 2
+  KeySounds:
+  - Sample: 605
+- StartTime: 73700
+  Lane: 4
+  KeySounds:
+  - Sample: 616
+- StartTime: 73700
+  Lane: 6
+  KeySounds:
+  - Sample: 609
+- StartTime: 74173
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 75118
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 75590
+  Lane: 3
+  KeySounds:
+  - Sample: 620
+- StartTime: 75590
+  Lane: 5
+  KeySounds:
+  - Sample: 619
+- StartTime: 75590
+  Lane: 8
+  KeySounds:
+  - Sample: 590
+- StartTime: 75590
+  Lane: 7
+  KeySounds:
+  - Sample: 618
+- StartTime: 76063
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 76063
+  Lane: 8
+  KeySounds:
+  - Sample: 593
+- StartTime: 76535
+  Lane: 8
+  KeySounds:
+  - Sample: 594
+- StartTime: 77007
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 77007
+  Lane: 4
+  KeySounds:
+  - Sample: 17
+- StartTime: 77007
+  Lane: 8
+  KeySounds:
+  - Sample: 596
+- StartTime: 77480
+  Lane: 2
+  KeySounds:
+  - Sample: 718
+- StartTime: 77480
+  Lane: 8
+  KeySounds:
+  - Sample: 25
+- StartTime: 77480
+  Lane: 6
+  KeySounds:
+  - Sample: 16
+- StartTime: 77952
+  Lane: 8
+  KeySounds:
+  - Sample: 13
+- StartTime: 78897
+  Lane: 7
+  KeySounds:
+  - Sample: 719
+- StartTime: 79133
+  Lane: 6
+  KeySounds:
+  - Sample: 720
+- StartTime: 80078
+  Lane: 2
+  KeySounds:
+  - Sample: 721
+- StartTime: 80315
+  Lane: 5
+  KeySounds:
+  - Sample: 722
+- StartTime: 80551
+  Lane: 6
+  KeySounds:
+  - Sample: 723
+- StartTime: 80787
+  Lane: 5
+  KeySounds:
+  - Sample: 724
+- StartTime: 81023
+  Lane: 4
+  KeySounds:
+  - Sample: 725
+- StartTime: 81259
+  Lane: 3
+  KeySounds:
+  - Sample: 726
+- StartTime: 81732
+  Lane: 1
+  KeySounds:
+  - Sample: 727
+- StartTime: 81968
+  Lane: 6
+  KeySounds:
+  - Sample: 728
+- StartTime: 82440
+  Lane: 5
+  KeySounds:
+  - Sample: 729
+- StartTime: 82677
+  Lane: 2
+  KeySounds:
+  - Sample: 730
+- StartTime: 82913
+  Lane: 7
+  KeySounds:
+  - Sample: 731
+- StartTime: 83385
+  Lane: 5
+  KeySounds:
+  - Sample: 732
+- StartTime: 83622
+  Lane: 3
+  KeySounds:
+  - Sample: 733
+- StartTime: 83858
+  Lane: 5
+  KeySounds:
+  - Sample: 734
+- StartTime: 84330
+  Lane: 2
+  KeySounds:
+  - Sample: 735
+- StartTime: 84330
+  Lane: 4
+  KeySounds:
+  - Sample: 621
+- StartTime: 84566
+  Lane: 1
+  KeySounds:
+  - Sample: 736
+- StartTime: 84566
+  Lane: 5
+  KeySounds:
+  - Sample: 622
+- StartTime: 84803
+  Lane: 8
+  KeySounds:
+  - Sample: 23
+- StartTime: 84803
+  Lane: 7
+  KeySounds:
+  - Sample: 624
+- StartTime: 85039
+  Lane: 3
+  KeySounds:
+  - Sample: 737
+- StartTime: 85039
+  Lane: 6
+  KeySounds:
+  - Sample: 626
+- StartTime: 85748
+  Lane: 1
+  KeySounds:
+  - Sample: 628
+- StartTime: 86220
+  Lane: 4
+  KeySounds:
+  - Sample: 623
+- StartTime: 86456
+  Lane: 3
+  KeySounds:
+  - Sample: 719
+- StartTime: 86456
+  Lane: 5
+  KeySounds:
+  - Sample: 630
+- StartTime: 86663
+  Lane: 6
+  KeySounds:
+  - Sample: 632
+- StartTime: 86692
+  Lane: 2
+  KeySounds:
+  - Sample: 720
+- StartTime: 86692
+  Lane: 7
+  KeySounds:
+  - Sample: 633
+- StartTime: 86929
+  Lane: 5
+  KeySounds:
+  - Sample: 635
+- StartTime: 87401
+  Lane: 4
+  KeySounds:
+  - Sample: 624
+- StartTime: 87637
+  Lane: 1
+  KeySounds:
+  - Sample: 738
+- StartTime: 87637
+  Lane: 3
+  KeySounds:
+  - Sample: 626
+- StartTime: 87874
+  Lane: 6
+  KeySounds:
+  - Sample: 739
+- StartTime: 88228
+  Lane: 7
+  KeySounds:
+  - Sample: 740
+- StartTime: 88346
+  Lane: 2
+  KeySounds:
+  - Sample: 621
+- StartTime: 88582
+  Lane: 6
+  KeySounds:
+  - Sample: 741
+- StartTime: 88818
+  Lane: 3
+  KeySounds:
+  - Sample: 622
+- StartTime: 88818
+  Lane: 5
+  KeySounds:
+  - Sample: 742
+- StartTime: 89173
+  Lane: 2
+  KeySounds:
+  - Sample: 637
+- StartTime: 89527
+  Lane: 4
+  KeySounds:
+  - Sample: 627
+- StartTime: 90472
+  Lane: 5
+  KeySounds:
+  - Sample: 688
+- StartTime: 90708
+  Lane: 3
+  KeySounds:
+  - Sample: 743
+- StartTime: 90708
+  Lane: 8
+  KeySounds:
+  - Sample: 590
+- StartTime: 90708
+  Lane: 7
+  KeySounds:
+  - Sample: 689
+- StartTime: 91063
+  Lane: 6
+  KeySounds:
+  - Sample: 690
+- StartTime: 91181
+  Lane: 8
+  KeySounds:
+  - Sample: 593
+- StartTime: 91417
+  Lane: 4
+  KeySounds:
+  - Sample: 691
+- StartTime: 91653
+  Lane: 1
+  KeySounds:
+  - Sample: 744
+- StartTime: 91653
+  Lane: 8
+  KeySounds:
+  - Sample: 594
+- StartTime: 91889
+  Lane: 2
+  KeySounds:
+  - Sample: 638
+- StartTime: 91889
+  Lane: 7
+  KeySounds:
+  - Sample: 692
+- StartTime: 92126
+  Lane: 3
+  KeySounds:
+  - Sample: 630
+- StartTime: 92126
+  Lane: 5
+  KeySounds:
+  - Sample: 693
+- StartTime: 92126
+  Lane: 8
+  KeySounds:
+  - Sample: 596
+- StartTime: 92244
+  Lane: 4
+  KeySounds:
+  - Sample: 694
+- StartTime: 92362
+  Lane: 6
+  KeySounds:
+  - Sample: 624
+- StartTime: 92598
+  Lane: 3
+  KeySounds:
+  - Sample: 626
+- StartTime: 92598
+  Lane: 5
+  KeySounds:
+  - Sample: 695
+- StartTime: 92598
+  Lane: 8
+  KeySounds:
+  - Sample: 26
+- StartTime: 92598
+  Lane: 7
+  KeySounds:
+  - Sample: 640
+- StartTime: 92834
+  Lane: 4
+  KeySounds:
+  - Sample: 769
+- StartTime: 93189
+  Lane: 1
+  KeySounds:
+  - Sample: 772
+- StartTime: 93543
+  Lane: 4
+  KeySounds:
+  - Sample: 770
+- StartTime: 93897
+  Lane: 1
+  KeySounds:
+  - Sample: 771
+- StartTime: 94252
+  Lane: 5
+  KeySounds:
+  - Sample: 774
+- StartTime: 94370
+  Lane: 2
+  KeySounds:
+  - Sample: 777
+- StartTime: 94488
+  Lane: 1
+  KeySounds:
+  - Sample: 644
+- StartTime: 94488
+  Lane: 4
+  KeySounds:
+  - Sample: 641
+- StartTime: 94724
+  Lane: 6
+  KeySounds:
+  - Sample: 780
+- StartTime: 95078
+  Lane: 3
+  KeySounds:
+  - Sample: 782
+- StartTime: 95196
+  Lane: 2
+  KeySounds:
+  - Sample: 647
+- StartTime: 95196
+  Lane: 5
+  KeySounds:
+  - Sample: 642
+- StartTime: 95433
+  Lane: 6
+  KeySounds:
+  - Sample: 781
+- StartTime: 95787
+  Lane: 4
+  KeySounds:
+  - Sample: 783
+- StartTime: 95905
+  Lane: 3
+  KeySounds:
+  - Sample: 638
+- StartTime: 95905
+  Lane: 6
+  KeySounds:
+  - Sample: 636
+- StartTime: 96141
+  Lane: 2
+  KeySounds:
+  - Sample: 780
+- StartTime: 96259
+  Lane: 5
+  KeySounds:
+  - Sample: 784
+- StartTime: 96378
+  Lane: 4
+  KeySounds:
+  - Sample: 626
+- StartTime: 96378
+  Lane: 7
+  KeySounds:
+  - Sample: 643
+- StartTime: 96614
+  Lane: 3
+  KeySounds:
+  - Sample: 785
+- StartTime: 96968
+  Lane: 1
+  KeySounds:
+  - Sample: 773
+- StartTime: 97086
+  Lane: 2
+  KeySounds:
+  - Sample: 644
+- StartTime: 97086
+  Lane: 6
+  KeySounds:
+  - Sample: 635
+- StartTime: 97322
+  Lane: 4
+  KeySounds:
+  - Sample: 786
+- StartTime: 97677
+  Lane: 6
+  KeySounds:
+  - Sample: 778
+- StartTime: 97795
+  Lane: 3
+  KeySounds:
+  - Sample: 639
+- StartTime: 97795
+  Lane: 5
+  KeySounds:
+  - Sample: 625
+- StartTime: 98031
+  Lane: 4
+  KeySounds:
+  - Sample: 781
+- StartTime: 98149
+  Lane: 1
+  KeySounds:
+  - Sample: 775
+- StartTime: 98267
+  Lane: 2
+  KeySounds:
+  - Sample: 647
+- StartTime: 98267
+  Lane: 7
+  KeySounds:
+  - Sample: 646
+- StartTime: 98503
+  Lane: 4
+  KeySounds:
+  - Sample: 776
+- StartTime: 98858
+  Lane: 4
+  KeySounds:
+  - Sample: 774
+- StartTime: 98976
+  Lane: 1
+  KeySounds:
+  - Sample: 629
+- StartTime: 98976
+  Lane: 6
+  KeySounds:
+  - Sample: 643
+- StartTime: 99212
+  Lane: 3
+  KeySounds:
+  - Sample: 779
+- StartTime: 99448
+  Lane: 2
+  KeySounds:
+  - Sample: 621
+- StartTime: 99448
+  Lane: 5
+  KeySounds:
+  - Sample: 775
+- StartTime: 99566
+  Lane: 4
+  KeySounds:
+  - Sample: 777
+- StartTime: 99685
+  Lane: 3
+  KeySounds:
+  - Sample: 622
+- StartTime: 99685
+  Lane: 6
+  KeySounds:
+  - Sample: 636
+- StartTime: 99803
+  Lane: 1
+  KeySounds:
+  - Sample: 782
+- StartTime: 99921
+  Lane: 8
+  KeySounds:
+  - Sample: 23
+- StartTime: 99921
+  Lane: 7
+  KeySounds:
+  - Sample: 624
+- StartTime: 100039
+  Lane: 2
+  KeySounds:
+  - Sample: 769
+- StartTime: 100157
+  Lane: 4
+  KeySounds:
+  - Sample: 640
+- StartTime: 100157
+  Lane: 6
+  KeySounds:
+  - Sample: 626
+- StartTime: 100393
+  Lane: 3
+  KeySounds:
+  - Sample: 770
+- StartTime: 100748
+  Lane: 3
+  KeySounds:
+  - Sample: 771
+- StartTime: 100866
+  Lane: 1
+  KeySounds:
+  - Sample: 628
+- StartTime: 101102
+  Lane: 4
+  KeySounds:
+  - Sample: 778
+- StartTime: 101338
+  Lane: 2
+  KeySounds:
+  - Sample: 623
+- StartTime: 101456
+  Lane: 5
+  KeySounds:
+  - Sample: 776
+- StartTime: 101574
+  Lane: 3
+  KeySounds:
+  - Sample: 630
+- StartTime: 101781
+  Lane: 6
+  KeySounds:
+  - Sample: 632
+- StartTime: 101811
+  Lane: 4
+  KeySounds:
+  - Sample: 780
+- StartTime: 101811
+  Lane: 7
+  KeySounds:
+  - Sample: 633
+- StartTime: 101929
+  Lane: 3
+  KeySounds:
+  - Sample: 779
+- StartTime: 102047
+  Lane: 2
+  KeySounds:
+  - Sample: 638
+- StartTime: 102047
+  Lane: 5
+  KeySounds:
+  - Sample: 635
+- StartTime: 102283
+  Lane: 1
+  KeySounds:
+  - Sample: 777
+- StartTime: 102519
+  Lane: 3
+  KeySounds:
+  - Sample: 625
+- StartTime: 102637
+  Lane: 1
+  KeySounds:
+  - Sample: 778
+- StartTime: 102755
+  Lane: 3
+  KeySounds:
+  - Sample: 624
+- StartTime: 102755
+  Lane: 7
+  KeySounds:
+  - Sample: 646
+- StartTime: 102992
+  Lane: 2
+  KeySounds:
+  - Sample: 774
+- StartTime: 103228
+  Lane: 4
+  KeySounds:
+  - Sample: 631
+- StartTime: 103228
+  Lane: 6
+  KeySounds:
+  - Sample: 634
+- StartTime: 103346
+  Lane: 1
+  KeySounds:
+  - Sample: 779
+- StartTime: 103582
+  Lane: 2
+  KeySounds:
+  - Sample: 775
+- StartTime: 103700
+  Lane: 1
+  KeySounds:
+  - Sample: 781
+- StartTime: 103700
+  Lane: 3
+  KeySounds:
+  - Sample: 639
+- StartTime: 103700
+  Lane: 5
+  KeySounds:
+  - Sample: 636
+- StartTime: 103818
+  Lane: 7
+  KeySounds:
+  - Sample: 784
+- StartTime: 103937
+  Lane: 2
+  KeySounds:
+  - Sample: 644
+- StartTime: 103937
+  Lane: 4
+  KeySounds:
+  - Sample: 641
+- StartTime: 104173
+  Lane: 6
+  KeySounds:
+  - Sample: 783
+- StartTime: 104527
+  Lane: 3
+  KeySounds:
+  - Sample: 772
+- StartTime: 104881
+  Lane: 7
+  KeySounds:
+  - Sample: 780
+- StartTime: 105118
+  Lane: 1
+  KeySounds:
+  - Sample: 645
+- StartTime: 105118
+  Lane: 3
+  KeySounds:
+  - Sample: 630
+- StartTime: 105118
+  Lane: 6
+  KeySounds:
+  - Sample: 776
+- StartTime: 105236
+  Lane: 4
+  KeySounds:
+  - Sample: 777
+- StartTime: 105472
+  Lane: 2
+  KeySounds:
+  - Sample: 638
+- StartTime: 105472
+  Lane: 5
+  KeySounds:
+  - Sample: 624
+- StartTime: 105472
+  Lane: 7
+  KeySounds:
+  - Sample: 774
+- StartTime: 105590
+  Lane: 6
+  KeySounds:
+  - Sample: 778
+- StartTime: 105708
+  Lane: 3
+  KeySounds:
+  - Sample: 782
+- StartTime: 105826
+  Lane: 2
+  KeySounds:
+  - Sample: 627
+- StartTime: 105826
+  Lane: 8
+  KeySounds:
+  - Sample: 590
+- StartTime: 105826
+  Lane: 7
+  KeySounds:
+  - Sample: 640
+- StartTime: 106063
+  Lane: 1
+  KeySounds:
+  - Sample: 773
+- StartTime: 106299
+  Lane: 8
+  KeySounds:
+  - Sample: 593
+- StartTime: 106417
+  Lane: 4
+  KeySounds:
+  - Sample: 787
+- StartTime: 106771
+  Lane: 2
+  KeySounds:
+  - Sample: 788
+- StartTime: 106771
+  Lane: 8
+  KeySounds:
+  - Sample: 594
+- StartTime: 107007
+  Lane: 4
+  KeySounds:
+  - Sample: 789
+- StartTime: 107126
+  Lane: 6
+  KeySounds:
+  - Sample: 790
+- StartTime: 107244
+  Lane: 1
+  KeySounds:
+  - Sample: 768
+- StartTime: 107244
+  Lane: 8
+  KeySounds:
+  - Sample: 596
+- StartTime: 107244
+  Lane: 7
+  KeySounds:
+  - Sample: 5
+- StartTime: 107716
+  Lane: 3
+  KeySounds:
+  - Sample: 223
+- StartTime: 107716
+  Lane: 5
+  KeySounds:
+  - Sample: 205
+- StartTime: 107716
+  Lane: 8
+  KeySounds:
+  - Sample: 13
+- StartTime: 107952
+  Lane: 3
+  KeySounds:
+  - Sample: 224
+- StartTime: 107952
+  Lane: 5
+  KeySounds:
+  - Sample: 206
+- StartTime: 108307
+  Lane: 3
+  KeySounds:
+  - Sample: 225
+- StartTime: 108307
+  Lane: 5
+  KeySounds:
+  - Sample: 207
+- StartTime: 108661
+  Lane: 3
+  KeySounds:
+  - Sample: 226
+- StartTime: 108661
+  Lane: 5
+  KeySounds:
+  - Sample: 208
+- StartTime: 109015
+  Lane: 3
+  KeySounds:
+  - Sample: 227
+- StartTime: 109015
+  Lane: 5
+  KeySounds:
+  - Sample: 209
+- StartTime: 109370
+  Lane: 3
+  KeySounds:
+  - Sample: 228
+- StartTime: 109370
+  Lane: 5
+  KeySounds:
+  - Sample: 210
+- StartTime: 109606
+  Lane: 2
+  KeySounds:
+  - Sample: 243
+- StartTime: 109606
+  Lane: 5
+  KeySounds:
+  - Sample: 205
+- StartTime: 109842
+  Lane: 2
+  KeySounds:
+  - Sample: 244
+- StartTime: 109842
+  Lane: 5
+  KeySounds:
+  - Sample: 206
+- StartTime: 110196
+  Lane: 2
+  KeySounds:
+  - Sample: 245
+- StartTime: 110196
+  Lane: 5
+  KeySounds:
+  - Sample: 207
+- StartTime: 110551
+  Lane: 2
+  KeySounds:
+  - Sample: 246
+- StartTime: 110551
+  Lane: 5
+  KeySounds:
+  - Sample: 208
+- StartTime: 110787
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 110905
+  Lane: 2
+  KeySounds:
+  - Sample: 247
+- StartTime: 110905
+  Lane: 5
+  KeySounds:
+  - Sample: 209
+- StartTime: 111023
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 111259
+  Lane: 4
+  KeySounds:
+  - Sample: 266
+- StartTime: 111259
+  Lane: 8
+  KeySounds:
+  - Sample: 794
+- StartTime: 111259
+  Lane: 7
+  KeySounds:
+  - Sample: 216
+- StartTime: 111496
+  Lane: 3
+  KeySounds:
+  - Sample: 223
+- StartTime: 111496
+  Lane: 6
+  KeySounds:
+  - Sample: 199
+- StartTime: 111732
+  Lane: 3
+  KeySounds:
+  - Sample: 224
+- StartTime: 111732
+  Lane: 6
+  KeySounds:
+  - Sample: 200
+- StartTime: 112086
+  Lane: 3
+  KeySounds:
+  - Sample: 225
+- StartTime: 112086
+  Lane: 6
+  KeySounds:
+  - Sample: 201
+- StartTime: 112441
+  Lane: 3
+  KeySounds:
+  - Sample: 226
+- StartTime: 112441
+  Lane: 6
+  KeySounds:
+  - Sample: 202
+- StartTime: 112795
+  Lane: 3
+  KeySounds:
+  - Sample: 227
+- StartTime: 112795
+  Lane: 6
+  KeySounds:
+  - Sample: 203
+- StartTime: 113149
+  Lane: 3
+  KeySounds:
+  - Sample: 228
+- StartTime: 113149
+  Lane: 6
+  KeySounds:
+  - Sample: 204
+- StartTime: 113385
+  Lane: 2
+  KeySounds:
+  - Sample: 267
+- StartTime: 113385
+  Lane: 4
+  KeySounds:
+  - Sample: 217
+- StartTime: 113622
+  Lane: 2
+  KeySounds:
+  - Sample: 268
+- StartTime: 113622
+  Lane: 4
+  KeySounds:
+  - Sample: 218
+- StartTime: 113976
+  Lane: 2
+  KeySounds:
+  - Sample: 269
+- StartTime: 113976
+  Lane: 4
+  KeySounds:
+  - Sample: 219
+- StartTime: 114330
+  Lane: 1
+  KeySounds:
+  - Sample: 258
+- StartTime: 114330
+  Lane: 4
+  KeySounds:
+  - Sample: 220
+- StartTime: 114567
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 114685
+  Lane: 1
+  KeySounds:
+  - Sample: 259
+- StartTime: 114685
+  Lane: 4
+  KeySounds:
+  - Sample: 221
+- StartTime: 114803
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 115039
+  Lane: 1
+  KeySounds:
+  - Sample: 260
+- StartTime: 115039
+  Lane: 4
+  KeySounds:
+  - Sample: 222
+- StartTime: 115039
+  Lane: 8
+  KeySounds:
+  - Sample: 793
+- StartTime: 115275
+  Lane: 3
+  KeySounds:
+  - Sample: 223
+- StartTime: 115275
+  Lane: 5
+  KeySounds:
+  - Sample: 205
+- StartTime: 115511
+  Lane: 3
+  KeySounds:
+  - Sample: 224
+- StartTime: 115511
+  Lane: 5
+  KeySounds:
+  - Sample: 206
+- StartTime: 115866
+  Lane: 3
+  KeySounds:
+  - Sample: 225
+- StartTime: 115866
+  Lane: 5
+  KeySounds:
+  - Sample: 207
+- StartTime: 116220
+  Lane: 3
+  KeySounds:
+  - Sample: 226
+- StartTime: 116220
+  Lane: 5
+  KeySounds:
+  - Sample: 208
+- StartTime: 116574
+  Lane: 3
+  KeySounds:
+  - Sample: 227
+- StartTime: 116574
+  Lane: 5
+  KeySounds:
+  - Sample: 209
+- StartTime: 116929
+  Lane: 3
+  KeySounds:
+  - Sample: 228
+- StartTime: 116929
+  Lane: 5
+  KeySounds:
+  - Sample: 210
+- StartTime: 117165
+  Lane: 2
+  KeySounds:
+  - Sample: 243
+- StartTime: 117165
+  Lane: 5
+  KeySounds:
+  - Sample: 205
+- StartTime: 117401
+  Lane: 2
+  KeySounds:
+  - Sample: 244
+- StartTime: 117401
+  Lane: 5
+  KeySounds:
+  - Sample: 206
+- StartTime: 117755
+  Lane: 2
+  KeySounds:
+  - Sample: 245
+- StartTime: 117755
+  Lane: 5
+  KeySounds:
+  - Sample: 207
+- StartTime: 118110
+  Lane: 2
+  KeySounds:
+  - Sample: 246
+- StartTime: 118110
+  Lane: 5
+  KeySounds:
+  - Sample: 208
+- StartTime: 118346
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 118464
+  Lane: 2
+  KeySounds:
+  - Sample: 247
+- StartTime: 118464
+  Lane: 5
+  KeySounds:
+  - Sample: 209
+- StartTime: 118582
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 118818
+  Lane: 4
+  KeySounds:
+  - Sample: 266
+- StartTime: 118818
+  Lane: 8
+  KeySounds:
+  - Sample: 795
+- StartTime: 118818
+  Lane: 7
+  KeySounds:
+  - Sample: 216
+- StartTime: 119055
+  Lane: 3
+  KeySounds:
+  - Sample: 223
+- StartTime: 119055
+  Lane: 6
+  KeySounds:
+  - Sample: 199
+- StartTime: 119291
+  Lane: 3
+  KeySounds:
+  - Sample: 224
+- StartTime: 119291
+  Lane: 6
+  KeySounds:
+  - Sample: 200
+- StartTime: 119645
+  Lane: 3
+  KeySounds:
+  - Sample: 225
+- StartTime: 119645
+  Lane: 6
+  KeySounds:
+  - Sample: 201
+- StartTime: 120000
+  Lane: 3
+  KeySounds:
+  - Sample: 226
+- StartTime: 120000
+  Lane: 6
+  KeySounds:
+  - Sample: 202
+- StartTime: 120354
+  Lane: 3
+  KeySounds:
+  - Sample: 227
+- StartTime: 120354
+  Lane: 6
+  KeySounds:
+  - Sample: 203
+- StartTime: 120708
+  Lane: 3
+  KeySounds:
+  - Sample: 228
+- StartTime: 120708
+  Lane: 6
+  KeySounds:
+  - Sample: 204
+- StartTime: 120944
+  Lane: 2
+  KeySounds:
+  - Sample: 267
+- StartTime: 120944
+  Lane: 4
+  KeySounds:
+  - Sample: 217
+- StartTime: 120944
+  Lane: 8
+  KeySounds:
+  - Sample: 590
+- StartTime: 121181
+  Lane: 2
+  KeySounds:
+  - Sample: 268
+- StartTime: 121181
+  Lane: 4
+  KeySounds:
+  - Sample: 218
+- StartTime: 121417
+  Lane: 8
+  KeySounds:
+  - Sample: 593
+- StartTime: 121535
+  Lane: 2
+  KeySounds:
+  - Sample: 269
+- StartTime: 121535
+  Lane: 4
+  KeySounds:
+  - Sample: 219
+- StartTime: 121889
+  Lane: 1
+  KeySounds:
+  - Sample: 258
+- StartTime: 121889
+  Lane: 4
+  KeySounds:
+  - Sample: 220
+- StartTime: 121889
+  Lane: 8
+  KeySounds:
+  - Sample: 594
+- StartTime: 122244
+  Lane: 1
+  KeySounds:
+  - Sample: 259
+- StartTime: 122244
+  Lane: 4
+  KeySounds:
+  - Sample: 221
+- StartTime: 122362
+  Lane: 8
+  KeySounds:
+  - Sample: 596
+- StartTime: 122598
+  Lane: 1
+  KeySounds:
+  - Sample: 260
+- StartTime: 122598
+  Lane: 4
+  KeySounds:
+  - Sample: 222
+- StartTime: 122834
+  Lane: 8
+  KeySounds:
+  - Sample: 26
+- StartTime: 122834
+  Lane: 7
+  KeySounds:
+  - Sample: 27
+- StartTime: 123307
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 123543
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 124252
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 124488
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 125196
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 125433
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 125905
+  Lane: 3
+  KeySounds:
+  - Sample: 10
+- StartTime: 125905
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 126141
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 126141
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 126378
+  Lane: 8
+  KeySounds:
+  - Sample: 794
+- StartTime: 126614
+  Lane: 7
+  KeySounds:
+  - Sample: 576
+- StartTime: 127086
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 127322
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 127322
+  Lane: 4
+  KeySounds:
+  - Sample: 578
+- StartTime: 128031
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 128031
+  Lane: 6
+  KeySounds:
+  - Sample: 579
+- StartTime: 128267
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 128976
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 129212
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 129212
+  Lane: 5
+  KeySounds:
+  - Sample: 581
+- StartTime: 129448
+  Lane: 4
+  KeySounds:
+  - Sample: 582
+- StartTime: 129685
+  Lane: 3
+  KeySounds:
+  - Sample: 10
+- StartTime: 129685
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 129803
+  Lane: 6
+  KeySounds:
+  - Sample: 583
+- StartTime: 129921
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 129921
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 130157
+  Lane: 8
+  KeySounds:
+  - Sample: 793
+- StartTime: 130157
+  Lane: 7
+  KeySounds:
+  - Sample: 584
+- StartTime: 130393
+  Lane: 5
+  KeySounds:
+  - Sample: 580
+- StartTime: 130866
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 131102
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 131102
+  Lane: 6
+  KeySounds:
+  - Sample: 577
+- StartTime: 131811
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 132047
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 132755
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 132992
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 133464
+  Lane: 3
+  KeySounds:
+  - Sample: 10
+- StartTime: 133464
+  Lane: 8
+  KeySounds:
+  - Sample: 463
+- StartTime: 133700
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 133700
+  Lane: 4
+  KeySounds:
+  - Sample: 578
+- StartTime: 133700
+  Lane: 8
+  KeySounds:
+  - Sample: 464
+- StartTime: 133937
+  Lane: 8
+  KeySounds:
+  - Sample: 795
+- StartTime: 134173
+  Lane: 6
+  KeySounds:
+  - Sample: 576
+- StartTime: 134645
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 134881
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 134881
+  Lane: 7
+  KeySounds:
+  - Sample: 586
+- StartTime: 135590
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 135590
+  Lane: 4
+  KeySounds:
+  - Sample: 585
+- StartTime: 135826
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 136063
+  Lane: 4
+  KeySounds:
+  - Sample: 584
+- StartTime: 136063
+  Lane: 8
+  KeySounds:
+  - Sample: 590
+- StartTime: 136063
+  Lane: 6
+  KeySounds:
+  - Sample: 587
+- StartTime: 136535
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 136535
+  Lane: 8
+  KeySounds:
+  - Sample: 593
+- StartTime: 136771
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 137007
+  Lane: 5
+  KeySounds:
+  - Sample: 588
+- StartTime: 137007
+  Lane: 8
+  KeySounds:
+  - Sample: 594
+- StartTime: 137007
+  Lane: 7
+  KeySounds:
+  - Sample: 589
+- StartTime: 137480
+  Lane: 1
+  KeySounds:
+  - Sample: 4
+- StartTime: 137480
+  Lane: 8
+  KeySounds:
+  - Sample: 596
+- StartTime: 137716
+  Lane: 2
+  KeySounds:
+  - Sample: 9
+- StartTime: 137716
+  Lane: 4
+  KeySounds:
+  - Sample: 2
+- StartTime: 137952
+  Lane: 4
+  KeySounds:
+  - Sample: 3
+- StartTime: 137952
+  Lane: 8
+  KeySounds:
+  - Sample: 13
