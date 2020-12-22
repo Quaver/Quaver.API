@@ -104,7 +104,7 @@ namespace Quaver.API.Maps.Parsers.Bms.Utilities
                         timingPoints.Add(new BmsTimingPoint
                         {
                             StartTime = currentTime + timeElapsed + stopTime,
-                            Bpm = 0.000001
+                            Bpm = 0.0
                         });
                         timingPoints.Add(new BmsTimingPoint
                         {
