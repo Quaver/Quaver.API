@@ -48,6 +48,15 @@ namespace Quaver.API.Maps.Structures
             [MoonSharpVisible(false)] set;
         }
 
+        /// <summary>
+        ///     Whether timing lines during this timing point should be hidden or not
+        /// </summary>
+        public bool Hidden
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        }
+
         [YamlIgnore]
         public bool IsEditableInLuaScript
         {
@@ -72,7 +81,7 @@ namespace Quaver.API.Maps.Structures
                 if (ReferenceEquals(x, null)) return false;
                 if (ReferenceEquals(y, null)) return false;
                 if (x.GetType() != y.GetType()) return false;
-                return x.StartTime.Equals(y.StartTime) && x.Bpm.Equals(y.Bpm) && x.Signature == y.Signature;
+                return x.StartTime.Equals(y.StartTime) && x.Bpm.Equals(y.Bpm) && x.Signature == y.Signature && x.Hidden == y.Hidden;
             }
 
             public int GetHashCode(TimingPointInfo obj)
@@ -82,6 +91,7 @@ namespace Quaver.API.Maps.Structures
                     var hashCode = obj.StartTime.GetHashCode();
                     hashCode = (hashCode * 397) ^ obj.Bpm.GetHashCode();
                     hashCode = (hashCode * 397) ^ (int) obj.Signature;
+                    hashCode = (hashCode * 397) ^ (obj.Hidden ? 1 : 0);
                     return hashCode;
                 }
             }
