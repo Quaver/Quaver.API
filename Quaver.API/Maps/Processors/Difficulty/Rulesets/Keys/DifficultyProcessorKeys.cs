@@ -568,7 +568,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         private void ComputeNoteDensityData(float rate)
         {
             //MapLength = Qua.Length;
-            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * (2- rate));
+            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * (-.5f * rate + 1.5f));
 
             //todo: solve note density graph
             // put stuff here
