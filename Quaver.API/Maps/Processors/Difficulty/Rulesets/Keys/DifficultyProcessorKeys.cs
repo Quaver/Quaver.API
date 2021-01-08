@@ -582,17 +582,18 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // todo: temp. Linear for now
             // todo: apply cosine curve
             const float lowestDifficulty = 1;
+            float densityMultiplier = .266f;
+            float densityDifficultyMin = .4f;
 
             // calculate ratio between min and max value
             var ratio = Math.Max(0, (duration - xMin) / (xMax - xMin));
-            //if ratio is too big scale based on nps instead
-            if (ratio > 1)
+            //if ratio is too big and map isnt a beginner map (nps > 4) scale based on nps instead
+            if (ratio > 1 && AverageNoteDensity < 4)
             {
+                //if note density is too low dont bother calculating for density either
                 if (AverageNoteDensity < 1)
-                    return .4f;
-                if (AverageNoteDensity > 4)
-                    return AverageNoteDensity * .5f;
-                return AverageNoteDensity * .266f + .134f;
+                    return densityDifficultyMin;
+                return AverageNoteDensity * densityMultiplier + .134f;
             }
             ratio = 1 - Math.Min(1, ratio);
 
