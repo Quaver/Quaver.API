@@ -162,6 +162,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float ComputeForOverallDifficulty(float rate, Hand assumeHand = Hand.Right)
         {
+            ComputeNoteDensityData(rate);
             ComputeBaseStrainStates(rate, assumeHand);
             ComputeForChords();
             ComputeForFingerActions();
@@ -567,7 +568,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         private void ComputeNoteDensityData(float rate)
         {
             //MapLength = Qua.Length;
-            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * rate);
+            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * (-.5f * rate + 1.5f));
 
             //todo: solve note density graph
             // put stuff here
@@ -581,10 +582,20 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // todo: temp. Linear for now
             // todo: apply cosine curve
             const float lowestDifficulty = 1;
+            float densityMultiplier = .266f;
+            float densityDifficultyMin = .4f;
 
             // calculate ratio between min and max value
             var ratio = Math.Max(0, (duration - xMin) / (xMax - xMin));
-                ratio = 1 - Math.Min(1, ratio);
+            //if ratio is too big and map isnt a beginner map (nps > 4) scale based on nps instead
+            if (ratio > 1 && AverageNoteDensity < 4)
+            {
+                //if note density is too low dont bother calculating for density either
+                if (AverageNoteDensity < 1)
+                    return densityDifficultyMin;
+                return AverageNoteDensity * densityMultiplier + .134f;
+            }
+            ratio = 1 - Math.Min(1, ratio);
 
             // compute for difficulty
             return lowestDifficulty + (strainMax - lowestDifficulty) * (float)Math.Pow(ratio, exp);
