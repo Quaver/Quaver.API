@@ -280,7 +280,8 @@ namespace Quaver.API.Maps
                     {
                         Bpm = tp.Bpm,
                         Signature = 0,
-                        StartTime = tp.StartTime
+                        StartTime = tp.StartTime,
+                        Hidden = tp.Hidden
                     });
                 }
                 else
