@@ -454,7 +454,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForLnMultiplier()
         {
-            const float shortLnThreshold = 60000f / 170 / 4;
+            const float shortLnThreshold = 60000f / 150 / 4; // value at which the multiplier starts decreasing
+            const float shortLnThresholdCeiling = 60000f / 180 / 4; // value at which the multiplier is 0
 
             foreach (var data in StrainSolverData)
             {
@@ -464,10 +465,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (Map.Mode == GameMode.Keys4 && Math.Abs(data.EndTime - data.StartTime) < shortLnThreshold)
                         continue;
 
-                    var durationValue = 1 - Math.Min(1, Math.Max(0, ((StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs)
+                    var durationValue = 1 - Math.Min(1, Math.Max(0, (StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs
                                                                      - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
 
-                    var baseMultiplier = 1 + (float)((1 - durationValue) * StrainConstants.LnBaseMultiplier);
+                    var lnLength = Math.Abs(data.EndTime - data.StartTime);
+                    var shortLnMultiplier = 1f;
+                    if (Map.Mode == GameMode.Keys4)
+                    {
+                        // if ln is 150/4, then 1
+                        // if ln is 180/4, then 0
+                        var lnShortness = ( shortLnThreshold - Math.Max(lnLength, shortLnThresholdCeiling) ) /
+                                          ( shortLnThreshold - shortLnThresholdCeiling );
+                        shortLnMultiplier = 1 - Math.Min(1, Math.Max(0, lnShortness));
+                    }
+
+                    var baseMultiplier = 1 + (float) ( ( 1 - durationValue ) * StrainConstants.LnBaseMultiplier * shortLnMultiplier );
                     foreach (var k in data.HitObjects)
                         k.LnStrainMultiplier = baseMultiplier;
 
