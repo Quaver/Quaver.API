@@ -462,9 +462,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // Check if data is LN
                 if (data.EndTime > data.StartTime)
                 {
-                    if (Map.Mode == GameMode.Keys4 && Math.Abs(data.EndTime - data.StartTime) < shortLnThreshold)
-                        continue;
-
                     var durationValue = 1 - Math.Min(1, Math.Max(0, (StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs
                                                                      - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
 
