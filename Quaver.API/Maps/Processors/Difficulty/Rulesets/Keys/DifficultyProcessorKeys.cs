@@ -551,9 +551,35 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             foreach (var data in StrainSolverData)
                 data.CalculateStrainValue();
 
+
+            var maxStrain = StrainSolverData.Select(s => s.TotalStrainValue).Max();
+
+            /*
+             * This value buffs breaks, since they drop down the strain average too much
+             * It keeps the ratings of maps with no breaks roughly the same or lowers them,
+             * but can add around 1-2 rating for maps above 30 rating with >15% breaks
+             *
+             * The reference value in this case is the regular count of data points in StrainSolverData
+             * It's divided with the strain sum later, so decreasing the strainCountAvg will increase the difficulty
+             *
+             * The used function f(s) = 0.9 + 0.15 * Math.Sqrt(s) with s between 0 and 1 will decrease the
+             * strainCountAvg if a section is low in strain
+             */
+            var strainCountAvg = (float)StrainSolverData.Select(
+                s => 0.9 + 0.15 * Math.Sqrt(s.TotalStrainValue / maxStrain)
+            ).Sum();
+
+            var mapStart = float.MaxValue;
+            var mapEnd = float.MinValue;
+
             // left hand
             foreach (var data in StrainSolverData)
             {
+                if (data.StartTime < mapStart)
+                    mapStart = data.StartTime;
+                if (data.EndTime > mapStart)
+                    mapEnd = data.EndTime;
+
                 if (data.Hand == Hand.Left)
                     calculatedDiff += data.TotalStrainValue;
             }
@@ -566,7 +592,26 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             // Calculate overall 4k difficulty
-            calculatedDiff /= StrainSolverData.Count;
+            calculatedDiff /= strainCountAvg;
+
+            // Nerf short maps below 60 seconds of true drain time (time where a player is actually playing hard/moderate parts)
+            const float maxShortNerf = 0.925f;
+            const float shortMapThresholdFloor = 30 * SECONDS_TO_MILLISECONDS; // Applies maxShortNerf at this length
+            const float shortMapThreshold = 60 * SECONDS_TO_MILLISECONDS; // Apply no change at this length
+
+            // Don't count sections as true drain time that are very easy in comparison to the rest of the map
+            var trueDrainPercentage =
+                (float) StrainSolverData.FindAll(s => s.TotalStrainValue > calculatedDiff * 0.4).Count /
+                StrainSolverData.Count;
+            var trueDrainTime = ( mapEnd - mapStart ) * trueDrainPercentage;
+
+            var mapShortness = ( trueDrainTime - shortMapThresholdFloor ) /
+                               ( shortMapThreshold - shortMapThresholdFloor );
+
+            var shortMapMultiplier = Math.Min(1, Math.Max(maxShortNerf,
+                maxShortNerf + ( 1 - maxShortNerf ) * mapShortness));
+
+            calculatedDiff *= shortMapMultiplier;
 
             // Get Overall 4k difficulty
             return calculatedDiff;
