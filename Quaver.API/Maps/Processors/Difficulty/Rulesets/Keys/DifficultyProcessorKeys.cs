@@ -548,7 +548,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             foreach (var data in StrainSolverData)
                 data.CalculateStrainValue();
 
-
             var maxStrain = StrainSolverData.Select(s => s.TotalStrainValue).Max();
 
             /*
@@ -563,7 +562,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
              * strainCountAvg if a section is low in strain
              */
             var strainCountAvg = (float)StrainSolverData.Select(
-                s => 0.9 + 0.15 * Math.Sqrt(s.TotalStrainValue / maxStrain)
+                s => 0.15 * Math.Sqrt(s.TotalStrainValue / maxStrain) + 0.9
             ).Sum();
 
             var mapStart = float.MaxValue;
@@ -606,7 +605,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                                ( shortMapThreshold - shortMapThresholdFloor );
 
             var shortMapMultiplier = Math.Min(1, Math.Max(maxShortNerf,
-                maxShortNerf + ( 1 - maxShortNerf ) * mapShortness));
+                ( 1 - maxShortNerf ) * mapShortness + maxShortNerf
+            ));
 
             calculatedDiff *= shortMapMultiplier;
 
