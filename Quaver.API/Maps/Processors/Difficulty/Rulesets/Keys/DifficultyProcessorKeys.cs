@@ -548,52 +548,65 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             foreach (var data in StrainSolverData)
                 data.CalculateStrainValue();
 
-            var maxStrain = StrainSolverData.Select(s => s.TotalStrainValue).Max();
+            calculatedDiff = StrainSolverData.Where(s => s.Hand == Hand.Left || s.Hand == Hand.Right).Select(s => s.TotalStrainValue).Average();
+
+            var bins = new List<float>();
+            const int binSize = 1000;
+            for (var i = Map.HitObjects.Select(h => h.StartTime).Min(); i < Map.HitObjects.Select(h => Math.Max(h.StartTime, h.EndTime)).Max(); i += 1000)
+            {
+                var valuesInBin = StrainSolverData.Where(s => s.StartTime >= i && s.StartTime < i + binSize).Select(s => s.TotalStrainValue);
+                if (valuesInBin.Any())
+                    bins.Add(valuesInBin.ToList().Average());
+                else
+                    bins.Add(0);
+            }
 
             /*
-             * This value buffs breaks, since they drop down the strain average too much
-             * It keeps the ratings of maps with no breaks roughly the same or lowers them,
-             * but can add around 1-2 rating for maps above 30 rating with >15% breaks
+             * Having a section, where notes are relatively easy to hit compared to the hardest sections of the map drop the rating of a map more than they should.
+             * This computes a "continuity" value, the higher it is the less "easy" notes it has.
+             * Maps with a higher continuity should get nerfed, since they are overrated right now.
              *
-             * The reference value in this case is the regular count of data points in StrainSolverData
-             * It's divided with the strain sum later, so decreasing the strainCountAvg will increase the difficulty
-             *
-             * The used function f(s) = 0.9 + 0.15 * Math.Sqrt(s) with s between 0 and 1 will decrease the
-             * strainCountAvg if a section is low in strain
+             * The continuity is computed by taking a comparison value, set as the average of the hardest 40% of all sections.
+             * All sections are compared to that value, the average is the continuity.
+             * A square root is used to decrease the gap between easy sections and hard sections and considered the core of this adjustment.
              */
-            var strainCountAvg = (float)StrainSolverData.Select(
-                s => 0.15 * Math.Sqrt(s.TotalStrainValue / maxStrain) + 0.9
-            ).Sum();
 
-            var mapStart = float.MaxValue;
-            var mapEnd = float.MinValue;
+            // Average of the hardest 40% of the map
+            var cutoffPos = (int)Math.Floor(bins.Count * 0.4);
+            var easyRatingCutoff = bins.OrderByDescending(s => s).Take(cutoffPos).Average();
 
-            // left hand
-            foreach (var data in StrainSolverData)
+            // We do consider sections without notes, since there are no "easy notes". Those sections have barely affected the rating in the old difficulty calculator.
+            var continuity = (float)bins.Where(strain => strain > 0)
+                .Select(strain => Math.Sqrt(strain / easyRatingCutoff))
+                .Average();
+
+            // The average continuity of maps in our dataset has been observed to be around 0.85, so we take that as the reference value to keep the rating the same.
+            const float maxContinuity = 1.00f;
+            const float avgContinuity = 0.85f;
+            const float minContinuity = 0.60f;
+
+            const float maxAdjustment = 1.05f;
+            const float avgAdjustment = 1.00f;
+            const float minAdjustment = 0.90f;
+
+            float continuityAdjustment;
+
+            if (continuity > avgContinuity)
             {
-                if (data.StartTime < mapStart)
-                    mapStart = data.StartTime;
-                if (data.EndTime > mapStart)
-                    mapEnd = data.EndTime;
-
-                if (data.Hand == Hand.Left)
-                    calculatedDiff += data.TotalStrainValue;
+                var continuityFactor = 1 - (continuity - avgContinuity)/(maxContinuity - avgContinuity);
+                continuityAdjustment = Math.Min(avgAdjustment, Math.Max(minAdjustment,
+                    continuityFactor * ( avgAdjustment - minAdjustment ) + minAdjustment
+                ));
+            }
+            else
+            {
+                var continuityFactor = 1 - (continuity - minContinuity)/(avgContinuity - minContinuity);
+                continuityAdjustment = Math.Min(maxAdjustment, Math.Max(avgAdjustment,
+                    continuityFactor * ( maxAdjustment - avgAdjustment ) + avgAdjustment
+                ));
             }
 
-            // right hand
-            foreach (var data in StrainSolverData)
-            {
-                if (data.Hand == Hand.Right)
-                    calculatedDiff += data.TotalStrainValue;
-            }
-
-            // Calculate overall 4k difficulty
-            calculatedDiff /= strainCountAvg;
-
-            // Nerf short maps below 60 seconds of true drain time (time where a player is actually playing hard/moderate parts)
-            const float maxShortNerf = 0.925f;
-            const float shortMapThresholdFloor = 30 * SECONDS_TO_MILLISECONDS; // Applies maxShortNerf at this length
-            const float shortMapThreshold = 60 * SECONDS_TO_MILLISECONDS; // Apply no change at this length
+            calculatedDiff *= continuityAdjustment;
 
             // Don't count sections as true drain time that are very easy in comparison to the rest of the map
             var trueDrainPercentage =
