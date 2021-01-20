@@ -582,6 +582,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     bins.Add(0);
             }
 
+            if (!bins.Any(strain => strain > 0)) return 0;
+
             /*
              * Having a section where notes are relatively easy, compared to the hardest sections of the map, drops the rating way more than it should.
              *
@@ -595,12 +597,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // Average of the hardest 40% of the map
             var cutoffPos = (int)Math.Floor(bins.Count * 0.4);
-            var easyRatingCutoff = bins.OrderByDescending(s => s).Take(cutoffPos).Average();
+            var top40 = bins.OrderByDescending(s => s).Take(cutoffPos);
+            var easyRatingCutoff = top40.Any() ? top40.Average() : 0;
 
             // We do consider sections without notes, since there are no "easy notes". Those sections have barely affected the rating in the old difficulty calculator.
-            var continuity = (float)bins.Where(strain => strain > 0)
-                .Select(strain => Math.Sqrt(strain / easyRatingCutoff))
-                .Average();
+            var continuity = (float) bins.Where(strain => strain > 0)
+                .Select(strain => Math.Sqrt(strain / easyRatingCutoff)
+            ).Average();
 
             // The average continuity of maps in our dataset has been observed to be around 0.85, so we take that as the reference value to keep the rating the same.
             const float maxContinuity = 1.00f;
