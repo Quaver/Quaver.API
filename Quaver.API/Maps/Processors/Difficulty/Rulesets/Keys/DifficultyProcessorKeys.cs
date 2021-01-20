@@ -564,22 +564,18 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 data.CalculateStrainValue();
 
             calculatedDiff = StrainSolverData.Where(s => s.Hand == Hand.Left || s.Hand == Hand.Right)
-                .Select(s => s.TotalStrainValue)
-                .Average();
+                .Average(s => s.TotalStrainValue);
 
             var bins = new List<float>();
             const int binSize = 1000;
 
-            var mapStart = Map.HitObjects.Select(h => h.StartTime).Min();
-            var mapEnd = Map.HitObjects.Select(h => Math.Max(h.StartTime, h.EndTime)).Max();
+            var mapStart = StrainSolverData.Select(s => s.StartTime).Min();
+            var mapEnd = StrainSolverData.Select(s => s.EndTime).Max();
             for (var i = mapStart; i < mapEnd; i += binSize)
             {
-                var valuesInBin = StrainSolverData.Where(s => s.StartTime >= i && s.StartTime < i + binSize)
-                    .Select(s => s.TotalStrainValue);
-                if (valuesInBin.Any())
-                    bins.Add(valuesInBin.ToList().Average());
-                else
-                    bins.Add(0);
+                var valuesInBin = StrainSolverData.Where(s => s.StartTime >= i && s.StartTime < i + binSize).ToList();
+                var averageRating = valuesInBin.Count != 0 ? valuesInBin.Average(s => s.TotalStrainValue) : 0;
+                bins.Add(averageRating);
             }
 
             if (!bins.Any(strain => strain > 0)) return 0;
@@ -602,8 +598,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // We do consider sections without notes, since there are no "easy notes". Those sections have barely affected the rating in the old difficulty calculator.
             var continuity = (float) bins.Where(strain => strain > 0)
-                .Select(strain => Math.Sqrt(strain / easyRatingCutoff)
-            ).Average();
+                .Average(strain => Math.Sqrt(strain / easyRatingCutoff));
 
             // The average continuity of maps in our dataset has been observed to be around 0.85, so we take that as the reference value to keep the rating the same.
             const float maxContinuity = 1.00f;
