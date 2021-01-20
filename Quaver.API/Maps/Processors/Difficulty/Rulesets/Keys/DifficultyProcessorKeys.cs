@@ -26,7 +26,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     The version of the processor.
         /// </summary>
-        public static string Version { get; } = "0.0.3";
+        public static string Version { get; } = "0.0.4";
 
         /// <summary>
         ///     Constants used for solving
