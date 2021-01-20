@@ -562,8 +562,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             /*
-             * Having a section, where notes are relatively easy to hit compared to the hardest sections of the map drop the rating of a map more than they should.
-             * This computes a "continuity" value, the higher it is the less "easy" notes it has.
+             * Having a section where notes are relatively easy, compared to the hardest sections of the map, drops the rating way more than it should.
+             *
+             * This part computes a "continuity" value, the higher it is the less "easy" notes it has.
              * Maps with a higher continuity should get nerfed, since they are overrated right now.
              *
              * The continuity is computed by taking a comparison value, set as the average of the hardest 40% of all sections.
@@ -608,20 +609,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             calculatedDiff *= continuityAdjustment;
 
-            // Don't count sections as true drain time that are very easy in comparison to the rest of the map
-            var trueDrainPercentage =
-                (float) StrainSolverData.FindAll(s => s.TotalStrainValue > calculatedDiff * 0.4).Count /
-                StrainSolverData.Count;
-            var trueDrainTime = ( mapEnd - mapStart ) * trueDrainPercentage;
+            /*
+             * Nerf short maps below 60 seconds of true drain time (time where a player is actually playing hard/moderate parts)
+             * We derive the "true drain time" from the continuity.
+             * There is no need to measure map length by taking the first/last note or strain data, since the bin size is already known.
+             */
+            const float maxShortMapAdjustment = 0.75f;
+            const float shortMapThreshold = 60 * SECONDS_TO_MILLISECONDS; // Start applying the nerf once a map is shorter
 
-            var mapShortness = ( trueDrainTime - shortMapThresholdFloor ) /
-                               ( shortMapThreshold - shortMapThresholdFloor );
-
-            var shortMapMultiplier = Math.Min(1, Math.Max(maxShortNerf,
-                ( 1 - maxShortNerf ) * mapShortness + maxShortNerf
+            var trueDrainTime = bins.Count * continuity * binSize;
+            var shortMapAdjustment = (float)Math.Min(1, Math.Max(maxShortMapAdjustment,
+                0.75 + 0.25 * Math.Sqrt(trueDrainTime / shortMapThreshold)
             ));
 
-            calculatedDiff *= shortMapMultiplier;
+            calculatedDiff *= shortMapAdjustment;
+
+            Console.WriteLine($"{Map.MapId},{Map},{calculatedDiff},{continuity},{continuityAdjustment},{shortMapAdjustment}");
 
             // Get Overall 4k difficulty
             return calculatedDiff;
