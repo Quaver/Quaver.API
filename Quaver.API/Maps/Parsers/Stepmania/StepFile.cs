@@ -43,7 +43,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
 
         /// <summary>
         /// </summary>
-        public string Background { get; private set; }
+        public string Background { get; set; }
 
         /// <summary>
         /// </summary>
