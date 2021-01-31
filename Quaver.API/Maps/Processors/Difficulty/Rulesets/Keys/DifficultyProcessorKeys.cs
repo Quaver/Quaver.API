@@ -569,12 +569,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var bins = new List<float>();
             const int binSize = 1000;
 
-            var mapStart = StrainSolverData.Select(s => s.StartTime).Min();
-            var mapEnd = StrainSolverData.Select(s => s.EndTime).Max();
+            var mapStart = StrainSolverData.Min(s => s.StartTime);
+            var mapEnd = StrainSolverData.Max(s => Math.Max(s.StartTime, s.EndTime));
             for (var i = mapStart; i < mapEnd; i += binSize)
             {
                 var valuesInBin = StrainSolverData.Where(s => s.StartTime >= i && s.StartTime < i + binSize).ToList();
-                var averageRating = valuesInBin.Count != 0 ? valuesInBin.Average(s => s.TotalStrainValue) : 0;
+                var averageRating = valuesInBin.Count > 0 ? valuesInBin.Average(s => s.TotalStrainValue) : 0;
                 bins.Add(averageRating);
             }
 
@@ -596,7 +596,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var top40 = bins.OrderByDescending(s => s).Take(cutoffPos);
             var easyRatingCutoff = top40.Any() ? top40.Average() : 0;
 
-            // We do consider sections without notes, since there are no "easy notes". Those sections have barely affected the rating in the old difficulty calculator.
+            // We do not consider sections without notes, since there are no "easy notes". Those sections have barely affected the rating in the old difficulty calculator.
             var continuity = (float) bins.Where(strain => strain > 0)
                 .Average(strain => Math.Sqrt(strain / easyRatingCutoff));
 
