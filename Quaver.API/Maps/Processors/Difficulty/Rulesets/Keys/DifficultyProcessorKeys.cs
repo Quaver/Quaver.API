@@ -26,7 +26,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     The version of the processor.
         /// </summary>
-        public static string Version { get; } = "0.0.3";
+        public static string Version { get; } = "0.0.4";
 
         /// <summary>
         ///     Constants used for solving
@@ -48,10 +48,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private Dictionary<int, Hand> LaneToHand4K { get; set; } = new Dictionary<int, Hand>()
         {
-            { 1, Hand.Left },
-            { 2, Hand.Left },
-            { 3, Hand.Right },
-            { 4, Hand.Right }
+            {1, Hand.Left},
+            {2, Hand.Left},
+            {3, Hand.Right},
+            {4, Hand.Right}
         };
 
         /// <summary>
@@ -59,13 +59,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private Dictionary<int, Hand> LaneToHand7K { get; set; } = new Dictionary<int, Hand>()
         {
-            { 1, Hand.Left },
-            { 2, Hand.Left },
-            { 3, Hand.Left },
-            { 4, Hand.Ambiguous },
-            { 5, Hand.Right },
-            { 6, Hand.Right },
-            { 7, Hand.Right }
+            {1, Hand.Left},
+            {2, Hand.Left},
+            {3, Hand.Left},
+            {4, Hand.Ambiguous},
+            {5, Hand.Right},
+            {6, Hand.Right},
+            {7, Hand.Right}
         };
 
         /// <summary>
@@ -73,10 +73,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private Dictionary<int, FingerState> LaneToFinger4K { get; set; } = new Dictionary<int, FingerState>()
         {
-            { 1, FingerState.Middle },
-            { 2, FingerState.Index },
-            { 3, FingerState.Index },
-            { 4, FingerState.Middle }
+            {1, FingerState.Middle},
+            {2, FingerState.Index},
+            {3, FingerState.Index},
+            {4, FingerState.Middle}
         };
 
         /// <summary>
@@ -84,13 +84,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private Dictionary<int, FingerState> LaneToFinger7K { get; set; } = new Dictionary<int, FingerState>()
         {
-            { 1, FingerState.Ring },
-            { 2, FingerState.Middle },
-            { 3, FingerState.Index },
-            { 4, FingerState.Thumb },
-            { 5, FingerState.Index },
-            { 6, FingerState.Middle },
-            { 7, FingerState.Ring }
+            {1, FingerState.Ring},
+            {2, FingerState.Middle},
+            {3, FingerState.Index},
+            {4, FingerState.Thumb},
+            {5, FingerState.Index},
+            {6, FingerState.Middle},
+            {7, FingerState.Ring}
         };
 
         /// <summary>
@@ -110,10 +110,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="constants"></param>
         /// <param name="mods"></param>
         /// <param name="detailedSolve"></param>
-        public DifficultyProcessorKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None, bool detailedSolve = false) : base(map, constants, mods)
+        public DifficultyProcessorKeys(Qua map, StrainConstants constants, ModIdentifier mods = ModIdentifier.None,
+            bool detailedSolve = false) : base(map, constants, mods)
         {
             // Cast the current Strain Constants Property to the correct type.
-            StrainConstants = (StrainConstantsKeys)constants;
+            StrainConstants = (StrainConstantsKeys) constants;
 
             // Don't bother calculating map difficulty if there's less than 2 hit objects
             if (map.HitObjects.Count < 2)
@@ -145,11 +146,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // Compute for overall difficulty
             switch (Map.Mode)
             {
-                case (GameMode.Keys4):
+                case GameMode.Keys4:
                     OverallDifficulty = ComputeForOverallDifficulty(rate);
                     break;
-                case (GameMode.Keys7):
-                    OverallDifficulty = (ComputeForOverallDifficulty(rate, Hand.Left) + ComputeForOverallDifficulty(rate, Hand.Right))/2;
+                case GameMode.Keys7:
+                    OverallDifficulty = (ComputeForOverallDifficulty(rate, Hand.Left) + ComputeForOverallDifficulty(rate, Hand.Right) ) / 2;
                     break;
             }
         }
@@ -200,7 +201,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         break;
                     case GameMode.Keys7:
                         curHitOb.FingerState = LaneToFinger7K[Map.HitObjects[i].Lane];
-                        curStrainData.Hand = LaneToHand7K[Map.HitObjects[i].Lane] == Hand.Ambiguous ? assumeHand : LaneToHand7K[Map.HitObjects[i].Lane];
+                        curStrainData.Hand = LaneToHand7K[Map.HitObjects[i].Lane] == Hand.Ambiguous
+                            ? assumeHand
+                            : LaneToHand7K[Map.HitObjects[i].Lane];
                         break;
                 }
 
@@ -280,7 +283,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (curHitOb.Hand == nextHitOb.Hand && nextHitOb.StartTime > curHitOb.StartTime)
                     {
                         // Determined by if there's a minijack within 2 set of chords/single notes
-                        var actionJackFound = ((int)nextHitOb.FingerState & (1 << (int)curHitOb.FingerState - 1)) != 0;
+                        var actionJackFound = ((int) nextHitOb.FingerState & (1 << (int) curHitOb.FingerState - 1)) != 0;
 
                         // Determined by if a chord is found in either finger state
                         var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
@@ -352,11 +355,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <param name="qssData"></param>
         private void ComputeForActionPatterns()
         {
-
         }
 
         /// <summary>
-        ///     Scans for roll manipulation. "Roll Manipulation" is definced as notes in sequence "A -> B -> A" with one action at least twice as long as the other.
+        ///     Scans for roll manipulation. "Roll Manipulation" is definced as notes in sequence
+        ///     "A -> B -> A" with one action at least twice as long as the other.
         /// </summary>
         private void ComputeForRollManipulation()
         {
@@ -368,7 +371,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 var manipulationFound = false;
 
                 // Check to see if the current data point has two other following points
-                if (data.NextStrainSolverDataOnCurrentHand != null && data.NextStrainSolverDataOnCurrentHand.NextStrainSolverDataOnCurrentHand != null)
+                if (data.NextStrainSolverDataOnCurrentHand != null &&
+                    data.NextStrainSolverDataOnCurrentHand.NextStrainSolverDataOnCurrentHand != null)
                 {
                     var middle = data.NextStrainSolverDataOnCurrentHand;
                     var last = data.NextStrainSolverDataOnCurrentHand.NextStrainSolverDataOnCurrentHand;
@@ -385,13 +389,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                             {
                                 // Apply multiplier
                                 // todo: catch possible arithmetic error (division by 0)
-                                var durationMultiplier = 1 / (1 + ((durationRatio - 1) * StrainConstants.RollRatioMultiplier));
-                                var manipulationFoundRatio = 1 - ((manipulationIndex / StrainConstants.RollMaxLength) * (1 - StrainConstants.RollLengthMultiplier));
+                                var durationMultiplier = 1 / (1 + (durationRatio - 1) * StrainConstants.RollRatioMultiplier);
+
+                                var manipulationFoundRatio = 1 - manipulationIndex / StrainConstants.RollMaxLength * (1 - StrainConstants.RollLengthMultiplier);
                                 data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
 
                                 // Count manipulation
                                 manipulationFound = true;
                                 RollInaccuracyConfidence++;
+
                                 if (manipulationIndex < StrainConstants.RollMaxLength)
                                     manipulationIndex++;
                             }
@@ -418,9 +424,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 var manipulationFound = false;
 
                 // Check to see if the current data point has a following data point
-                if (data.NextStrainSolverDataOnCurrentHand != null )
+                if (data.NextStrainSolverDataOnCurrentHand != null)
                 {
                     var next = data.NextStrainSolverDataOnCurrentHand;
+
                     if (data.FingerAction == FingerAction.SimpleJack && next.FingerAction == FingerAction.SimpleJack)
                     {
                         // Apply multiplier
@@ -430,14 +437,16 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         //          93.7ms = 160bpm 1/4 vibro
 
                         // 35f = 35ms tolerance before hitting vibro point (88.2ms, 170bpm vibro)
-                        var durationValue = Math.Min(1, Math.Max(0, ((StrainConstants.VibroActionDurationMs + StrainConstants.VibroActionToleranceMs) - data.FingerActionDurationMs) / StrainConstants.VibroActionToleranceMs));
-                        var durationMultiplier = 1 - (durationValue * (1 - StrainConstants.VibroMultiplier));
-                        var manipulationFoundRatio = 1 - ((longJackSize / StrainConstants.VibroMaxLength) * (1 - StrainConstants.VibroLengthMultiplier));
+                        var durationValue = Math.Min(1, Math.Max(0, (StrainConstants.VibroActionDurationMs + StrainConstants.VibroActionToleranceMs - data.FingerActionDurationMs ) / StrainConstants.VibroActionToleranceMs));
+
+                        var durationMultiplier = 1 - durationValue * (1 - StrainConstants.VibroMultiplier);
+                        var manipulationFoundRatio = 1 - longJackSize / StrainConstants.VibroMaxLength * (1 - StrainConstants.VibroLengthMultiplier);
                         data.RollManipulationStrainMultiplier = durationMultiplier * manipulationFoundRatio;
 
                         // Count manipulation
                         manipulationFound = true;
                         VibroInaccuracyConfidence++;
+
                         if (longJackSize < StrainConstants.VibroMaxLength)
                             longJackSize++;
                     }
@@ -454,58 +463,72 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForLnMultiplier()
         {
-            const float shortLnThreshold = 60000f / 170 / 4;
+            const float shortLnThreshold = 60000f / 150 / 4; // value at which the multiplier starts decreasing
+            const float shortLnThresholdCeiling = 60000f / 180 / 4; // value at which the multiplier is 0
 
             foreach (var data in StrainSolverData)
             {
                 // Check if data is LN
                 if (data.EndTime > data.StartTime)
                 {
-                    if (Map.Mode == GameMode.Keys4 && Math.Abs(data.EndTime - data.StartTime) < shortLnThreshold)
-                        continue;
+                    var durationValue = 1 - Math.Min(1, Math.Max(0, (StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
 
-                    var durationValue = 1 - Math.Min(1, Math.Max(0, ((StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs)
-                                                                     - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
+                    var lnLength = Math.Abs(data.EndTime - data.StartTime);
+                    var shortLnMultiplier = 1f;
 
-                    var baseMultiplier = 1 + (float)((1 - durationValue) * StrainConstants.LnBaseMultiplier);
+                    if (Map.Mode == GameMode.Keys4)
+                    {
+                        // if ln is 150/4, then 1
+                        // if ln is 180/4, then 0
+                        var lnShortness = (shortLnThreshold - Math.Max(lnLength, shortLnThresholdCeiling)) / (shortLnThreshold - shortLnThresholdCeiling);
+                        shortLnMultiplier = 1 - Math.Min(1, Math.Max(0, lnShortness));
+                    }
+
+                    var baseMultiplier = 1 + (1 - durationValue) * StrainConstants.LnBaseMultiplier * shortLnMultiplier;
+
                     foreach (var k in data.HitObjects)
                         k.LnStrainMultiplier = baseMultiplier;
 
                     // Check if next data point exists on current hand
                     var next = data.NextStrainSolverDataOnCurrentHand;
+
                     if (next != null)
-
-                    // Check to see if the target hitobject is layered inside the current LN
-                    if (next.StartTime < data.EndTime - StrainConstants.LnEndThresholdMs)
-                    if (next.StartTime >= data.StartTime + StrainConstants.LnEndThresholdMs)
-
-                    // Target hitobject's LN ends after current hitobject's LN end.
-                    if (next.EndTime > data.EndTime + StrainConstants.LnEndThresholdMs)
                     {
-                        foreach (var k in data.HitObjects)
+                         // Check to see if the target hitobject is layered inside the current LN
+                        if (next.StartTime < data.EndTime - StrainConstants.LnEndThresholdMs)
                         {
-                            k.LnLayerType = LnLayerType.OutsideRelease;
-                            k.LnStrainMultiplier *= StrainConstants.LnReleaseAfterMultiplier;
-                        }
-                    }
+                            if (next.StartTime >= data.StartTime + StrainConstants.LnEndThresholdMs)
+                            {
+                                // Target hitobject's LN ends after current hitobject's LN end.
+                                if (next.EndTime > data.EndTime + StrainConstants.LnEndThresholdMs)
+                                {
+                                    foreach (var k in data.HitObjects)
+                                    {
+                                        k.LnLayerType = LnLayerType.OutsideRelease;
+                                        k.LnStrainMultiplier *= StrainConstants.LnReleaseAfterMultiplier;
+                                    }
+                                }
 
-                    // Target hitobject's LN ends before current hitobject's LN end
-                    else if (next.EndTime > 0)
-                    {
-                        foreach (var k in data.HitObjects)
-                        {
-                            k.LnLayerType = LnLayerType.InsideRelease;
-                            k.LnStrainMultiplier *= StrainConstants.LnReleaseBeforeMultiplier;
-                        }
-                    }
+                                // Target hitobject's LN ends before current hitobject's LN end
+                                else if (next.EndTime > 0)
+                                {
+                                    foreach (var k in data.HitObjects)
+                                    {
+                                        k.LnLayerType = LnLayerType.InsideRelease;
+                                        k.LnStrainMultiplier *= StrainConstants.LnReleaseBeforeMultiplier;
+                                    }
+                                }
 
-                    // Target hitobject is not an LN
-                    else
-                    {
-                        foreach (var k in data.HitObjects)
-                        {
-                            k.LnLayerType = LnLayerType.InsideTap;
-                            k.LnStrainMultiplier *= StrainConstants.LnTapMultiplier;
+                                // Target hitobject is not an LN
+                                else
+                                {
+                                    foreach (var k in data.HitObjects)
+                                    {
+                                        k.LnLayerType = LnLayerType.InsideTap;
+                                        k.LnStrainMultiplier *= StrainConstants.LnTapMultiplier;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -533,30 +556,92 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float CalculateOverallDifficulty()
         {
-            float calculatedDiff = 0;
+            float calculatedDiff;
 
             // Solve strain value of every data point
             foreach (var data in StrainSolverData)
                 data.CalculateStrainValue();
 
-            // left hand
-            foreach (var data in StrainSolverData)
+            calculatedDiff = StrainSolverData.Where(s => s.Hand == Hand.Left || s.Hand == Hand.Right)
+                .Average(s => s.TotalStrainValue);
+
+            var bins = new List<float>();
+            const int binSize = 1000;
+
+            var mapStart = StrainSolverData.Min(s => s.StartTime);
+            var mapEnd = StrainSolverData.Max(s => Math.Max(s.StartTime, s.EndTime));
+
+            for (var i = mapStart; i < mapEnd; i += binSize)
             {
-                if (data.Hand == Hand.Left)
-                    calculatedDiff += data.TotalStrainValue;
+                var valuesInBin = StrainSolverData.Where(s => s.StartTime >= i && s.StartTime < i + binSize).ToList();
+                var averageRating = valuesInBin.Count > 0 ? valuesInBin.Average(s => s.TotalStrainValue) : 0;
+
+                bins.Add(averageRating);
             }
 
-            // right hand
-            foreach (var data in StrainSolverData)
+            if (!bins.Any(strain => strain > 0)) return 0;
+
+            /*
+             * Having a section where notes are relatively easy, compared to the hardest sections of the map, drops the rating way more than it should.
+             *
+             * This part computes a "continuity" value, the higher it is the less "easy" notes it has.
+             * Maps with a higher continuity should get nerfed, since they are overrated right now.
+             *
+             * The continuity is computed by taking a comparison value, set as the average of the hardest 40% of all sections.
+             * All sections are compared to that value, the average is the continuity.
+             * A square root is used to decrease the gap between easy sections and hard sections and considered the core of this adjustment.
+             */
+
+            // Average of the hardest 40% of the map
+            var cutoffPos = (int)Math.Floor(bins.Count * 0.4);
+            var top40 = bins.OrderByDescending(s => s).Take(cutoffPos);
+            var enumerable = top40 as float[] ?? top40.ToArray();
+            var easyRatingCutoff = enumerable.Any() ? enumerable.Average() : 0;
+
+            // We do not consider sections without notes, since there are no "easy notes". Those sections have barely
+            // affected the rating in the old difficulty calculator.
+            var continuity = (float) bins.Where(strain => strain > 0)
+                .Average(strain => Math.Sqrt(strain / easyRatingCutoff));
+
+            // The average continuity of maps in our dataset has been observed to be around 0.85, so we take that
+            // as the reference value to keep the rating the same.
+            const float maxContinuity = 1.00f;
+            const float avgContinuity = 0.85f;
+            const float minContinuity = 0.60f;
+
+            const float maxAdjustment = 1.05f;
+            const float avgAdjustment = 1.00f;
+            const float minAdjustment = 0.90f;
+
+            float continuityAdjustment;
+
+            if (continuity > avgContinuity)
             {
-                if (data.Hand == Hand.Right)
-                    calculatedDiff += data.TotalStrainValue;
+                var continuityFactor = 1 - (continuity - avgContinuity)/(maxContinuity - avgContinuity);
+                continuityAdjustment = Math.Min(avgAdjustment, Math.Max(minAdjustment, continuityFactor * ( avgAdjustment - minAdjustment ) + minAdjustment
+                ));
+            }
+            else
+            {
+                var continuityFactor = 1 - (continuity - minContinuity)/(avgContinuity - minContinuity);
+                continuityAdjustment = Math.Min(maxAdjustment, Math.Max(avgAdjustment, continuityFactor * (maxAdjustment - avgAdjustment) + avgAdjustment));
             }
 
-            // Calculate overall 4k difficulty
-            calculatedDiff /= StrainSolverData.Count;
+            calculatedDiff *= continuityAdjustment;
 
-            // Get Overall 4k difficulty
+            /*
+             * Nerf short maps below 60 seconds of true drain time (time where a player is actually playing hard/moderate parts)
+             * We derive the "true drain time" from the continuity.
+             * There is no need to measure map length by taking the first/last note or strain data, since the bin size is already known.
+             */
+            const float maxShortMapAdjustment = 0.75f;
+            const float shortMapThreshold = 60 * SECONDS_TO_MILLISECONDS; // Start applying the nerf once a map is shorter
+
+            var trueDrainTime = bins.Count * continuity * binSize;
+            var shortMapAdjustment = (float)Math.Min(1, Math.Max(maxShortMapAdjustment, 0.25 * Math.Sqrt(trueDrainTime / shortMapThreshold) + 0.75));
+
+            calculatedDiff *= shortMapAdjustment;
+
             return calculatedDiff;
         }
 
@@ -568,10 +653,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         private void ComputeNoteDensityData(float rate)
         {
             //MapLength = Qua.Length;
-            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * (-.5f * rate + 1.5f));
-
-            //todo: solve note density graph
-            // put stuff here
+            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / ( Map.Length * ( -.5f * rate + 1.5f ) );
         }
 
         /// <summary>
@@ -582,23 +664,26 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // todo: temp. Linear for now
             // todo: apply cosine curve
             const float lowestDifficulty = 1;
-            float densityMultiplier = .266f;
-            float densityDifficultyMin = .4f;
+            const float densityMultiplier = .266f;
+            const float densityDifficultyMin = .4f;
 
             // calculate ratio between min and max value
             var ratio = Math.Max(0, (duration - xMin) / (xMax - xMin));
+
             //if ratio is too big and map isnt a beginner map (nps > 4) scale based on nps instead
             if (ratio > 1 && AverageNoteDensity < 4)
             {
                 //if note density is too low dont bother calculating for density either
                 if (AverageNoteDensity < 1)
                     return densityDifficultyMin;
+
                 return AverageNoteDensity * densityMultiplier + .134f;
             }
+
             ratio = 1 - Math.Min(1, ratio);
 
             // compute for difficulty
-            return lowestDifficulty + (strainMax - lowestDifficulty) * (float)Math.Pow(ratio, exp);
+            return lowestDifficulty + (strainMax - lowestDifficulty) * (float) Math.Pow(ratio, exp);
         }
     }
 }
