@@ -642,7 +642,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             calculatedDiff *= shortMapAdjustment;
 
-            return calculatedDiff;
+            return calculatedDiff * 2;
         }
 
         /// <summary>
