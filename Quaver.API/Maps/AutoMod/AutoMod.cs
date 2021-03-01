@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Quaver.API.Enums;
 using Quaver.API.Maps.AutoMod.Issues;
+using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Quaver.API.Maps.Structures;
+using Quaver.API.Replays;
+using Quaver.API.Replays.Virtual;
 
 namespace Quaver.API.Maps.AutoMod
 {
@@ -44,6 +48,7 @@ namespace Quaver.API.Maps.AutoMod
             DetectHitObjectIssues();
             DetectTimingPointIssues();
             DetectScrollVelocityIssues();
+            DetectAutoplayIssues();
         }
 
         /// <summary>
@@ -74,7 +79,8 @@ namespace Quaver.API.Maps.AutoMod
                 if (hitObject.StartTime < 0 || (hitObject.IsLongNote && hitObject.EndTime < 0))
                     Issues.Add(new AutoModIssueObjectBeforeStart(hitObject));
 
-                // Any checks below this point require the previous object in the column, so don't run for the first object in the map.
+                // Any checks below this point require the previous object in the column, so don't run
+                // for the first object in the map.
                 if (hitObject == Qua.HitObjects.First())
                 {
                     previousNoteInColumns[laneIndex] = hitObject;
@@ -168,6 +174,27 @@ namespace Quaver.API.Maps.AutoMod
                 if (current.StartTime == previous.StartTime)
                     Issues.Add(new AutoModIssueScrollVelocityOverlap(new []{ current, previous }));
             }
+        }
+
+        /// <summary>
+        ///     Detects issues related to Autoplay (It should be able to 100%)
+        /// </summary>
+        private void DetectAutoplayIssues()
+        {
+            if (Qua.HitObjects.Count <= 1)
+                return;
+
+            var replay = new Replay(Qua.Mode, "", ModIdentifier.Autoplay, "");
+            replay = Replay.GeneratePerfectReplayKeys(replay, Qua);
+
+            var virtualReplayPlayer = new VirtualReplayPlayer(replay, Qua);
+            virtualReplayPlayer.PlayAllFrames();
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            if (virtualReplayPlayer.ScoreProcessor.Accuracy == 100)
+                return;
+
+            Issues.Add(new AutoModIssueAutoplayFailure());
         }
     }
 }

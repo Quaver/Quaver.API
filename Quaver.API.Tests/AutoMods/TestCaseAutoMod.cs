@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
-using Quaver.API.Maps.AutoMod.Issues;
+using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
@@ -95,6 +94,15 @@ namespace Quaver.API.Tests.AutoMods
             // ReSharper disable once CompareOfFloatsByEqualityOperator
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueScrollVelocityOverlap issue &&
                                                  issue.ScrollVelocities.First().StartTime == 545);
+        }
+
+        [Fact]
+        public void DetectAutoPlayFailure()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/autoplay-failure.qua"));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueAutoplayFailure);
         }
     }
 }

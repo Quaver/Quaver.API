@@ -194,5 +194,8 @@
     <None Update="AutoMods\Resources\overlap-sv.qua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="AutoMods\Resources\autoplay-failure.qua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
