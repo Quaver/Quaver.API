@@ -1,0 +1,25 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: -1
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Overlap Inside LN
+Description: Created at 1614617057000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- Lane: 1
+  EndTime: 1090
+  KeySounds: []
+- StartTime: 545
+  Lane: 1
+  KeySounds: []

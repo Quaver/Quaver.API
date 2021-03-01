@@ -78,6 +78,12 @@ namespace Quaver.API.Maps.AutoMod
 
                 var previousObject = previousNoteInColumns[laneIndex];
 
+                if (previousObject == null)
+                {
+                    previousNoteInColumns[laneIndex] = hitObject;
+                    continue;
+                }
+
                 // Check if the objects are overlapping in start times
                 if (Math.Abs(hitObject.StartTime - previousObject.StartTime) <= OverlappingObjectsThreshold)
                     Issues.Add(new AutoModIssueOverlappingObjects(new []{ hitObject, previousObject }));
