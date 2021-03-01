@@ -66,7 +66,7 @@ namespace Quaver.API.Maps.AutoMod
                     Issues.Add(new AutoModIssueShortLongNote(hitObject));
 
                 // Check if the object is before the object is before the audio begins
-                if (hitObject.StartTime < 0 || hitObject.IsLongNote && hitObject.EndTime < 0)
+                if (hitObject.StartTime < 0 || (hitObject.IsLongNote && hitObject.EndTime < 0))
                     Issues.Add(new AutoModIssueObjectBeforeStart(hitObject));
 
                 // Any checks below this point require the previous object in the column, so don't run for the first object in the map.
