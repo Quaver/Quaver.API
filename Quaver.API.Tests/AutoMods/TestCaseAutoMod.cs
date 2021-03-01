@@ -4,6 +4,8 @@ using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
 using Quaver.API.Maps.AutoMod.Issues;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
+using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
+using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -71,6 +73,28 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueObjectInAllColumns issue
                                                  && issue.MissingColumns.Count == 1 && issue.MissingColumns.First() == 3);
+        }
+
+        [Fact]
+        public void DetectOverlappingTimingPoints()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/overlap-timing-points.qua"));
+            autoMod.Run();
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            Assert.Contains(autoMod.Issues, x => x is AutoModeIssueTimingPointOverlap issue &&
+                                                 issue.TimingPoints.First().StartTime == 545);
+        }
+
+        [Fact]
+        public void DetectOverlappingScrollVelocities()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/overlap-sv.qua"));
+            autoMod.Run();
+
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueScrollVelocityOverlap issue &&
+                                                 issue.ScrollVelocities.First().StartTime == 545);
         }
     }
 }

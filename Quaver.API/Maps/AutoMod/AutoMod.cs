@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Quaver.API.Maps.AutoMod.Issues;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
+using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
+using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Maps.AutoMod
@@ -38,7 +40,10 @@ namespace Quaver.API.Maps.AutoMod
         public void Run()
         {
             Issues = new List<AutoModIssue>();
+
             DetectHitObjectIssues();
+            DetectTimingPointIssues();
+            DetectScrollVelocityIssues();
         }
 
         /// <summary>
@@ -120,6 +125,49 @@ namespace Quaver.API.Maps.AutoMod
             }
 
             Issues.Add(new AutoModIssueObjectInAllColumns(columnsMissing));
+        }
+
+        /// <summary>
+        ///     Detects issues related to timing points
+        ///
+        ///     It will check for the following:
+        ///         - Overlapping Timing Points
+        /// </summary>
+        private void DetectTimingPointIssues()
+        {
+            for (var i = 0; i < Qua.TimingPoints.Count; i++)
+            {
+                var current = Qua.TimingPoints[i];
+
+                if (i == 0)
+                    continue;
+
+                var previous = Qua.TimingPoints[i - 1];
+
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (current.StartTime == previous.StartTime)
+                    Issues.Add(new AutoModeIssueTimingPointOverlap(new [] { current, previous }));
+            }
+        }
+
+        /// <summary>
+        ///     Detects issues related to scroll velocities
+        /// </summary>
+        private void DetectScrollVelocityIssues()
+        {
+            for (var i = 0; i < Qua.SliderVelocities.Count; i++)
+            {
+                var current = Qua.SliderVelocities[i];
+
+                if (i == 0)
+                    continue;
+
+                var previous = Qua.SliderVelocities[i - 1];
+
+                // ReSharper disable once CompareOfFloatsByEqualityOperator
+                if (current.StartTime == previous.StartTime)
+                    Issues.Add(new AutoModIssueScrollVelocityOverlap(new []{ current, previous }));
+            }
         }
     }
 }
