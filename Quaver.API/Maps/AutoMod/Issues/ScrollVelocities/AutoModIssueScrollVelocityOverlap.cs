@@ -7,10 +7,12 @@ namespace Quaver.API.Maps.AutoMod.Issues.ScrollVelocities
     {
         public SliderVelocityInfo[] ScrollVelocities { get; }
 
-        public AutoModIssueScrollVelocityOverlap(SliderVelocityInfo[] scrollVelocities) : base(AutoModIssueLevel.Critical)
+        public AutoModIssueScrollVelocityOverlap(SliderVelocityInfo[] scrollVelocities) : base(AutoModIssueLevel.Warning)
         {
             ScrollVelocities = scrollVelocities;
-            Text = $"There are {ScrollVelocities.Length} scroll velocities overlapping at: {ScrollVelocities.First().StartTime}";
+
+            Text = $"There are {ScrollVelocities.Length} scroll velocities overlapping at: " +
+                   $"{ScrollVelocities.First().StartTime}";
         }
     }
 }

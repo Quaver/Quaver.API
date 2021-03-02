@@ -7,7 +7,7 @@ namespace Quaver.API.Maps.AutoMod.Issues.TimingPoints
     {
         public TimingPointInfo[] TimingPoints { get; }
 
-        public AutoModeIssueTimingPointOverlap(TimingPointInfo[] timingPoints) : base(AutoModIssueLevel.Critical)
+        public AutoModeIssueTimingPointOverlap(TimingPointInfo[] timingPoints) : base(AutoModIssueLevel.Warning)
         {
             TimingPoints = timingPoints;
             Text = $"There are {TimingPoints.Length} overlapping timing points at: {TimingPoints.First().StartTime} ms.";
