@@ -4,6 +4,7 @@ using Quaver.API.Maps.AutoMod;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
 using Quaver.API.Maps.AutoMod.Issues.Map;
+using Quaver.API.Maps.AutoMod.Issues.Metadata;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Xunit;
@@ -122,6 +123,16 @@ namespace Quaver.API.Tests.AutoMods
             autoMod.Run();
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueMapLength);
+        }
+
+        [Fact]
+        public void DetectNonRomanizedCharacters()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/non-romanized.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueNonRomanized issue &&
+                                                 issue.Text.Contains("Artist"));
         }
     }
 }

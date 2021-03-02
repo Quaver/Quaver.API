@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Quaver.API.Enums;
 using Quaver.API.Maps.AutoMod.Issues;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
 using Quaver.API.Maps.AutoMod.Issues.Map;
+using Quaver.API.Maps.AutoMod.Issues.Metadata;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Quaver.API.Maps.Structures;
@@ -62,6 +64,7 @@ namespace Quaver.API.Maps.AutoMod
             DetectScrollVelocityIssues();
             DetectAutoplayIssues();
             DetectMapLengthIssues();
+            DetectNonRomanizedMetadata();
         }
 
         /// <summary>
@@ -230,5 +233,32 @@ namespace Quaver.API.Maps.AutoMod
             if (Qua.Length < RequiredMapLength)
                 Issues.Add(new AutoModIssueMapLength());
         }
+
+        /// <summary>
+        ///     Detects issues related to the map's metadata.
+        /// </summary>
+        private void DetectMetadataIssues()
+        {
+            DetectNonRomanizedMetadata();
+        }
+
+        /// <summary>
+        ///     Detects if any portion of the metadata uses non-romanized characters.
+        /// </summary>
+        private void DetectNonRomanizedMetadata()
+        {
+            if (HasNonAsciiCharacters(Qua.Artist))
+                Issues.Add(new AutoModIssueNonRomanized("Artist"));
+
+            if (HasNonAsciiCharacters(Qua.Title))
+                Issues.Add(new AutoModIssueNonRomanized("Title"));
+        }
+
+        /// <summary>
+        ///     Checks a string for non-ascii characters
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private bool HasNonAsciiCharacters(string str) => str.Any(c => c > 128);
     }
 }
