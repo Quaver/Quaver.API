@@ -5,6 +5,7 @@ using Quaver.API.Enums;
 using Quaver.API.Maps.AutoMod.Issues;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
+using Quaver.API.Maps.AutoMod.Issues.Map;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Quaver.API.Maps.Structures;
@@ -40,6 +41,11 @@ namespace Quaver.API.Maps.AutoMod
         public const int BreakTime = 30000;
 
         /// <summary>
+        ///     The amount of time in milliseconds a map must be to be considered rankable
+        /// </summary>
+        public const int RequiredMapLength = 45000;
+
+        /// <summary>
         /// </summary>
         /// <param name="qua"></param>
         public AutoMod(Qua qua) => Qua = qua;
@@ -55,6 +61,7 @@ namespace Quaver.API.Maps.AutoMod
             DetectTimingPointIssues();
             DetectScrollVelocityIssues();
             DetectAutoplayIssues();
+            DetectMapLengthIssues();
         }
 
         /// <summary>
@@ -213,6 +220,15 @@ namespace Quaver.API.Maps.AutoMod
                 return;
 
             Issues.Add(new AutoModIssueAutoplayFailure());
+        }
+
+        /// <summary>
+        ///     Detects issues related to map length
+        /// </summary>
+        private void DetectMapLengthIssues()
+        {
+            if (Qua.Length < RequiredMapLength)
+                Issues.Add(new AutoModIssueMapLength());
         }
     }
 }

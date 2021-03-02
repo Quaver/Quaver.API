@@ -3,6 +3,7 @@ using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
+using Quaver.API.Maps.AutoMod.Issues.Map;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Xunit;
@@ -112,6 +113,15 @@ namespace Quaver.API.Tests.AutoMods
             autoMod.Run();
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueExcessiveBreakTime);
+        }
+
+        [Fact]
+        public void DetectShortMapLength()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/no-45-sec-map.qua"));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueMapLength);
         }
     }
 }

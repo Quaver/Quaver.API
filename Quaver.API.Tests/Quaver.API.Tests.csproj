@@ -200,5 +200,8 @@
     <None Update="AutoMods\Resources\30-sec-break.qua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="AutoMods\Resources\no-45-sec-map.qua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
