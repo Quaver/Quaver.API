@@ -104,5 +104,14 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueAutoplayFailure);
         }
+
+        [Fact]
+        public void DetectExcessiveBreak()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/30-sec-break.qua"));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueExcessiveBreakTime);
+        }
     }
 }

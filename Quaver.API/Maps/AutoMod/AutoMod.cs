@@ -34,6 +34,12 @@ namespace Quaver.API.Maps.AutoMod
         public const int OverlappingObjectsThreshold = 10;
 
         /// <summary>
+        ///     The amount of time in milliseconds where a break would be considered too excessive
+        ///     and against the ranking criteria.
+        /// </summary>
+        public const int BreakTime = 30000;
+
+        /// <summary>
         /// </summary>
         /// <param name="qua"></param>
         public AutoMod(Qua qua) => Qua = qua;
@@ -59,6 +65,7 @@ namespace Quaver.API.Maps.AutoMod
         ///         - Short Long Notes
         ///         - Notes that are placed before the audio begins
         ///         - There must be one note in every column
+        ///         - 30s+ break time
         /// </summary>
         private void DetectHitObjectIssues()
         {
@@ -67,8 +74,9 @@ namespace Quaver.API.Maps.AutoMod
             for (var i = 0; i < Qua.GetKeyCount(); i++)
                 previousNoteInColumns.Add(null);
 
-            foreach (var hitObject in Qua.HitObjects)
+            for (var i = 0; i < Qua.HitObjects.Count; i++)
             {
+                var hitObject = Qua.HitObjects[i];
                 var laneIndex = hitObject.Lane - 1;
 
                 // Check if the long note is too short
@@ -76,7 +84,7 @@ namespace Quaver.API.Maps.AutoMod
                     Issues.Add(new AutoModIssueShortLongNote(hitObject));
 
                 // Check if the object is before the object is before the audio begins
-                if (hitObject.StartTime < 0 || (hitObject.IsLongNote && hitObject.EndTime < 0))
+                if (hitObject.StartTime < 0 || ( hitObject.IsLongNote && hitObject.EndTime < 0 ))
                     Issues.Add(new AutoModIssueObjectBeforeStart(hitObject));
 
                 // Any checks below this point require the previous object in the column, so don't run
@@ -87,28 +95,38 @@ namespace Quaver.API.Maps.AutoMod
                     continue;
                 }
 
-                var previousObject = previousNoteInColumns[laneIndex];
+                var previousObjInMap = Qua.HitObjects[i - 1];
 
-                if (previousObject == null)
+                // Check for excessive break time.
+                if (hitObject.StartTime - previousObjInMap.StartTime >= BreakTime ||
+                   (previousObjInMap.IsLongNote && hitObject.StartTime - previousObjInMap.EndTime >= BreakTime))
+                {
+                    Issues.Add(new AutoModIssueExcessiveBreakTime(hitObject));
+                }
+
+                // Retrieve the previous object in the column if one exists.
+                var prevColObject = previousNoteInColumns[laneIndex];
+
+                if (prevColObject == null)
                 {
                     previousNoteInColumns[laneIndex] = hitObject;
                     continue;
                 }
 
                 // Check if the objects are overlapping in start times
-                if (Math.Abs(hitObject.StartTime - previousObject.StartTime) <= OverlappingObjectsThreshold)
-                    Issues.Add(new AutoModIssueOverlappingObjects(new []{ hitObject, previousObject }));
+                if (Math.Abs(hitObject.StartTime - prevColObject.StartTime) <= OverlappingObjectsThreshold)
+                    Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
 
                 // Check for long note overlaps
-                if (previousObject.IsLongNote)
+                if (prevColObject.IsLongNote)
                 {
                     // Check if the object is overlapping the previous object's long note end.
-                    if (Math.Abs(hitObject.StartTime - previousObject.EndTime) <= OverlappingObjectsThreshold)
-                        Issues.Add(new AutoModIssueOverlappingObjects(new [] { hitObject, previousObject }));
+                    if (Math.Abs(hitObject.StartTime - prevColObject.EndTime) <= OverlappingObjectsThreshold)
+                        Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
 
                     // Check if the object is "inside" of the previous long note.
-                    if (hitObject.StartTime >= previousObject.StartTime && hitObject.StartTime <= previousObject.EndTime)
-                        Issues.Add(new AutoModIssueOverlappingObjects(new [] { hitObject, previousObject }));
+                    if (hitObject.StartTime >= prevColObject.StartTime && hitObject.StartTime <= prevColObject.EndTime)
+                        Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
                 }
 
                 previousNoteInColumns[hitObject.Lane - 1] = hitObject;
