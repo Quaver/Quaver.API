@@ -64,7 +64,7 @@ namespace Quaver.API.Maps.AutoMod
             DetectScrollVelocityIssues();
             DetectAutoplayIssues();
             DetectMapLengthIssues();
-            DetectNonRomanizedMetadata();
+            DetectMetadataIssues();
         }
 
         /// <summary>
@@ -237,10 +237,7 @@ namespace Quaver.API.Maps.AutoMod
         /// <summary>
         ///     Detects issues related to the map's metadata.
         /// </summary>
-        private void DetectMetadataIssues()
-        {
-            DetectNonRomanizedMetadata();
-        }
+        private void DetectMetadataIssues() => DetectNonRomanizedMetadata();
 
         /// <summary>
         ///     Detects if any portion of the metadata uses non-romanized characters.
