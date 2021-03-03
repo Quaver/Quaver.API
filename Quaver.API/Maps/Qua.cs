@@ -174,6 +174,12 @@ namespace Quaver.API.Maps
         public int RandomizeModifierSeed { get; set; } = -1;
 
         /// <summary>
+        ///     The path of the .qua file if it is being parsed from one.
+        /// </summary>
+        [YamlIgnore]
+        private string FilePath { get; set; }
+
+        /// <summary>
         ///     Ctor
         /// </summary>
         public Qua() {}
@@ -248,6 +254,7 @@ namespace Quaver.API.Maps
                 var deserializer = new DeserializerBuilder();
                 deserializer.IgnoreUnmatchedProperties();
                 qua = (Qua)deserializer.Build().Deserialize(file, typeof(Qua));
+                qua.FilePath = path;
 
                 RestoreDefaultValues(qua);
             }
@@ -1295,6 +1302,18 @@ namespace Quaver.API.Maps
             // Relies on DenormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
             qua.DenormalizeSVs();
             return qua;
+        }
+
+        /// <summary>
+        ///     Returns the path of the file background. If no background exists, it will retur null.
+        /// </summary>
+        /// <returns></returns>
+        public string GetBackgroundPath()
+        {
+            if (string.IsNullOrEmpty(BackgroundFile) || string.IsNullOrEmpty(FilePath))
+                return null;
+
+            return $"{Path.GetDirectoryName(FilePath)}/{BackgroundFile}";
         }
     }
 }

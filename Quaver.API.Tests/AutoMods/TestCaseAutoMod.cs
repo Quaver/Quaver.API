@@ -2,6 +2,7 @@
 using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
+using Quaver.API.Maps.AutoMod.Issues.Background;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
 using Quaver.API.Maps.AutoMod.Issues.Map;
 using Quaver.API.Maps.AutoMod.Issues.Metadata;
@@ -133,6 +134,15 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueNonRomanized issue &&
                                                  issue.Text.Contains("Artist"));
+        }
+
+        [Fact]
+        public void DetectNoBackgroundFile()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/no-bg-file.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueNoBackground);
         }
     }
 }
