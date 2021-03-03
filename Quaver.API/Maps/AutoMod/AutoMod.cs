@@ -50,6 +50,11 @@ namespace Quaver.API.Maps.AutoMod
         public const int RequiredMapLength = 45000;
 
         /// <summary>
+        ///     The max file size of a background in bytes.
+        /// </summary>
+        public const int MaxBackgroundFileSize = 4000000;
+
+        /// <summary>
         /// </summary>
         /// <param name="qua"></param>
         public AutoMod(Qua qua) => Qua = qua;
@@ -270,13 +275,18 @@ namespace Quaver.API.Maps.AutoMod
         {
             var path = Qua.GetBackgroundPath();
 
+            // Check if the background exis
             if (path == null)
             {
                 Issues.Add(new AutoModIssueNoBackground());
                 return;
             }
 
-            var fileSize = new FileInfo(path).Length;
+            // Check background file size
+            if (new FileInfo(path).Length > MaxBackgroundFileSize)
+                Issues.Add(new AutoModIssueBackgroundTooLarge());
+
+
         }
     }
 }

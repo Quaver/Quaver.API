@@ -144,5 +144,14 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueNoBackground);
         }
+
+        [Fact]
+        public void DetectLargeBackgroundFile()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/large-bg-file.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueBackgroundTooLarge);
+        }
     }
 }
