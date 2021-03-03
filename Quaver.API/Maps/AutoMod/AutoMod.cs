@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,6 +15,7 @@ using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Quaver.API.Maps.Structures;
 using Quaver.API.Replays;
 using Quaver.API.Replays.Virtual;
+using SixLabors.ImageSharp;
 
 namespace Quaver.API.Maps.AutoMod
 {
@@ -289,12 +289,12 @@ namespace Quaver.API.Maps.AutoMod
 
             try
             {
-                using (var bitmap = new Bitmap(path))
+                using (var image = Image.Load(path))
                 {
-                    if (bitmap.Width < 1280 || bitmap.Height < 720)
+                    if (image.Width < 1280 || image.Height < 720)
                         Issues.Add(new AutoModIssueBackgroundResolution());
 
-                    bitmap.Dispose();
+                    image.Dispose();
                 }
             }
             catch (Exception e)
