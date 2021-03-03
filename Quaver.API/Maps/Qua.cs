@@ -216,7 +216,8 @@ namespace Quaver.API.Maps
                    && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
                    && SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer)
                    && EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer)
-                   && RandomizeModifierSeed == other.RandomizeModifierSeed;
+                   && RandomizeModifierSeed == other.RandomizeModifierSeed
+                   && FilePath == other.FilePath;
         }
 
         /// <summary>
