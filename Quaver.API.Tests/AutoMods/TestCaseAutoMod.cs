@@ -153,5 +153,14 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueBackgroundTooLarge);
         }
+
+        [Fact]
+        public void DetectSmallBackgroundResolution()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/small-bg-resolution.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueBackgroundResolution);
+        }
     }
 }

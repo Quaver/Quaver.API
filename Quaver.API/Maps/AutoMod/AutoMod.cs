@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -286,7 +287,20 @@ namespace Quaver.API.Maps.AutoMod
             if (new FileInfo(path).Length > MaxBackgroundFileSize)
                 Issues.Add(new AutoModIssueBackgroundTooLarge());
 
+            try
+            {
+                using (var bitmap = new Bitmap(path))
+                {
+                    if (bitmap.Width < 1280 || bitmap.Height < 720)
+                        Issues.Add(new AutoModIssueBackgroundResolution());
 
+                    bitmap.Dispose();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }

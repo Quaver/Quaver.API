@@ -1,0 +1,33 @@
+AudioFile: audio.mp3
+BackgroundFile: small-bg-resolution.png
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Small Background Resolution
+Description: Created at 1614792937000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- Lane: 1
+  KeySounds: []
+- StartTime: 136
+  Lane: 1
+  KeySounds: []
+- StartTime: 272
+  Lane: 1
+  KeySounds: []
+- StartTime: 409
+  Lane: 1
+  KeySounds: []
+- StartTime: 545
+  Lane: 1
+  KeySounds: []
