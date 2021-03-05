@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
 using Quaver.API.Maps.AutoMod.Issues.Audio;
@@ -6,6 +7,7 @@ using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.Background;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
 using Quaver.API.Maps.AutoMod.Issues.Map;
+using Quaver.API.Maps.AutoMod.Issues.Mapset;
 using Quaver.API.Maps.AutoMod.Issues.Metadata;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
@@ -198,6 +200,19 @@ namespace Quaver.API.Tests.AutoMods
             autoMod.Run();
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueAudioBitrate);
+        }
+
+        [Fact]
+        public void DetectMapsetSpreadIssues()
+        {
+            var autoModMapset = new AutoModMapset(new List<Qua>()
+            {
+                Qua.Parse("./AutoMods/Resources/short-ln.qua", false)
+            });
+
+            autoModMapset.Run();
+
+            Assert.Contains(autoModMapset.Issues, x => x is AutoModIssueMapsetSpreadLength);
         }
     }
 }
