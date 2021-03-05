@@ -6,6 +6,7 @@ using System.Text;
 using ATL;
 using Quaver.API.Enums;
 using Quaver.API.Maps.AutoMod.Issues;
+using Quaver.API.Maps.AutoMod.Issues.Audio;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.Background;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
@@ -80,6 +81,7 @@ namespace Quaver.API.Maps.AutoMod
             DetectMapLengthIssues();
             DetectMetadataIssues();
             DetectBackgroundFileIsues();
+            DetectAudioFileIssues();
         }
 
         /// <summary>
@@ -341,6 +343,18 @@ namespace Quaver.API.Maps.AutoMod
             {
                 Console.WriteLine(e);
             }
+        }
+
+        /// <summary>
+        ///     Detects issues with the audio file if one exists
+        /// </summary>
+        private void DetectAudioFileIssues()
+        {
+            if (AudioTrackInfo == null)
+                return;
+
+            if (AudioTrackInfo.Bitrate > 192)
+                Issues.Add(new AutoModIssueAudioBitrate());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
+using Quaver.API.Maps.AutoMod.Issues.Audio;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
 using Quaver.API.Maps.AutoMod.Issues.Background;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
@@ -188,6 +189,15 @@ namespace Quaver.API.Tests.AutoMods
             autoMod.Run();
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueScrollVelocityAfterEnd);
+        }
+
+        [Fact]
+        public void DetectAudioBitrateTooHigh()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/high-bitrate.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueAudioBitrate);
         }
     }
 }
