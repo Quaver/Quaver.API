@@ -171,5 +171,14 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueObjectAfterAudioEnd);
         }
+
+        [Fact]
+        public void DetectTimingPointAfterAudio()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/timing-point-after-end.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueTimingPointAfterAudioEnd);
+        }
     }
 }

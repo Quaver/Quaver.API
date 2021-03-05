@@ -216,6 +216,9 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var current = Qua.TimingPoints[i];
 
+                if (AudioTrackInfo != null && (current.StartTime > AudioTrackInfo.DurationMs))
+                    Issues.Add(new AutoModIssueTimingPointAfterAudioEnd(current));
+
                 if (i == 0)
                     continue;
 
