@@ -1305,7 +1305,7 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        ///     Returns the path of the file background. If no background exists, it will retur null.
+        ///     Returns the path of the file background. If no background exists, it will return null.
         /// </summary>
         /// <returns></returns>
         public string GetBackgroundPath()
@@ -1314,6 +1314,18 @@ namespace Quaver.API.Maps
                 return null;
 
             return $"{Path.GetDirectoryName(FilePath)}/{BackgroundFile}";
+        }
+
+        /// <summary>
+        ///     Returns the path of the audio track file. If no track exists, it will return null.
+        /// </summary>
+        /// <returns></returns>
+        public string GetAudioPath()
+        {
+            if (string.IsNullOrEmpty(AudioFile) || string.IsNullOrEmpty(FilePath))
+                return null;
+
+            return $"{Path.GetDirectoryName(FilePath)}/{AudioFile}";
         }
     }
 }

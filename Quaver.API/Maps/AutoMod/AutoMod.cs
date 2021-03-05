@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using ATL;
 using Quaver.API.Enums;
 using Quaver.API.Maps.AutoMod.Issues;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
@@ -24,6 +25,10 @@ namespace Quaver.API.Maps.AutoMod
         /// <summary>
         /// </summary>
         public Qua Qua { get; }
+
+        /// <summary>
+        /// </summary>
+        public Track AudioTrackInfo { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -67,6 +72,7 @@ namespace Quaver.API.Maps.AutoMod
         {
             Issues = new List<AutoModIssue>();
 
+            LoadAudioTrackData();
             DetectHitObjectIssues();
             DetectTimingPointIssues();
             DetectScrollVelocityIssues();
@@ -74,6 +80,27 @@ namespace Quaver.API.Maps.AutoMod
             DetectMapLengthIssues();
             DetectMetadataIssues();
             DetectBackgroundFileIsues();
+        }
+
+        /// <summary>
+        ///     Loads audio track metadata.
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private void LoadAudioTrackData()
+        {
+            var path = Qua.GetAudioPath();
+
+            if (path == null)
+                return;
+
+            try
+            {
+                AudioTrackInfo = new Track(path, true);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         /// <summary>
@@ -105,6 +132,13 @@ namespace Quaver.API.Maps.AutoMod
                 // Check if the object is before the object is before the audio begins
                 if (hitObject.StartTime < 0 || ( hitObject.IsLongNote && hitObject.EndTime < 0 ))
                     Issues.Add(new AutoModIssueObjectBeforeStart(hitObject));
+
+                // Check if object is after the audio ends
+                if (AudioTrackInfo != null && (hitObject.StartTime > AudioTrackInfo.DurationMs
+                                               || hitObject.EndTime > AudioTrackInfo.DurationMs))
+                {
+                    Issues.Add(new AutoModIssueObjectAfterAudioEnd(hitObject));
+                }
 
                 // Any checks below this point require the previous object in the column, so don't run
                 // for the first object in the map.

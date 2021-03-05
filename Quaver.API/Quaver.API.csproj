@@ -16,5 +16,6 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="YamlDotNet" Version="5.1.0" />
+    <PackageReference Include="z440.atl.core" Version="3.18.0" />
   </ItemGroup>
 </Project>

@@ -162,5 +162,14 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueBackgroundResolution);
         }
+
+        [Fact]
+        public void DetectNotesAfterAudio()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/notes-after-audio.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueObjectAfterAudioEnd);
+        }
     }
 }
