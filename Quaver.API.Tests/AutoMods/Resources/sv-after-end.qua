@@ -1,0 +1,24 @@
+AudioFile: notes-after-audio.mp3
+SongPreviewTime: 18409
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: SV After Audio Ends
+Description: Created at 1614967114000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities:
+- StartTime: 999999
+  Multiplier: 123
+HitObjects:
+- Lane: 3
+  KeySounds: []

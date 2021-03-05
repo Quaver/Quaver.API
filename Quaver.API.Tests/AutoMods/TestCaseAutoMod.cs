@@ -180,5 +180,14 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueTimingPointAfterAudioEnd);
         }
+
+        [Fact]
+        public void DetectScrollVelocityAfterAudio()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/sv-after-end.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueScrollVelocityAfterEnd);
+        }
     }
 }

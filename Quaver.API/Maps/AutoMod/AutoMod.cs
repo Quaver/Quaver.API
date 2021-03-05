@@ -239,6 +239,9 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var current = Qua.SliderVelocities[i];
 
+                if (AudioTrackInfo != null && (current.StartTime > AudioTrackInfo.DurationMs))
+                    Issues.Add(new AutoModIssueScrollVelocityAfterEnd(current));
+
                 if (i == 0)
                     continue;
 
