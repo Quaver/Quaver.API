@@ -267,13 +267,13 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     DifficultyName = chart.Difficulty,
                 };
 
-                var totalBeats = 0f;
+                var totalBeats = 0d;
                 var bpmCache = new List<StepFileBPM>(Bpms);
                 var stopCache = new List<StepFileStop>(Stops);
 
                 foreach (var measure in chart.Measures)
                 {
-                    var beatTimePerRow = 4.0f / measure.Notes.Count;
+                    var beatTimePerRow = 4.0d / measure.Notes.Count;
 
                     foreach (var row in measure.Notes)
                     {
