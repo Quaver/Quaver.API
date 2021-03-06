@@ -278,7 +278,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     foreach (var row in measure.Notes)
                     {
                         // Add bpms at the current time if we've reached that beat
-                        if (bpmCache.Count != 0 && totalBeats >= bpmCache.First().Beat)
+                        if (bpmCache.Count != 0 && (float)totalBeats >= bpmCache.First().Beat)
                         {
                             qua.TimingPoints.Add(new TimingPointInfo
                             {
