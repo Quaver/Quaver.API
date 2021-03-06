@@ -63,7 +63,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
 
         /// <summary>
         /// </summary>
-        public float Offset { get; private set; }
+        public double Offset { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -160,7 +160,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             MusicLength = float.Parse(value);
                             break;
                         case "OFFSET":
-                            Offset = float.Parse(value);
+                            Offset = double.Parse(value);
                             break;
                         case "SAMPLESTART":
                             SampleStart = float.Parse(value);
@@ -232,6 +232,9 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     {
                         currentChart.Measures.Add(new StepFileChartMeasure(new List<List<StepFileChartNoteType>>()));
                         continue;
+                    } else if(trimmedLine.StartsWith(";"))
+                    {
+                        continue;
                     }
 
                     currentChart.Measures.Last().Notes.Add(StepFileChartMeasure.ParseLine(trimmedLine));
@@ -279,7 +282,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                         {
                             qua.TimingPoints.Add(new TimingPointInfo
                             {
-                                StartTime = currentTime,
+                                StartTime = (float)currentTime,
                                 Signature = TimeSignature.Quadruple,
                                 Bpm = bpmCache.First().BPM
                             });
@@ -330,7 +333,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
 
                             qua.SliderVelocities.Add(new SliderVelocityInfo()
                             {
-                                StartTime = currentTime - stopCache.First().Seconds * 1000,
+                                StartTime = (float)currentTime - stopCache.First().Seconds * 1000,
                                 Multiplier = 1
                             });
 
