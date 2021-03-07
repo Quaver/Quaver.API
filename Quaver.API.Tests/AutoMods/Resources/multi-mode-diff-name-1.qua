@@ -1,0 +1,152 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys7
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Mutl-Mode Missing (7K)
+Description: Created at 1615146469000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- Lane: 1
+  KeySounds: []
+- Lane: 7
+  KeySounds: []
+- StartTime: 136
+  Lane: 1
+  KeySounds: []
+- StartTime: 136
+  Lane: 7
+  KeySounds: []
+- StartTime: 136
+  Lane: 6
+  KeySounds: []
+- StartTime: 272
+  Lane: 1
+  KeySounds: []
+- StartTime: 272
+  Lane: 6
+  KeySounds: []
+- StartTime: 409
+  Lane: 1
+  KeySounds: []
+- StartTime: 409
+  Lane: 5
+  KeySounds: []
+- StartTime: 409
+  Lane: 4
+  KeySounds: []
+- StartTime: 545
+  Lane: 1
+  KeySounds: []
+- StartTime: 545
+  Lane: 5
+  KeySounds: []
+- StartTime: 545
+  Lane: 4
+  KeySounds: []
+- StartTime: 545
+  Lane: 6
+  KeySounds: []
+- StartTime: 545
+  Lane: 7
+  KeySounds: []
+- StartTime: 681
+  Lane: 1
+  KeySounds: []
+- StartTime: 681
+  Lane: 5
+  KeySounds: []
+- StartTime: 681
+  Lane: 3
+  KeySounds: []
+- StartTime: 681
+  Lane: 4
+  KeySounds: []
+- StartTime: 681
+  Lane: 7
+  KeySounds: []
+- StartTime: 818
+  Lane: 1
+  KeySounds: []
+- StartTime: 818
+  Lane: 5
+  KeySounds: []
+- StartTime: 818
+  Lane: 4
+  KeySounds: []
+- StartTime: 818
+  Lane: 3
+  KeySounds: []
+- StartTime: 818
+  Lane: 7
+  KeySounds: []
+- StartTime: 954
+  Lane: 1
+  KeySounds: []
+- StartTime: 954
+  Lane: 2
+  KeySounds: []
+- StartTime: 954
+  Lane: 4
+  KeySounds: []
+- StartTime: 954
+  Lane: 3
+  KeySounds: []
+- StartTime: 954
+  Lane: 7
+  KeySounds: []
+- StartTime: 1090
+  Lane: 2
+  KeySounds: []
+- StartTime: 1090
+  Lane: 4
+  KeySounds: []
+- StartTime: 1090
+  Lane: 6
+  KeySounds: []
+- StartTime: 1227
+  Lane: 2
+  KeySounds: []
+- StartTime: 1227
+  Lane: 4
+  KeySounds: []
+- StartTime: 1227
+  Lane: 6
+  KeySounds: []
+- StartTime: 1227
+  Lane: 5
+  KeySounds: []
+- StartTime: 1363
+  Lane: 2
+  KeySounds: []
+- StartTime: 1363
+  Lane: 3
+  KeySounds: []
+- StartTime: 1363
+  Lane: 4
+  KeySounds: []
+- StartTime: 1499
+  Lane: 3
+  KeySounds: []
+- StartTime: 1499
+  Lane: 4
+  KeySounds: []
+- StartTime: 1636
+  Lane: 4
+  KeySounds: []
+- StartTime: 1772
+  Lane: 4
+  KeySounds: []
+- StartTime: 1909
+  Lane: 4
+  KeySounds: []

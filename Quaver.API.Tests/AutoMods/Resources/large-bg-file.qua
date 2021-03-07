@@ -1,0 +1,21 @@
+AudioFile: audio.mp3
+BackgroundFile: large-image.jpg
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Large Background File
+Description: Created at 1614792493000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- Lane: 1
+  KeySounds: []

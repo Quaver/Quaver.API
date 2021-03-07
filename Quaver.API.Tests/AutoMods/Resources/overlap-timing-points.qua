@@ -1,0 +1,26 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Overlapping Timing Points
+Description: Created at 1614621657000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+- StartTime: 545
+  Bpm: 110
+- StartTime: 545
+  Bpm: 110
+SliderVelocities: []
+HitObjects:
+- StartTime: 545
+  Lane: 1
+  KeySounds: []

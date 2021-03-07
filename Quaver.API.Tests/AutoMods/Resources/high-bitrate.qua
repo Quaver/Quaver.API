@@ -1,0 +1,124 @@
+AudioFile: high-bitrate.mp3
+SongPreviewTime: 18409
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: High Bitrate
+Description: Created at 1614967870000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- Lane: 1
+  KeySounds: []
+- Lane: 2
+  KeySounds: []
+- Lane: 3
+  KeySounds: []
+- Lane: 4
+  KeySounds: []
+- StartTime: 136
+  Lane: 3
+  KeySounds: []
+- StartTime: 136
+  Lane: 1
+  KeySounds: []
+- StartTime: 136
+  Lane: 2
+  KeySounds: []
+- StartTime: 136
+  Lane: 4
+  KeySounds: []
+- StartTime: 272
+  Lane: 3
+  KeySounds: []
+- StartTime: 272
+  Lane: 1
+  KeySounds: []
+- StartTime: 272
+  Lane: 2
+  KeySounds: []
+- StartTime: 272
+  Lane: 4
+  KeySounds: []
+- StartTime: 409
+  Lane: 3
+  KeySounds: []
+- StartTime: 409
+  Lane: 2
+  KeySounds: []
+- StartTime: 409
+  Lane: 1
+  KeySounds: []
+- StartTime: 409
+  Lane: 4
+  KeySounds: []
+- StartTime: 545
+  Lane: 3
+  KeySounds: []
+- StartTime: 545
+  Lane: 2
+  KeySounds: []
+- StartTime: 545
+  Lane: 1
+  KeySounds: []
+- StartTime: 545
+  Lane: 4
+  KeySounds: []
+- StartTime: 681
+  Lane: 3
+  KeySounds: []
+- StartTime: 681
+  Lane: 1
+  KeySounds: []
+- StartTime: 681
+  Lane: 2
+  KeySounds: []
+- StartTime: 681
+  Lane: 4
+  KeySounds: []
+- StartTime: 818
+  Lane: 3
+  KeySounds: []
+- StartTime: 818
+  Lane: 2
+  KeySounds: []
+- StartTime: 818
+  Lane: 1
+  KeySounds: []
+- StartTime: 818
+  Lane: 4
+  KeySounds: []
+- StartTime: 954
+  Lane: 3
+  KeySounds: []
+- StartTime: 954
+  Lane: 2
+  KeySounds: []
+- StartTime: 954
+  Lane: 1
+  KeySounds: []
+- StartTime: 954
+  Lane: 4
+  KeySounds: []
+- StartTime: 1090
+  Lane: 3
+  KeySounds: []
+- StartTime: 1090
+  Lane: 2
+  KeySounds: []
+- StartTime: 1090
+  Lane: 1
+  KeySounds: []
+- StartTime: 1090
+  Lane: 4
+  KeySounds: []

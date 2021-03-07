@@ -1,0 +1,25 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Autoplay Failure
+Description: Created at 1614625107000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- StartTime: 545
+  Lane: 3
+  KeySounds: []
+- StartTime: 545
+  Lane: 3
+  KeySounds: []

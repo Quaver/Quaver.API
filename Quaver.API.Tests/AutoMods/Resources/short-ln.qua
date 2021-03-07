@@ -1,0 +1,24 @@
+﻿﻿AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: -1
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Short LN
+Description: Created at 1590247491000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- Lane: 1
+  EndTime: 17
+  KeySounds: []
+- Lane: 4
+  KeySounds: []
