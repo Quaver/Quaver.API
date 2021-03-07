@@ -1,0 +1,19 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: 'AutoMod Tests #2'
+Artist: 'Swan #2'
+Source: Example Source 2
+Tags: Example Tags 2
+Creator: Swan
+DifficultyName: 'Mismatched Metadata #2'
+Description: Created at 1615144920000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects: []

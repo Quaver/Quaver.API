@@ -214,5 +214,19 @@ namespace Quaver.API.Tests.AutoMods
 
             Assert.Contains(autoModMapset.Issues, x => x is AutoModIssueMapsetSpreadLength);
         }
+
+        [Fact]
+        public void DetectMapsetMismatchedMetadata()
+        {
+            var autoModMapset = new AutoModMapset(new List<Qua>()
+            {
+                Qua.Parse("./AutoMods/Resources/mismatch-metadata-1.qua", false),
+                Qua.Parse("./AutoMods/Resources/mismatch-metadata-2.qua", false)
+            });
+
+            autoModMapset.Run();
+
+            Assert.True(autoModMapset.Issues.FindAll(x => x is AutoModIssueMismatchingMetdata).Count == 4);
+        }
     }
 }

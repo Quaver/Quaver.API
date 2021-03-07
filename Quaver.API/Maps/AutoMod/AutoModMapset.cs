@@ -2,6 +2,7 @@
 using System.Linq;
 using Quaver.API.Maps.AutoMod.Issues;
 using Quaver.API.Maps.AutoMod.Issues.Mapset;
+using Quaver.API.Maps.AutoMod.Issues.Metadata;
 
 namespace Quaver.API.Maps.AutoMod
 {
@@ -35,6 +36,7 @@ namespace Quaver.API.Maps.AutoMod
             Maps.ForEach(x => Mods.Add(x, new AutoMod(x)));
 
             DetectSpreadRequirementIssues();
+            DetectMismatchingMetadata();
         }
 
         /// <summary>
@@ -48,6 +50,27 @@ namespace Quaver.API.Maps.AutoMod
 
             if (Maps.First().Length < 150000)
                 Issues.Add(new AutoModIssueMapsetSpreadLength());
+        }
+
+        /// <summary>
+        ///     Detects if the metadata in all files are the same.
+        /// </summary>
+        private void DetectMismatchingMetadata()
+        {
+            if (Maps.Count == 1)
+                return;
+
+            if (Maps.Any(x => x.Artist != Maps.First().Artist))
+                Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Artist));
+
+            if (Maps.Any(x => x.Title != Maps.First().Title))
+                Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Title));
+
+            if (Maps.Any(x => x.Source != Maps.First().Source))
+                Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Source));
+
+            if (Maps.Any(x => x.Tags != Maps.First().Tags))
+                Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Tags));
         }
     }
 }
