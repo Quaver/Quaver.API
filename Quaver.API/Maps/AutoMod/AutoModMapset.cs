@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Quaver.API.Helpers;
 using Quaver.API.Maps.AutoMod.Issues;
 using Quaver.API.Maps.AutoMod.Issues.Mapset;
 using Quaver.API.Maps.AutoMod.Issues.Metadata;
@@ -37,6 +38,7 @@ namespace Quaver.API.Maps.AutoMod
 
             DetectSpreadRequirementIssues();
             DetectMismatchingMetadata();
+            DetectMultiModeDifficultyNameIssues();
         }
 
         /// <summary>
@@ -71,6 +73,30 @@ namespace Quaver.API.Maps.AutoMod
 
             if (Maps.Any(x => x.Tags != Maps.First().Tags))
                 Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Tags));
+        }
+
+        /// <summary>
+        ///     Detects if a multi-mode mapset's difficulty names aren't prceeeded by
+        ///     either "4K" or "7K"
+        /// </summary>
+        private void DetectMultiModeDifficultyNameIssues()
+        {
+            if (Maps.Count == 1)
+                return;
+
+            // Set only contains 1 unique game mode.
+            if (Maps.Select(x => x.Mode).Distinct().Count() == 1)
+                return;
+
+            foreach (var map in Maps)
+            {
+                var modeString = ModeHelper.ToShortHand(map.Mode).ToLower();
+
+                if (map.DifficultyName.ToLower().StartsWith(modeString))
+                    continue;
+
+                Issues.Add(new AutoModIssueMultiModeDiffName(map));
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
 using Quaver.API.Maps.AutoMod.Issues.Audio;
@@ -227,6 +228,21 @@ namespace Quaver.API.Tests.AutoMods
             autoModMapset.Run();
 
             Assert.True(autoModMapset.Issues.FindAll(x => x is AutoModIssueMismatchingMetdata).Count == 4);
+        }
+
+        [Fact]
+        public void DetectMultiModeDiffNameIssues()
+        {
+            var autoModMapset = new AutoModMapset(new List<Qua>()
+            {
+                Qua.Parse("./AutoMods/Resources/multi-mode-diff-name-1.qua", false),
+                Qua.Parse("./AutoMods/Resources/multi-mode-diff-name-2.qua", false)
+            });
+
+            autoModMapset.Run();
+
+            Assert.Contains(autoModMapset.Issues, x => x is AutoModIssueMultiModeDiffName issue &&
+                                                       issue.Map.Mode == GameMode.Keys7);
         }
     }
 }
