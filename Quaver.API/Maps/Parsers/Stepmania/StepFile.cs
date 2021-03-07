@@ -327,7 +327,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                         currentTime += qua.GetTimingPointAt((float)currentTime).MillisecondsPerBeat * 4 / measure.Notes.Count;
                         totalBeats += beatTimePerRow;
 
-                        if (stopCache.Count != 0 && totalBeats > stopCache.First().Beat)
+                        if (stopCache.Count != 0 && (float)totalBeats > stopCache.First().Beat)
                         {
                             currentTime += stopCache.First().Seconds * 1000;
 
