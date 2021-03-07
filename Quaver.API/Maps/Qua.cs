@@ -112,7 +112,7 @@ namespace Quaver.API.Maps
         ///
         ///     It's "does not affect" rather than "affects" so that the "affects" value (in this case, false) serializes to nothing to support old maps.
         /// </summary>
-        public bool BPMDoesNotAffectScrollVelocity { get; private set; }
+        public bool BPMDoesNotAffectScrollVelocity { get; set; }
 
         /// <summary>
         ///    The initial scroll velocity before the first SV change.
