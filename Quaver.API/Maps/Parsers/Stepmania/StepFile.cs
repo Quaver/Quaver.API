@@ -63,7 +63,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
 
         /// <summary>
         /// </summary>
-        public float Offset { get; private set; }
+        public double Offset { get; private set; }
 
         /// <summary>
         /// </summary>
@@ -160,7 +160,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             MusicLength = float.Parse(value);
                             break;
                         case "OFFSET":
-                            Offset = float.Parse(value);
+                            Offset = double.Parse(value);
                             break;
                         case "SAMPLESTART":
                             SampleStart = float.Parse(value);
@@ -232,6 +232,9 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     {
                         currentChart.Measures.Add(new StepFileChartMeasure(new List<List<StepFileChartNoteType>>()));
                         continue;
+                    } else if(trimmedLine.StartsWith(";"))
+                    {
+                        continue;
                     }
 
                     currentChart.Measures.Last().Notes.Add(StepFileChartMeasure.ParseLine(trimmedLine));
@@ -264,22 +267,22 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     DifficultyName = chart.Difficulty,
                 };
 
-                var totalBeats = 0f;
+                var totalBeats = 0d;
                 var bpmCache = new List<StepFileBPM>(Bpms);
                 var stopCache = new List<StepFileStop>(Stops);
 
                 foreach (var measure in chart.Measures)
                 {
-                    var beatTimePerRow = 4.0f / measure.Notes.Count;
+                    var beatTimePerRow = 4.0d / measure.Notes.Count;
 
                     foreach (var row in measure.Notes)
                     {
                         // Add bpms at the current time if we've reached that beat
-                        if (bpmCache.Count != 0 && totalBeats >= bpmCache.First().Beat)
+                        if (bpmCache.Count != 0 && (float)totalBeats >= bpmCache.First().Beat)
                         {
                             qua.TimingPoints.Add(new TimingPointInfo
                             {
-                                StartTime = currentTime,
+                                StartTime = (float)currentTime,
                                 Signature = TimeSignature.Quadruple,
                                 Bpm = bpmCache.First().BPM
                             });
@@ -321,16 +324,16 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             }
                         }
 
-                        currentTime += qua.GetTimingPointAt(currentTime).MillisecondsPerBeat * 4 / measure.Notes.Count;
+                        currentTime += qua.GetTimingPointAt((float)currentTime).MillisecondsPerBeat * 4 / measure.Notes.Count;
                         totalBeats += beatTimePerRow;
 
-                        if (stopCache.Count != 0 && totalBeats > stopCache.First().Beat)
+                        if (stopCache.Count != 0 && (float)totalBeats > stopCache.First().Beat)
                         {
                             currentTime += stopCache.First().Seconds * 1000;
 
                             qua.SliderVelocities.Add(new SliderVelocityInfo()
                             {
-                                StartTime = currentTime - stopCache.First().Seconds * 1000,
+                                StartTime = (float)currentTime - stopCache.First().Seconds * 1000,
                                 Multiplier = 1
                             });
 
