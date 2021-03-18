@@ -2,6 +2,7 @@
 {
     public enum AutoModIssueCategory
     {
+        None,
         Files,
         HitObjects,
         Mapset,
