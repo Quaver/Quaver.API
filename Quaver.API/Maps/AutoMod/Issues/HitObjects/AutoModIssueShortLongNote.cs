@@ -4,6 +4,8 @@ namespace Quaver.API.Maps.AutoMod.Issues.HitObjects
 {
     public class AutoModIssueShortLongNote : AutoModIssue
     {
+        public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.HitObjects;
+
         public HitObjectInfo HitObject { get; }
 
         public AutoModIssueShortLongNote(HitObjectInfo hitObject) : base(AutoModIssueLevel.Ranking)

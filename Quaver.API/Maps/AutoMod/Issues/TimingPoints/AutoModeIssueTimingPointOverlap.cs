@@ -5,6 +5,8 @@ namespace Quaver.API.Maps.AutoMod.Issues.TimingPoints
 {
     public class AutoModeIssueTimingPointOverlap : AutoModIssue
     {
+        public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.TimingPoints;
+
         public TimingPointInfo[] TimingPoints { get; }
 
         public AutoModeIssueTimingPointOverlap(TimingPointInfo[] timingPoints) : base(AutoModIssueLevel.Warning)

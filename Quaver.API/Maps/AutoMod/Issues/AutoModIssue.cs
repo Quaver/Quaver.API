@@ -1,10 +1,12 @@
 ﻿namespace Quaver.API.Maps.AutoMod.Issues
 {
-    public class AutoModIssue
+    public abstract class AutoModIssue
     {
         /// <summary>
         /// </summary>
         public AutoModIssueLevel Level { get; }
+
+        public abstract AutoModIssueCategory Category { get; protected set; }
 
         /// <summary>
         ///     The text that will be displayed for this detection
