@@ -33,9 +33,16 @@ namespace Quaver.API.Maps.AutoMod
         /// </summary>
         public void Run()
         {
-            Mods = new Dictionary<Qua, AutoMod>();
             Issues.Clear();
-            Maps.ForEach(x => Mods.Add(x, new AutoMod(x)));
+
+            Mods = new Dictionary<Qua, AutoMod>();
+
+            Maps.ForEach(x =>
+            {
+                var autoMod = new AutoMod(x);
+                autoMod.Run();
+                Mods.Add(x, autoMod);
+            });
 
             DetectSpreadRequirementIssues();
             DetectMismatchingMetadata();
