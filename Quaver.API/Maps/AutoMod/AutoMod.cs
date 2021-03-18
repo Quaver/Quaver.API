@@ -203,7 +203,8 @@ namespace Quaver.API.Maps.AutoMod
                     columnsMissing.Add(i + 1);
             }
 
-            Issues.Add(new AutoModIssueObjectInAllColumns(columnsMissing));
+            if (columnsMissing.Count > 0)
+                Issues.Add(new AutoModIssueObjectInAllColumns(columnsMissing));
         }
 
         /// <summary>
