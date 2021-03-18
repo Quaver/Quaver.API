@@ -4,6 +4,8 @@ namespace Quaver.API.Maps.AutoMod.Issues.TimingPoints
 {
     public class AutoModIssueTimingPointAfterAudioEnd : AutoModIssue
     {
+        public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.TimingPoints;
+
         public TimingPointInfo TimingPoint { get; }
 
         public AutoModIssueTimingPointAfterAudioEnd(TimingPointInfo timingPoint) : base(AutoModIssueLevel.Warning)

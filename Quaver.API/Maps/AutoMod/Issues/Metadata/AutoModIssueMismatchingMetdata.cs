@@ -2,6 +2,8 @@
 {
     public class AutoModIssueMismatchingMetdata : AutoModIssue
     {
+        public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.Metadata;
+
         public MetadataField Field { get; }
 
         public AutoModIssueMismatchingMetdata(MetadataField field) : base(AutoModIssueLevel.Ranking)

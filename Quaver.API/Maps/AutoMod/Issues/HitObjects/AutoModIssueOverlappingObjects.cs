@@ -5,6 +5,8 @@ namespace Quaver.API.Maps.AutoMod.Issues.HitObjects
 {
     public class AutoModIssueOverlappingObjects : AutoModIssue
     {
+        public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.HitObjects;
+
         public HitObjectInfo[] HitObjects { get; }
 
         public AutoModIssueOverlappingObjects(HitObjectInfo[] hitObjects) : base(AutoModIssueLevel.Critical)

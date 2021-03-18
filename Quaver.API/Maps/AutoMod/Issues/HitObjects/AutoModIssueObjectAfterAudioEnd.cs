@@ -4,6 +4,8 @@ namespace Quaver.API.Maps.AutoMod.Issues.HitObjects
 {
     public class AutoModIssueObjectAfterAudioEnd : AutoModIssue
     {
+        public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.HitObjects;
+
         public HitObjectInfo HitObject { get; }
 
         public AutoModIssueObjectAfterAudioEnd(HitObjectInfo hitObject) : base(AutoModIssueLevel.Critical)
