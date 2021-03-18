@@ -92,7 +92,7 @@ namespace Quaver.API.Maps.AutoMod
         {
             var path = Qua.GetAudioPath();
 
-            if (path == null)
+            if (path == null || !File.Exists(path))
                 return;
 
             try
@@ -319,7 +319,7 @@ namespace Quaver.API.Maps.AutoMod
             var path = Qua.GetBackgroundPath();
 
             // Check if the background exis
-            if (path == null)
+            if (path == null || !File.Exists(path))
             {
                 Issues.Add(new AutoModIssueNoBackground());
                 return;
