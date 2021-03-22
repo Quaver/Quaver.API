@@ -6,7 +6,7 @@ namespace Quaver.API.Maps.AutoMod.Issues.HitObjects
     {
         public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.HitObjects;
 
-        private HitObjectInfo HitObject { get; }
+        public HitObjectInfo HitObject { get; }
 
         public AutoModIssueObjectBeforeStart(HitObjectInfo hitObject) : base(AutoModIssueLevel.Critical)
         {
