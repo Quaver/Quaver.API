@@ -13,7 +13,7 @@ namespace Quaver.API.Maps.AutoMod.Issues.ScrollVelocities
         {
             ScrollVelocities = scrollVelocities;
 
-            Text = $"There are {ScrollVelocities.Length} scroll velocities overlapping at: " +
+            Text = $"There are scroll velocities overlapping at: " +
                    $"{ScrollVelocities.First().StartTime}";
         }
     }

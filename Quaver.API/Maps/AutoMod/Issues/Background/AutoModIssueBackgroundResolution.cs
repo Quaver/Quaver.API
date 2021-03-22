@@ -5,6 +5,6 @@
         public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.Files;
 
         public AutoModIssueBackgroundResolution() : base(AutoModIssueLevel.Ranking)
-            => Text = $" The background resolution must be at least 1280x720.";
+            => Text = $"The background resolution must be at least 1280x720.";
     }
 }
