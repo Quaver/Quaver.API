@@ -156,7 +156,7 @@ namespace Quaver.API.Maps.AutoMod
                 if (hitObject.StartTime - previousObjInMap.StartTime >= BreakTime ||
                    (previousObjInMap.IsLongNote && hitObject.StartTime - previousObjInMap.EndTime >= BreakTime))
                 {
-                    Issues.Add(new AutoModIssueExcessiveBreakTime(hitObject));
+                    Issues.Add(new AutoModIssueExcessiveBreakTime(previousObjInMap));
                 }
 
                 // Retrieve the previous object in the column if one exists.
