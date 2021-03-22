@@ -99,7 +99,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         private void ComputeNoteSpacingFactor()
         {
-            float sum = 0f;
+            double sum = 0f;
 
             for (int i = 1; i < NoteTimes.Count; i++)
             {
@@ -111,10 +111,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 float ratio = svSpacing / (float)normalSpacing;
                 ratio = Math.Min(ratio, 1);
 
-                sum += ratio;
+                sum += Math.Pow(1 - ratio, 2);
             }
 
-            NoteSpacingFactor = 1 - sum / (NoteTimes.Count - 1);
+            NoteSpacingFactor = (float)(Math.Sqrt(sum / (NoteTimes.Count - 1)));
         }
 
         private void ComputeNoteVisibilityFactor()
@@ -124,7 +124,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // even if it's only on screen for less than a frame
             // or if it's hidden under another note at the same position
 
-            float sum = 0;
+            double sum = 0;
 
             foreach (int time in NoteTimes)
             {
@@ -136,10 +136,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // upper limit of human reaction time is about 150 ms
                 // convert reaction time of [150, playfield time] => visibility factor [0, 1]
                 reactionTime = Math.Min(Math.Max(reactionTime, 150), PlayfieldHeight);
-                sum += (reactionTime - 150) / (PlayfieldHeight - 150);
+                sum += Math.Pow(1 - (reactionTime - 150) / (PlayfieldHeight - 150), 2);
             }
 
-            NoteVisibilityFactor = 1 - sum / NoteTimes.Count;
+            NoteVisibilityFactor = (float)(Math.Sqrt(sum / NoteTimes.Count));
         }
 
         private void ComputeReadingHeightFactor()
@@ -149,7 +149,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // tiny flickers can cause this calculation to not be reprsentative of the true reading height
 
-            float sum = 0;
+            double sum = 0;
             float lastReadingHeight = BaseReadingHeight;
 
             foreach (int time in NoteTimes)
@@ -164,11 +164,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 readingHeight = (0 <= readingHeight && readingHeight <= PlayfieldHeight) ? readingHeight : PlayfieldHeight;
 
                 // absolute change in relative deviance
-                sum += Math.Abs(readingHeight - lastReadingHeight) / PlayfieldHeight;
+                sum += Math.Pow(Math.Abs(readingHeight - lastReadingHeight) / PlayfieldHeight, 2);
                 lastReadingHeight = readingHeight;
             }
 
-            ReadingHeightFactor = sum / NoteTimes.Count;
+            ReadingHeightFactor = (float)(Math.Sqrt(sum / NoteTimes.Count));
         }
 
         private void ComputeOverallSVDifficulty()
