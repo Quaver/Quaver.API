@@ -45,6 +45,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         // Should include the position(s) of every note
         public Dictionary<int, long> Positions { get; private set; } = new Dictionary<int, long>();
 
+        // Time each note (including LN ends) is visible for
+        // Should be expressed in ms
+        public Dictionary<int, float> NoteVisibilities { get; private set; } = new Dictionary<int, float>();
+
         public SVDIfficultyProcessorKeys(Qua map, int baseReadingHeight = 250, int playfieldHeight = 450)
         {
             Map = map;
@@ -69,9 +73,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             InitializePositionMarkers();
             InitializeNoteTimes();
             CalculateImportantPositions();
+            CalculateNoteVisibilities();
 
-            ComputeNoteSpacingFactor();
             ComputeNoteVisibilityFactor();
+            ComputeNoteSpacingFactor();
             ComputeReadingHeightFactor();
 
             ComputeOverallSVDifficulty();
@@ -97,6 +102,143 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 Positions[time] = GetPositionFromTime(time);
         }
 
+        private void CalculateNoteVisibilities()
+        {
+            // calculate visibility for each important note time
+            foreach (int time in NoteTimes)
+            {
+                float visibility = 0; // in ms
+
+                // playfield positions when the note is at the top or bottom of the playfield
+                long playfieldPositionNoteOnBottom = Positions[time];
+                long playfieldPositionNoteOnTop = playfieldPositionNoteOnBottom - (long)(PlayfieldHeight * TrackRounding);
+
+                // times when the note enters or exits the playfield area
+                List<float> intersectionTimes = new List<float>();
+
+                // used when scrolling stops when a velocity position is directly on a playfield boundary position
+                int prevDirection = Math.Sign(Map.InitialScrollVelocity);
+
+                // if gameplay starts with note visible in playfield area,
+                // add intersection time to represent the note "entering" the playfield area
+                if (PositionBetween(GetPositionFromTime(-3000), playfieldPositionNoteOnTop, playfieldPositionNoteOnBottom))
+                    intersectionTimes.Add(-3000);
+
+                // find intersections from -3000 ms to the first sv
+                if (Map.SliderVelocities[0].StartTime > -3000)
+                {
+                    if (PositionBetween(playfieldPositionNoteOnTop, GetPositionFromTime(-3000), VelocityPositionMarkers[0]))
+                        intersectionTimes.Add(GetTimeFromPosition(playfieldPositionNoteOnTop, GetPositionFromTime(-3000), Map.InitialScrollVelocity, -3000));
+
+                    if (PositionBetween(playfieldPositionNoteOnBottom, GetPositionFromTime(-3000), VelocityPositionMarkers[0]))
+                        intersectionTimes.Add(GetTimeFromPosition(playfieldPositionNoteOnBottom, GetPositionFromTime(-3000), Map.InitialScrollVelocity, -3000));
+                }
+
+                // find intersections during the normal length of the map
+                for (int i = 1; i < VelocityPositionMarkers.Count; i++)
+                {
+                    // times past the note time are irrelevant to visibility
+                    if (Map.SliderVelocities[i - 1].StartTime > time)
+                        break;
+
+                    // times before -3000 ms aren't seen by the player
+                    if (Map.SliderVelocities[i - 1].StartTime < -3000)
+                        continue;
+
+                    // if first velocity position is equal to a playfield boundary position
+                    // whether to add another intersection time depends on the scroll direction
+                    // previous iteration will always add to intersection times
+                    if (VelocityPositionMarkers[i - 1] == playfieldPositionNoteOnBottom || VelocityPositionMarkers[i - 1] == playfieldPositionNoteOnTop)
+                    {
+                        int currentDirection = Math.Sign(Map.SliderVelocities[i - 1].Multiplier);
+
+                        // skip any 0x SVs while in this state
+                        if (currentDirection == 0)
+                            continue;
+
+                        // scrolling doesn't reverse and so there is only one intersection (one enter/exit event)
+                        if (currentDirection == prevDirection)
+                            continue;
+
+                        // currentDirection != prevDirection
+                        // scrolling reverses and so enters and then exits the playfield area
+                        intersectionTimes.Add(Map.SliderVelocities[i - 1].StartTime);
+                        prevDirection *= -1;
+                        continue;
+                    }
+
+                    if (PositionBetween(playfieldPositionNoteOnTop, VelocityPositionMarkers[i - 1], VelocityPositionMarkers[i]))
+                    {
+                        var sv = Map.SliderVelocities[i - 1];
+                        intersectionTimes.Add(GetTimeFromPosition(playfieldPositionNoteOnTop, VelocityPositionMarkers[i - 1], sv.Multiplier, sv.StartTime));
+                    }
+
+                    if (PositionBetween(playfieldPositionNoteOnBottom, VelocityPositionMarkers[i - 1], VelocityPositionMarkers[i]))
+                    {
+                        var sv = Map.SliderVelocities[i - 1];
+                        intersectionTimes.Add(GetTimeFromPosition(playfieldPositionNoteOnBottom, VelocityPositionMarkers[i - 1], sv.Multiplier, sv.StartTime));
+                    }
+
+                    prevDirection = Math.Sign(Map.SliderVelocities[i - 1].Multiplier);
+                }
+
+                // if note is during last sv:
+                //     playfield top intersects with note if scroll direction is positive
+                //     playfield bottom intersects with note
+                if (time > Map.SliderVelocities.Last().StartTime)
+                {
+                    if (Math.Sign(Map.SliderVelocities.Last().Multiplier) == 1)
+                    {
+                        var sv = Map.SliderVelocities.Last();
+                        intersectionTimes.Add(GetTimeFromPosition(playfieldPositionNoteOnTop, VelocityPositionMarkers.Last(), sv.Multiplier, sv.StartTime));
+                    }
+
+                    intersectionTimes.Add(time);
+                }
+
+                // reverse scrolling may cause order to be incorrect
+                intersectionTimes.Sort();
+
+                // in the case a map reverse scrolls into a note, there will be an odd number of intersections
+                // in this case the last intersection time contributes no visibility, and so can be removed
+                if (intersectionTimes.Count % 2 == 1)
+                    intersectionTimes.RemoveAt(intersectionTimes.Count - 1);
+
+                // calculate total time visible from intersection times
+                // each pair of intersections is one playfield enter and one playfield exit
+                for (int i = 0; i < intersectionTimes.Count - 1; i += 2)
+                {
+                    visibility += intersectionTimes[i + 1] - intersectionTimes[i];
+                }
+
+                NoteVisibilities[time] = visibility;
+            }
+        }
+
+        private bool PositionBetween(long position, long a, long b)
+        {
+            if (a < b)
+                return (a <= position && position <= b);
+            else
+                return (b <= position && position <= a);
+        }
+
+        private void ComputeNoteVisibilityFactor()
+        {
+            double sum = 0;
+
+            foreach (int time in NoteTimes)
+            {
+                // lower limit of human reaction time is about 150 ms
+                // convert visibility of [150, playfield time] => visibility factor [0, 1]
+                float visibility = NoteVisibilities[time];
+                visibility = Math.Min(Math.Max(visibility, 150), PlayfieldHeight);
+                sum += Math.Pow(1 - (visibility - 150) / (PlayfieldHeight - 150), 2);
+            }
+
+            NoteVisibilityFactor = (float)(Math.Sqrt(sum / NoteTimes.Count));
+        }
+
         private void ComputeNoteSpacingFactor()
         {
             double sum = 0f;
@@ -115,31 +257,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             NoteSpacingFactor = (float)(Math.Sqrt(sum / (NoteTimes.Count - 1)));
-        }
-
-        private void ComputeNoteVisibilityFactor()
-        {
-            // uses the earliest appearance of a note to determine its visibility
-            // currently any amount of time a note theoretically spends on screen counts
-            // even if it's only on screen for less than a frame
-            // or if it's hidden under another note at the same position
-
-            double sum = 0;
-
-            foreach (int time in NoteTimes)
-            {
-                long notePosition = Positions[time];
-                long earliestVisiblePosition = notePosition - (long)(PlayfieldHeight * TrackRounding);
-                float earliestVisibleTime = GetEarliestTimeFromPosition(earliestVisiblePosition);
-                float reactionTime = time - earliestVisibleTime;
-
-                // upper limit of human reaction time is about 150 ms
-                // convert reaction time of [150, playfield time] => visibility factor [0, 1]
-                reactionTime = Math.Min(Math.Max(reactionTime, 150), PlayfieldHeight);
-                sum += Math.Pow(1 - (reactionTime - 150) / (PlayfieldHeight - 150), 2);
-            }
-
-            NoteVisibilityFactor = (float)(Math.Sqrt(sum / NoteTimes.Count));
         }
 
         private void ComputeReadingHeightFactor()
@@ -177,28 +294,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             //SVDifficulty = ReadingHeightFactor * 100;
         }
 
-        public float GetEarliestTimeFromPosition(long position)
-        {
-            int gameplayStart = -3000; // Gameplay starts at -3000 ms
-            if (GetPositionFromTime(gameplayStart) <= position && position < VelocityPositionMarkers[0])
-                return GetEarliestTimeFromPosition(position, GetPositionFromTime(gameplayStart), Map.InitialScrollVelocity, gameplayStart);
-
-            // find the two earliest SVs the position can be found between
-            for (int i = 1; i < VelocityPositionMarkers.Count; i++)
-            {
-                if (VelocityPositionMarkers[i - 1] <= position && position < VelocityPositionMarkers[i])
-                {
-                    var sv = Map.SliderVelocities[i - 1];
-                    return GetEarliestTimeFromPosition(position, VelocityPositionMarkers[i - 1], sv.Multiplier, sv.StartTime);
-                }
-            }
-
-            // c# is dumb
-            var lastsv = Map.SliderVelocities.Last();
-            return GetEarliestTimeFromPosition(position, VelocityPositionMarkers.Last(), lastsv.Multiplier, lastsv.StartTime);
-        }
-
-        public float GetEarliestTimeFromPosition(long position, long svPosition, float svMultiplier, float svTime)
+        public float GetTimeFromPosition(long position, long svPosition, float svMultiplier, float svTime)
         {
             return (position - svPosition) / svMultiplier / TrackRounding + svTime;
         }
