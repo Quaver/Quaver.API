@@ -23,6 +23,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         // How much the spacing between notes affects difficulty
         public float NoteSpacingFactor { get; private set; }
 
+        // Representation of the map's density
+        // Should be expressed in 4 Key actions per second
+        public float ActionsPerSecond { get; private set; }
+
+        // Any map densities greater than this are treated as this number instead
+        // Should be expressed in 4 Key actions per second
+        public float MaxDensity { get; private set; }
+
         // How much the time notes spend on screen affects difficulty
         public float NoteVisibilityFactor { get; private set; }
 
@@ -58,7 +66,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public float ReactionThreshold { get; private set; }
 
         public SVDIfficultyProcessorKeys(Qua map, int baseReadingHeight = 250, int playfieldHeight = 450,
-                                         float visibilityThreshold = 1000 / 60f, float reactionThreshold = 150)
+                                         float visibilityThreshold = 1000 / 60f, float reactionThreshold = 150,
+                                         float maxDensity = 18)
         {
             Map = map;
 
@@ -66,6 +75,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             PlayfieldHeight = playfieldHeight;
             VisibilityThreshold = visibilityThreshold;
             ReactionThreshold = reactionThreshold;
+
+            MaxDensity = maxDensity / Map.GetKeyCount() * 4;
+            ActionsPerSecond = Map.GetActionsPerSecond() / Map.GetKeyCount() * 4;
 
             CalculateSVDifficulty();
         }
@@ -282,7 +294,18 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 float relativeSpacing = svSpacing / (float)normalSpacing;
                 relativeSpacing = Math.Min(relativeSpacing, 1);
 
-                sum += Math.Pow(1 - relativeSpacing, 4);
+                // assuming perceived difficulty increases linearly with some geometric change in density
+                double densityLevel = -1 * Math.Log(relativeSpacing, Math.Sqrt(2));
+
+                double difficulty = densityLevel / 6;
+
+                // reduce perceived difficulty based off of map's normal density
+                difficulty *= Math.Min(ActionsPerSecond / MaxDensity, 1);
+
+                // make sure we don't get infinity difficulty lol
+                difficulty = Math.Min(difficulty, 1);
+
+                sum += Math.Pow(difficulty, 2);
             }
 
             NoteSpacingFactor = (float)(Math.Sqrt(sum / (NoteTimes.Count - 1)));
