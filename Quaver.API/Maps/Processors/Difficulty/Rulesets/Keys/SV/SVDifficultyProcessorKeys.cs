@@ -279,10 +279,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                 // normalSpacing should theoretically never be 0
                 // svSpacing could be any number 0 or greater
-                float ratio = svSpacing / (float)normalSpacing;
-                ratio = Math.Min(ratio, 1);
+                float relativeSpacing = svSpacing / (float)normalSpacing;
+                relativeSpacing = Math.Min(relativeSpacing, 1);
 
-                sum += Math.Pow(1 - ratio, 2);
+                sum += Math.Pow(1 - relativeSpacing, 4);
             }
 
             NoteSpacingFactor = (float)(Math.Sqrt(sum / (NoteTimes.Count - 1)));
