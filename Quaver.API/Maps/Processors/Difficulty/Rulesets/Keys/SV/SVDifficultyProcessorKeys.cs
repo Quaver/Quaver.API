@@ -23,10 +23,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         // How much the spacing between notes affects difficulty
         public float NoteSpacingFactor { get; private set; }
 
-        // Representation of the map's density
-        // Should be expressed in 4 Key actions per second
-        public float ActionsPerSecond { get; private set; }
-
         // Any map densities greater than this are treated as this number instead
         // Should be expressed in 4 Key actions per second
         public float MaxDensity { get; private set; }
@@ -76,8 +72,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             VisibilityThreshold = visibilityThreshold;
             ReactionThreshold = reactionThreshold;
 
-            MaxDensity = maxDensity / Map.GetKeyCount() * 4;
-            ActionsPerSecond = Map.GetActionsPerSecond() / Map.GetKeyCount() * 4;
+            MaxDensity = maxDensity;
 
             CalculateSVDifficulty();
         }
@@ -300,7 +295,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 double difficulty = densityLevel / 6;
 
                 // reduce perceived difficulty based off of map's normal density
-                difficulty *= Math.Min(ActionsPerSecond / MaxDensity, 1);
+                float localDensity = 1000f / (NoteTimes[i] - NoteTimes[i - 1]);
+                difficulty *= Math.Min(localDensity / MaxDensity, 1);
 
                 // make sure we don't get infinity difficulty lol
                 difficulty = Math.Min(difficulty, 1);
