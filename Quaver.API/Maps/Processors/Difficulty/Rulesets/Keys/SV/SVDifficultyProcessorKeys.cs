@@ -49,11 +49,23 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         // Should be expressed in ms
         public Dictionary<int, float> NoteVisibilities { get; private set; } = new Dictionary<int, float>();
 
-        public SVDIfficultyProcessorKeys(Qua map, int baseReadingHeight = 250, int playfieldHeight = 450)
+        // Notes with less visibility than this are considered invisible
+        // Should be expressed in ms
+        public float VisibilityThreshold { get; private set; }
+
+        // Notes with less visibility than this are considered impossible to react to
+        // Should be expressed in ms
+        public float ReactionThreshold { get; private set; }
+
+        public SVDIfficultyProcessorKeys(Qua map, int baseReadingHeight = 250, int playfieldHeight = 450,
+                                         float visibilityThreshold = 1000 / 60f, float reactionThreshold = 150)
         {
             Map = map;
+
             BaseReadingHeight = baseReadingHeight;
             PlayfieldHeight = playfieldHeight;
+            VisibilityThreshold = visibilityThreshold;
+            ReactionThreshold = reactionThreshold;
 
             CalculateSVDifficulty();
         }
@@ -215,6 +227,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
         }
 
+        public bool IsNoteReactable(int time) => NoteVisibilities[time] >= ReactionThreshold;
+
+        public bool IsNoteVisible(int time) => NoteVisibilities[time] >= VisibilityThreshold;
+
         private bool PositionBetween(long position, long a, long b)
         {
             if (a < b)
@@ -241,10 +257,23 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         private void ComputeNoteSpacingFactor()
         {
-            double sum = 0f;
+            if (Map.HitObjects.Count < 2)
+            {
+                NoteSpacingFactor = 0;
+                return;
+            }
+
+            double sum = 0;
+            int n = NoteTimes.Count - 1;
 
             for (int i = 1; i < NoteTimes.Count; i++)
             {
+                if (!IsNoteVisible(NoteTimes[i - 1]) || !IsNoteVisible(NoteTimes[i]))
+                {
+                    n--;
+                    continue;
+                }
+
                 long svSpacing = Math.Abs(Positions[NoteTimes[i]] - Positions[NoteTimes[i - 1]]);
                 long normalSpacing = GetPositionFromTimeWithoutSV(NoteTimes[i]) - GetPositionFromTimeWithoutSV(NoteTimes[i - 1]);
 
@@ -267,10 +296,17 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             // tiny flickers can cause this calculation to not be reprsentative of the true reading height
 
             double sum = 0;
+            int n = NoteTimes.Count;
             float lastReadingHeight = BaseReadingHeight;
 
             foreach (int time in NoteTimes)
             {
+                if (!IsNoteReactable(time))
+                {
+                    n--;
+                    continue;
+                }
+
                 float playfieldTime = time - BaseReadingHeight;
                 long notePosition = Positions[time];
                 long playfieldPosition = GetPositionFromTime(playfieldTime);
@@ -285,7 +321,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 lastReadingHeight = readingHeight;
             }
 
-            ReadingHeightFactor = (float)(Math.Sqrt(sum / NoteTimes.Count));
+            ReadingHeightFactor = (float)(Math.Sqrt(sum / n));
         }
 
         private void ComputeOverallSVDifficulty()
