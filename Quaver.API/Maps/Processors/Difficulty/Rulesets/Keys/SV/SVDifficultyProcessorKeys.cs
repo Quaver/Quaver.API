@@ -61,16 +61,23 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         // Should be expressed in ms
         public float ReactionThreshold { get; private set; }
 
+        // Periods of visibility lower than this but above the visibility threshold
+        // are artificially increased to account for flickers
+        // Should be expressed in ms
+        public float FlickerThreshold { get; private set; }
+
         public SVDIfficultyProcessorKeys(Qua map, int baseReadingHeight = 250, int playfieldHeight = 450,
                                          float visibilityThreshold = 1000 / 60f, float reactionThreshold = 150,
-                                         float maxDensity = 18)
+                                         float maxDensity = 18, float flickerThreshold = 60)
         {
             Map = map;
 
             BaseReadingHeight = baseReadingHeight;
             PlayfieldHeight = playfieldHeight;
+
             VisibilityThreshold = visibilityThreshold;
             ReactionThreshold = reactionThreshold;
+            FlickerThreshold = flickerThreshold;
 
             MaxDensity = maxDensity;
 
@@ -219,15 +226,26 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 intersectionTimes.Sort();
 
                 // in the case a map reverse scrolls into a note, there will be an odd number of intersections
-                // in this case the last intersection time contributes no visibility, and so can be removed
+                // treat this as both an enter and an exit event
                 if (intersectionTimes.Count % 2 == 1)
-                    intersectionTimes.RemoveAt(intersectionTimes.Count - 1);
+                    intersectionTimes.Add(intersectionTimes.Last());
 
                 // calculate total time visible from intersection times
                 // each pair of intersections is one playfield enter and one playfield exit
-                for (int i = 0; i < intersectionTimes.Count - 1; i += 2)
+                for (int i = 1; i < intersectionTimes.Count; i += 2)
                 {
-                    visibility += intersectionTimes[i + 1] - intersectionTimes[i];
+                    float sectionVisibility = intersectionTimes[i] - intersectionTimes[i - 1];
+
+                    // attempt to account for human vision when dealing with flickers
+                    // by using the concept of flicker fusion and
+                    // a luminance to lightness cube-root relationship estimate
+                    if (VisibilityThreshold < sectionVisibility && sectionVisibility < FlickerThreshold && i != intersectionTimes.Count - 1)
+                    {
+                        float ratio = sectionVisibility / FlickerThreshold;
+                        sectionVisibility = FlickerThreshold * (float)Math.Pow(ratio, 1/3);
+                    }
+
+                    visibility += sectionVisibility;
                 }
 
                 NoteVisibilities[time] = visibility;
