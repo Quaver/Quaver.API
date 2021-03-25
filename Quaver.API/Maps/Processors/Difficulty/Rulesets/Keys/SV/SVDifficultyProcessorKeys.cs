@@ -72,7 +72,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         public SVDIfficultyProcessorKeys(Qua map, int baseReadingHeight = 250, int playfieldHeight = 450,
                                          float visibilityThreshold = 1000 / 60f, float reactionThreshold = 150,
-                                         float maxDensity = 18, float flickerThreshold = 60, int noteCountThreshold = 1000)
+                                         float maxDensity = 18, float flickerThreshold = 60, int noteCountThreshold = 1500)
         {
             Map = map;
 
