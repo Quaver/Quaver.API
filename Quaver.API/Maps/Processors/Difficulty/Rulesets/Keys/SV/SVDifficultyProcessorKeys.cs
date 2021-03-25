@@ -340,10 +340,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         private void ComputeReadingHeightFactor()
         {
-            // currently treats notes above the screen and notes below the screen as different
-            // when in reality they are both offscreen and so should be treated the same
-
-            // tiny flickers can cause this calculation to not be reprsentative of the true reading height
+            // tiny flickers can potentially cause this calculation to not be reprsentative of the true reading height
 
             double sum = 0;
             int n = NoteTimes.Count;
@@ -367,7 +364,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 readingHeight = (0 <= readingHeight && readingHeight <= PlayfieldHeight) ? readingHeight : PlayfieldHeight;
 
                 // absolute change in relative deviance
-                sum += Math.Pow(Math.Abs(readingHeight - lastReadingHeight) / PlayfieldHeight, 2);
+                sum += Math.Pow(Math.Abs(readingHeight - lastReadingHeight) / BaseReadingHeight, 2);
                 lastReadingHeight = readingHeight;
             }
 
