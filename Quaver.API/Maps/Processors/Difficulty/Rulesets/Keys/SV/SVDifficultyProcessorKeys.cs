@@ -66,9 +66,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         // Should be expressed in ms
         public float FlickerThreshold { get; private set; }
 
+        // Certain factors are nerfed (or buffed) based on map's note count relative to this
+        // Should be expressed in number of notes
+        public int NoteCountThreshold { get; private set; }
+
         public SVDIfficultyProcessorKeys(Qua map, int baseReadingHeight = 250, int playfieldHeight = 450,
                                          float visibilityThreshold = 1000 / 60f, float reactionThreshold = 150,
-                                         float maxDensity = 18, float flickerThreshold = 60)
+                                         float maxDensity = 18, float flickerThreshold = 60, int noteCountThreshold = 1000)
         {
             Map = map;
 
@@ -78,6 +82,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             VisibilityThreshold = visibilityThreshold;
             ReactionThreshold = reactionThreshold;
             FlickerThreshold = flickerThreshold;
+            NoteCountThreshold = noteCountThreshold * Map.GetKeyCount() / 4;
 
             MaxDensity = maxDensity;
 
@@ -273,11 +278,19 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // lower limit of human reaction time is about 150 ms
                 // convert visibility of [150, playfield time] => visibility factor [0, 1]
                 float visibility = NoteVisibilities[time];
-                visibility = Math.Min(Math.Max(visibility, 150), PlayfieldHeight);
-                sum += Math.Pow(1 - (visibility - 150) / (PlayfieldHeight - 150), 2);
+                visibility = Math.Min(Math.Max(visibility, ReactionThreshold), PlayfieldHeight);
+                visibility -= ReactionThreshold;
+                visibility /= PlayfieldHeight - ReactionThreshold;
+
+                double difficulty = Math.Sqrt(-1 * visibility + 1);
+
+                sum += Math.Pow(difficulty, 2);
             }
 
             NoteVisibilityFactor = (float)(Math.Sqrt(sum / NoteTimes.Count));
+
+            // adjust further based off map's total note count
+            NoteVisibilityFactor *= (float)Math.Sqrt(Map.HitObjects.Count / (float)NoteCountThreshold);
         }
 
         private void ComputeNoteSpacingFactor()
