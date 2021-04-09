@@ -1,3 +1,4 @@
+using Quaver.API.Helpers;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Structures;
 using System;
@@ -13,6 +14,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         public Qua Map { get; private set; }
 
         public float SVDifficulty { get; private set; }
+
+        // Difficulty before length nerf is applied
+        public float RawSVDifficulty { get; private set; }
 
         // Assumed comfortable reading height of a player, expressed in ms
         public int BaseReadingHeight { get; set; }
@@ -32,6 +36,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
         // How much changes in reading height affect difficulty
         public float ReadingHeightFactor { get; private set; }
+
+        // How much changes in relative spacing affect difficulty
+        public float SpacingChaosFactor { get; private set; }
+
+        // Multiplier applied to overrall difficulty calculation based off of number of note times in map
+        public float LengthMultiplierFactor { get; private set; }
 
         // Anything regarding position calculations is currently just copy pasted from HitObjectManagerKeys.cs
         public List<long> VelocityPositionMarkers { get; private set; } = new List<long>();
@@ -53,6 +63,18 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         // Should be expressed in ms
         public Dictionary<int, float> NoteVisibilities { get; private set; } = new Dictionary<int, float>();
 
+        // The size of a spacing that starts at a certain time relative to the normal spacing
+        // Should be expressed as a ratio
+        public Dictionary<int, float> NoteSpacings { get; private set; } = new Dictionary<int, float>();
+
+        // Relative spacings greater than this are treated as this instead
+        // Should be expressed as a ratio
+        public float MaxSpacing { get; private set; }
+
+        // Negative spacing means reading using the opposite scroll direction, which is quite hard
+        // 1.5 == +50%
+        public float ReverseScrollBonus { get; private set; }
+
         // Notes with less visibility than this are considered invisible
         // Should be expressed in ms
         public float VisibilityThreshold { get; private set; }
@@ -66,13 +88,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         // Should be expressed in ms
         public float FlickerThreshold { get; private set; }
 
-        // Certain factors are nerfed (or buffed) based on map's note count relative to this
-        // Should be expressed in number of notes
+        // Certain factors are nerfed (or buffed) based on map's note times count relative to this
+        // Should be expressed in number of note times
         public int NoteCountThreshold { get; private set; }
 
         public SVDIfficultyProcessorKeys(Qua map, int baseReadingHeight = 250, int playfieldHeight = 450,
                                          float visibilityThreshold = 1000 / 60f, float reactionThreshold = 150,
-                                         float maxDensity = 18, float flickerThreshold = 60, int noteCountThreshold = 1500)
+                                         float maxDensity = 18, float flickerThreshold = 60, int noteCountThreshold = 1250,
+                                         float maxSpacing = 2, float reverseScrollBonus = 2)
         {
             Map = map;
 
@@ -82,9 +105,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             VisibilityThreshold = visibilityThreshold;
             ReactionThreshold = reactionThreshold;
             FlickerThreshold = flickerThreshold;
-            NoteCountThreshold = noteCountThreshold * Map.GetKeyCount() / 4;
+            NoteCountThreshold = noteCountThreshold;
 
             MaxDensity = maxDensity;
+            MaxSpacing = maxSpacing;
+
+            ReverseScrollBonus = reverseScrollBonus;
 
             CalculateSVDifficulty();
         }
@@ -103,12 +129,15 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             InitializePositionMarkers();
             InitializeNoteTimes();
+
             CalculateImportantPositions();
             CalculateNoteVisibilities();
+            CalculateNoteSpacings();
 
             ComputeNoteVisibilityFactor();
             ComputeNoteSpacingFactor();
             ComputeReadingHeightFactor();
+            ComputeSpacingChaosFactor();
 
             ComputeOverallSVDifficulty();
         }
@@ -269,6 +298,26 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 return (b <= position && position <= a);
         }
 
+        private void CalculateNoteSpacings()
+        {
+            if (Map.HitObjects.Count < 2)
+                return;
+
+            for (int i = 1; i < NoteTimes.Count; i++)
+            {
+                long svSpacing = Positions[NoteTimes[i]] - Positions[NoteTimes[i - 1]];
+                long normalSpacing = GetPositionFromTimeWithoutSV(NoteTimes[i]) - GetPositionFromTimeWithoutSV(NoteTimes[i - 1]);
+
+                // normalSpacing should theoretically never be 0
+                // svSpacing could be any number
+                float relativeSpacing = svSpacing / (float)normalSpacing;
+                relativeSpacing = MathHelper.Clamp(relativeSpacing, -1 * MaxSpacing, MaxSpacing);
+
+                // use the start time of the spacing as the key
+                NoteSpacings[NoteTimes[i - 1]] = relativeSpacing;
+            }
+        }
+
         private void ComputeNoteVisibilityFactor()
         {
             double sum = 0;
@@ -288,9 +337,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             NoteVisibilityFactor = (float)(Math.Sqrt(sum / NoteTimes.Count));
-
-            // adjust further based off map's total note count
-            NoteVisibilityFactor *= (float)Math.Sqrt(Map.HitObjects.Count / (float)NoteCountThreshold);
         }
 
         private void ComputeNoteSpacingFactor()
@@ -312,16 +358,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     continue;
                 }
 
-                long svSpacing = Math.Abs(Positions[NoteTimes[i]] - Positions[NoteTimes[i - 1]]);
-                long normalSpacing = GetPositionFromTimeWithoutSV(NoteTimes[i]) - GetPositionFromTimeWithoutSV(NoteTimes[i - 1]);
-
-                // normalSpacing should theoretically never be 0
-                // svSpacing could be any number 0 or greater
-                float relativeSpacing = svSpacing / (float)normalSpacing;
-                relativeSpacing = Math.Min(relativeSpacing, 1);
+                float relativeSpacing = NoteSpacings[NoteTimes[i - 1]];
 
                 // assuming perceived difficulty increases linearly with some geometric change in density
-                double densityLevel = -1 * Math.Log(relativeSpacing, Math.Sqrt(2));
+                double densityLevel = -1 * Math.Log(Math.Abs(relativeSpacing), Math.Sqrt(2));
 
                 double difficulty = densityLevel / 6;
 
@@ -332,10 +372,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 // make sure we don't get infinity difficulty lol
                 difficulty = Math.Min(difficulty, 1);
 
+                // buff reverse scrolling
+                if (Math.Sign(relativeSpacing) == -1)
+                difficulty *= ReverseScrollBonus;
+
                 sum += Math.Pow(difficulty, 2);
             }
 
-            NoteSpacingFactor = (float)(Math.Sqrt(sum / (NoteTimes.Count - 1)));
+            NoteSpacingFactor = (float)(Math.Sqrt(sum / n));
         }
 
         private void ComputeReadingHeightFactor()
@@ -371,10 +415,40 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             ReadingHeightFactor = (float)(Math.Sqrt(sum / n));
         }
 
+        private void ComputeSpacingChaosFactor()
+        {
+            if (Map.HitObjects.Count < 3)
+            {
+                SpacingChaosFactor = 0;
+                return;
+            }
+
+            double sum = 0;
+            int n = NoteTimes.Count - 2;
+
+            for (int i = 2; i < NoteTimes.Count; i++)
+            {
+                if (!IsNoteReactable(NoteTimes[i - 2]) || !IsNoteReactable(NoteTimes[i - 1]) || !IsNoteReactable(NoteTimes[i]))
+                {
+                    n--;
+                    continue;
+                }
+
+                float difference = NoteSpacings[NoteTimes[i - 1]] - NoteSpacings[NoteTimes[i - 2]];
+
+                sum += Math.Min(Math.Pow(difference, 2), 1);
+            }
+
+            SpacingChaosFactor = (float)(Math.Sqrt(sum / n));
+        }
+
         private void ComputeOverallSVDifficulty()
         {
-            SVDifficulty = (NoteSpacingFactor + NoteVisibilityFactor + ReadingHeightFactor) / 3 * 100;
-            //SVDifficulty = ReadingHeightFactor * 100;
+            RawSVDifficulty = (NoteSpacingFactor + NoteVisibilityFactor + ReadingHeightFactor + SpacingChaosFactor) / 4 * 100;
+
+            // nerf shorter maps
+            LengthMultiplierFactor = (float)Math.Min(Math.Sqrt(NoteTimes.Count / (float)NoteCountThreshold), 1);
+            SVDifficulty = RawSVDifficulty * LengthMultiplierFactor;
         }
 
         public float GetTimeFromPosition(long position, long svPosition, float svMultiplier, float svTime)
