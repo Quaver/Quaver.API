@@ -12,7 +12,7 @@ namespace Quaver.API.Maps.AutoMod.Issues.Metadata
         {
             Map = map;
 
-            Text = $"The difficulty '{Map.DifficultyName}' must contain '{ModeHelper.ToShortHand(Map.Mode)}'";
+            Text = $"The difficulty '{Map.DifficultyName}' should contain '{ModeHelper.ToShortHand(Map.Mode)}'";
         }
     }
 }
