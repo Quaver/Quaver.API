@@ -100,7 +100,7 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var modeString = ModeHelper.ToShortHand(map.Mode).ToLower();
 
-                if (map.DifficultyName.ToLower().StartsWith(modeString))
+                if (map.DifficultyName.ToLower().Contains(modeString))
                     continue;
 
                 Issues.Add(new AutoModIssueMultiModeDiffName(map));
