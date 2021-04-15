@@ -365,6 +365,9 @@ namespace Quaver.API.Maps.AutoMod
             if (AudioTrackInfo == null)
                 return;
 
+            if (AudioTrackInfo.AudioFormat.ToString() != ".mp3")
+                Issues.Add(new AutoModIssueAudioFormat());
+
             if (AudioTrackInfo.Bitrate > 192)
                 Issues.Add(new AutoModIssueAudioBitrate());
         }
