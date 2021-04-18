@@ -1,0 +1,32 @@
+AudioFile: audio.mp3
+SongPreviewTime: -272
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Kizuna
+DifficultyName: Preview Point On Negative Value
+Description: Created at 1618769775000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- StartTime: 545
+  Lane: 1
+  KeySounds: []
+- StartTime: 1090
+  Lane: 2
+  KeySounds: []
+- StartTime: 1636
+  Lane: 3
+  KeySounds: []
+- StartTime: 2181
+  Lane: 4
+  KeySounds: []
