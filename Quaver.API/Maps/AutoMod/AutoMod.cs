@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -80,6 +80,7 @@ namespace Quaver.API.Maps.AutoMod
             DetectAutoplayIssues();
             DetectMapLengthIssues();
             DetectMetadataIssues();
+            DetectPreviewPointIssues();
             DetectBackgroundFileIsues();
             DetectAudioFileIssues();
         }
@@ -128,7 +129,7 @@ namespace Quaver.API.Maps.AutoMod
                 var laneIndex = hitObject.Lane - 1;
 
                 // Check if the long note is too short
-                if (hitObject.IsLongNote && Math.Abs(hitObject.EndTime - hitObject.StartTime) <= ShortLongNoteThreshold)
+                if (hitObject.IsLongNote && Math.Abs(hitObject.EndTime - hitObject.StartTime) < ShortLongNoteThreshold)
                     Issues.Add(new AutoModIssueShortLongNote(hitObject));
 
                 // Check if the object is before the object is before the audio begins
@@ -168,10 +169,6 @@ namespace Quaver.API.Maps.AutoMod
                     continue;
                 }
 
-                // Check if the objects are overlapping in start times
-                if (Math.Abs(hitObject.StartTime - prevColObject.StartTime) <= OverlappingObjectsThreshold)
-                    Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
-
                 // Check for long note overlaps
                 if (prevColObject.IsLongNote)
                 {
@@ -180,7 +177,12 @@ namespace Quaver.API.Maps.AutoMod
                         Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
 
                     // Check if the object is "inside" of the previous long note.
-                    if (hitObject.StartTime >= prevColObject.StartTime && hitObject.StartTime <= prevColObject.EndTime)
+                    if (hitObject.StartTime >= prevColObject.StartTime && hitObject.StartTime < prevColObject.EndTime - OverlappingObjectsThreshold)
+                        Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
+                } else
+                {
+                    // Check if the objects are overlapping in start times
+                    if (Math.Abs(hitObject.StartTime - prevColObject.StartTime) <= OverlappingObjectsThreshold)
                         Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
                 }
 
@@ -287,6 +289,15 @@ namespace Quaver.API.Maps.AutoMod
         }
 
         /// <summary>
+        ///     Detects issues related to the map's preview point.
+        /// </summary>
+        private void DetectPreviewPointIssues()
+        {
+            if (Qua.SongPreviewTime <= 0)
+                Issues.Add(new AutoModIssuePreviewPoint());
+        }
+
+        /// <summary>
         ///     Detects issues related to the map's metadata.
         /// </summary>
         private void DetectMetadataIssues() => DetectNonRomanizedMetadata();
@@ -353,6 +364,9 @@ namespace Quaver.API.Maps.AutoMod
         {
             if (AudioTrackInfo == null)
                 return;
+
+            if (Path.GetExtension(AudioTrackInfo.Path).ToLower() != ".mp3")
+                Issues.Add(new AutoModIssueAudioFormat());
 
             if (AudioTrackInfo.Bitrate > 192)
                 Issues.Add(new AutoModIssueAudioBitrate());

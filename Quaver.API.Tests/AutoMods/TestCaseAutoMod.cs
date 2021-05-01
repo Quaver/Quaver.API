@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
@@ -131,6 +131,18 @@ namespace Quaver.API.Tests.AutoMods
         }
 
         [Fact]
+        public void DetectIncorrectPreviewPoint()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/preview-point-1.qua", false));
+            var autoMod2 = new AutoMod(Qua.Parse("./AutoMods/Resources/preview-point-2.qua", false));
+            autoMod.Run();
+            autoMod2.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssuePreviewPoint);
+            Assert.Contains(autoMod2.Issues, x => x is AutoModIssuePreviewPoint);
+        }
+
+        [Fact]
         public void DetectNonRomanizedCharacters()
         {
             var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/non-romanized.qua", false));
@@ -201,6 +213,15 @@ namespace Quaver.API.Tests.AutoMods
             autoMod.Run();
 
             Assert.Contains(autoMod.Issues, x => x is AutoModIssueAudioBitrate);
+        }
+
+        [Fact]
+        public void DetectWrongAudioFormat()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/wrong-audio-format.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueAudioFormat);
         }
 
         [Fact]
