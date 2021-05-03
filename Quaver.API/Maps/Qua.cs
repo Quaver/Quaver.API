@@ -249,14 +249,20 @@ namespace Quaver.API.Maps
         {
             Qua qua;
 
-            using (var file = File.OpenText(path))
+            try
             {
-                var deserializer = new DeserializerBuilder();
-                deserializer.IgnoreUnmatchedProperties();
-                qua = (Qua)deserializer.Build().Deserialize(file, typeof(Qua));
-                qua.FilePath = path;
+                using (var file = File.OpenText(path))
+                {
+                    var deserializer = new DeserializerBuilder();
+                    deserializer.IgnoreUnmatchedProperties();
+                    qua = (Qua)deserializer.Build().Deserialize(file, typeof(Qua));
+                    qua.FilePath = path;
 
-                RestoreDefaultValues(qua);
+                    RestoreDefaultValues(qua);
+                }
+            } catch (FileNotFoundException e)
+            {
+                throw new ArgumentException(Convert.ToString(e));
             }
 
             AfterLoad(qua, checkValidity);
