@@ -14,6 +14,7 @@ using Quaver.API.Enums;
 using Quaver.API.Helpers;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Parsers;
+using Quaver.API.Maps.Processors.Scoring.Data;
 using Quaver.API.Replays;
 using Quaver.API.Replays.Virtual;
 
@@ -72,7 +73,11 @@ namespace Quaver.Tools.Commands
 
             foreach (var stat in virtualPlayer.ScoreProcessor.Stats)
             {
-                var val = $"{stat.HitDifference}{(stat.HitObject.IsLongNote ? "L" : "")}";
+                var val = $"{stat.HitDifference}";
+
+                if (stat.KeyPressType == KeyPressType.Release && stat.Judgement != Judgement.Miss)
+                    val += "L";
+
                 hits.Add(val);
             }
 
