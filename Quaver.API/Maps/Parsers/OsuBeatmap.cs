@@ -460,7 +460,7 @@ namespace Quaver.API.Maps.Parsers
         ///     Converts an .osu file into a Qua object
         /// </summary>
         /// <returns></returns>
-        public Qua ToQua()
+        public Qua ToQua(bool checkValidity = true)
         {
             // Init Qua with general information
             var qua = new Qua()
@@ -636,7 +636,7 @@ namespace Quaver.API.Maps.Parsers
             }
 
             // Do a validity check.
-            if (!qua.IsValid())
+            if (checkValidity && !qua.IsValid())
                 throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
 
             return qua;
