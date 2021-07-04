@@ -293,7 +293,7 @@ namespace Quaver.API.Maps.Parsers
                                 case "CircleSize":
                                     KeyCount = int.Parse(value, CultureInfo.InvariantCulture);
 
-                                    if (KeyCount != 4 && KeyCount != 7 && KeyCount != 5 && KeyCount != 8)
+                                    if (KeyCount <= 0 || KeyCount > 8)
                                         IsValid = false;
                                     break;
                                 case "OverallDifficulty":
@@ -462,6 +462,9 @@ namespace Quaver.API.Maps.Parsers
         /// <returns></returns>
         public Qua ToQua(bool checkValidity = true)
         {
+            // Include the Keymode in the diffname if it's not 4/7/8k and if it's not already included in it or in the title (in case of packs).
+            if (KeyCount != 4 && KeyCount != 7 && KeyCount != 8 && !Version.ToLower().Contains(KeyCount.ToString() + "k") && !Title.ToLower().Contains(KeyCount.ToString() + "k")) Version = KeyCount.ToString() + "K " + Version;
+
             // Init Qua with general information
             var qua = new Qua()
             {
@@ -482,11 +485,18 @@ namespace Quaver.API.Maps.Parsers
             // Get the correct game mode based on the amount of keys the map has.
             switch (KeyCount)
             {
+                case 1:
+                case 2:
+                case 3:
                 case 4:
                     qua.Mode = GameMode.Keys4;
+                    KeyCount = 4;
                     break;
+                case 5:
+                case 6:
                 case 7:
                     qua.Mode = GameMode.Keys7;
+                    KeyCount = 7;
                     break;
                 case 8:
                     qua.Mode = GameMode.Keys7;
