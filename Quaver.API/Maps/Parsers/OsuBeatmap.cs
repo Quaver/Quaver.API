@@ -11,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
@@ -485,18 +486,16 @@ namespace Quaver.API.Maps.Parsers
             // Get the correct game mode based on the amount of keys the map has.
             switch (KeyCount)
             {
-                case 1:
                 case 2:
-                case 3:
                 case 4:
                     qua.Mode = GameMode.Keys4;
-                    KeyCount = 4;
                     break;
+                case 1:
+                case 3:
                 case 5:
                 case 6:
                 case 7:
                     qua.Mode = GameMode.Keys7;
-                    KeyCount = 7;
                     break;
                 case 8:
                     qua.Mode = GameMode.Keys7;
@@ -569,6 +568,26 @@ namespace Quaver.API.Maps.Parsers
             {
                 // Get the keyLane the hitObject is in
                 var keyLane = (int) (hitObject.X / (512d / KeyCount)).Clamp(0, KeyCount - 1) + 1;
+
+                // Hardcode keylane for other keymode so they look centered in their assigned keymode.
+                switch (KeyCount)
+                {
+                    case 1:
+                        keyLane += 3;
+                        break;
+                    case 2:
+                        keyLane += 1;
+                        break;
+                    case 3:
+                        keyLane += 2;
+                        break;
+                    case 5:
+                        keyLane += 1;
+                        break;
+                    case 6:
+                        if (keyLane >= 4) keyLane += 1;
+                        break;
+                }
 
                 // osu! considers objects in lane 1 to be the special key, Quaver considers it to be the last lane.
                 // Lane 8 on 7K+1
