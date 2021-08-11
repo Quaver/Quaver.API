@@ -234,8 +234,11 @@ namespace Quaver.API.Maps.Processors.Scoring
             Accuracy = CalculateAccuracy();
 
 #region SCORE_CALCULATION
+            // Custom miss/combo break judgement
+            var comboBreakJudgement = Windows?.ComboBreakJudgement ?? (judgement = Judgement.Miss);
+
             // If the user didn't miss, then we want to update their combo and multiplier.
-            if (judgement != Judgement.Miss)
+            if (judgement < comboBreakJudgement)
             {
                 //Update Multiplier
                 if (judgement == Judgement.Good)
