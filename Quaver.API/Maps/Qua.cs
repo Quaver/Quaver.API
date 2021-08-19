@@ -112,7 +112,7 @@ namespace Quaver.API.Maps
         ///
         ///     It's "does not affect" rather than "affects" so that the "affects" value (in this case, false) serializes to nothing to support old maps.
         /// </summary>
-        public bool BPMDoesNotAffectScrollVelocity { get; private set; }
+        public bool BPMDoesNotAffectScrollVelocity { get; set; }
 
         /// <summary>
         ///    The initial scroll velocity before the first SV change.
@@ -172,6 +172,12 @@ namespace Quaver.API.Maps
         /// </summary>
         [YamlIgnore]
         public int RandomizeModifierSeed { get; set; } = -1;
+
+        /// <summary>
+        ///     The path of the .qua file if it is being parsed from one.
+        /// </summary>
+        [YamlIgnore]
+        private string FilePath { get; set; }
 
         /// <summary>
         ///     Ctor
@@ -248,6 +254,7 @@ namespace Quaver.API.Maps
                 var deserializer = new DeserializerBuilder();
                 deserializer.IgnoreUnmatchedProperties();
                 qua = (Qua)deserializer.Build().Deserialize(file, typeof(Qua));
+                qua.FilePath = path;
 
                 RestoreDefaultValues(qua);
             }
@@ -1295,6 +1302,30 @@ namespace Quaver.API.Maps
             // Relies on DenormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
             qua.DenormalizeSVs();
             return qua;
+        }
+
+        /// <summary>
+        ///     Returns the path of the file background. If no background exists, it will return null.
+        /// </summary>
+        /// <returns></returns>
+        public string GetBackgroundPath()
+        {
+            if (string.IsNullOrEmpty(BackgroundFile) || string.IsNullOrEmpty(FilePath))
+                return null;
+
+            return $"{Path.GetDirectoryName(FilePath)}/{BackgroundFile}";
+        }
+
+        /// <summary>
+        ///     Returns the path of the audio track file. If no track exists, it will return null.
+        /// </summary>
+        /// <returns></returns>
+        public string GetAudioPath()
+        {
+            if (string.IsNullOrEmpty(AudioFile) || string.IsNullOrEmpty(FilePath))
+                return null;
+
+            return $"{Path.GetDirectoryName(FilePath)}/{AudioFile}";
         }
     }
 }

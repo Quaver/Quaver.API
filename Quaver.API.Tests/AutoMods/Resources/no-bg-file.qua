@@ -1,0 +1,21 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: No Background File
+Description: Created at 1614791591000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects:
+- Lane: 2
+  KeySounds: []

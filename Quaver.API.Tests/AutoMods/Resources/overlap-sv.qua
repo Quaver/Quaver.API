@@ -1,0 +1,26 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Swan
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Overlapping SV
+Description: Created at 1614622165000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities:
+- StartTime: 545
+  Multiplier: 1
+- StartTime: 545
+  Multiplier: 1
+HitObjects:
+- StartTime: 545
+  Lane: 4
+  KeySounds: []

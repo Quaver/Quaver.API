@@ -262,6 +262,8 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     SongPreviewTime = (int) (SampleStart * 1000),
                     Mode = GameMode.Keys4,
                     DifficultyName = chart.Difficulty,
+                    BPMDoesNotAffectScrollVelocity = true,
+                    InitialScrollVelocity = 1,
                 };
 
                 var totalBeats = 0f;
