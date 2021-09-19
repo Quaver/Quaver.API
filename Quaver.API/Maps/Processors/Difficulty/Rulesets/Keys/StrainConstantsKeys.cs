@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -114,10 +114,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // LN
             LnBaseMultiplier = NewConstant("LnBaseMultiplier", 0.6f);
-            LnLayerToleranceMs = NewConstant("LnLayerToleranceMs", 40f);
+            LnLayerToleranceMs = NewConstant("LnLayerToleranceMs", 60f);
             LnLayerThresholdMs = NewConstant("LnLayerThresholdMs", 93.7f);
-            LnReleaseAfterMultiplier = NewConstant("LnReleaseAfterMultiplier", 1.75f);
-            LnReleaseBeforeMultiplier = NewConstant("LnReleaseBeforeMultiplier", 1.35f);
+            LnReleaseAfterMultiplier = NewConstant("LnReleaseAfterMultiplier", 1.0f);
+            LnReleaseBeforeMultiplier = NewConstant("LnReleaseBeforeMultiplier", 1.3f);
             LnTapMultiplier = NewConstant("LnTapMultiplier", 1.05f);
 
             // LongJack Manipulation

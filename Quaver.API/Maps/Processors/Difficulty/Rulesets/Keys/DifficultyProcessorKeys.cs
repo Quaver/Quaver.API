@@ -463,28 +463,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForLnMultiplier()
         {
-            const float shortLnThreshold = 60000f / 150 / 4; // value at which the multiplier starts decreasing
-            const float shortLnThresholdCeiling = 60000f / 180 / 4; // value at which the multiplier is 0
-
             foreach (var data in StrainSolverData)
             {
                 // Check if data is LN
                 if (data.EndTime > data.StartTime)
                 {
                     var durationValue = 1 - Math.Min(1, Math.Max(0, (StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
-
-                    var lnLength = Math.Abs(data.EndTime - data.StartTime);
-                    var shortLnMultiplier = 1f;
-
-                    if (Map.Mode == GameMode.Keys4)
-                    {
-                        // if ln is 150/4, then 1
-                        // if ln is 180/4, then 0
-                        var lnShortness = (shortLnThreshold - Math.Max(lnLength, shortLnThresholdCeiling)) / (shortLnThreshold - shortLnThresholdCeiling);
-                        shortLnMultiplier = 1 - Math.Min(1, Math.Max(0, lnShortness));
-                    }
-
-                    var baseMultiplier = 1 + (1 - durationValue) * StrainConstants.LnBaseMultiplier * shortLnMultiplier;
+                    var baseMultiplier = 1 + durationValue * StrainConstants.LnBaseMultiplier;
 
                     foreach (var k in data.HitObjects)
                         k.LnStrainMultiplier = baseMultiplier;
