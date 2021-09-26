@@ -653,10 +653,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             const float densityDifficultyMin = .4f;
 
             // calculate ratio between min and max value
-            var ratio = Math.Max(0, (duration - xMin) / (xMax - xMin));
+            var ratio = Math.Max(0, 1 - (duration - xMin) / (xMax - xMin));
 
             //if ratio is too big and map isnt a beginner map (nps > 4) scale based on nps instead
-            if (ratio > 1 && AverageNoteDensity < 4)
+            if (ratio == 0 && AverageNoteDensity < 4)
             {
                 //if note density is too low dont bother calculating for density either
                 if (AverageNoteDensity < 1)
@@ -664,8 +664,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                 return AverageNoteDensity * densityMultiplier + .134f;
             }
-
-            ratio = 1 - Math.Min(1, ratio);
 
             // compute for difficulty
             return lowestDifficulty + (strainMax - lowestDifficulty) * (float) Math.Pow(ratio, exp);
