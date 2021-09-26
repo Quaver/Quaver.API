@@ -541,14 +541,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float CalculateOverallDifficulty()
         {
-            float calculatedDiff;
-
             // Solve strain value of every data point
             foreach (var data in StrainSolverData)
                 data.CalculateStrainValue();
-
-            calculatedDiff = StrainSolverData.Where(s => s.Hand == Hand.Left || s.Hand == Hand.Right)
-                .Average(s => s.TotalStrainValue);
 
             var bins = new List<float>();
             const int binSize = 1000;
@@ -564,70 +559,21 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 bins.Add(averageRating);
             }
 
-            if (!bins.Any(strain => strain > 0)) return 0;
+            const int buildupWindow = 22500;
+            const float decayMultiplier = 0.6f;
+            var buildupBinCount = buildupWindow / binSize;
 
-            /*
-             * Having a section where notes are relatively easy, compared to the hardest sections of the map, drops the rating way more than it should.
-             *
-             * This part computes a "continuity" value, the higher it is the less "easy" notes it has.
-             * Maps with a higher continuity should get nerfed, since they are overrated right now.
-             *
-             * The continuity is computed by taking a comparison value, set as the average of the hardest 40% of all sections.
-             * All sections are compared to that value, the average is the continuity.
-             * A square root is used to decrease the gap between easy sections and hard sections and considered the core of this adjustment.
-             */
+            var exhaustion = new List<float>();
 
-            // Average of the hardest 40% of the map
-            var cutoffPos = (int)Math.Floor(bins.Count * 0.4);
-            var top40 = bins.OrderByDescending(s => s).Take(cutoffPos);
-            var enumerable = top40 as float[] ?? top40.ToArray();
-            var easyRatingCutoff = enumerable.Any() ? enumerable.Average() : 0;
-
-            // We do not consider sections without notes, since there are no "easy notes". Those sections have barely
-            // affected the rating in the old difficulty calculator.
-            var continuity = (float) bins.Where(strain => strain > 0)
-                .Average(strain => Math.Sqrt(strain / easyRatingCutoff));
-
-            // The average continuity of maps in our dataset has been observed to be around 0.85, so we take that
-            // as the reference value to keep the rating the same.
-            const float maxContinuity = 1.00f;
-            const float avgContinuity = 0.85f;
-            const float minContinuity = 0.60f;
-
-            const float maxAdjustment = 1.05f;
-            const float avgAdjustment = 1.00f;
-            const float minAdjustment = 0.90f;
-
-            float continuityAdjustment;
-
-            if (continuity > avgContinuity)
+            foreach (var bin in bins)
             {
-                var continuityFactor = 1 - (continuity - avgContinuity)/(maxContinuity - avgContinuity);
-                continuityAdjustment = Math.Min(avgAdjustment, Math.Max(minAdjustment, continuityFactor * ( avgAdjustment - minAdjustment ) + minAdjustment
-                ));
-            }
-            else
-            {
-                var continuityFactor = 1 - (continuity - minContinuity)/(avgContinuity - minContinuity);
-                continuityAdjustment = Math.Min(maxAdjustment, Math.Max(avgAdjustment, continuityFactor * (maxAdjustment - avgAdjustment) + avgAdjustment));
+                var currentDiff = exhaustion.Any() ? exhaustion.Last() : 0;
+                var delta = ( bin - currentDiff ) / buildupBinCount;
+                if (delta < 0) delta *= decayMultiplier;
+                exhaustion.Add(Math.Max(0, currentDiff + delta));
             }
 
-            calculatedDiff *= continuityAdjustment;
-
-            /*
-             * Nerf short maps below 60 seconds of true drain time (time where a player is actually playing hard/moderate parts)
-             * We derive the "true drain time" from the continuity.
-             * There is no need to measure map length by taking the first/last note or strain data, since the bin size is already known.
-             */
-            const float maxShortMapAdjustment = 0.75f;
-            const float shortMapThreshold = 60 * SECONDS_TO_MILLISECONDS; // Start applying the nerf once a map is shorter
-
-            var trueDrainTime = bins.Count * continuity * binSize;
-            var shortMapAdjustment = (float)Math.Min(1, Math.Max(maxShortMapAdjustment, 0.25 * Math.Sqrt(trueDrainTime / shortMapThreshold) + 0.75));
-
-            calculatedDiff *= shortMapAdjustment;
-
-            return calculatedDiff;
+            return exhaustion.Max();
         }
 
         /// <summary>
@@ -646,6 +592,9 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private float GetCoefficientValue(float duration, float xMin, float xMax, float strainMax, float exp)
         {
+            // Scale to 0-50 scale after applying exhaustion model
+            const float multiplier = 0.9f;
+
             // todo: temp. Linear for now
             // todo: apply cosine curve
             const float lowestDifficulty = 1;
@@ -653,20 +602,18 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             const float densityDifficultyMin = .4f;
 
             // calculate ratio between min and max value
-            var ratio = Math.Max(0, 1 - (duration - xMin) / (xMax - xMin));
+            var ratio = Math.Max(0, 1 - ( duration - xMin ) / ( xMax - xMin ));
 
             //if ratio is too big and map isnt a beginner map (nps > 4) scale based on nps instead
             if (ratio == 0 && AverageNoteDensity < 4)
             {
                 //if note density is too low dont bother calculating for density either
-                if (AverageNoteDensity < 1)
-                    return densityDifficultyMin;
-
-                return AverageNoteDensity * densityMultiplier + .134f;
+                if (AverageNoteDensity < 1) return densityDifficultyMin * multiplier;
+                return ( AverageNoteDensity * densityMultiplier + .134f ) * multiplier;
             }
 
             // compute for difficulty
-            return lowestDifficulty + (strainMax - lowestDifficulty) * (float) Math.Pow(ratio, exp);
+            return ( lowestDifficulty + ( strainMax - lowestDifficulty ) * (float) Math.Pow(ratio, exp) ) * multiplier;
         }
     }
 }
