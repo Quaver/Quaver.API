@@ -283,7 +283,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (curHitOb.Hand == nextHitOb.Hand && nextHitOb.StartTime > curHitOb.StartTime)
                     {
                         // Determined by if there's a minijack within 2 set of chords/single notes
-                        var actionJackFound = ((int) nextHitOb.FingerState & (1 << (int) curHitOb.FingerState - 1)) != 0;
+                        var actionJackFound = ( curHitOb.FingerState & nextHitOb.FingerState ) != 0;
 
                         // Determined by if a chord is found in either finger state
                         var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
