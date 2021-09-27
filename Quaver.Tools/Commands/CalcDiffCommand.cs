@@ -41,6 +41,7 @@ namespace Quaver.Tools.Commands
                 Map = new OsuBeatmap(path).ToQua();
 
             Mods = (ModIdentifier) Enum.Parse(typeof(ModIdentifier), args[2]);
+            Map.ApplyMods(Mods);
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-﻿namespace Quaver.API.Maps.AutoMod.Issues.Map
+namespace Quaver.API.Maps.AutoMod.Issues.Map
 {
     public class AutoModIssueMapLength : AutoModIssue
     {
