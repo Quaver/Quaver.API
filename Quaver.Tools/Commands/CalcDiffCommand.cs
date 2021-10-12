@@ -36,7 +36,7 @@ namespace Quaver.Tools.Commands
             var path = args[1];
 
             if (path.EndsWith(".qua"))
-                Map = Qua.Parse(path);
+                Map = Qua.Parse(path, false);
             else if (path.EndsWith(".osu"))
                 Map = new OsuBeatmap(path).ToQua();
 
