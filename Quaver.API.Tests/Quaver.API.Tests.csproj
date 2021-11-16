@@ -263,5 +263,11 @@
     <None Update="AutoMods\Resources\multi-mode-diff-name-2.qua">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Quaver\Resources\regression-9.qua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Quaver\Resources\regression-9-normalized.qua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
