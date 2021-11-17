@@ -225,6 +225,7 @@ namespace Quaver.API.Tests.Quaver
                 "regression-6",
                 "regression-7",
                 "regression-8",
+                "regression-9",
                 "sample",
                 "sv-at-first-timing-point",
                 "sv-before-first-timing-point",

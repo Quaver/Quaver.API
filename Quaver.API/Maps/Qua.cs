@@ -1071,8 +1071,14 @@ namespace Quaver.API.Maps
             float? currentAdjustedSvMultiplier = null;
             float? initialSvMultiplier = null;
 
-            foreach (var timingPoint in TimingPoints)
+            for (var i = 0; i < TimingPoints.Count; i++)
             {
+                var timingPoint = TimingPoints[i];
+
+                var nextTimingPointHasSameTimestamp = false;
+                if (i + 1 < TimingPoints.Count && TimingPoints[i + 1].StartTime == timingPoint.StartTime)
+                    nextTimingPointHasSameTimestamp = true;
+
                 while (true)
                 {
                     if (currentSvIndex >= SliderVelocities.Count)
@@ -1080,6 +1086,11 @@ namespace Quaver.API.Maps
 
                     var sv = SliderVelocities[currentSvIndex];
                     if (sv.StartTime > timingPoint.StartTime)
+                        break;
+
+                    // If there are more timing points on this timestamp, the SV only applies on the
+                    // very last one, so skip it for now.
+                    if (nextTimingPointHasSameTimestamp && sv.StartTime == timingPoint.StartTime)
                         break;
 
                     if (sv.StartTime < timingPoint.StartTime)
