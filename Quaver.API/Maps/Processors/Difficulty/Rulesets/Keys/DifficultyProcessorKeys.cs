@@ -592,8 +592,8 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private float GetCoefficientValue(float duration, float xMin, float xMax, float strainMax, float exp)
         {
-            // Scale to 0-100 scale after applying exhaustion model
-            const float multiplier = 0.9f * 2.0f;
+            // Scale to 0-50 scale after applying exhaustion model
+            const float multiplier = 0.9f;
 
             // todo: temp. Linear for now
             // todo: apply cosine curve
