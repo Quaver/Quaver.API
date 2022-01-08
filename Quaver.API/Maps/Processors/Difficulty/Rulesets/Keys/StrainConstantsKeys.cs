@@ -1,7 +1,7 @@
 /*
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2018 Swan & The Quaver Team <support@quavergame.com>.
 */
 
@@ -90,14 +90,14 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         {
             // Simple Jack
             SJackLowerBoundaryMs = NewConstant("SJackLowerBoundaryMs", 40);
-            SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 330);
-            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 81);
+            SJackUpperBoundaryMs = NewConstant("SJackUpperBoundaryMs", 320);
+            SJackMaxStrainValue = NewConstant("SJackMaxStrainValue", 68);
             SJackCurveExponential = NewConstant("SJackCurveExponential", 1.17f);
 
             // Tech Jack
             TJackLowerBoundaryMs = NewConstant("TJackLowerBoundaryMs", 40);
-            TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 340);
-            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 83);
+            TJackUpperBoundaryMs = NewConstant("TJackUpperBoundaryMs", 330);
+            TJackMaxStrainValue = NewConstant("TJackMaxStrainValue", 70);
             TJackCurveExponential = NewConstant("TJackCurveExponential", 1.14f);
 
             // Roll/Trill
@@ -114,16 +114,16 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // LN
             LnBaseMultiplier = NewConstant("LnBaseMultiplier", 0.6f);
-            LnLayerToleranceMs = NewConstant("LnLayerToleranceMs", 40f);
+            LnLayerToleranceMs = NewConstant("LnLayerToleranceMs", 60f);
             LnLayerThresholdMs = NewConstant("LnLayerThresholdMs", 93.7f);
-            LnReleaseAfterMultiplier = NewConstant("LnReleaseAfterMultiplier", 1.75f);
-            LnReleaseBeforeMultiplier = NewConstant("LnReleaseBeforeMultiplier", 1.35f);
+            LnReleaseAfterMultiplier = NewConstant("LnReleaseAfterMultiplier", 1.0f);
+            LnReleaseBeforeMultiplier = NewConstant("LnReleaseBeforeMultiplier", 1.3f);
             LnTapMultiplier = NewConstant("LnTapMultiplier", 1.05f);
 
             // LongJack Manipulation
             VibroActionDurationMs = NewConstant("VibroActionDurationMs", 88.2f);
-            VibroActionToleranceMs = NewConstant("VibroActionToleranceMs", 22f);
-            VibroMultiplier = NewConstant("VibroMultiplier", 0.48f);
+            VibroActionToleranceMs = NewConstant("VibroActionToleranceMs", 88.2f);
+            VibroMultiplier = NewConstant("VibroMultiplier", 0.75f);
             VibroLengthMultiplier = NewConstant("VibroLengthMultiplier", 0.3f);
             VibroMaxLength = NewConstant("VibroMaxLength", 6);
 

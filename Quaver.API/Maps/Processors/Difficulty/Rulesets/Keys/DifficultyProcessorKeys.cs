@@ -26,7 +26,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     The version of the processor.
         /// </summary>
-        public static string Version { get; } = "0.0.4";
+        public static string Version { get; } = "0.0.5";
 
         /// <summary>
         ///     Constants used for solving
@@ -283,7 +283,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (curHitOb.Hand == nextHitOb.Hand && nextHitOb.StartTime > curHitOb.StartTime)
                     {
                         // Determined by if there's a minijack within 2 set of chords/single notes
-                        var actionJackFound = ((int) nextHitOb.FingerState & (1 << (int) curHitOb.FingerState - 1)) != 0;
+                        var actionJackFound = ( curHitOb.FingerState & nextHitOb.FingerState ) != 0;
 
                         // Determined by if a chord is found in either finger state
                         var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
@@ -463,28 +463,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// </summary>
         private void ComputeForLnMultiplier()
         {
-            const float shortLnThreshold = 60000f / 150 / 4; // value at which the multiplier starts decreasing
-            const float shortLnThresholdCeiling = 60000f / 180 / 4; // value at which the multiplier is 0
-
             foreach (var data in StrainSolverData)
             {
                 // Check if data is LN
                 if (data.EndTime > data.StartTime)
                 {
                     var durationValue = 1 - Math.Min(1, Math.Max(0, (StrainConstants.LnLayerThresholdMs + StrainConstants.LnLayerToleranceMs - (data.EndTime - data.StartTime)) / StrainConstants.LnLayerToleranceMs));
-
-                    var lnLength = Math.Abs(data.EndTime - data.StartTime);
-                    var shortLnMultiplier = 1f;
-
-                    if (Map.Mode == GameMode.Keys4)
-                    {
-                        // if ln is 150/4, then 1
-                        // if ln is 180/4, then 0
-                        var lnShortness = (shortLnThreshold - Math.Max(lnLength, shortLnThresholdCeiling)) / (shortLnThreshold - shortLnThresholdCeiling);
-                        shortLnMultiplier = 1 - Math.Min(1, Math.Max(0, lnShortness));
-                    }
-
-                    var baseMultiplier = 1 + (1 - durationValue) * StrainConstants.LnBaseMultiplier * shortLnMultiplier;
+                    var baseMultiplier = 1 + durationValue * StrainConstants.LnBaseMultiplier;
 
                     foreach (var k in data.HitObjects)
                         k.LnStrainMultiplier = baseMultiplier;
@@ -668,10 +653,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             const float densityDifficultyMin = .4f;
 
             // calculate ratio between min and max value
-            var ratio = Math.Max(0, (duration - xMin) / (xMax - xMin));
+            var ratio = Math.Max(0, 1 - (duration - xMin) / (xMax - xMin));
 
             //if ratio is too big and map isnt a beginner map (nps > 4) scale based on nps instead
-            if (ratio > 1 && AverageNoteDensity < 4)
+            if (ratio == 0 && AverageNoteDensity < 4)
             {
                 //if note density is too low dont bother calculating for density either
                 if (AverageNoteDensity < 1)
@@ -679,8 +664,6 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                 return AverageNoteDensity * densityMultiplier + .134f;
             }
-
-            ratio = 1 - Math.Min(1, ratio);
 
             // compute for difficulty
             return lowestDifficulty + (strainMax - lowestDifficulty) * (float) Math.Pow(ratio, exp);
