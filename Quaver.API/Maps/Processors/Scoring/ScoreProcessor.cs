@@ -56,7 +56,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     If the score is currently failed.
         /// </summary>
-        public bool Failed => Health <= 0 && !Mods.HasFlag(ModIdentifier.NoFail);
+        public bool Failed => Health <= 0 && !Mods.HasFlag(ModIdentifier.NoFail) || ForceFail;
+
+        /// <summary>
+        ///     Forces the game to fail
+        /// </summary>
+        protected bool ForceFail { get; set; } = false;
 
         /// <summary>
         ///     The user's stats per object.

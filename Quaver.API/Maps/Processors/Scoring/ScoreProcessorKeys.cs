@@ -260,12 +260,18 @@ namespace Quaver.API.Maps.Processors.Scoring
             {
                 MultiplierCount -= MultiplierCountToIncreaseIndex * 2;
                 Combo = 0;
+
+                if (Mods.HasFlag(ModIdentifier.NoMiss))
+                {
+                    Health = 0;
+                    ForceFail = true;
+                    return;
+                }
             }
 
             // Make sure the multiplier count doesn't go below 0
             if (MultiplierCount < 0)
                 MultiplierCount = 0;
-
             // Make sure the multiplier count is not over max multiplier count
             else if (MultiplierCount > MaxMultiplierCount)
                 MultiplierCount = MaxMultiplierCount;

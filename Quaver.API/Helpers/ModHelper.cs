@@ -164,6 +164,9 @@ namespace Quaver.API.Helpers
                     case ModIdentifier.HeatlthAdjust:
                         modStrings.Add("HPA");
                         break;
+                    case ModIdentifier.NoMiss:
+                        modStrings.Add("NM");
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException($"Short string for ModIdentifier: {mod} does not exist.");
                 }
