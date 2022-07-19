@@ -61,7 +61,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     Forces the game to fail
         /// </summary>
-        protected bool ForceFail { get; set; } = false;
+        public bool ForceFail { get; protected set; } = false;
 
         /// <summary>
         ///     The user's stats per object.
