@@ -522,8 +522,6 @@ namespace Quaver.API.Maps
             if (HitObjects.Count == 0)
                 return TimingPoints[0].Bpm;
 
-            var firstTime = HitObjects[0].StartTime;
-
             var lastObject = HitObjects.OrderByDescending(x => x.IsLongNote ? x.EndTime : x.StartTime).First();
             double lastTime = lastObject.IsLongNote ? lastObject.EndTime : lastObject.StartTime;
 
@@ -543,9 +541,6 @@ namespace Quaver.API.Maps
                     durations[point.Bpm] += duration;
                 else
                     durations[point.Bpm] = duration;
-
-                if (point.StartTime < firstTime)
-                    break;
             }
 
             if (durations.Count == 0)
