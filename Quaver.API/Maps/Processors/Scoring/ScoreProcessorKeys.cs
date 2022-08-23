@@ -120,6 +120,8 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Judgement.Miss, -6.0f}
         };
 
+        private const float ReleaseHealthWeight = 0.5f;
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -286,7 +288,9 @@ namespace Quaver.API.Maps.Processors.Scoring
 #endregion
 
 #region HEALTH_CALCULATION
-            var newHealth = Health += JudgementHealthWeighting[judgement];
+            var healthDelta = JudgementHealthWeighting[judgement];
+            if (isLongNoteRelease) healthDelta *= ReleaseHealthWeight;
+            var newHealth = Health += healthDelta;
 
             // Constrain health from 0-100
             if (newHealth <= 0)
