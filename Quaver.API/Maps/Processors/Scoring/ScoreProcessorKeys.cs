@@ -112,12 +112,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         public override Dictionary<Judgement, float> JudgementHealthWeighting { get; } = new Dictionary<Judgement, float>()
         {
-            {Judgement.Marv, 0.5f},
-            {Judgement.Perf, 0.4f},
-            {Judgement.Great, 0.2f},
-            {Judgement.Good, -3.0f},
-            {Judgement.Okay, -4.5f},
-            {Judgement.Miss, -6.0f}
+            { Judgement.Marv, 100f / 1500 },
+            { Judgement.Perf, 100f / 1800 },
+            { Judgement.Great, 100f / 2500 },
+            { Judgement.Good, -100f / 100 },
+            { Judgement.Okay, -100f / 60 },
+            { Judgement.Miss, -100f / 30 }
         };
 
         private const float ReleaseHealthWeight = 0.5f;
