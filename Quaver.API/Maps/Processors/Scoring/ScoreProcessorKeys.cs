@@ -327,36 +327,13 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         protected override void InitializeHealthWeighting()
         {
+            const float baseDensity = 20;
             if (Mods.HasFlag(ModIdentifier.Autoplay))
                 return;
 
-            var density = Map.GetActionsPerSecond(ModHelper.GetRateFromMods(Mods));
-
-            // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (density == 0 || density >= 12 || double.IsNaN(density))
-                return;
-
-            // Set baseline density to 2
-            if (density > 0 && density < 2)
-                density = 2;
-
-            var values = new Dictionary<Judgement, Tuple<float, float>>
-            {
-                {Judgement.Marv, new Tuple<float, float>(-0.14f, 2.68f)},
-                {Judgement.Perf, new Tuple<float, float>(-0.2f, 3.4f)},
-                {Judgement.Great, new Tuple<float, float>(-0.14f, 2.68f)},
-                {Judgement.Good, new Tuple<float, float>(0.084f, -0.008f)},
-                {Judgement.Okay, new Tuple<float, float>(0.081f, 0.028f)}
-            };
-
-            foreach (var item in values)
-            {
-                var val = values[item.Key];
-                var multiplier = val.Item1 * density + val.Item2;
-
-                var weight = JudgementHealthWeighting[item.Key];
-                JudgementHealthWeighting[item.Key] = (float) Math.Round(multiplier * weight, 2, MidpointRounding.ToEven);
-            }
+            var density = MathHelper.Clamp(Map.HitObjects.Count, 2, baseDensity);
+            foreach (var judge in new[] { Judgement.Marv, Judgement.Perf, Judgement.Great })
+                JudgementHealthWeighting[judge] *= baseDensity / density;
         }
 
         /// <summary>
