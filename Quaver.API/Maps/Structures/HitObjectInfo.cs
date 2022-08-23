@@ -77,11 +77,8 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     Manual recolor of the object.
         /// </summary>
-        public int Color
-        {
-            get;
-            [MoonSharpVisible(false)] set;
-        }
+        [MoonSharpVisible(false)]
+        public int Color { get; set; } = -1;
 
         /// <summary>
         ///     If the object is a long note. (EndTime > 0)
