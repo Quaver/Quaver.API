@@ -318,7 +318,8 @@ namespace Quaver.API.Maps
                     KeySounds = keySoundsWithDefaults,
                     Lane = obj.Lane,
                     StartTime = obj.StartTime,
-                    EditorLayer = obj.EditorLayer
+                    EditorLayer = obj.EditorLayer,
+                    Color = obj.Color
                 });
             }
 
