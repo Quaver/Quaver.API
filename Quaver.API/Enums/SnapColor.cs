@@ -2,6 +2,7 @@ namespace Quaver.API.Enums
 {
     public enum SnapColor
     {
+        None = 0,
         Red = 1,
         Blue = 2,
         Purple = 3,
