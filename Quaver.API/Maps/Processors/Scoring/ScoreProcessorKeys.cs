@@ -323,7 +323,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         ///     Calculates the final health weighting values for each judgement from
         ///     average actions per second. <see cref="Qua.GetActionsPerSecond"/>
         ///
-        ///     Resource: https://www.desmos.com/calculator/veeobxirvz
+        ///     Makes recovery easier on maps with lower density, linear scaling based on density
         /// </summary>
         protected override void InitializeHealthWeighting()
         {
@@ -331,7 +331,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             if (Mods.HasFlag(ModIdentifier.Autoplay))
                 return;
 
-            var density = MathHelper.Clamp(Map.HitObjects.Count, 2, baseDensity);
+            var density = MathHelper.Clamp(Map.GetActionsPerSecond(), 2, baseDensity);
             foreach (var judge in new[] { Judgement.Marv, Judgement.Perf, Judgement.Great })
                 JudgementHealthWeighting[judge] *= baseDensity / density;
         }
