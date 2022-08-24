@@ -36,94 +36,94 @@ namespace Quaver.API.Helpers
                         modStrings.Add("NSV");
                         break;
                     case ModIdentifier.Speed05X:
-                        modStrings.Add("0.5x");
+                        modStrings.Insert(0, "0.5x");
                         break;
                     case ModIdentifier.Speed055X:
-                        modStrings.Add("0.55x");
+                        modStrings.Insert(0, "0.55x");
                         break;
                     case ModIdentifier.Speed06X:
-                        modStrings.Add("0.6x");
+                        modStrings.Insert(0, "0.6x");
                         break;
                     case ModIdentifier.Speed065X:
-                        modStrings.Add("0.65x");
+                        modStrings.Insert(0, "0.65x");
                         break;
                     case ModIdentifier.Speed07X:
-                        modStrings.Add("0.7x");
+                        modStrings.Insert(0, "0.7x");
                         break;
                     case ModIdentifier.Speed075X:
-                        modStrings.Add("0.75x");
+                        modStrings.Insert(0, "0.75x");
                         break;
                     case ModIdentifier.Speed08X:
-                        modStrings.Add("0.8x");
+                        modStrings.Insert(0, "0.8x");
                         break;
                     case ModIdentifier.Speed085X:
-                        modStrings.Add("0.85x");
+                        modStrings.Insert(0, "0.85x");
                         break;
                     case ModIdentifier.Speed09X:
-                        modStrings.Add("0.9x");
+                        modStrings.Insert(0, "0.9x");
                         break;
                     case ModIdentifier.Speed095X:
-                        modStrings.Add("0.95x");
+                        modStrings.Insert(0, "0.95x");
                         break;
                     case ModIdentifier.Speed105X:
-                        modStrings.Add("1.05x");
+                        modStrings.Insert(0, "1.05x");
                         break;
                     case ModIdentifier.Speed11X:
-                        modStrings.Add("1.1x");
+                        modStrings.Insert(0, "1.1x");
                         break;
                     case ModIdentifier.Speed115X:
-                        modStrings.Add("1.15x");
+                        modStrings.Insert(0, "1.15x");
                         break;
                     case ModIdentifier.Speed12X:
-                        modStrings.Add("1.2x");
+                        modStrings.Insert(0, "1.2x");
                         break;
                     case ModIdentifier.Speed125X:
-                        modStrings.Add("1.25x");
+                        modStrings.Insert(0, "1.25x");
                         break;
                     case ModIdentifier.Speed13X:
-                        modStrings.Add("1.3x");
+                        modStrings.Insert(0, "1.3x");
                         break;
                     case ModIdentifier.Speed135X:
-                        modStrings.Add("1.35x");
+                        modStrings.Insert(0, "1.35x");
                         break;
                     case ModIdentifier.Speed14X:
-                        modStrings.Add("1.4x");
+                        modStrings.Insert(0, "1.4x");
                         break;
                     case ModIdentifier.Speed145X:
-                        modStrings.Add("1.45x");
+                        modStrings.Insert(0, "1.45x");
                         break;
                     case ModIdentifier.Speed15X:
-                        modStrings.Add("1.5x");
+                        modStrings.Insert(0, "1.5x");
                         break;
                     case ModIdentifier.Speed155X:
-                        modStrings.Add("1.55x");
+                        modStrings.Insert(0, "1.55x");
                         break;
                     case ModIdentifier.Speed16X:
-                        modStrings.Add("1.6x");
+                        modStrings.Insert(0, "1.6x");
                         break;
                     case ModIdentifier.Speed165X:
-                        modStrings.Add("1.65x");
+                        modStrings.Insert(0, "1.65x");
                         break;
                     case ModIdentifier.Speed17X:
-                        modStrings.Add("1.7x");
+                        modStrings.Insert(0, "1.7x");
                         break;
                     case ModIdentifier.Speed175X:
-                        modStrings.Add("1.75x");
+                        modStrings.Insert(0, "1.75x");
                         break;
                     case ModIdentifier.Speed18X:
-                        modStrings.Add("1.8x");
+                        modStrings.Insert(0, "1.8x");
                         break;
                     case ModIdentifier.Speed185X:
-                        modStrings.Add("1.85x");
+                        modStrings.Insert(0, "1.85x");
                         break;
                     case ModIdentifier.Speed19X:
-                        modStrings.Add("1.9x");
+                        modStrings.Insert(0, "1.9x");
                         break;
                     case ModIdentifier.Speed195X:
-                        modStrings.Add("1.95x");
+                        modStrings.Insert(0, "1.95x");
                         break;
                     case ModIdentifier.Speed20X:
-                        modStrings.Add("2.0x");
+                        modStrings.Insert(0, "2.0x");
                         break;
                     case ModIdentifier.Strict:
                         modStrings.Add("ST");
