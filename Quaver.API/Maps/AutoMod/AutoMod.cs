@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using ATL;
 using Quaver.API.Enums;
 using Quaver.API.Maps.AutoMod.Issues;
@@ -300,7 +301,11 @@ namespace Quaver.API.Maps.AutoMod
         /// <summary>
         ///     Detects issues related to the map's metadata.
         /// </summary>
-        private void DetectMetadataIssues() => DetectNonRomanizedMetadata();
+        private void DetectMetadataIssues()
+        {
+            DetectNonRomanizedMetadata();
+            DetectNonStandardizedMetadata();
+        }
 
         /// <summary>
         ///     Detects if any portion of the metadata uses non-romanized characters.
@@ -312,6 +317,31 @@ namespace Quaver.API.Maps.AutoMod
 
             if (HasNonAsciiCharacters(Qua.Title))
                 Issues.Add(new AutoModIssueNonRomanized("Title"));
+        }
+
+        /// <summary>
+        ///     Detects if metadata violates standardization rules.
+        /// </summary>
+        private void DetectNonStandardizedMetadata()
+        {
+            DetectNonStandardizedField("Artist", Qua.Artist);
+            DetectNonStandardizedField("Title", Qua.Title);
+        }
+
+        /// <summary>
+        ///     Detects if a given field violates standardization rules.
+        /// </summary>
+        /// <param name="fieldName"></param>
+        /// <param name="fieldValue"></param>
+        private void DetectNonStandardizedField(string fieldName, string fieldValue)
+        {
+            var vsMatch = new Regex(@"\b(vs\.?)\b").Match(fieldValue);
+            if (!fieldValue.Contains("vs.") && vsMatch.Success)
+                Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, vsMatch.Groups[1].Value, "vs."));
+
+            var featMatch = new Regex(@"\b(ft\.?|)\b", RegexOptions.IgnoreCase).Match(fieldValue);
+            if (!fieldValue.Contains("feat.") && featMatch.Success)
+                Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, featMatch.Groups[1].Value, "vs."));
         }
 
         /// <summary>

@@ -153,6 +153,18 @@ namespace Quaver.API.Tests.AutoMods
         }
 
         [Fact]
+        public void DetectNonStandardizedCharacters()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/non-standardized.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueNonStandardizedMetadata issue &&
+                                                 issue.Text.Contains("Artist"));
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueNonStandardizedMetadata issue &&
+                                                 issue.Text.Contains("Title"));
+        }
+
+        [Fact]
         public void DetectNoBackgroundFile()
         {
             var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/no-bg-file.qua", false));
