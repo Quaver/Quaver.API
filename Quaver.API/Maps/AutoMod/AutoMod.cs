@@ -82,7 +82,7 @@ namespace Quaver.API.Maps.AutoMod
             DetectMapLengthIssues();
             DetectMetadataIssues();
             DetectPreviewPointIssues();
-            DetectBackgroundFileIsues();
+            DetectBackgroundFileIssues();
             DetectAudioFileIssues();
         }
 
@@ -363,7 +363,7 @@ namespace Quaver.API.Maps.AutoMod
         ///     - File too large
         ///     - Resolution too small
         /// </summary>
-        private void DetectBackgroundFileIsues()
+        private void DetectBackgroundFileIssues()
         {
             var path = Qua.GetBackgroundPath();
 

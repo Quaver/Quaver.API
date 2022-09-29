@@ -269,7 +269,7 @@ namespace Quaver.API.Tests.AutoMods
 
             autoModMapset.Run();
 
-            Assert.True(autoModMapset.Issues.FindAll(x => x is AutoModIssueMismatchingMetdata).Count == 4);
+            Assert.True(autoModMapset.Issues.FindAll(x => x is AutoModIssueMismatchingMetadata).Count == 4);
         }
 
         [Fact]
