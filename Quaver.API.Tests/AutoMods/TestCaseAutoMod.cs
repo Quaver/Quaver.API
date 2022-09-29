@@ -5,8 +5,8 @@ using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
 using Quaver.API.Maps.AutoMod.Issues.Audio;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
-using Quaver.API.Maps.AutoMod.Issues.Background;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
+using Quaver.API.Maps.AutoMod.Issues.Images;
 using Quaver.API.Maps.AutoMod.Issues.Map;
 using Quaver.API.Maps.AutoMod.Issues.Mapset;
 using Quaver.API.Maps.AutoMod.Issues.Metadata;
@@ -188,7 +188,18 @@ namespace Quaver.API.Tests.AutoMods
             var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/large-bg-file.qua", false));
             autoMod.Run();
 
-            Assert.Contains(autoMod.Issues, x => x is AutoModIssueBackgroundTooLarge);
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueImageTooLarge issue && issue.Item == "background");
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueImageResolution issue && issue.Item == "background");
+        }
+
+        [Fact]
+        public void DetectLargeBannerFile()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/large-banner.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueImageTooLarge issue && issue.Item == "banner");
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueImageResolution issue && issue.Item == "banner");
         }
 
         [Fact]
@@ -197,7 +208,7 @@ namespace Quaver.API.Tests.AutoMods
             var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/small-bg-resolution.qua", false));
             autoMod.Run();
 
-            Assert.Contains(autoMod.Issues, x => x is AutoModIssueBackgroundResolution);
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueImageResolution);
         }
 
         [Fact]

@@ -9,8 +9,8 @@ using Quaver.API.Enums;
 using Quaver.API.Maps.AutoMod.Issues;
 using Quaver.API.Maps.AutoMod.Issues.Audio;
 using Quaver.API.Maps.AutoMod.Issues.Autoplay;
-using Quaver.API.Maps.AutoMod.Issues.Background;
 using Quaver.API.Maps.AutoMod.Issues.HitObjects;
+using Quaver.API.Maps.AutoMod.Issues.Images;
 using Quaver.API.Maps.AutoMod.Issues.Map;
 using Quaver.API.Maps.AutoMod.Issues.Metadata;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
@@ -63,6 +63,11 @@ namespace Quaver.API.Maps.AutoMod
         public const int MaxBackgroundFileSize = 4000000;
 
         /// <summary>
+        ///     The max file size of a background in bytes.
+        /// </summary>
+        public const int MaxBannerFileSize = 2000000;
+
+        /// <summary>
         /// </summary>
         /// <param name="qua"></param>
         public AutoMod(Qua qua) => Qua = qua;
@@ -82,7 +87,7 @@ namespace Quaver.API.Maps.AutoMod
             DetectMapLengthIssues();
             DetectMetadataIssues();
             DetectPreviewPointIssues();
-            DetectBackgroundFileIssues();
+            DetectImageIssues();
             DetectAudioFileIssues();
         }
 
@@ -138,8 +143,8 @@ namespace Quaver.API.Maps.AutoMod
                     Issues.Add(new AutoModIssueObjectBeforeStart(hitObject));
 
                 // Check if object is after the audio ends
-                if (AudioTrackInfo != null && (hitObject.StartTime > AudioTrackInfo.DurationMs
-                                               || hitObject.EndTime > AudioTrackInfo.DurationMs))
+                if (AudioTrackInfo != null && ( hitObject.StartTime > AudioTrackInfo.DurationMs
+                                                || hitObject.EndTime > AudioTrackInfo.DurationMs ))
                 {
                     Issues.Add(new AutoModIssueObjectAfterAudioEnd(hitObject));
                 }
@@ -156,7 +161,7 @@ namespace Quaver.API.Maps.AutoMod
 
                 // Check for excessive break time.
                 if (hitObject.StartTime - previousObjInMap.StartTime >= BreakTime ||
-                   (previousObjInMap.IsLongNote && hitObject.StartTime - previousObjInMap.EndTime >= BreakTime))
+                    ( previousObjInMap.IsLongNote && hitObject.StartTime - previousObjInMap.EndTime >= BreakTime ))
                 {
                     Issues.Add(new AutoModIssueExcessiveBreakTime(previousObjInMap));
                 }
@@ -175,16 +180,17 @@ namespace Quaver.API.Maps.AutoMod
                 {
                     // Check if the object is overlapping the previous object's long note end.
                     if (Math.Abs(hitObject.StartTime - prevColObject.EndTime) <= OverlappingObjectsThreshold)
-                        Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
+                        Issues.Add(new AutoModIssueOverlappingObjects(new[] { hitObject, prevColObject }));
 
                     // Check if the object is "inside" of the previous long note.
                     if (hitObject.StartTime >= prevColObject.StartTime && hitObject.StartTime < prevColObject.EndTime - OverlappingObjectsThreshold)
-                        Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
-                } else
+                        Issues.Add(new AutoModIssueOverlappingObjects(new[] { hitObject, prevColObject }));
+                }
+                else
                 {
                     // Check if the objects are overlapping in start times
                     if (Math.Abs(hitObject.StartTime - prevColObject.StartTime) <= OverlappingObjectsThreshold)
-                        Issues.Add(new AutoModIssueOverlappingObjects(new[] {hitObject, prevColObject}));
+                        Issues.Add(new AutoModIssueOverlappingObjects(new[] { hitObject, prevColObject }));
                 }
 
                 previousNoteInColumns[hitObject.Lane - 1] = hitObject;
@@ -222,7 +228,7 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var current = Qua.TimingPoints[i];
 
-                if (AudioTrackInfo != null && (current.StartTime > AudioTrackInfo.DurationMs))
+                if (AudioTrackInfo != null && ( current.StartTime > AudioTrackInfo.DurationMs ))
                     Issues.Add(new AutoModIssueTimingPointAfterAudioEnd(current));
 
                 if (i == 0)
@@ -232,7 +238,7 @@ namespace Quaver.API.Maps.AutoMod
 
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
                 if (current.StartTime == previous.StartTime)
-                    Issues.Add(new AutoModeIssueTimingPointOverlap(new [] { current, previous }));
+                    Issues.Add(new AutoModeIssueTimingPointOverlap(new[] { current, previous }));
             }
         }
 
@@ -245,7 +251,7 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var current = Qua.SliderVelocities[i];
 
-                if (AudioTrackInfo != null && (current.StartTime > AudioTrackInfo.DurationMs))
+                if (AudioTrackInfo != null && ( current.StartTime > AudioTrackInfo.DurationMs ))
                     Issues.Add(new AutoModIssueScrollVelocityAfterEnd(current));
 
                 if (i == 0)
@@ -255,7 +261,7 @@ namespace Quaver.API.Maps.AutoMod
 
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
                 if (current.StartTime == previous.StartTime)
-                    Issues.Add(new AutoModIssueScrollVelocityOverlap(new []{ current, previous }));
+                    Issues.Add(new AutoModIssueScrollVelocityOverlap(new[] { current, previous }));
             }
         }
 
@@ -359,31 +365,60 @@ namespace Quaver.API.Maps.AutoMod
         private bool HasNonAsciiCharacters(string str) => str.Any(c => c > 128);
 
         /// <summary>
-        ///     Detects issues related to the background file:
+        ///     Detects issues related to the background and banner files:
         ///     - File too large
-        ///     - Resolution too small
+        ///     - Resolution outsize valid range
         /// </summary>
-        private void DetectBackgroundFileIssues()
+        private void DetectImageIssues()
         {
-            var path = Qua.GetBackgroundPath();
+            DetectBackgroundIssues();
+            DetectBannerIssues();
+        }
 
-            // Check if the background exis
-            if (path == null || !File.Exists(path))
+        private void DetectBackgroundIssues()
+        {
+            var bgPath = Qua.GetBackgroundPath();
+            if (bgPath == null || !File.Exists(bgPath))
             {
                 Issues.Add(new AutoModIssueNoBackground());
                 return;
             }
 
+            DetectImageFileIssues("background", bgPath, MaxBackgroundFileSize, 1280, 720, 2560, 1440);
+        }
+
+        private void DetectBannerIssues()
+        {
+            var bannerPath = Qua.GetBannerPath();
+            if (bannerPath == null || !File.Exists(bannerPath)) return;
+
+            DetectImageFileIssues("banner", bannerPath, MaxBannerFileSize, 481, 82, 1263, 243);
+        }
+
+        /// <summary>
+        ///     Detects issues related to a given image file:
+        ///     - File too large
+        ///     - Resolution outsize valid range
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="path"></param>
+        /// <param name="maxSize"></param>
+        /// <param name="minWidth"></param>
+        /// <param name="minHeight"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        private void DetectImageFileIssues(string item, string path, int maxSize, int minWidth, int minHeight, int maxWidth, int maxHeight)
+        {
             // Check background file size
-            if (new FileInfo(path).Length > MaxBackgroundFileSize)
-                Issues.Add(new AutoModIssueBackgroundTooLarge());
+            if (new FileInfo(path).Length > maxSize)
+                Issues.Add(new AutoModIssueImageTooLarge(item, maxSize));
 
             try
             {
                 using (var image = Image.Load(path))
                 {
-                    if (image.Width < 1280 || image.Height < 720)
-                        Issues.Add(new AutoModIssueBackgroundResolution());
+                    if (image.Width < minWidth || image.Height < minHeight || image.Width > maxWidth || image.Height > maxHeight)
+                        Issues.Add(new AutoModIssueImageResolution(item, minWidth, minHeight, maxWidth, maxHeight));
 
                     image.Dispose();
                 }
