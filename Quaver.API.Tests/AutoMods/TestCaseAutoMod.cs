@@ -165,6 +165,15 @@ namespace Quaver.API.Tests.AutoMods
         }
 
         [Fact]
+        public void DetectNonCommaSeparatedTags()
+        {
+            var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/non-comma-separated-tags.qua", false));
+            autoMod.Run();
+
+            Assert.Contains(autoMod.Issues, x => x is AutoModIssueNonCommaSeparatedTags);
+        }
+
+        [Fact]
         public void DetectNoBackgroundFile()
         {
             var autoMod = new AutoMod(Qua.Parse("./AutoMods/Resources/no-bg-file.qua", false));

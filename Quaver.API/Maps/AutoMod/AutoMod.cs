@@ -305,6 +305,7 @@ namespace Quaver.API.Maps.AutoMod
         {
             DetectNonRomanizedMetadata();
             DetectNonStandardizedMetadata();
+            DetectNonCommaSeparatedTags();
         }
 
         /// <summary>
@@ -342,6 +343,12 @@ namespace Quaver.API.Maps.AutoMod
             var featMatch = new Regex(@"\b(ft\.?|)\b", RegexOptions.IgnoreCase).Match(fieldValue);
             if (!fieldValue.Contains("feat.") && featMatch.Success)
                 Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, featMatch.Groups[1].Value, "vs."));
+        }
+
+        private void DetectNonCommaSeparatedTags()
+        {
+            if (Qua.Tags.Length > 10 && !Qua.Tags.Contains(','))
+                Issues.Add(new AutoModIssueNonCommaSeparatedTags());
         }
 
         /// <summary>
