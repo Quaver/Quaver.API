@@ -1,0 +1,19 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests
+Artist: Quaver
+Source: ''
+Tags: tag1 tag2 ababa
+Creator: Swan
+DifficultyName: Non-Comma-Separated Tags
+Description: Created at 1614703462000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects: []

@@ -1,0 +1,19 @@
+AudioFile: audio.mp3
+BackgroundFile: ''
+MapId: -1
+MapSetId: 5269
+Mode: Keys4
+Title: AutoMod Tests ft. Quaver
+Artist: Player VS. Player
+Source: ''
+Tags: ''
+Creator: Swan
+DifficultyName: Non-Standardized Characters
+Description: Created at 1614703462000
+EditorLayers: []
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- Bpm: 110
+SliderVelocities: []
+HitObjects: []
