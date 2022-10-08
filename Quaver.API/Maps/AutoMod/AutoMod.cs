@@ -342,13 +342,13 @@ namespace Quaver.API.Maps.AutoMod
         /// <param name="fieldValue"></param>
         private void DetectNonStandardizedField(string fieldName, string fieldValue)
         {
-            var vsMatch = new Regex(@"\b(vs\.?)\b").Match(fieldValue);
+            var vsMatch = new Regex(@"\b(vs\.?|versus\.?)").Match(fieldValue);
             if (!fieldValue.Contains("vs.") && vsMatch.Success)
                 Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, vsMatch.Groups[1].Value, "vs."));
 
-            var featMatch = new Regex(@"\b(ft\.?|)\b", RegexOptions.IgnoreCase).Match(fieldValue);
+            var featMatch = new Regex(@"\b(ft\.?|feat\.?)", RegexOptions.IgnoreCase).Match(fieldValue);
             if (!fieldValue.Contains("feat.") && featMatch.Success)
-                Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, featMatch.Groups[1].Value, "vs."));
+                Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, featMatch.Groups[1].Value, "feat."));
         }
 
         private void DetectNonCommaSeparatedTags()
