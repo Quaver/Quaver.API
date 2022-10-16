@@ -69,6 +69,20 @@ namespace Quaver.API.Maps.Parsers.Malody
                     throw new InvalidEnumArgumentException();
             }
 
+            ConvertTimingPoints(qua, audioOffset);
+            ConvertSvPoints(qua, audioOffset);
+            ConvertHitobjects(qua, audioOffset);
+
+            qua.Sort();
+
+            if (!qua.IsValid())
+                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
+
+            return qua;
+        }
+
+        private void ConvertTimingPoints(Qua qua, int audioOffset)
+        {
             foreach (var tp in TimingPoints)
             {
                 qua.TimingPoints.Add(new TimingPointInfo()
@@ -78,7 +92,10 @@ namespace Quaver.API.Maps.Parsers.Malody
                     Signature = 4
                 });
             }
+        }
 
+        private void ConvertSvPoints(Qua qua, int audioOffset)
+        {
             if (SvPoints != null)
             {
                 foreach (var sv in SvPoints)
@@ -90,7 +107,10 @@ namespace Quaver.API.Maps.Parsers.Malody
                     });
                 }
             }
+        }
 
+        private void ConvertHitobjects(Qua qua, int audioOffset)
+        {
             foreach (var ho in Hitobjects)
             {
                 KeySoundInfo keySound;
@@ -123,16 +143,9 @@ namespace Quaver.API.Maps.Parsers.Malody
                     StartTime = GetMilliSeconds(GetBeat(ho.Beat), audioOffset),
                     EndTime = ho.BeatEnd == null ? 0 : GetMilliSeconds(GetBeat(ho.BeatEnd), audioOffset),
                     Lane = ho.Column + 1,
-                    KeySounds = keySound == null ? new List<KeySoundInfo>() : new List<KeySoundInfo> { keySound }
+                    KeySounds = keySound == null ? new List<KeySoundInfo>() : new List<KeySoundInfo> {keySound}
                 });
             }
-
-            qua.Sort();
-
-            if (!qua.IsValid())
-                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
-
-            return qua;
         }
 
         /// <summary>
