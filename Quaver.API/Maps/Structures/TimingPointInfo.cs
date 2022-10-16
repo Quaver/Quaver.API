@@ -42,7 +42,7 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     The signature during this timing point
         /// </summary>
-        public TimeSignature Signature
+        public int Signature
         {
             get;
             [MoonSharpVisible(false)] set;
@@ -90,7 +90,7 @@ namespace Quaver.API.Maps.Structures
                 {
                     var hashCode = obj.StartTime.GetHashCode();
                     hashCode = (hashCode * 397) ^ obj.Bpm.GetHashCode();
-                    hashCode = (hashCode * 397) ^ (int) obj.Signature;
+                    hashCode = (hashCode * 397) ^ obj.Signature;
                     hashCode = (hashCode * 397) ^ (obj.Hidden ? 1 : 0);
                     return hashCode;
                 }

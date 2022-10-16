@@ -282,7 +282,7 @@ namespace Quaver.API.Maps
             TimingPoints = new List<TimingPointInfo>();
             foreach (var tp in originalTimingPoints)
             {
-                if (tp.Signature == TimeSignature.Quadruple)
+                if (tp.Signature == 4)
                 {
                     TimingPoints.Add(new TimingPointInfo()
                     {
@@ -1008,7 +1008,7 @@ namespace Quaver.API.Maps
             {
                 var tp = qua.TimingPoints[i];
                 if (tp.Signature == 0)
-                    tp.Signature = TimeSignature.Quadruple;
+                    tp.Signature = 4;
                 qua.TimingPoints[i] = tp;
             }
 

@@ -282,7 +282,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             qua.TimingPoints.Add(new TimingPointInfo
                             {
                                 StartTime = currentTime,
-                                Signature = TimeSignature.Quadruple,
+                                Signature = 4,
                                 Bpm = bpmCache.First().BPM
                             });
 

@@ -75,7 +75,7 @@ namespace Quaver.API.Maps.Parsers.Malody
                 {
                     StartTime = GetMilliSeconds(GetBeat(tp.Beat), audioOffset),
                     Bpm = tp.Bpm,
-                    Signature = TimeSignature.Quadruple
+                    Signature = 4
                 });
             }
 
