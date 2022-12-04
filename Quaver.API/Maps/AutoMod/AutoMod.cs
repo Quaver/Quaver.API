@@ -353,6 +353,9 @@ namespace Quaver.API.Maps.AutoMod
 
         private void DetectNonCommaSeparatedTags()
         {
+            if (Qua.Tags == null)
+                return;
+
             if (Qua.Tags.Length > 10 && !Qua.Tags.Contains(','))
                 Issues.Add(new AutoModIssueNonCommaSeparatedTags());
         }
