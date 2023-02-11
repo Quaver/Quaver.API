@@ -133,6 +133,11 @@ namespace Quaver.API.Maps
         public List<EditorLayerInfo> EditorLayers { get; private set; } = new List<EditorLayerInfo>();
 
         /// <summary>
+        ///     Bookmark .qua data
+        /// </summary>
+        public List<BookmarkInfo> Bookmarks { get; private set; } = new List<BookmarkInfo>();
+
+        /// <summary>
         ///     CustomAudioSamples .qua data
         /// </summary>
         public List<CustomAudioSampleInfo> CustomAudioSamples { get; set; } = new List<CustomAudioSampleInfo>();
@@ -217,6 +222,7 @@ namespace Quaver.API.Maps
                    && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
                    && SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer)
                    && EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer)
+                   && Bookmarks.SequenceEqual(other.Bookmarks, BookmarkInfo.ByValueComparer)
                    && RandomizeModifierSeed == other.RandomizeModifierSeed;
         }
 
@@ -421,6 +427,7 @@ namespace Quaver.API.Maps
             TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
             SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
             SoundEffects = SoundEffects.OrderBy(x => x.StartTime).ToList();
+            Bookmarks = Bookmarks.OrderBy(x => x.StartTime).ToList();
         }
 
         /// <summary>
