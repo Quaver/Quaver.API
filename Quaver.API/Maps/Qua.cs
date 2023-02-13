@@ -1331,12 +1331,20 @@ namespace Quaver.API.Maps
         ///     Returns the path of the file background. If no background exists, it will return null.
         /// </summary>
         /// <returns></returns>
-        public string GetBackgroundPath()
+        public string GetBackgroundPath() => GetFullPath(BackgroundFile);
+
+        /// <summary>
+        ///     Returns the path of the banner background. If no background exists, it will return null.
+        /// </summary>
+        /// <returns></returns>
+        public string GetBannerPath() => GetFullPath(BannerFile);
+
+        private string GetFullPath(string file)
         {
-            if (string.IsNullOrEmpty(BackgroundFile) || string.IsNullOrEmpty(FilePath))
+            if (string.IsNullOrEmpty(file) || string.IsNullOrEmpty(FilePath))
                 return null;
 
-            return $"{Path.GetDirectoryName(FilePath)}/{BackgroundFile}";
+            return $"{Path.GetDirectoryName(FilePath)}/{file}";
         }
 
         /// <summary>

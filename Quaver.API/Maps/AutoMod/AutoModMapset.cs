@@ -71,16 +71,16 @@ namespace Quaver.API.Maps.AutoMod
                 return;
 
             if (Maps.Any(x => x.Artist != Maps.First().Artist))
-                Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Artist));
+                Issues.Add(new AutoModIssueMismatchingMetadata(MetadataField.Artist));
 
             if (Maps.Any(x => x.Title != Maps.First().Title))
-                Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Title));
+                Issues.Add(new AutoModIssueMismatchingMetadata(MetadataField.Title));
 
             if (Maps.Any(x => x.Source != Maps.First().Source))
-                Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Source));
+                Issues.Add(new AutoModIssueMismatchingMetadata(MetadataField.Source));
 
             if (Maps.Any(x => x.Tags != Maps.First().Tags))
-                Issues.Add(new AutoModIssueMismatchingMetdata(MetadataField.Tags));
+                Issues.Add(new AutoModIssueMismatchingMetadata(MetadataField.Tags));
         }
 
         /// <summary>
