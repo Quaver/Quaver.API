@@ -188,7 +188,9 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     Ctor
         /// </summary>
-        public Qua() {}
+        public Qua()
+        {
+        }
 
         /// <summary>
         ///     Returns true if the two maps are equal by value.
@@ -346,6 +348,11 @@ namespace Quaver.API.Maps
                 }
             }
 
+            // Doing this to keep compatibility with older versions of .qua (.osu and .sm file conversions). It won't serialize
+            // the bookmarks in the file.
+            if (Bookmarks.Count == 0)
+                Bookmarks = null;
+            
             var serializer = new Serializer();
             var stringWriter = new StringWriter {NewLine = "\r\n"};
             serializer.Serialize(stringWriter, this);
