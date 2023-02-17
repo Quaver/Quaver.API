@@ -1,14 +1,25 @@
 using System;
 using System.Collections.Generic;
+using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Interop;
 
 namespace Quaver.API.Maps.Structures
 {
+    [MoonSharpUserData]
     [Serializable]
     public class BookmarkInfo
     {
-        public int StartTime { get; set; }
+        public int StartTime
+        {
+            get; 
+            [MoonSharpVisible(false)] set;
+        }
 
-        public string Note { get; set; }
+        public string Note
+        {
+            get; 
+            [MoonSharpVisible(false)] set;
+        }
 
         private sealed class TimeNoteEqualityComparer : IEqualityComparer<BookmarkInfo>
         {
