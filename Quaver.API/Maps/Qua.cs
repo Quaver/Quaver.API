@@ -362,6 +362,7 @@ namespace Quaver.API.Maps
             TimingPoints = originalTimingPoints;
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
+            Bookmarks = new List<BookmarkInfo>();
 
             return serialized;
         }
