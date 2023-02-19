@@ -286,6 +286,7 @@ namespace Quaver.API.Maps
             var originalTimingPoints = TimingPoints;
             var originalHitObjects = HitObjects;
             var originalSoundEffects = SoundEffects;
+            var originalBookmarks = Bookmarks;
 
             TimingPoints = new List<TimingPointInfo>();
             foreach (var tp in originalTimingPoints)
@@ -362,6 +363,7 @@ namespace Quaver.API.Maps
             TimingPoints = originalTimingPoints;
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
+            Bookmarks = originalBookmarks;
 
             return serialized;
         }
