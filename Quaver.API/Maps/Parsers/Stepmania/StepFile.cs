@@ -39,6 +39,10 @@ namespace Quaver.API.Maps.Parsers.Stepmania
 
         /// <summary>
         /// </summary>
+        public string Tags { get; set; }
+
+        /// <summary>
+        /// </summary>
         public string Banner { get; private set; }
 
         /// <summary>
@@ -140,6 +144,9 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             break;
                         case "CREDIT":
                             Credit = value;
+                            break;
+                        case "GENRE":
+                            Tags = value;
                             break;
                         case "BANNER":
                             Banner = value;
@@ -264,6 +271,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     DifficultyName = chart.Difficulty,
                     BPMDoesNotAffectScrollVelocity = true,
                     InitialScrollVelocity = 1,
+                    Tags = Tags,
                 };
 
                 var totalBeats = 0f;
