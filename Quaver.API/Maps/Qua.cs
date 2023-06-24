@@ -736,14 +736,23 @@ namespace Quaver.API.Maps
 
             var newHitObjects = new List<HitObjectInfo>();
 
+            var keyCount = GetKeyCount();
+
             // An array indicating whether the currently processed HitObject is the first in its lane.
-            var firstInLane = new bool[GetKeyCount()];
+            var firstInLane = new bool[keyCount];
             for (var i = 0; i < firstInLane.Length; i++)
                 firstInLane[i] = true;
 
             for (var i = 0; i < HitObjects.Count; i++)
             {
                 var currentObject = HitObjects[i];
+
+                // The scratch lane (the last one in Quaver) should not be affected by Inverse.
+                if (HasScratchKey && currentObject.Lane == keyCount)
+                {
+                    newHitObjects.Add(currentObject);
+                    continue;
+                }
 
                 // Find the next and second next hit object in the lane.
                 HitObjectInfo nextObjectInLane = null, secondNextObjectInLane = null;

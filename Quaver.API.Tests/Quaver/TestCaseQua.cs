@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
@@ -106,6 +107,22 @@ namespace Quaver.API.Tests.Quaver
             var expectedObjects = expected.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
 
             Assert.True(objects.SetEquals(expectedObjects));
+        }
+
+        [Fact]
+        public void InverseDoesNotAffectScratchLane()
+        {
+            var qua = new Qua { Mode = GameMode.Keys7, HasScratchKey = true };
+            qua.TimingPoints.Add(new TimingPointInfo { Bpm = 100 });
+
+            for (var i = 0; i < qua.GetKeyCount(); i++)
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1 });
+            for (var i = 0; i < qua.GetKeyCount(); i++)
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1, StartTime = 10 });
+
+            qua.ApplyMods(ModIdentifier.Inverse);
+
+            Assert.True(qua.HitObjects.Where(x => x.Lane == 8).All(x => x.EndTime == 0));
         }
 
         [Fact]
