@@ -939,10 +939,24 @@ namespace Quaver.API.Maps
         /// </summary>
         public void MirrorHitObjects()
         {
+            var keyCount = GetKeyCount();
+            
             for (var i = 0; i < HitObjects.Count; i++)
             {
                 var temp = HitObjects[i];
-                temp.Lane = GetKeyCount() - temp.Lane + 1;
+
+                if (HasScratchKey)
+                {
+                    // The scratch lane (which is the last lane in Quaver) should not be mirrored.
+                    if (temp.Lane == keyCount)
+                        continue;
+                    temp.Lane = keyCount - temp.Lane;
+                }
+                else
+                {
+                    temp.Lane = keyCount - temp.Lane + 1;
+                }
+
                 HitObjects[i] = temp;
             }
         }

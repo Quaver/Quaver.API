@@ -50,6 +50,26 @@ namespace Quaver.API.Tests.Quaver
         }
 
         [Fact]
+        public void MirrorHitObjects7KP1()
+        {
+            var qua = new Qua { Mode = GameMode.Keys7, HasScratchKey = true };
+
+            for (var i = 0; i < qua.GetKeyCount(); i++)
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1});
+
+            qua.MirrorHitObjects();
+
+            Assert.True(qua.HitObjects[0].Lane == 7 &&
+                        qua.HitObjects[1].Lane == 6 &&
+                        qua.HitObjects[2].Lane == 5 &&
+                        qua.HitObjects[3].Lane == 4 &&
+                        qua.HitObjects[4].Lane == 3 &&
+                        qua.HitObjects[5].Lane == 2 &&
+                        qua.HitObjects[6].Lane == 1 &&
+                        qua.HitObjects[7].Lane == 8);
+        }
+
+        [Fact]
         public void NLN()
         {
             var qua = Qua.Parse(LN_CONVERSION_INPUT);
