@@ -922,9 +922,12 @@ namespace Quaver.API.Maps
             RandomizeModifierSeed = seed;
 
             var values = new List<int>();
-            values.AddRange(Enumerable.Range(0, GetKeyCount()).Select(x => x + 1));
+            values.AddRange(Enumerable.Range(0, GetKeyCount(false)).Select(x => x + 1));
 
             values.Shuffle(new Random(seed));
+
+            if (HasScratchKey)
+                values.Add(GetKeyCount());
 
             for (var i = 0; i < HitObjects.Count; i++)
             {
