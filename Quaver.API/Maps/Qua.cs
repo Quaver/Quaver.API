@@ -736,14 +736,23 @@ namespace Quaver.API.Maps
 
             var newHitObjects = new List<HitObjectInfo>();
 
+            var keyCount = GetKeyCount();
+
             // An array indicating whether the currently processed HitObject is the first in its lane.
-            var firstInLane = new bool[GetKeyCount()];
+            var firstInLane = new bool[keyCount];
             for (var i = 0; i < firstInLane.Length; i++)
                 firstInLane[i] = true;
 
             for (var i = 0; i < HitObjects.Count; i++)
             {
                 var currentObject = HitObjects[i];
+
+                // The scratch lane (the last one in Quaver) should not be affected by Inverse.
+                if (HasScratchKey && currentObject.Lane == keyCount)
+                {
+                    newHitObjects.Add(currentObject);
+                    continue;
+                }
 
                 // Find the next and second next hit object in the lane.
                 HitObjectInfo nextObjectInLane = null, secondNextObjectInLane = null;
@@ -922,9 +931,12 @@ namespace Quaver.API.Maps
             RandomizeModifierSeed = seed;
 
             var values = new List<int>();
-            values.AddRange(Enumerable.Range(0, GetKeyCount()).Select(x => x + 1));
+            values.AddRange(Enumerable.Range(0, GetKeyCount(false)).Select(x => x + 1));
 
             values.Shuffle(new Random(seed));
+
+            if (HasScratchKey)
+                values.Add(GetKeyCount());
 
             for (var i = 0; i < HitObjects.Count; i++)
             {
@@ -939,10 +951,24 @@ namespace Quaver.API.Maps
         /// </summary>
         public void MirrorHitObjects()
         {
+            var keyCount = GetKeyCount();
+            
             for (var i = 0; i < HitObjects.Count; i++)
             {
                 var temp = HitObjects[i];
-                temp.Lane = GetKeyCount() - temp.Lane + 1;
+
+                if (HasScratchKey)
+                {
+                    // The scratch lane (which is the last lane in Quaver) should not be mirrored.
+                    if (temp.Lane == keyCount)
+                        continue;
+                    temp.Lane = keyCount - temp.Lane;
+                }
+                else
+                {
+                    temp.Lane = keyCount - temp.Lane + 1;
+                }
+
                 HitObjects[i] = temp;
             }
         }

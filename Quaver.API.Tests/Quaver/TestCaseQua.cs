@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
@@ -50,6 +51,26 @@ namespace Quaver.API.Tests.Quaver
         }
 
         [Fact]
+        public void MirrorHitObjects7KP1()
+        {
+            var qua = new Qua { Mode = GameMode.Keys7, HasScratchKey = true };
+
+            for (var i = 0; i < qua.GetKeyCount(); i++)
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1});
+
+            qua.MirrorHitObjects();
+
+            Assert.True(qua.HitObjects[0].Lane == 7 &&
+                        qua.HitObjects[1].Lane == 6 &&
+                        qua.HitObjects[2].Lane == 5 &&
+                        qua.HitObjects[3].Lane == 4 &&
+                        qua.HitObjects[4].Lane == 3 &&
+                        qua.HitObjects[5].Lane == 2 &&
+                        qua.HitObjects[6].Lane == 1 &&
+                        qua.HitObjects[7].Lane == 8);
+        }
+
+        [Fact]
         public void NLN()
         {
             var qua = Qua.Parse(LN_CONVERSION_INPUT);
@@ -86,6 +107,22 @@ namespace Quaver.API.Tests.Quaver
             var expectedObjects = expected.HitObjects.ToImmutableHashSet(HitObjectInfo.ByValueComparer);
 
             Assert.True(objects.SetEquals(expectedObjects));
+        }
+
+        [Fact]
+        public void InverseDoesNotAffectScratchLane()
+        {
+            var qua = new Qua { Mode = GameMode.Keys7, HasScratchKey = true };
+            qua.TimingPoints.Add(new TimingPointInfo { Bpm = 100 });
+
+            for (var i = 0; i < qua.GetKeyCount(); i++)
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1 });
+            for (var i = 0; i < qua.GetKeyCount(); i++)
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1, StartTime = 10 });
+
+            qua.ApplyMods(ModIdentifier.Inverse);
+
+            Assert.True(qua.HitObjects.Where(x => x.Lane == 8).All(x => x.EndTime == 0));
         }
 
         [Fact]
