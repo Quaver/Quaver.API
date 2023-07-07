@@ -3,9 +3,9 @@
 >📖 Keep developing for [Quaver](https://github.com/Quaver) with these set of tools and C# libraries.
 
 ### Table of Contents ###
-* [What's Included](https://github.com/Quaver/Quaver-API#whats-included)
-* [Contributing](https://github.com/Quaver/Quaver-API#contributing)
-* [License](https://github.com/Quaver/Quaver-API#license)
+* [What's Included](https://github.com/Quaver/Quaver.API#whats-included)
+* [Contributing](https://github.com/Quaver/Quaver.API#contributing)
+* [License](https://github.com/Quaver/Quaver.API#license)
 
 # What's Included
 We want to make it as easy and seamless as possible for developers to use the same tools as what is utilized in Quaver. That means if we change anything about anything, you'll have everything.
