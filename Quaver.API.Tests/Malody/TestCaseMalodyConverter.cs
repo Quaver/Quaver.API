@@ -53,5 +53,23 @@ namespace Quaver.API.Tests.Malody
                 // passed.
             }
         }
+
+        [Fact]
+        public void CheckSVEffects()
+        {
+            var converter = MalodyFile.Parse("./Malody/Resources/1626341674.mc");
+            var qua = converter.ToQua();
+
+            Assert.True(qua.SliderVelocities.Count > 0);
+        }
+
+        [Fact]
+        public void IgnoreNonSVEffect()
+        {
+            var converter = MalodyFile.Parse("./Malody/Resources/1651047750.mc");
+            var qua = converter.ToQua();
+
+            Assert.True(qua.SliderVelocities.Count == 0);
+        }
     }
 }
