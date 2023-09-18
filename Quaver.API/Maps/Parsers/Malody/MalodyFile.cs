@@ -21,7 +21,7 @@ namespace Quaver.API.Maps.Parsers.Malody
         public List<MalodyTimingPoint> TimingPoints { get; set; }
 
         [JsonProperty("effect")]
-        public List<MalodySvPoint> SvPoints { get; set; }
+        public List<MalodyEffectPoint> EffectPoints { get; set; }
 
         /// <summary>
         ///     Parses a malody file from a file path
@@ -79,14 +79,15 @@ namespace Quaver.API.Maps.Parsers.Malody
                 });
             }
 
-            if (SvPoints != null)
+            if (EffectPoints != null)
             {
-                foreach (var sv in SvPoints)
+                foreach (var sv in EffectPoints)
                 {
+                    if (sv.Scroll == null) continue;
                     qua.SliderVelocities.Add(new SliderVelocityInfo
                     {
                         StartTime = GetMilliSeconds(GetBeat(sv.Beat), audioOffset),
-                        Multiplier = sv.Scroll
+                        Multiplier = sv.Scroll.Value
                     });
                 }
             }
