@@ -42,6 +42,11 @@ namespace Quaver.API.Maps
         ///     The name of the background file
         /// </summary>
         public string BackgroundFile { get; set; }
+        
+        /// <summary>
+        ///     The name of the animation file (.lua)
+        /// </summary>
+        public string AnimationFile { get; set; }
 
         /// <summary>
         ///     The name of the mapset banner
