@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace Quaver.API.Helpers
 {
@@ -15,7 +15,7 @@ namespace Quaver.API.Helpers
         {
             using (var ms = new MemoryStream())
             {
-                var formatter = new BinaryFormatter();
+                var formatter = new XmlSerializer(typeof(T));
                 formatter.Serialize(ms, obj);
                 ms.Position = 0;
 
