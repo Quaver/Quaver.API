@@ -540,7 +540,7 @@ namespace Quaver.API.Maps.Parsers
                     qua.SliderVelocities.Add(new SliderVelocityInfo
                     {
                         StartTime = tp.Offset,
-                        Multiplier = (-100 / tp.MillisecondsPerBeat).Clamp(0.1f, 10)
+                        Multiplier = (-100 / tp.MillisecondsPerBeat).Clamp(0.01f, 10)
                     });
                 }
                 else
