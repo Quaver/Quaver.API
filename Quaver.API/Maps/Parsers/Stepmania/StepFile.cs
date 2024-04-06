@@ -276,19 +276,6 @@ namespace Quaver.API.Maps.Parsers.Stepmania
 
                     foreach (var row in measure.Notes)
                     {
-                        // Add bpms at the current time if we've reached that beat
-                        if (bpmCache.Count != 0 && totalBeats >= bpmCache.First().Beat)
-                        {
-                            qua.TimingPoints.Add(new TimingPointInfo
-                            {
-                                StartTime = currentTime,
-                                Signature = TimeSignature.Quadruple,
-                                Bpm = bpmCache.First().BPM
-                            });
-
-                            bpmCache.Remove(bpmCache.First());
-                        }
-
                         for (var i = 0; i < row.Count; i++)
                         {
                             switch (row[i])
@@ -323,7 +310,31 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             }
                         }
 
-                        currentTime += qua.GetTimingPointAt(currentTime).MillisecondsPerBeat * 4 / measure.Notes.Count;
+                        // Add bpms at the current time if we've reached that beat
+                        if (bpmCache.Count != 0 && totalBeats + beatTimePerRow >= bpmCache.First().Beat)
+                        {
+                            // Fraction of row before the timing point is placed
+                            var rowBefore = (bpmCache.First().Beat - totalBeats) / beatTimePerRow;
+                            if (qua.TimingPoints.Count != 0)
+                                currentTime += qua.GetTimingPointAt(currentTime).MillisecondsPerBeat * beatTimePerRow * rowBefore;
+                            var newTimingPointInfo = new TimingPointInfo
+                            {
+                                StartTime = currentTime,
+                                Signature = TimeSignature.Quadruple,
+                                Bpm = bpmCache.First().BPM
+                            };
+                            qua.TimingPoints.Add(newTimingPointInfo);
+
+                            bpmCache.Remove(bpmCache.First());
+
+                            // Add back the residual fraction of row using the new timing point
+                            currentTime += newTimingPointInfo.MillisecondsPerBeat * beatTimePerRow * (1 - rowBefore);
+                        }
+                        else
+                        {
+                            currentTime += qua.GetTimingPointAt(currentTime).MillisecondsPerBeat * beatTimePerRow;
+                        }
+                        
                         totalBeats += beatTimePerRow;
 
                         if (stopCache.Count != 0 && totalBeats > stopCache.First().Beat)
