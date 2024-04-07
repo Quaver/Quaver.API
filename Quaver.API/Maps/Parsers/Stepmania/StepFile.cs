@@ -266,20 +266,31 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                 InitialScrollVelocity = 1,
             };
 
+            // Combine BPM changes and stops together and order by its beat time
             var bpmAndStops = new Queue<StepBpmOrStop>(Bpms.Select(b => new StepBpmOrStop(b))
                 .Concat(
                     Stops.Select(s => new StepBpmOrStop(s)))
                 .OrderBy(s => s.Beat));
 
+            // The starting beat time of the current measure
             var measureBeats = 0;
+
             var startTime = -Offset * 1000;
+
+            // The starting time of the measure on which the most recent BPM change was added
             var lastBpmChangeMeasureTime = startTime;
+
+            // The number of measures passed from the last BPM change
             var measureCountSinceLastChange = 0;
+
             var millisecondsPerMeasure = 0f;
             var millisecondsPerBeat = 0f;
+
             foreach (var measure in chart.Measures)
             {
+                // Calculate the time the measure starts
                 var measureTime = lastBpmChangeMeasureTime + measureCountSinceLastChange * millisecondsPerMeasure;
+
                 var beatTimePerRow = 4.0f / measure.Notes.Count;
                 var millisecondsPerRow = millisecondsPerMeasure / measure.Notes.Count;
 
@@ -288,8 +299,10 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     var row = measure.Notes[rowIndex];
                     var totalBeats = measureBeats + rowIndex * beatTimePerRow;
                     var currentTime = measureTime + rowIndex * millisecondsPerRow;
+
                     AddRow(row, qua, currentTime);
 
+                    // Process every bpm and stops between the current row and the next (inclusive-exclusive)
                     while (bpmAndStops.Count > 0 && totalBeats + beatTimePerRow > bpmAndStops.Peek().Beat)
                     {
                         var bpmOrStop = bpmAndStops.Dequeue();
@@ -306,10 +319,16 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             };
                             qua.TimingPoints.Add(newTimingPointInfo);
 
+                            // Update the conversion related variables
                             millisecondsPerBeat = newTimingPointInfo.MillisecondsPerBeat;
                             millisecondsPerMeasure = newTimingPointInfo.MillisecondsPerBeat * 4;
-                            var beatsPassed = bpm.Beat - measureBeats;
                             millisecondsPerRow = millisecondsPerMeasure / measure.Notes.Count;
+
+                            // The measure time is the "virtual" measure time
+                            // The "virtual" measure has the same BPM as the recently added one and
+                            // will have the same beat number at the time when the new timing point is reached.
+                            // It is as if the BPM has always been the new BPM added
+                            var beatsPassed = bpm.Beat - measureBeats;
                             lastBpmChangeMeasureTime = insertTime - beatsPassed * millisecondsPerBeat;
                             measureCountSinceLastChange = 0;
                             measureTime = lastBpmChangeMeasureTime;
@@ -324,6 +343,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                                 StartTime = currentTime,
                                 Multiplier = 0
                             });
+                            // Shift the entire time forward
                             lastBpmChangeMeasureTime += stopMilliseconds;
                             measureTime += stopMilliseconds;
                             currentTime += stopMilliseconds;
@@ -336,6 +356,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     }
                 }
 
+                // A measure has 4 beats
                 measureBeats += 4;
                 measureCountSinceLastChange++;
             }
@@ -343,6 +364,11 @@ namespace Quaver.API.Maps.Parsers.Stepmania
             return qua;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="qua"></param>
+        /// <param name="currentTime"></param>
         private static void AddRow(List<StepFileChartNoteType> row, Qua qua, float currentTime)
         {
             for (var i = 0; i < row.Count; i++)
