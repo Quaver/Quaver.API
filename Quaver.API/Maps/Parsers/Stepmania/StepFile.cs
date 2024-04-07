@@ -332,7 +332,6 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                                 StartTime = currentTime,
                                 Multiplier = 1
                             });
-                            
                         }
                     }
                 }

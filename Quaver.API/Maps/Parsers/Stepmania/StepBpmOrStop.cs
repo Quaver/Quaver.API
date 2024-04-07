@@ -20,7 +20,6 @@ public class StepBpmOrStop
     public bool IsBpm => Bpm != null;
     public bool IsStop => Stop != null;
     
-    
     public float Beat => IsBpm ? Bpm.Beat : Stop.Beat;
 
     private sealed class BeatRelationalComparer : IComparer<StepBpmOrStop>
