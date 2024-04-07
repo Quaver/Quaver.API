@@ -306,25 +306,6 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             };
                             qua.TimingPoints.Add(newTimingPointInfo);
 
-                        bpmCache.Remove(bpm);
-
-                        millisecondsPerBeat = newTimingPointInfo.MillisecondsPerBeat;
-                        millisecondsPerMeasure = newTimingPointInfo.MillisecondsPerBeat * 4;
-                        var beatsPassed = bpm.Beat - measureBeats;
-                        millisecondsPerRow = millisecondsPerMeasure / measure.Notes.Count;
-                        lastBpmChangeMeasureTime = insertTime - beatsPassed * millisecondsPerBeat;
-                        measureCountSinceLastChange = 0;
-                        measureTime = lastBpmChangeMeasureTime;
-                        currentTime = measureTime + rowIndex * millisecondsPerRow;
-                    }
-
-                    if (stopCache.Count != 0 && totalBeats + beatTimePerRow > stopCache.First().Beat)
-                    {
-                        var stop = stopCache.First();
-                        lastBpmChangeMeasureTime += stop.Seconds * 1000;
-                        measureTime += stop.Seconds * 1000;
-                        
-                        stopCache.Remove(stop);
                             millisecondsPerBeat = newTimingPointInfo.MillisecondsPerBeat;
                             millisecondsPerMeasure = newTimingPointInfo.MillisecondsPerBeat * 4;
                             var beatsPassed = bpm.Beat - measureBeats;
@@ -338,9 +319,19 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                         {
                             var stop = bpmOrStop.Stop;
                             var stopMilliseconds = stop.Seconds * 1000;
+                            qua.SliderVelocities.Add(new SliderVelocityInfo
+                            {
+                                StartTime = currentTime,
+                                Multiplier = 0
+                            });
                             lastBpmChangeMeasureTime += stopMilliseconds;
                             measureTime += stopMilliseconds;
                             currentTime += stopMilliseconds;
+                            qua.SliderVelocities.Add(new SliderVelocityInfo
+                            {
+                                StartTime = currentTime,
+                                Multiplier = 1
+                            });
                             
                         }
                     }
