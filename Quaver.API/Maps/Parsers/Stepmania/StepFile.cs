@@ -266,15 +266,17 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                 InitialScrollVelocity = 1,
             };
 
-            var bpmCache = new List<StepFileBPM>(Bpms);
-            var stopCache = new List<StepFileStop>(Stops);
+            var bpmAndStops = new Queue<StepBpmOrStop>(Bpms.Select(b => new StepBpmOrStop(b))
+                .Concat(
+                    Stops.Select(s => new StepBpmOrStop(s)))
+                .OrderBy(s => s.Beat));
 
             var measureBeats = 0;
             var startTime = -Offset * 1000;
             var lastBpmChangeMeasureTime = startTime;
             var measureCountSinceLastChange = 0;
             var millisecondsPerMeasure = 0f;
-            float millisecondsPerBeat = 0;
+            var millisecondsPerBeat = 0f;
             foreach (var measure in chart.Measures)
             {
                 var measureTime = lastBpmChangeMeasureTime + measureCountSinceLastChange * millisecondsPerMeasure;
@@ -288,19 +290,21 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     var currentTime = measureTime + rowIndex * millisecondsPerRow;
                     AddRow(row, qua, currentTime);
 
-                    // Add bpms at the current time if we've reached that beat
-                    if (bpmCache.Count != 0 && totalBeats + beatTimePerRow > bpmCache.First().Beat)
+                    while (bpmAndStops.Count > 0 && totalBeats + beatTimePerRow > bpmAndStops.Peek().Beat)
                     {
-                        var bpm = bpmCache.First();
-                        // Fraction of row before the timing point is placed
-                        var insertTime = currentTime + millisecondsPerBeat * (bpm.Beat - totalBeats);
-                        var newTimingPointInfo = new TimingPointInfo
+                        var bpmOrStop = bpmAndStops.Dequeue();
+                        if (bpmOrStop.IsBpm)
                         {
-                            StartTime = insertTime,
-                            Signature = TimeSignature.Quadruple,
-                            Bpm = bpm.BPM
-                        };
-                        qua.TimingPoints.Add(newTimingPointInfo);
+                            var bpm = bpmOrStop.Bpm;
+                            // Fraction of row before the timing point is placed
+                            var insertTime = currentTime + millisecondsPerBeat * (bpm.Beat - totalBeats);
+                            var newTimingPointInfo = new TimingPointInfo
+                            {
+                                StartTime = insertTime,
+                                Signature = TimeSignature.Quadruple,
+                                Bpm = bpm.BPM
+                            };
+                            qua.TimingPoints.Add(newTimingPointInfo);
 
                         bpmCache.Remove(bpm);
 
@@ -321,6 +325,24 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                         measureTime += stop.Seconds * 1000;
                         
                         stopCache.Remove(stop);
+                            millisecondsPerBeat = newTimingPointInfo.MillisecondsPerBeat;
+                            millisecondsPerMeasure = newTimingPointInfo.MillisecondsPerBeat * 4;
+                            var beatsPassed = bpm.Beat - measureBeats;
+                            millisecondsPerRow = millisecondsPerMeasure / measure.Notes.Count;
+                            lastBpmChangeMeasureTime = insertTime - beatsPassed * millisecondsPerBeat;
+                            measureCountSinceLastChange = 0;
+                            measureTime = lastBpmChangeMeasureTime;
+                            currentTime = measureTime + rowIndex * millisecondsPerRow;
+                        }
+                        else
+                        {
+                            var stop = bpmOrStop.Stop;
+                            var stopMilliseconds = stop.Seconds * 1000;
+                            lastBpmChangeMeasureTime += stopMilliseconds;
+                            measureTime += stopMilliseconds;
+                            currentTime += stopMilliseconds;
+                            
+                        }
                     }
                 }
 
