@@ -286,40 +286,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     var row = measure.Notes[rowIndex];
                     var totalBeats = measureBeats + rowIndex * beatTimePerRow;
                     var currentTime = measureTime + rowIndex * millisecondsPerRow;
-                    for (var i = 0; i < row.Count; i++)
-                    {
-                        switch (row[i])
-                        {
-                            case StepFileChartNoteType.None:
-                                break;
-                            // For normal objects, create a normal object
-                            case StepFileChartNoteType.Normal:
-                                qua.HitObjects.Add(new HitObjectInfo
-                                {
-                                    StartTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero),
-                                    Lane = i + 1
-                                });
-                                break;
-                            // For hold heads, create a new object with an int.MinValue end time,
-                            // so that it can be found later when the end pops up
-                            case StepFileChartNoteType.Head:
-                                qua.HitObjects.Add(new HitObjectInfo
-                                {
-                                    StartTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero),
-                                    EndTime = int.MinValue,
-                                    Lane = i + 1
-                                });
-                                break;
-                            // Find the last object in this lane that has an int.MinValue end time
-                            case StepFileChartNoteType.Tail:
-                                var longNote = qua.HitObjects.FindLast(x =>
-                                    x.Lane == i + 1 && x.EndTime == int.MinValue);
-
-                                if (longNote != null)
-                                    longNote.EndTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero);
-                                break;
-                        }
-                    }
+                    AddRow(row, qua, currentTime);
 
                     // Add bpms at the current time if we've reached that beat
                     if (bpmCache.Count != 0 && totalBeats + beatTimePerRow > bpmCache.First().Beat)
@@ -362,6 +329,44 @@ namespace Quaver.API.Maps.Parsers.Stepmania
             }
 
             return qua;
+        }
+
+        private static void AddRow(List<StepFileChartNoteType> row, Qua qua, float currentTime)
+        {
+            for (var i = 0; i < row.Count; i++)
+            {
+                switch (row[i])
+                {
+                    case StepFileChartNoteType.None:
+                        break;
+                    // For normal objects, create a normal object
+                    case StepFileChartNoteType.Normal:
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero),
+                            Lane = i + 1
+                        });
+                        break;
+                    // For hold heads, create a new object with an int.MinValue end time,
+                    // so that it can be found later when the end pops up
+                    case StepFileChartNoteType.Head:
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero),
+                            EndTime = int.MinValue,
+                            Lane = i + 1
+                        });
+                        break;
+                    // Find the last object in this lane that has an int.MinValue end time
+                    case StepFileChartNoteType.Tail:
+                        var longNote = qua.HitObjects.FindLast(x =>
+                            x.Lane == i + 1 && x.EndTime == int.MinValue);
+
+                        if (longNote != null)
+                            longNote.EndTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero);
+                        break;
+                }
+            }
         }
     }
 }
