@@ -225,7 +225,8 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                         currentChart.GrooveRadarValues = value;
                 }
                 // Parsing the actual notes (ex: 0001, 0100...)
-                else if (currentChart != null && currentChart.GrooveRadarValues != null && !string.IsNullOrEmpty(trimmedLine))
+                else if (currentChart != null && currentChart.GrooveRadarValues != null &&
+                         !string.IsNullOrEmpty(trimmedLine))
                 {
                     // Denotes a new measure
                     if (trimmedLine.StartsWith(","))
@@ -245,121 +246,122 @@ namespace Quaver.API.Maps.Parsers.Stepmania
         /// <returns></returns>
         public List<Qua> ToQuas()
         {
-            var quas = new List<Qua>();
+            return Charts.Select(ConvertChart).ToList();
+        }
 
-            foreach (var chart in Charts)
+        private Qua ConvertChart(StepFileChart chart)
+        {
+            var qua = new Qua
             {
-                var currentTime = -Offset * 1000;
+                Title = Title,
+                Artist = Artist,
+                Creator = Credit,
+                BannerFile = Banner,
+                BackgroundFile = Background,
+                AudioFile = Music,
+                SongPreviewTime = (int)(SampleStart * 1000),
+                Mode = GameMode.Keys4,
+                DifficultyName = chart.Difficulty,
+                BPMDoesNotAffectScrollVelocity = true,
+                InitialScrollVelocity = 1,
+            };
 
-                var qua = new Qua
+            var bpmCache = new List<StepFileBPM>(Bpms);
+            var stopCache = new List<StepFileStop>(Stops);
+
+            var measureBeats = 0;
+            var startTime = -Offset * 1000;
+            var lastBpmChangeMeasureTime = startTime;
+            var measureCountSinceLastChange = 0;
+            var millisecondsPerMeasure = 0f;
+            float millisecondsPerBeat = 0;
+            foreach (var measure in chart.Measures)
+            {
+                var measureTime = lastBpmChangeMeasureTime + measureCountSinceLastChange * millisecondsPerMeasure;
+                var beatTimePerRow = 4.0f / measure.Notes.Count;
+                var millisecondsPerRow = millisecondsPerMeasure / measure.Notes.Count;
+
+                for (var rowIndex = 0; rowIndex < measure.Notes.Count; rowIndex++)
                 {
-                    Title = Title,
-                    Artist = Artist,
-                    Creator = Credit,
-                    BannerFile = Banner,
-                    BackgroundFile = Background,
-                    AudioFile = Music,
-                    SongPreviewTime = (int) (SampleStart * 1000),
-                    Mode = GameMode.Keys4,
-                    DifficultyName = chart.Difficulty,
-                    BPMDoesNotAffectScrollVelocity = true,
-                    InitialScrollVelocity = 1,
-                };
-
-                var measureBeats = 0;
-                var bpmCache = new List<StepFileBPM>(Bpms);
-                var stopCache = new List<StepFileStop>(Stops);
-
-                foreach (var measure in chart.Measures)
-                {
-                    var beatTimePerRow = 4.0f / measure.Notes.Count;
-
-                    for (var index = 0; index < measure.Notes.Count; index++)
+                    var row = measure.Notes[rowIndex];
+                    var totalBeats = measureBeats + rowIndex * beatTimePerRow;
+                    var currentTime = measureTime + rowIndex * millisecondsPerRow;
+                    for (var i = 0; i < row.Count; i++)
                     {
-                        var row = measure.Notes[index];
-                        var totalBeats = measureBeats + index * beatTimePerRow;
-                        for (var i = 0; i < row.Count; i++)
+                        switch (row[i])
                         {
-                            switch (row[i])
-                            {
-                                case StepFileChartNoteType.None:
-                                    break;
-                                // For normal objects, create a normal object
-                                case StepFileChartNoteType.Normal:
-                                    qua.HitObjects.Add(new HitObjectInfo
-                                    {
-                                        StartTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero),
-                                        Lane = i + 1
-                                    });
-                                    break;
-                                // For hold heads, create a new object with an int.MinValue end time,
-                                // so that it can be found later when the end pops up
-                                case StepFileChartNoteType.Head:
-                                    qua.HitObjects.Add(new HitObjectInfo
-                                    {
-                                        StartTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero),
-                                        EndTime = int.MinValue,
-                                        Lane = i + 1
-                                    });
-                                    break;
-                                // Find the last object in this lane that has an int.MinValue end time
-                                case StepFileChartNoteType.Tail:
-                                    var longNote = qua.HitObjects.FindLast(x =>
-                                        x.Lane == i + 1 && x.EndTime == int.MinValue);
+                            case StepFileChartNoteType.None:
+                                break;
+                            // For normal objects, create a normal object
+                            case StepFileChartNoteType.Normal:
+                                qua.HitObjects.Add(new HitObjectInfo
+                                {
+                                    StartTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero),
+                                    Lane = i + 1
+                                });
+                                break;
+                            // For hold heads, create a new object with an int.MinValue end time,
+                            // so that it can be found later when the end pops up
+                            case StepFileChartNoteType.Head:
+                                qua.HitObjects.Add(new HitObjectInfo
+                                {
+                                    StartTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero),
+                                    EndTime = int.MinValue,
+                                    Lane = i + 1
+                                });
+                                break;
+                            // Find the last object in this lane that has an int.MinValue end time
+                            case StepFileChartNoteType.Tail:
+                                var longNote = qua.HitObjects.FindLast(x =>
+                                    x.Lane == i + 1 && x.EndTime == int.MinValue);
 
-                                    if (longNote != null)
-                                        longNote.EndTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero);
-                                    break;
-                            }
-                        }
-
-                        // Add bpms at the current time if we've reached that beat
-                        if (bpmCache.Count != 0 && totalBeats + beatTimePerRow >= bpmCache.First().Beat)
-                        {
-                            // Fraction of row before the timing point is placed
-                            var rowBefore = (bpmCache.First().Beat - totalBeats) / beatTimePerRow;
-                            if (qua.TimingPoints.Count != 0)
-                                currentTime += qua.GetTimingPointAt(currentTime).MillisecondsPerBeat * beatTimePerRow *
-                                               rowBefore;
-                            var newTimingPointInfo = new TimingPointInfo
-                            {
-                                StartTime = currentTime,
-                                Signature = TimeSignature.Quadruple,
-                                Bpm = bpmCache.First().BPM
-                            };
-                            qua.TimingPoints.Add(newTimingPointInfo);
-
-                            bpmCache.Remove(bpmCache.First());
-
-                            // Add back the residual fraction of row using the new timing point
-                            currentTime += newTimingPointInfo.MillisecondsPerBeat * beatTimePerRow * (1 - rowBefore);
-                        }
-                        else
-                        {
-                            currentTime += qua.GetTimingPointAt(currentTime).MillisecondsPerBeat * beatTimePerRow;
-                        }
-
-                        if (stopCache.Count != 0 && totalBeats > stopCache.First().Beat)
-                        {
-                            currentTime += stopCache.First().Seconds * 1000;
-
-                            qua.SliderVelocities.Add(new SliderVelocityInfo()
-                            {
-                                StartTime = currentTime - stopCache.First().Seconds * 1000,
-                                Multiplier = 1
-                            });
-
-                            stopCache.Remove(stopCache.First());
+                                if (longNote != null)
+                                    longNote.EndTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero);
+                                break;
                         }
                     }
 
-                    measureBeats += 4;
+                    // Add bpms at the current time if we've reached that beat
+                    if (bpmCache.Count != 0 && totalBeats + beatTimePerRow > bpmCache.First().Beat)
+                    {
+                        var bpm = bpmCache.First();
+                        // Fraction of row before the timing point is placed
+                        var insertTime = currentTime + millisecondsPerBeat * (bpm.Beat - totalBeats);
+                        var newTimingPointInfo = new TimingPointInfo
+                        {
+                            StartTime = insertTime,
+                            Signature = TimeSignature.Quadruple,
+                            Bpm = bpm.BPM
+                        };
+                        qua.TimingPoints.Add(newTimingPointInfo);
+
+                        bpmCache.Remove(bpm);
+
+                        millisecondsPerBeat = newTimingPointInfo.MillisecondsPerBeat;
+                        millisecondsPerMeasure = newTimingPointInfo.MillisecondsPerBeat * 4;
+                        var beatsPassed = bpm.Beat - measureBeats;
+                        millisecondsPerRow = millisecondsPerMeasure / measure.Notes.Count;
+                        lastBpmChangeMeasureTime = insertTime - beatsPassed * millisecondsPerBeat;
+                        measureCountSinceLastChange = 0;
+                        measureTime = lastBpmChangeMeasureTime;
+                        currentTime = measureTime + rowIndex * millisecondsPerRow;
+                    }
+
+                    if (stopCache.Count != 0 && totalBeats + beatTimePerRow > stopCache.First().Beat)
+                    {
+                        var stop = stopCache.First();
+                        lastBpmChangeMeasureTime += stop.Seconds * 1000;
+                        measureTime += stop.Seconds * 1000;
+                        
+                        stopCache.Remove(stop);
+                    }
                 }
 
-                quas.Add(qua);
+                measureBeats += 4;
+                measureCountSinceLastChange++;
             }
 
-            return quas;
+            return qua;
         }
     }
 }
