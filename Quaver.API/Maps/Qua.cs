@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Force.DeepCloner;
 using MonoGame.Extended.Collections;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
@@ -353,7 +354,7 @@ namespace Quaver.API.Maps
             // the bookmarks in the file.
             if (Bookmarks.Count == 0)
                 Bookmarks = null;
-            
+
             var serializer = new Serializer();
             var stringWriter = new StringWriter {NewLine = "\r\n"};
             serializer.Serialize(stringWriter, this);
@@ -629,7 +630,7 @@ namespace Quaver.API.Maps
             // Create a new version of the qua with modifiers applied, and use that for calculations.
             if (applyMods)
             {
-                qua = Objects.DeepClone(qua);
+                qua = qua.DeepClone();
                 qua.ApplyMods(mods);
             }
 
@@ -952,7 +953,7 @@ namespace Quaver.API.Maps
         public void MirrorHitObjects()
         {
             var keyCount = GetKeyCount();
-            
+
             for (var i = 0; i < HitObjects.Count; i++)
             {
                 var temp = HitObjects[i];
