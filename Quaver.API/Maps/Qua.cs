@@ -584,6 +584,17 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
+        ///     Gets the bookmark at a particular time in the map.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public BookmarkInfo GetBookmarkAt(int time)
+        {
+            var index = Bookmarks.FindIndex(b => b.StartTime == time);
+            return index == -1 ? null : Bookmarks[index];
+        }
+
+        /// <summary>
         ///     Gets a scroll velocity at a particular time in the map
         /// </summary>
         /// <param name="time"></param>
