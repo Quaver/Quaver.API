@@ -105,6 +105,11 @@ namespace Quaver.API.Maps
         public string Genre { get; set; }
 
         /// <summary>
+        ///     Gets the value determining whether to use the old LN rendering system. (earliest/latest -> start/end)
+        /// </summary>
+        public bool LegacyLNRendering { get; set; }
+
+        /// <summary>
         ///     Indicates if the BPM changes in affect scroll velocity.
         ///
         ///     If this is set to false, SliderVelocities are in the denormalized format (BPM affects SV),
