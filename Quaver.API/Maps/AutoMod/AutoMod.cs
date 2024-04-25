@@ -342,7 +342,7 @@ namespace Quaver.API.Maps.AutoMod
         /// <param name="fieldValue"></param>
         private void DetectNonStandardizedField(string fieldName, string fieldValue)
         {
-            var vsMatch = new Regex(@"\b(vs\.?|versus\.?)").Match(fieldValue);
+            var vsMatch = new Regex(@"\b(vs\.?|versus\.?)", RegexOptions.IgnoreCase).Match(fieldValue);
             if (!fieldValue.Contains("vs.") && vsMatch.Success)
                 Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, vsMatch.Groups[1].Value, "vs."));
 

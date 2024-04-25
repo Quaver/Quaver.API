@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
@@ -12,7 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Malody\Resources\1574436578.mc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Malody\Resources\1626341674.mc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Malody\Resources\1651047750.mc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Osu\Resources\uma vs. Morimori Atsushi - ReEnd of a Dream %28Critical_Star%29 [Another].osu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
