@@ -1379,6 +1379,8 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public string GetBackgroundPath() => GetFullPath(BackgroundFile);
 
+        public string GetAnimationScriptPath() => GetFullPath(AnimationFile);
+
         /// <summary>
         ///     Returns the path of the banner background. If no background exists, it will return null.
         /// </summary>
