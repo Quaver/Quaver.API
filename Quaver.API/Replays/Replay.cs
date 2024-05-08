@@ -368,7 +368,7 @@ namespace Quaver.API.Replays
                             state |= KeyLaneToPressState(frame.HitObject.Lane);
                             break;
                         case ReplayAutoplayFrameType.Release:
-                            state -= KeyLaneToPressState(frame.HitObject.Lane);
+                            state &= ~KeyLaneToPressState(frame.HitObject.Lane);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
