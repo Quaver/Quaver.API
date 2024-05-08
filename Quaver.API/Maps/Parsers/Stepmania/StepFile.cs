@@ -303,12 +303,10 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     while (bpmAndStops.Count > 0 && totalBeats + beatTimePerRow > bpmAndStops.Peek().Beat)
                     {
                         var bpmOrStop = bpmAndStops.Dequeue();
-                        if (bpmOrStop.IsBpm)
+                        // Fraction of row before the timing point is placed
+                        var insertTime = currentTime + millisecondsPerBeat * (bpmOrStop.Beat - totalBeats);
                         if (bpmOrStop is StepFileBPM bpm)
                         {
-                            var bpm = bpmOrStop.Bpm;
-                            // Fraction of row before the timing point is placed
-                            var insertTime = currentTime + millisecondsPerBeat * (bpm.Beat - totalBeats);
                             var newTimingPointInfo = new TimingPointInfo
                             {
                                 StartTime = insertTime,
@@ -337,7 +335,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             var stopMilliseconds = stop.Seconds * 1000;
                             qua.SliderVelocities.Add(new SliderVelocityInfo
                             {
-                                StartTime = currentTime,
+                                StartTime = insertTime,
                                 Multiplier = 0
                             });
                             // Shift the entire time forward
