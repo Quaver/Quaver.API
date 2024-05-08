@@ -267,10 +267,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
             };
 
             // Combine BPM changes and stops together and order by its beat time
-            var bpmAndStops = new Queue<StepBpmOrStop>(Bpms.Select(b => new StepBpmOrStop(b))
-                .Concat(
-                    Stops.Select(s => new StepBpmOrStop(s)))
-                .OrderBy(s => s.Beat));
+            var bpmAndStops = new Queue<IStepWithBeat>(Bpms.Cast<IStepWithBeat>().Concat(Stops).OrderBy(s => s.Beat));
 
             // The starting beat time of the current measure
             var measureBeats = 0;
@@ -307,6 +304,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     {
                         var bpmOrStop = bpmAndStops.Dequeue();
                         if (bpmOrStop.IsBpm)
+                        if (bpmOrStop is StepFileBPM bpm)
                         {
                             var bpm = bpmOrStop.Bpm;
                             // Fraction of row before the timing point is placed
@@ -334,9 +332,8 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                             measureTime = lastBpmChangeMeasureTime;
                             currentTime = measureTime + rowIndex * millisecondsPerRow;
                         }
-                        else
+                        else if (bpmOrStop is StepFileStop stop)
                         {
-                            var stop = bpmOrStop.Stop;
                             var stopMilliseconds = stop.Seconds * 1000;
                             qua.SliderVelocities.Add(new SliderVelocityInfo
                             {
