@@ -381,7 +381,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     case StepFileChartNoteType.Normal:
                         qua.HitObjects.Add(new HitObjectInfo
                         {
-                            StartTime = (int)Math.Round(currentTime, MidpointRounding.ToZero),
+                            StartTime = (int)Math.Truncate(currentTime),
                             Lane = i + 1
                         });
                         break;
@@ -390,7 +390,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                     case StepFileChartNoteType.Head:
                         qua.HitObjects.Add(new HitObjectInfo
                         {
-                            StartTime = (int)Math.Round(currentTime, MidpointRounding.ToZero),
+                            StartTime = (int)Math.Truncate(currentTime),
                             EndTime = int.MinValue,
                             Lane = i + 1
                         });
