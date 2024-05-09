@@ -99,16 +99,16 @@ namespace Quaver.API.Maps.AutoMod
         {
             var path = Qua.GetAudioPath();
 
-            if (path == null || !File.Exists(path))
+            if (!File.Exists(path))
                 return;
 
             try
             {
                 AudioTrackInfo = new Track(path, true);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
+                // ignored
             }
         }
 
@@ -419,16 +419,12 @@ namespace Quaver.API.Maps.AutoMod
             try
             {
                 using (var image = Image.Load(path))
-                {
                     if (image.Width < minWidth || image.Height < minHeight || image.Width > maxWidth || image.Height > maxHeight)
                         Issues.Add(new AutoModIssueImageResolution(item, minWidth, minHeight, maxWidth, maxHeight));
-
-                    image.Dispose();
-                }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
+                // ignored
             }
         }
 
