@@ -239,22 +239,14 @@ namespace Quaver.API.Replays
 
                 // Add all the replay frames to the object
                 foreach (var frame in frames)
-                    try
-                    {
-                        // Split up the frame string by SongTime|KeyPressState
-                        var frameSplit = frame.Split('|');
+                {
+                    // Split up the frame string by SongTime|KeyPressState
+                    var (tTime, (tKeys, _)) = new Drain<char>(frame, '|');
 
-                        Frames.Add(
-                            new ReplayFrame(
-                                int.Parse(frameSplit[0]),
-                                (ReplayKeyPressState)Enum.Parse(typeof(ReplayKeyPressState), frameSplit[1])
-                            )
-                        );
-                    }
-                    catch (Exception)
-                    {
-                        // ignored
-                    }
+                    if (int.TryParse(tTime, out var time) &&
+                        Enum.TryParse(tKeys.ToString(), out ReplayKeyPressState keys))
+                        Frames.Add(new ReplayFrame(time, keys));
+                }
             }
         }
 
