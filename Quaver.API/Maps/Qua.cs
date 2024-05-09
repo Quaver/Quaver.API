@@ -242,7 +242,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public static Qua Parse(byte[] buffer, bool checkValidity = true)
         {
-            var input = new StringReader(Encoding.UTF8.GetString(buffer, 0, buffer.Length));
+            using var input = new StringReader(Encoding.UTF8.GetString(buffer, 0, buffer.Length));
 
             var deserializer = new DeserializerBuilder();
             deserializer.IgnoreUnmatchedProperties();
@@ -361,7 +361,7 @@ namespace Quaver.API.Maps
                 Bookmarks = null;
 
             var serializer = new Serializer();
-            var stringWriter = new StringWriter {NewLine = "\r\n"};
+            using var stringWriter = new StringWriter {NewLine = "\r\n"};
             serializer.Serialize(stringWriter, this);
             var serialized = stringWriter.ToString();
 
