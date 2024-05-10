@@ -231,27 +231,21 @@ namespace Quaver.API.Replays
 
                 if (!readHeaderless)
                 {
-                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.BaseStream).ToArray()).Split(',').ToList();
+                    using var stream = LZMACoder.Decompress(br.BaseStream);
+                    frames = Encoding.ASCII.GetString(stream.ToArray()).Split(',').ToList();
                 }
                 else
-                {
-                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.ReadBytes((int) br.BaseStream.Length))).Split(',').ToList();
-                }
+                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.ReadBytes((int)br.BaseStream.Length))).Split(',').ToList();
 
                 // Add all the replay frames to the object
                 foreach (var frame in frames)
                 {
-                    try
-                    {
-                        // Split up the frame string by SongTime|KeyPressState
-                        var frameSplit = frame.Split('|');
+                    // Split up the frame string by SongTime|KeyPressState
+                    var (tTime, (tKeys, _)) = new Drain<char>(frame, '|');
 
-                        Frames.Add(new ReplayFrame(int.Parse(frameSplit[0]), (ReplayKeyPressState)Enum.Parse(typeof(ReplayKeyPressState), frameSplit[1])));
-                    }
-                    catch (Exception e)
-                    {
-                        continue;
-                    }
+                    if (int.TryParse(tTime, out var time) &&
+                        Enum.TryParse(tKeys.ToString(), out ReplayKeyPressState keys))
+                        Frames.Add(new ReplayFrame(time, keys));
                 }
             }
         }
@@ -299,7 +293,9 @@ namespace Quaver.API.Replays
                 bw.Write(CountMiss);
                 bw.Write(PauseCount);
                 bw.Write(RandomizeModifierSeed);
-                bw.Write(StreamHelper.ConvertStreamToByteArray(LZMACoder.Compress(replayDataStream)));
+
+                using var stream = LZMACoder.Compress(replayDataStream);
+                bw.Write(StreamHelper.ConvertStreamToByteArray(stream));
             }
         }
 
