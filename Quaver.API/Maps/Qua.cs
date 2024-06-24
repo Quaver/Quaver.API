@@ -225,6 +225,7 @@ namespace Quaver.API.Maps
                    // ReSharper disable once CompareOfFloatsByEqualityOperator
                    && InitialScrollVelocity == other.InitialScrollVelocity
                    && BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity
+                   && LegacyLNRendering == other.LegacyLNRendering
                    && HasScratchKey == other.HasScratchKey
                    && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
                    && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
