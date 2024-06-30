@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <InvariantGlobalization>true</InvariantGlobalization>
+    <SelfContained>True</SelfContained>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="RestSharp" Version="106.12.0" />
