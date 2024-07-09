@@ -445,10 +445,14 @@ namespace Quaver.API.Maps
         /// </summary>
         public void Sort()
         {
+            var keyCount = GetKeyCount();
             HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
             TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
             SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
-            ScrollSpeedFactors = ScrollSpeedFactors.OrderBy(x => x.StartTime).ToList();
+            ScrollSpeedFactors = ScrollSpeedFactors
+                .OrderBy(x => x.StartTime)
+                .ThenByDescending(x => MathHelper.Reverse((uint)x.LaneMask, keyCount))
+                .ToList();
             SoundEffects = SoundEffects.OrderBy(x => x.StartTime).ToList();
             Bookmarks = Bookmarks.OrderBy(x => x.StartTime).ToList();
         }
