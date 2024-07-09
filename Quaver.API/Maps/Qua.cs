@@ -167,6 +167,11 @@ namespace Quaver.API.Maps
         public List<SliderVelocityInfo> SliderVelocities { get; private set; } = new List<SliderVelocityInfo>();
 
         /// <summary>
+        ///     Scroll Speed Factor .qua data
+        /// </summary>
+        public List<ScrollSpeedFactorInfo> ScrollSpeedFactors { get; private set; } = new List<ScrollSpeedFactorInfo>();
+
+        /// <summary>
         ///     HitObject .qua data
         /// </summary>
         public List<HitObjectInfo> HitObjects { get; private set; } = new List<HitObjectInfo>();
@@ -222,6 +227,7 @@ namespace Quaver.API.Maps
                    && Genre == other.Genre
                    && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
                    && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
+                   && ScrollSpeedFactors.SequenceEqual(other.ScrollSpeedFactors, ScrollSpeedFactorInfo.ByValueComparer)
                    // ReSharper disable once CompareOfFloatsByEqualityOperator
                    && InitialScrollVelocity == other.InitialScrollVelocity
                    && BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity
@@ -442,6 +448,7 @@ namespace Quaver.API.Maps
             HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
             TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
             SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+            ScrollSpeedFactors = ScrollSpeedFactors.OrderBy(x => x.StartTime).ToList();
             SoundEffects = SoundEffects.OrderBy(x => x.StartTime).ToList();
             Bookmarks = Bookmarks.OrderBy(x => x.StartTime).ToList();
         }
@@ -609,6 +616,17 @@ namespace Quaver.API.Maps
         {
             var index = SliderVelocities.FindLastIndex(x => x.StartTime <= time);
             return index == -1 ? null : SliderVelocities[index];
+        }
+
+        /// <summary>
+        ///     Gets a scroll velocity at a particular time in the map
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public ScrollSpeedFactorInfo GetScrollSpeedFactorAt(double time)
+        {
+            var index = ScrollSpeedFactors.FindLastIndex(x => x.StartTime <= time);
+            return index == -1 ? null : ScrollSpeedFactors[index];
         }
 
         /// <summary>
@@ -994,6 +1012,10 @@ namespace Quaver.API.Maps
         /// <summary>
         /// </summary>
         public void SortSliderVelocities() => SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+
+        /// <summary>
+        /// </summary>
+        public void SortScrollSpeedFactors() => ScrollSpeedFactors = ScrollSpeedFactors.OrderBy(x => x.StartTime).ToList();
 
         /// <summary>
         /// </summary>
