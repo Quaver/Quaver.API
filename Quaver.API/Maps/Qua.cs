@@ -385,30 +385,38 @@ namespace Quaver.API.Maps
         ///     If the .qua file is actually valid.
         /// </summary>
         /// <returns></returns>
-        public bool IsValid()
+        public bool IsValid() => Validate().Count == 0;
+
+        /// <summary>
+        ///     Returns all validation errors in the .qua file.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> Validate()
         {
+            var errors = new List<string>();
+
             // If there aren't any HitObjects
             if (HitObjects.Count == 0)
-                return false;
+                errors.Add("There are no HitObjects.");
 
             // If there aren't any TimingPoints
             if (TimingPoints.Count == 0)
-                return false;
+                errors.Add("There are no TimingPoints.");
 
             // Check if the mode is actually valid
             if (!Enum.IsDefined(typeof(GameMode), Mode))
-                return false;
+                errors.Add($"The GameMode '{Mode}' is invalid.");
 
             // Check that sound effects are valid.
             foreach (var info in SoundEffects)
             {
                 // Sample should be a valid array index.
                 if (info.Sample < 1 || info.Sample >= CustomAudioSamples.Count + 1)
-                    return false;
+                    errors.Add($"SoundEffect at {info.StartTime} has an invalid Sample index.");
 
                 // The sample volume should be between 1 and 100.
                 if (info.Volume < 1 || info.Volume > 100)
-                    return false;
+                    errors.Add($"SoundEffect at {info.StartTime} has an invalid Volume.");
             }
 
             // Check that hit objects are valid.
@@ -416,22 +424,22 @@ namespace Quaver.API.Maps
             {
                 // LN end times should be > start times.
                 if (info.IsLongNote && info.EndTime <= info.StartTime)
-                    return false;
+                    errors.Add($"LongNote at {info.StartTime} has an invalid EndTime.");
 
                 // Check that key sounds are valid.
                 foreach (var keySound in info.KeySounds)
                 {
                     // Sample should be a valid array index.
                     if (keySound.Sample < 1 || keySound.Sample >= CustomAudioSamples.Count + 1)
-                        return false;
+                        errors.Add($"KeySound at {info.StartTime} has an invalid Sample index.");
 
                     // The sample volume should be above 0.
                     if (keySound.Volume < 1)
-                        return false;
+                        errors.Add($"KeySound at {info.StartTime} has an invalid Volume.");
                 }
             }
 
-            return true;
+            return errors;
         }
 
         /// <summary>
@@ -1102,8 +1110,9 @@ namespace Quaver.API.Maps
         /// <exception cref="ArgumentException"></exception>
         private static void AfterLoad(Qua qua, bool checkValidity)
         {
-            if (checkValidity && !qua.IsValid())
-                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
+            var errors = qua.Validate();
+            if (checkValidity && errors.Count > 0)
+                throw new ArgumentException(string.Join("\n", errors));
 
             // Try to sort the Qua before returning.
             qua.Sort();
