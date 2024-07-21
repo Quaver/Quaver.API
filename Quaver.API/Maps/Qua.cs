@@ -1110,9 +1110,12 @@ namespace Quaver.API.Maps
         /// <exception cref="ArgumentException"></exception>
         private static void AfterLoad(Qua qua, bool checkValidity)
         {
-            var errors = qua.Validate();
-            if (checkValidity && errors.Count > 0)
-                throw new ArgumentException(string.Join("\n", errors));
+            if (checkValidity)
+            {
+                var errors = qua.Validate();
+                if (errors.Count > 0)
+                    throw new ArgumentException(string.Join("\n", errors));
+            }
 
             // Try to sort the Qua before returning.
             qua.Sort();
