@@ -48,7 +48,12 @@ namespace Quaver.API.Helpers
             if (time is 0)
                 return float.Epsilon;
 
-            _ = float.IsNegative(time) ? Unsafe.As<float, int>(ref time)-- : Unsafe.As<float, int>(ref time)++;
+            unsafe
+            {
+                // Slightly evil bit hack.
+                _ = time > 0 ? ++*(int*)&time : --*(int*)&time;
+            }
+
             return time;
         }
 
