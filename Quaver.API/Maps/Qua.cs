@@ -11,16 +11,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using Force.DeepCloner;
 using MonoGame.Extended.Collections;
 using Quaver.API.Enums;
 using Quaver.API.Helpers;
-using Quaver.API.Maps.Parsers;
 using Quaver.API.Maps.Processors.Difficulty;
 using Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys;
-using Quaver.API.Maps.Processors.Scoring;
 using Quaver.API.Maps.Structures;
 using YamlDotNet.Serialization;
 
@@ -176,7 +173,7 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <returns></returns>
         [YamlIgnore]
-        public int Length => HitObjects.Count == 0 ? 0 : HitObjects.Max(x => Math.Max(x.StartTime, x.EndTime));
+        public int Length => HitObjects.Count == 0 ? 0 : Math.Max(HitObjects[^1].StartTime, HitObjects[^1].EndTime);
 
         /// <summary>
         ///     Integer based seed used for shuffling the lanes when randomize mod is active.
@@ -447,11 +444,12 @@ namespace Quaver.API.Maps
         /// </summary>
         public void Sort()
         {
-            HitObjects = HitObjects.OrderBy(x => x.StartTime).ToList();
-            TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
-            SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
-            SoundEffects = SoundEffects.OrderBy(x => x.StartTime).ToList();
-            Bookmarks = Bookmarks.OrderBy(x => x.StartTime).ToList();
+            HitObjects.Sort();
+            TimingPoints.Sort();
+            SliderVelocities.Sort();
+            SoundEffects.Sort();
+            Bookmarks.Sort();
+            SoundEffects.Sort();
         }
 
         /// <summary>
@@ -518,27 +516,14 @@ namespace Quaver.API.Maps
         ///    This translates mode to key count.
         /// </summary>
         /// <returns></returns>
-        public int GetKeyCount(bool includeScratch = true)
-        {
-            int count;
-
-            switch (Mode)
+        public int GetKeyCount(bool includeScratch = true) =>
+            Mode switch
             {
-                case GameMode.Keys4:
-                    count = 4;
-                    break;
-                case GameMode.Keys7:
-                    count = 7;
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException();
-            }
-
-            if (HasScratchKey && includeScratch)
-                count++;
-
-            return count;
-        }
+                GameMode.Keys4 => 4,
+                GameMode.Keys7 => 7,
+                _ => throw new InvalidEnumArgumentException(),
+            } +
+            (HasScratchKey && includeScratch ? 1 : 0);
 
         /// <summary>
         ///     Finds the most common BPM in a Qua object.
@@ -546,17 +531,17 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public float GetCommonBpm()
         {
-            if (TimingPoints.Count == 0)
+            if (TimingPoints.Count is 0)
                 return 0;
 
             // This fallback isn't really justified, but it's only used for tests.
-            if (HitObjects.Count == 0)
+            if (HitObjects.Count is 0)
                 return TimingPoints[0].Bpm;
 
             var lastObject = HitObjects.OrderByDescending(x => x.IsLongNote ? x.EndTime : x.StartTime).First();
             double lastTime = lastObject.IsLongNote ? lastObject.EndTime : lastObject.StartTime;
+            var durations = new SortedDictionary<float, int>();
 
-            var durations = new Dictionary<float, int>();
             for (var i = TimingPoints.Count - 1; i >= 0; i--)
             {
                 var point = TimingPoints[i];
@@ -565,19 +550,15 @@ namespace Quaver.API.Maps
                 if (point.StartTime > lastTime)
                     continue;
 
-                var duration = (int) (lastTime - (i == 0 ? 0 : point.StartTime));
+                var duration = (int)(lastTime - (i == 0 ? 0 : point.StartTime));
                 lastTime = point.StartTime;
 
-                if (durations.ContainsKey(point.Bpm))
+                if (!durations.TryAdd(point.Bpm, duration))
                     durations[point.Bpm] += duration;
-                else
-                    durations[point.Bpm] = duration;
             }
 
-            if (durations.Count == 0)
-                return TimingPoints[0].Bpm; // osu! hangs on loading the map in this case; we return a sensible result.
-
-            return durations.OrderByDescending(x => x.Value).First().Key;
+            // osu! hangs on loading the map in this case; we return a sensible result.
+            return durations.Count is 0 ? TimingPoints[0].Bpm : durations.Last().Key;
         }
 
         /// <summary>
@@ -587,14 +568,11 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public TimingPointInfo GetTimingPointAt(double time)
         {
-            var index = TimingPoints.FindLastIndex(x => x.StartTime <= time);
+            var index = TimingPoints.IndexAtTime((float)time);
 
             // If the point can't be found, we want to return either null if there aren't
-            // any points, or the first timing point, since it'll be considered as apart of it anyway.
-            if (index == -1)
-                return TimingPoints.Count == 0 ? null : TimingPoints.First();
-
-            return TimingPoints[index];
+            // any points, or the first timing point, since it'll be considered as a part of it anyway.
+            return index == -1 ? TimingPoints.Count is 0 ? null : TimingPoints[0] : TimingPoints[index];
         }
 
         /// <summary>
@@ -602,22 +580,14 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public BookmarkInfo GetBookmarkAt(int time)
-        {
-            var index = Bookmarks.FindIndex(b => b.StartTime == time);
-            return index == -1 ? null : Bookmarks[index];
-        }
+        public BookmarkInfo GetBookmarkAt(int time) => Bookmarks.AtTime(time);
 
         /// <summary>
         ///     Gets a scroll velocity at a particular time in the map
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public SliderVelocityInfo GetScrollVelocityAt(double time)
-        {
-            var index = SliderVelocities.FindLastIndex(x => x.StartTime <= time);
-            return index == -1 ? null : SliderVelocities[index];
-        }
+        public SliderVelocityInfo GetScrollVelocityAt(double time) => SliderVelocities.AtTime((float)time);
 
         /// <summary>
         ///    Finds the length of a timing point.
@@ -821,7 +791,7 @@ namespace Quaver.API.Maps
                     // should use the fast section's BPM.
                     if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
                     {
-                        var prevTimingPointIndex = TimingPoints.FindLastIndex(x => x.StartTime < timingPoint.StartTime);
+                        var prevTimingPointIndex = TimingPoints.IndexAtTimeBefore(timingPoint.StartTime);
 
                         // No timing points before the object? Just use the first timing point then, it has the correct
                         // BPM.
@@ -979,33 +949,25 @@ namespace Quaver.API.Maps
         {
             var keyCount = GetKeyCount();
 
-            for (var i = 0; i < HitObjects.Count; i++)
-            {
-                var temp = HitObjects[i];
-
-                if (HasScratchKey)
+            if (HasScratchKey) // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+                foreach (var temp in HitObjects)
                 {
                     // The scratch lane (which is the last lane in Quaver) should not be mirrored.
-                    if (temp.Lane == keyCount)
-                        continue;
-                    temp.Lane = keyCount - temp.Lane;
+                    if (temp.Lane != keyCount)
+                        temp.Lane = keyCount - temp.Lane;
                 }
-                else
-                {
+            else
+                foreach (var temp in HitObjects)
                     temp.Lane = keyCount - temp.Lane + 1;
-                }
-
-                HitObjects[i] = temp;
-            }
         }
 
         /// <summary>
         /// </summary>
-        public void SortSliderVelocities() => SliderVelocities = SliderVelocities.OrderBy(x => x.StartTime).ToList();
+        public void SortSliderVelocities() => SliderVelocities.Sort();
 
         /// <summary>
         /// </summary>
-        public void SortTimingPoints() => TimingPoints = TimingPoints.OrderBy(x => x.StartTime).ToList();
+        public void SortTimingPoints() => TimingPoints.Sort();
 
         /// <summary>
         ///     Gets the judgement of a particular hitobject in the map
@@ -1014,22 +976,17 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public int GetHitObjectJudgementIndex(HitObjectInfo ho)
         {
-            var index = -1;
-
             var total = 0;
 
-            for (var i = 0; i < HitObjects.Count; i++)
+            foreach (var h in HitObjects)
             {
-                if (HitObjects[i] == ho)
+                if (h == ho)
                     return total;
 
-                if (HitObjects[i].IsLongNote)
-                    total += 2;
-                else
-                    total += 1;
+                total += h.IsLongNote ? 2 : 1;
             }
 
-            return index;
+            return -1;
         }
 
         /// <summary>
@@ -1039,31 +996,14 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public HitObjectInfo GetHitObjectAtJudgementIndex(int index)
         {
-            HitObjectInfo h = null;
-
             var total = 0;
 
-            for (var i = 0; i < HitObjects.Count; i++)
-            {
-                total += 1;
+            // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var h in HitObjects)
+                if (total++ == index || h.IsLongNote && total++ == index)
+                    return h;
 
-                if (total - 1 == index)
-                {
-                    h = HitObjects[i];
-                    break;
-                }
-
-                if (HitObjects[i].IsLongNote)
-                    total += 1;
-
-                if (total - 1 == index)
-                {
-                    h = HitObjects[i];
-                    break;
-                }
-            }
-
-            return h;
+            return null;
         }
 
         /// <summary>
@@ -1407,24 +1347,15 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public string GetBannerPath() => GetFullPath(BannerFile);
 
-        private string GetFullPath(string file)
-        {
-            if (string.IsNullOrEmpty(file) || string.IsNullOrEmpty(FilePath))
-                return null;
-
-            return $"{Path.GetDirectoryName(FilePath)}/{file}";
-        }
+        private string GetFullPath(string file) =>
+            string.IsNullOrEmpty(file) || string.IsNullOrEmpty(FilePath)
+                ? null
+                : Path.Join(Path.GetDirectoryName(FilePath.AsSpan()), file);
 
         /// <summary>
         ///     Returns the path of the audio track file. If no track exists, it will return null.
         /// </summary>
         /// <returns></returns>
-        public string GetAudioPath()
-        {
-            if (string.IsNullOrEmpty(AudioFile) || string.IsNullOrEmpty(FilePath))
-                return null;
-
-            return $"{Path.GetDirectoryName(FilePath)}/{AudioFile}";
-        }
+        public string GetAudioPath() => GetFullPath(AudioFile);
     }
 }

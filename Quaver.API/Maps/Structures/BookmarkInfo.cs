@@ -7,19 +7,28 @@ namespace Quaver.API.Maps.Structures
 {
     [MoonSharpUserData]
     [Serializable]
-    public class BookmarkInfo
+    public class BookmarkInfo : IComparable<BookmarkInfo>, IStartTime
     {
         public int StartTime
         {
-            get; 
+            get;
             [MoonSharpVisible(false)] set;
         }
 
         public string Note
         {
-            get; 
+            get;
             [MoonSharpVisible(false)] set;
         }
+
+        float IStartTime.StartTime
+        {
+            get => StartTime;
+            set => StartTime = (int)value;
+        }
+
+        /// <inheritdoc />
+        public int CompareTo(BookmarkInfo other) => StartTime.CompareTo(other.StartTime);
 
         private sealed class TimeNoteEqualityComparer : IEqualityComparer<BookmarkInfo>
         {
