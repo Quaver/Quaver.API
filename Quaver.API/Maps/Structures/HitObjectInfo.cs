@@ -22,7 +22,6 @@ namespace Quaver.API.Maps.Structures
     [MoonSharpUserData]
     [Serializable]
     public class HitObjectInfo : IComparable<HitObjectInfo>, IStartTime
-
     {
     /// <summary>
     ///     The time in milliseconds when the HitObject is supposed to be hit.
