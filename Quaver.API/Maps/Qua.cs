@@ -560,13 +560,7 @@ namespace Quaver.API.Maps
             if (durations.Count is 0) // osu! hangs on loading the map in this case; we return a sensible result.
                 return TimingPoints[0].Bpm;
 
-            var max = (Bpm: 0f, Duration: 0);
-
-            foreach (var (bpm, duration) in durations)
-                if (duration > max.Duration)
-                    max = (bpm, duration);
-
-            return max.Bpm;
+            return durations.OrderByDescending(x => x.Value).First().Key;
         }
 
         /// <summary>
@@ -1008,7 +1002,7 @@ namespace Quaver.API.Maps
 
             // ReSharper disable once ForeachCanBeConvertedToQueryUsingAnotherGetEnumerator
             foreach (var h in HitObjects)
-                if (total++ == index || h.IsLongNote && total++ == index)
+                if (total++ == index || (h.IsLongNote && total++ == index))
                     return h;
 
             return null;
