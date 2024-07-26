@@ -444,12 +444,16 @@ namespace Quaver.API.Maps
         /// </summary>
         public void Sort()
         {
+            Bookmarks = new List<BookmarkInfo>(Bookmarks);
+            HitObjects = new List<HitObjectInfo>(HitObjects);
+            SoundEffects = new List<SoundEffectInfo>(SoundEffects);
+            TimingPoints = new List<TimingPointInfo>(TimingPoints);
+            SliderVelocities = new List<SliderVelocityInfo>(SliderVelocities);
+            Bookmarks.Sort();
             HitObjects.Sort();
+            SoundEffects.Sort();
             TimingPoints.Sort();
             SliderVelocities.Sort();
-            SoundEffects.Sort();
-            Bookmarks.Sort();
-            SoundEffects.Sort();
         }
 
         /// <summary>
