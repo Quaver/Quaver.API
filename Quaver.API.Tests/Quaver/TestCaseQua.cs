@@ -282,21 +282,21 @@ namespace Quaver.API.Tests.Quaver
 
                 // Check that the normalization gives the correct result.
                 var quaDenormalizedNormalized = quaDenormalized.WithNormalizedSVs();
-                Assert.True(quaDenormalizedNormalized.EqualByValue(quaNormalized));
+                Assert.True(quaDenormalizedNormalized.EqualByValue(quaNormalized), $"Expected {test} to normalize correctly.");
 
                 // Denormalization can move the first SV (it doesn't matter where to put the InitialScrollVelocity SV).
                 // So check back-and-forth instead of just denormalization.
                 var quaNormalizedDenormalizedNormalized = quaNormalized.WithDenormalizedSVs().WithNormalizedSVs();
-                Assert.True(quaNormalizedDenormalizedNormalized.EqualByValue(quaNormalized));
+                Assert.True(quaNormalizedDenormalizedNormalized.EqualByValue(quaNormalized), $"Expected {test} to remain the same after denormalization and subsequent normalization.");
 
                 // Check that serializing and parsing the result does not change it.
                 var bufferDenormalized = Encoding.UTF8.GetBytes(quaDenormalized.Serialize());
                 var quaDenormalized2 = Qua.Parse(bufferDenormalized, false);
-                Assert.True(quaDenormalized.EqualByValue(quaDenormalized2));
+                Assert.True(quaDenormalized.EqualByValue(quaDenormalized2), $"Expected {test} denormalized to remain the same after serialization and parsing.");
 
                 var bufferNormalized = Encoding.UTF8.GetBytes(quaNormalized.Serialize());
                 var quaNormalized2 = Qua.Parse(bufferNormalized, false);
-                Assert.True(quaNormalized.EqualByValue(quaNormalized2));
+                Assert.True(quaNormalized.EqualByValue(quaNormalized2), $"Expected {test} to normalized to remain the same after serialization and parsing.");
             }
         }
     }
