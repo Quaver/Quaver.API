@@ -14,7 +14,7 @@ namespace Quaver.API.Helpers
             var right = list.Count - 1;
 
             while (left <= right)
-                if ((left + (right - left) / 2) is var mid && list[mid].StartTime <= time)
+                if ((left + ((right - left) / 2)) is var mid && list[mid].StartTime <= time)
                     left = mid + 1;
                 else
                     right = mid - 1;

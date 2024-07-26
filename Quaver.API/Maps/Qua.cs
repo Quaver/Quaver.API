@@ -707,12 +707,8 @@ namespace Quaver.API.Maps
         /// </summary>
         public void ReplaceLongNotesWithRegularNotes()
         {
-            for (var i = 0; i < HitObjects.Count; i++)
-            {
-                var temp = HitObjects[i];
+            foreach (var temp in HitObjects)
                 temp.EndTime = 0;
-                HitObjects[i] = temp;
-            }
         }
 
         /// <summary>
@@ -890,7 +886,8 @@ namespace Quaver.API.Maps
 
             // LN conversion can mess up the ordering, so sort it again. See the (this part can mess up the ordering)
             // comment above.
-            HitObjects = newHitObjects.OrderBy(x => x.StartTime).ToList();
+            newHitObjects.Sort();
+            HitObjects = newHitObjects;
         }
 
         /// <summary>
@@ -930,18 +927,13 @@ namespace Quaver.API.Maps
 
             var values = new List<int>();
             values.AddRange(Enumerable.Range(0, GetKeyCount(false)).Select(x => x + 1));
-
             values.Shuffle(new Random(seed));
 
             if (HasScratchKey)
                 values.Add(GetKeyCount());
 
-            for (var i = 0; i < HitObjects.Count; i++)
-            {
-                var temp = HitObjects[i];
+            foreach (var temp in HitObjects)
                 temp.Lane = values[temp.Lane - 1];
-                HitObjects[i] = temp;
-            }
         }
 
         /// <summary>
@@ -1176,9 +1168,10 @@ namespace Quaver.API.Maps
                 }
             }
 
+            normalizedScrollVelocities.Sort();
             BPMDoesNotAffectScrollVelocity = true;
-            InitialScrollVelocity = initialSvMultiplier ?? 1;
             SliderVelocities = normalizedScrollVelocities;
+            InitialScrollVelocity = initialSvMultiplier ?? 1;
         }
 
         /// <summary>
@@ -1308,8 +1301,9 @@ namespace Quaver.API.Maps
                 }
             }
 
-            BPMDoesNotAffectScrollVelocity = false;
             InitialScrollVelocity = 0;
+            denormalizedScrollVelocities.Sort();
+            BPMDoesNotAffectScrollVelocity = false;
             SliderVelocities = denormalizedScrollVelocities;
         }
 
