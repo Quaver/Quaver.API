@@ -540,7 +540,7 @@ namespace Quaver.API.Maps
 
             var lastObject = HitObjects.OrderByDescending(x => x.IsLongNote ? x.EndTime : x.StartTime).First();
             double lastTime = lastObject.IsLongNote ? lastObject.EndTime : lastObject.StartTime;
-            var durations = new SortedDictionary<float, int>();
+            var durations = new Dictionary<float, int>();
 
             for (var i = TimingPoints.Count - 1; i >= 0; i--)
             {
@@ -557,8 +557,16 @@ namespace Quaver.API.Maps
                     durations[point.Bpm] += duration;
             }
 
-            // osu! hangs on loading the map in this case; we return a sensible result.
-            return durations.Count is 0 ? TimingPoints[0].Bpm : durations.Last().Key;
+            if (durations.Count is 0) // osu! hangs on loading the map in this case; we return a sensible result.
+                return TimingPoints[0].Bpm;
+
+            var max = (Bpm: 0f, Duration: 0);
+
+            foreach (var (bpm, duration) in durations)
+                if (duration > max.Duration)
+                    max = (bpm, duration);
+
+            return max.Bpm;
         }
 
         /// <summary>
