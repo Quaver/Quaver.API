@@ -96,9 +96,6 @@ namespace Quaver.API.Maps.Structures
         [MoonSharpVisible(false)] set;
     }
 
-    /// <inheritdoc />
-    public int CompareTo(HitObjectInfo other) => StartTime.CompareTo(other.StartTime);
-
     /// <summary>
     ///     Gets the timing point this object is in range of.
     /// </summary>
@@ -149,6 +146,34 @@ namespace Quaver.API.Maps.Structures
     {
         if (!IsEditableInLuaScript)
             throw new InvalidOperationException("Value is not allowed to be edited in lua scripts.");
+    }
+
+    /// <inheritdoc />
+    public int CompareTo(HitObjectInfo other)
+    {
+        if (ReferenceEquals(this, other))
+            return 0;
+
+        if (other is null)
+            return 1;
+
+        var compare = StartTime.CompareTo(other.StartTime);
+
+        if (compare != 0)
+            return compare;
+
+        compare = Lane.CompareTo(other.Lane);
+
+        if (compare != 0)
+            return compare;
+
+        compare = EndTime.CompareTo(other.EndTime);
+
+        if (compare != 0)
+            return compare;
+
+        compare = HitSound.CompareTo(other.HitSound);
+        return compare is 0 ? EditorLayer.CompareTo(other.EditorLayer) : compare;
     }
 
     /// <summary>

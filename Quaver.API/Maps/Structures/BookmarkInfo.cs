@@ -28,7 +28,17 @@ namespace Quaver.API.Maps.Structures
         }
 
         /// <inheritdoc />
-        public int CompareTo(BookmarkInfo other) => StartTime.CompareTo(other.StartTime);
+        public int CompareTo(BookmarkInfo other)
+        {
+            if (ReferenceEquals(this, other))
+                return 0;
+
+            if (other is null)
+                return 1;
+
+            var compare = StartTime.CompareTo(other.StartTime);
+            return compare is 0 ? string.Compare(Note, other.Note, StringComparison.Ordinal) : compare;
+        }
 
         private sealed class TimeNoteEqualityComparer : IEqualityComparer<BookmarkInfo>
         {
