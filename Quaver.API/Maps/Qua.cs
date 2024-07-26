@@ -173,7 +173,8 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <returns></returns>
         [YamlIgnore]
-        public int Length => HitObjects.Count == 0 ? 0 : Math.Max(HitObjects[^1].StartTime, HitObjects[^1].EndTime);
+        public int Length =>
+            HitObjects.Count is 0 ? 0 : Math.Max(HitObjects[^1].StartTime, HitObjects.Max(x => x.EndTime));
 
         /// <summary>
         ///     Integer based seed used for shuffling the lanes when randomize mod is active.
