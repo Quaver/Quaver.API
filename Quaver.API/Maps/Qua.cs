@@ -957,7 +957,19 @@ namespace Quaver.API.Maps
 
         /// <summary>
         /// </summary>
+        public void SortBookmarks() => Bookmarks.Sort();
+
+        /// <summary>
+        /// </summary>
+        public void SortHitObjects() => HitObjects.Sort();
+
+        /// <summary>
+        /// </summary>
         public void SortSliderVelocities() => SliderVelocities.Sort();
+
+        /// <summary>
+        /// </summary>
+        public void SortSoundEffects() => SoundEffects.Sort();
 
         /// <summary>
         /// </summary>

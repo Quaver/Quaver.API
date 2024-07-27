@@ -14,7 +14,7 @@ namespace Quaver.API.Helpers
             list.Insert(i >= 0 ? i : ~i, element);
         }
 
-        public static void InsertSorted<T>(this List<T> list, ICollection<T> elements)
+        public static void InsertSorted<T>(this List<T> list, IReadOnlyCollection<T> elements)
             where T : IComparable<T>
         {
             if (list.Capacity - list.Count < elements.Count)
