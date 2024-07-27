@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MPL-2.0
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Helpers
@@ -14,14 +17,35 @@ namespace Quaver.API.Helpers
             list.Insert(i >= 0 ? i : ~i, element);
         }
 
-        public static void InsertSorted<T>(this List<T> list, IReadOnlyCollection<T> elements)
+        public static void InsertSorted<T>(this List<T> list, IEnumerable<T> elements)
             where T : IComparable<T>
         {
-            if (list.Capacity - list.Count < elements.Count)
-                list.Capacity = Math.Max(list.Capacity * 2, list.Capacity + elements.Count);
+            // Thanks to @WilliamQiufeng for going through the trouble of benchmarking
+            // to find the optimal capacity and count for our use case.
+            const int MaximumCapacity = 128;
 
-            foreach (var element in elements)
-                InsertSorted(list, element);
+            const int MinimumCount = 128;
+
+            // ReSharper disable PossibleMultipleEnumeration
+            switch (TryCount(elements))
+            {
+                case 0: break;
+                case 1:
+                    InsertSorted(list, elements.First());
+                    break;
+                case { } count when count <= MinimumCount && list.Capacity <= MaximumCapacity:
+                    var capacity = list.Capacity;
+
+                    if (capacity - list.Count < count)
+                        list.Capacity = Math.Max(capacity * 2, capacity + count);
+
+                    InsertSortedList(list, elements, count);
+                    break;
+                default: // If the list ends up becoming large, it is no longer worth it to find the insertion.
+                    list.AddRange(elements);
+                    list.Sort();
+                    break;
+            }
         }
 
         // Ideally would be IReadOnlyList<T> to indicate no mutation,
@@ -77,5 +101,40 @@ namespace Quaver.API.Helpers
         }
 
         public static float Before(float time) => -After(-time);
+
+        // For interfaces, indexers are generally more performant, hence the suppression below.
+        private static void InsertSortedList<T>(List<T> list, IEnumerable<T> elements, int count)
+            where T : IComparable<T>
+        {
+            switch (elements)
+            {
+                case IList<T> e:
+                    for (var i = 0; i < count; i++)
+                        InsertSorted(list, e[i]);
+
+                    break;
+                case IReadOnlyList<T> e:
+                    for (var i = 0; i < count; i++)
+                        InsertSorted(list, e[i]);
+
+                    break;
+                default:
+                    foreach (var e in elements)
+                        InsertSorted(list, e);
+
+                    break;
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static int? TryCount<T>(IEnumerable<T> enumerable) =>
+            enumerable switch
+            {
+                string c => c.Length,
+                ICollection c => c.Count,
+                ICollection<T> c => c.Count,
+                IReadOnlyCollection<T> c => c.Count,
+                _ => null,
+            };
     }
 }
