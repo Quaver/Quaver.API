@@ -1,20 +1,39 @@
 // SPDX-License-Identifier: MPL-2.0
+using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Quaver.API.Maps.Structures;
 
 namespace Quaver.API.Helpers
 {
     public static class StartTimeHelper
     {
-        public static int IndexAtTime<T>(this IReadOnlyList<T> list, float time)
+        public static void InsertSorted<T>(this List<T> list, T element)
+            where T : IComparable<T>
+        {
+            var i = list.BinarySearch(element);
+            list.Insert(i >= 0 ? i : ~i, element);
+        }
+
+        public static void InsertSorted<T>(this List<T> list, ICollection<T> elements)
+            where T : IComparable<T>
+        {
+            if (list.Capacity - list.Count < elements.Count)
+                list.Capacity = Math.Max(list.Capacity * 2, list.Capacity + elements.Count);
+
+            foreach (var element in elements)
+                InsertSorted(list, element);
+        }
+
+        // Ideally would be IReadOnlyList<T> to indicate no mutation,
+        // but unfortunately IList<T> doesn't implement IReadOnlyList<T>.
+        public static int IndexAtTime<T>(this IList<T> list, float time)
             where T : IStartTime
         {
             var left = 0;
             var right = list.Count - 1;
 
             while (left <= right)
-                if ((left + ((right - left) / 2)) is var mid && list[mid].StartTime <= time)
+                if (left + ((right - left) / 2) is var mid && list[mid].StartTime <= time)
                     left = mid + 1;
                 else
                     right = mid - 1;
@@ -22,18 +41,18 @@ namespace Quaver.API.Helpers
             return right;
         }
 
-        public static int IndexAtTimeBefore<T>(this IReadOnlyList<T> list, float time)
+        public static int IndexAtTimeBefore<T>(this IList<T> list, float time)
             where T : IStartTime =>
             IndexAtTime(list, Before(time));
 
-        public static T AtTime<T>(this IReadOnlyList<T> list, float time)
+        public static T AtTime<T>(this IList<T> list, float time)
             where T : IStartTime
         {
             var i = list.IndexAtTime(time);
             return i is -1 ? default : list[i];
         }
 
-        public static T AtTimeBefore<T>(this IReadOnlyList<T> list, float time)
+        public static T AtTimeBefore<T>(this IList<T> list, float time)
             where T : IStartTime =>
             AtTime(list, Before(time));
 
