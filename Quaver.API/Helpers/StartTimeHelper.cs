@@ -33,7 +33,7 @@ namespace Quaver.API.Helpers
                 case 1:
                     InsertSorted(list, elements.First());
                     break;
-                case { } count when count <= MinimumCount && list.Capacity <= MaximumCapacity:
+                case { } count when count <= MinimumCount && list.Capacity >= MaximumCapacity:
                     var capacity = list.Capacity;
 
                     if (capacity - list.Count < count)
