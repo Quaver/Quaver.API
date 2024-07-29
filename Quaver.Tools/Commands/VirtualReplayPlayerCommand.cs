@@ -73,7 +73,7 @@ namespace Quaver.Tools.Commands
 
             foreach (var stat in virtualPlayer.ScoreProcessor.Stats)
             {
-                var val = $"{stat.HitDifference}";
+                var val = $"{stat.SongPosition},{stat.HitDifference}";
 
                 if (stat.KeyPressType == KeyPressType.Release && stat.Judgement != Judgement.Miss)
                     val += "L";
