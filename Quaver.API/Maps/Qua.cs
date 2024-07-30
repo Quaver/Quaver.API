@@ -445,11 +445,11 @@ namespace Quaver.API.Maps
         /// </summary>
         public void Sort()
         {
-            Bookmarks.Sort();
-            HitObjects.Sort();
-            SoundEffects.Sort();
-            TimingPoints.Sort();
-            SliderVelocities.Sort();
+            SortBookmarks();
+            SortHitObjects();
+            SortSoundEffects();
+            SortTimingPoints();
+            SortSliderVelocities();
         }
 
         /// <summary>
@@ -957,23 +957,23 @@ namespace Quaver.API.Maps
 
         /// <summary>
         /// </summary>
-        public void SortBookmarks() => Bookmarks.Sort();
+        public void SortBookmarks() => Bookmarks.HybridSort();
 
         /// <summary>
         /// </summary>
-        public void SortHitObjects() => HitObjects.Sort();
+        public void SortHitObjects() => HitObjects.HybridSort();
 
         /// <summary>
         /// </summary>
-        public void SortSliderVelocities() => SliderVelocities.Sort();
+        public void SortSliderVelocities() => SliderVelocities.HybridSort();
 
         /// <summary>
         /// </summary>
-        public void SortSoundEffects() => SoundEffects.Sort();
+        public void SortSoundEffects() => SoundEffects.HybridSort();
 
         /// <summary>
         /// </summary>
-        public void SortTimingPoints() => TimingPoints.Sort();
+        public void SortTimingPoints() => TimingPoints.HybridSort();
 
         /// <summary>
         ///     Gets the judgement of a particular hitobject in the map
@@ -1365,5 +1365,6 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <returns></returns>
         public string GetAudioPath() => GetFullPath(AudioFile);
+
     }
 }

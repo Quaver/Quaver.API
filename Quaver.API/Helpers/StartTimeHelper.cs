@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Quaver.API.Maps.Structures;
 
@@ -10,6 +11,9 @@ namespace Quaver.API.Helpers
 {
     public static class StartTimeHelper
     {
+        // If the framework supports it, we want to use Random.Shared since it is much faster.
+        static readonly Random _rng = Shared()?.GetMethod?.Invoke(null, null) as Random ?? new Random();
+
         public static void InsertSorted<T>(this List<T> list, T element)
             where T : IComparable<T>
         {
@@ -43,8 +47,42 @@ namespace Quaver.API.Helpers
                     break;
                 default: // If the list ends up becoming large, it is no longer worth it to find the insertion.
                     list.AddRange(elements);
-                    list.Sort();
+                    list.HybridSort();
                     break;
+            }
+        }
+
+        /// <summary>
+        ///     Sorts the list.
+        /// </summary>
+        /// <remarks><para>
+        ///     This method is intended to be used on collections that have a decent chance of being nearly sorted.
+        ///     It uses Insertion Sort, but falls back on Quick Sort if that algorithm takes too long.
+        ///     The sorting is stable, meaning that the order for equal elements are preserved.
+        /// </para></remarks>
+        /// <typeparam name="T">The type of list to sort.</typeparam>
+        /// <param name="list">The list to sort.</param>
+        public static void HybridSort<T>(this List<T> list)
+            where T : IComparable<T>
+        {
+            var maxBacktracking = list.Count * (int)Math.Log(list.Count, 2);
+
+            for (var i = 1; i < list.Count; i++)
+            {
+                var j = i;
+
+                while (j > 0 && list[j - 1].CompareTo(list[j]) > 0)
+                {
+                    (list[j], list[j - 1]) = (list[j - 1], list[j]);
+                    j--;
+
+                    if (--maxBacktracking > 0)
+                        continue;
+
+                    // Insertion Sort is deemed to take too long, let's fall back to Quick Sort.
+                    QuickSort(list, 0, list.Count - 1);
+                    return;
+                }
             }
         }
 
@@ -126,6 +164,42 @@ namespace Quaver.API.Helpers
             }
         }
 
+        // ReSharper disable once CognitiveComplexity SuggestBaseTypeForParameter
+        private static void QuickSort<T>(List<T> list, int leftIndex, int rightIndex)
+            where T : IComparable<T>
+        {
+            while (true)
+            {
+                var i = leftIndex;
+                var j = rightIndex;
+                var pivot = list[_rng.Next(leftIndex, rightIndex + 1)];
+
+                while (i <= j)
+                {
+                    while (list[i].CompareTo(pivot) < 0)
+                        i++;
+
+                    while (list[j].CompareTo(pivot) > 0)
+                        j--;
+
+                    if (i > j)
+                        continue;
+
+                    (list[i], list[j]) = (list[j], list[i]);
+                    i++;
+                    j--;
+                }
+
+                if (leftIndex < j)
+                    QuickSort(list, leftIndex, j);
+
+                if (i >= rightIndex)
+                    break;
+
+                leftIndex = i;
+            }
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int? TryCount<T>(IEnumerable<T> enumerable) =>
             enumerable switch
@@ -136,5 +210,15 @@ namespace Quaver.API.Helpers
                 IReadOnlyCollection<T> c => c.Count,
                 _ => null,
             };
+
+        private static PropertyInfo Shared() =>
+            typeof(Random).GetProperty(
+                nameof(Shared),
+                BindingFlags.Public | BindingFlags.Static,
+                Type.DefaultBinder,
+                typeof(Random),
+                Type.EmptyTypes,
+                Array.Empty<ParameterModifier>()
+            );
     }
 }

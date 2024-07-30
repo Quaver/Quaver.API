@@ -4,10 +4,12 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Force.DeepCloner;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Structures;
 using Xunit;
+using YamlDotNet.Serialization;
 
 namespace Quaver.API.Tests.Quaver
 {
@@ -247,6 +249,22 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/keysounds-invalid-sample-index.qua", false);
             Assert.False(qua.IsValid());
+        }
+
+        [Fact]
+        public void StableSorting()
+        {
+            const string Q = "./Quaver/Resources/stable-sorting.qua";
+            var unsorted = new Deserializer().Deserialize<Qua>(File.ReadAllText(Q));
+            var sorted = unsorted.DeepClone();
+            sorted.Sort();
+
+            Assert.Equal(unsorted.TimingPoints, sorted.TimingPoints, TimingPointInfo.ByValueComparer);
+            Assert.Equal(unsorted.SliderVelocities, sorted.SliderVelocities, SliderVelocityInfo.ByValueComparer);
+            Assert.Equal(unsorted.HitObjects, sorted.HitObjects, HitObjectInfo.ByValueComparer);
+            Assert.Equal(unsorted.CustomAudioSamples, sorted.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer);
+            Assert.Equal(unsorted.EditorLayers, sorted.EditorLayers, EditorLayerInfo.ByValueComparer);
+            Assert.Equal(unsorted.Bookmarks, sorted.Bookmarks, BookmarkInfo.ByValueComparer);
         }
 
         [Fact]

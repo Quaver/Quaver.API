@@ -1,0 +1,72 @@
+AudioFile: ''
+SongPreviewTime: 0
+BackgroundFile: ''
+MapId: -1
+MapSetId: -1
+Mode: Keys4
+Title: ''
+Artist: ''
+Source: ''
+Tags: ''
+DifficultyName: ''
+EditorLayers: []
+Bookmarks:
+- StartTime: 0
+  Note: 'first'
+- StartTime: 0
+  Note: 'second'
+- StartTime: 0
+  Note: 'third'
+- StartTime: 1000
+  Note: 'fourth'
+- StartTime: 1000
+  Note: 'fifth'
+- StartTime: 1000
+  Note: 'sixth'
+CustomAudioSamples: []
+SoundEffects: []
+TimingPoints:
+- StartTime: 0
+  Bpm: 1
+- StartTime: 0
+  Bpm: 2
+- StartTime: 0
+  Bpm: 3
+- StartTime: 1000
+  Bpm: 4
+- StartTime: 1000
+  Bpm: 5
+- StartTime: 1000
+  Bpm: 6
+SliderVelocities:
+- StartTime: 0
+  Multiplier: 1
+- StartTime: 0
+  Multiplier: 2
+- StartTime: 0
+  Multiplier: 3
+- StartTime: 1000
+  Multiplier: 4
+- StartTime: 1000
+  Multiplier: 5
+- StartTime: 1000
+  Multiplier: 6
+HitObjects:
+- StartTime: 0
+  Lane: 1
+  KeySounds: []
+- StartTime: 0
+  Lane: 2
+  KeySounds: []
+- StartTime: 0
+  Lane: 3
+  KeySounds: []
+- StartTime: 1000
+  Lane: 4
+  KeySounds: []
+- StartTime: 1000
+  Lane: 5
+  KeySounds: []
+- StartTime: 1000
+  Lane: 6
+  KeySounds: []
