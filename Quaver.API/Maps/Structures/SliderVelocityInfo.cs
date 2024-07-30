@@ -73,17 +73,7 @@ namespace Quaver.API.Maps.Structures
         }
 
         /// <inheritdoc />
-        public int CompareTo(SliderVelocityInfo other)
-        {
-            if (ReferenceEquals(this, other))
-                return 0;
-
-            if (other is null)
-                return 1;
-
-            var compare = StartTime.CompareTo(other.StartTime);
-            return compare is 0 ? Multiplier.CompareTo(other.Multiplier) : compare;
-        }
+        public int CompareTo(SliderVelocityInfo other) => StartTime.CompareTo(other.StartTime);
 
         /// <summary>
         /// </summary>
