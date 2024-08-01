@@ -22,11 +22,8 @@ namespace Quaver.API.Helpers
         static readonly Random _rng = Shared()?.GetMethod?.Invoke(null, null) as Random ?? new Random();
 
         public static void InsertSorted<T>(this List<T> list, T element)
-            where T : IStartTime
-        {
-            var i = list.BinarySearch(element);
-            list.Insert(i >= 0 ? i : ~i, element);
-        }
+            where T : IStartTime =>
+            list.Insert(IndexAtTime(list, element.StartTime) + 1, element);
 
         public static void InsertSorted<T>(this List<T> list, IEnumerable<T> elements)
             where T : IStartTime
