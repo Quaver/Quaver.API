@@ -13,8 +13,9 @@ namespace Quaver.Tools.Commands
 
         public AutoModCommand(string[] args) : base(args)
         {
-
-            Dir = args[1];
+            var list = args.ToList();
+            list.RemoveAt(0);
+            Dir = string.Join(' ', list);
         }
 
         public override void Execute()
