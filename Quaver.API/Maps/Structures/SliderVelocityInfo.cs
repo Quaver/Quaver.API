@@ -18,7 +18,7 @@ namespace Quaver.API.Maps.Structures
     /// </summary>
     [Serializable]
     [MoonSharpUserData]
-    public class SliderVelocityInfo : IComparable<SliderVelocityInfo>, IStartTime
+    public class SliderVelocityInfo : IStartTime
     {
         /// <summary>
         ///     The time in milliseconds when the new SliderVelocity section begins
@@ -71,9 +71,6 @@ namespace Quaver.API.Maps.Structures
             ThrowUneditableException();
             Multiplier = multiplier;
         }
-
-        /// <inheritdoc />
-        public int CompareTo(SliderVelocityInfo other) => StartTime.CompareTo(other.StartTime);
 
         /// <summary>
         /// </summary>

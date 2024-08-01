@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -21,14 +22,14 @@ namespace Quaver.API.Helpers
         static readonly Random _rng = Shared()?.GetMethod?.Invoke(null, null) as Random ?? new Random();
 
         public static void InsertSorted<T>(this List<T> list, T element)
-            where T : IComparable<T>
+            where T : IStartTime
         {
             var i = list.BinarySearch(element);
             list.Insert(i >= 0 ? i : ~i, element);
         }
 
         public static void InsertSorted<T>(this List<T> list, IEnumerable<T> elements)
-            where T : IComparable<T>
+            where T : IStartTime
         {
             // Thanks to @WilliamQiufeng for going through the trouble of benchmarking
             // to find the optimal capacity and count for our use case.
@@ -69,7 +70,7 @@ namespace Quaver.API.Helpers
         /// <typeparam name="T">The type of list to sort.</typeparam>
         /// <param name="list">The list to sort.</param>
         public static void HybridSort<T>(this List<T> list)
-            where T : IComparable<T>
+            where T : IStartTime
         {
             var maxBacktracking = list.Count * (int)Math.Log(list.Count, 2);
 
@@ -77,7 +78,7 @@ namespace Quaver.API.Helpers
             {
                 var j = i;
 
-                while (j > 0 && list[j - 1].CompareTo(list[j]) > 0)
+                while (j > 0 && list[j - 1].StartTime > list[j].StartTime)
                 {
                     (list[j], list[j - 1]) = (list[j - 1], list[j]);
                     j--;
@@ -94,7 +95,8 @@ namespace Quaver.API.Helpers
 
         // Ideally would be IReadOnlyList<T> to indicate no mutation,
         // but unfortunately IList<T> doesn't implement IReadOnlyList<T>.
-        public static int IndexAtTime<T>(this IList<T> list, float time)
+        [Pure]
+        public static int IndexAtTime<T>(this List<T> list, float time)
             where T : IStartTime
         {
             var left = 0;
@@ -109,22 +111,26 @@ namespace Quaver.API.Helpers
             return right;
         }
 
-        public static int IndexAtTimeBefore<T>(this IList<T> list, float time)
+        [Pure]
+        public static int IndexAtTimeBefore<T>(this List<T> list, float time)
             where T : IStartTime =>
             IndexAtTime(list, Before(time));
 
-        public static T AtTime<T>(this IList<T> list, float time)
+        [Pure]
+        public static T AtTime<T>(this List<T> list, float time)
             where T : IStartTime
         {
             var i = list.IndexAtTime(time);
             return i is -1 ? default : list[i];
         }
 
-        public static T AtTimeBefore<T>(this IList<T> list, float time)
+        [Pure]
+        public static T AtTimeBefore<T>(this List<T> list, float time)
             where T : IStartTime =>
             AtTime(list, Before(time));
 
         // Thanks to https://stackoverflow.com/a/10426033 for the implementation.
+        [Pure]
         public static float After(float time)
         {
             // NaNs and positive infinity map to themselves.
@@ -144,11 +150,12 @@ namespace Quaver.API.Helpers
             return time;
         }
 
+        [Pure]
         public static float Before(float time) => -After(-time);
 
         // For interfaces, indexers are generally more performant, hence the suppression below.
         private static void InsertSortedList<T>(List<T> list, IEnumerable<T> elements, int count)
-            where T : IComparable<T>
+            where T : IStartTime
         {
             switch (elements)
             {
@@ -172,7 +179,7 @@ namespace Quaver.API.Helpers
 
         // ReSharper disable once CognitiveComplexity SuggestBaseTypeForParameter
         private static void QuickSort<T>(List<T> list, int leftIndex, int rightIndex)
-            where T : IComparable<T>
+            where T : IStartTime
         {
             while (true)
             {
@@ -182,10 +189,10 @@ namespace Quaver.API.Helpers
 
                 while (i <= j)
                 {
-                    while (list[i].CompareTo(pivot) < 0)
+                    while (list[i].StartTime < pivot.StartTime)
                         i++;
 
-                    while (list[j].CompareTo(pivot) > 0)
+                    while (list[j].StartTime > pivot.StartTime)
                         j--;
 
                     if (i > j)
@@ -206,7 +213,7 @@ namespace Quaver.API.Helpers
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining), Pure]
         private static int? TryCount<T>(IEnumerable<T> enumerable) =>
             enumerable switch
             {
