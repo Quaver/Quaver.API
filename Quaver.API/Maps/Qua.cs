@@ -834,7 +834,7 @@ namespace Quaver.API.Maps
 
             // LN conversion can mess up the ordering, so sort it again. See the (this part can mess up the ordering)
             // comment above.
-            newHitObjects.Sort();
+            newHitObjects.HybridSort();
             HitObjects = newHitObjects;
         }
 
@@ -1132,8 +1132,8 @@ namespace Quaver.API.Maps
                 currentAdjustedSvMultiplier = multiplier;
             }
 
-            normalizedScrollVelocities.Sort();
             BPMDoesNotAffectScrollVelocity = true;
+            normalizedScrollVelocities.HybridSort();
             SliderVelocities = normalizedScrollVelocities;
             InitialScrollVelocity = initialSvMultiplier ?? 1;
         }
@@ -1266,8 +1266,8 @@ namespace Quaver.API.Maps
             }
 
             InitialScrollVelocity = 0;
-            denormalizedScrollVelocities.Sort();
             BPMDoesNotAffectScrollVelocity = false;
+            denormalizedScrollVelocities.HybridSort();
             SliderVelocities = denormalizedScrollVelocities;
         }
 
