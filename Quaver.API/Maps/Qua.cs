@@ -23,7 +23,7 @@ using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps
 {
-    [Serializable]
+    [Serializable] // ReSharper disable CognitiveComplexity CompareOfFloatsByEqualityOperator
     public class Qua
     {
         /// <summary>
@@ -107,7 +107,7 @@ namespace Quaver.API.Maps
         public bool LegacyLNRendering { get; set; }
 
         /// <summary>
-        ///     Indicates if the BPM changes in affect scroll velocity.
+        ///     Indicates if the BPM changes affect scroll velocity.
         ///
         ///     If this is set to false, SliderVelocities are in the denormalized format (BPM affects SV),
         ///     and if this is set to true, SliderVelocities are in the normalized format (BPM does not affect SV).
@@ -192,46 +192,41 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     Ctor
         /// </summary>
-        public Qua()
-        {
-        }
+        public Qua() { }
 
         /// <summary>
         ///     Returns true if the two maps are equal by value.
         /// </summary>
         /// <param name="other">the Qua to compare to</param>
         /// <returns></returns>
-        public bool EqualByValue(Qua other)
-        {
-            return AudioFile == other.AudioFile
-                   && SongPreviewTime == other.SongPreviewTime
-                   && BackgroundFile == other.BackgroundFile
-                   && BannerFile == other.BannerFile
-                   && MapId == other.MapId
-                   && MapSetId == other.MapSetId
-                   && Mode == other.Mode
-                   && Title == other.Title
-                   && Artist == other.Artist
-                   && Source == other.Source
-                   && Tags == other.Tags
-                   && Creator == other.Creator
-                   && DifficultyName == other.DifficultyName
-                   && Description == other.Description
-                   && Genre == other.Genre
-                   && TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer)
-                   && SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer)
-                   // ReSharper disable once CompareOfFloatsByEqualityOperator
-                   && InitialScrollVelocity == other.InitialScrollVelocity
-                   && BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity
-                   && LegacyLNRendering == other.LegacyLNRendering
-                   && HasScratchKey == other.HasScratchKey
-                   && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
-                   && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
-                   && SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer)
-                   && EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer)
-                   && Bookmarks.SequenceEqual(other.Bookmarks, BookmarkInfo.ByValueComparer)
-                   && RandomizeModifierSeed == other.RandomizeModifierSeed;
-        }
+        public bool EqualByValue(Qua other) =>
+            AudioFile == other.AudioFile &&
+            SongPreviewTime == other.SongPreviewTime &&
+            BackgroundFile == other.BackgroundFile &&
+            BannerFile == other.BannerFile &&
+            MapId == other.MapId &&
+            MapSetId == other.MapSetId &&
+            Mode == other.Mode &&
+            Title == other.Title &&
+            Artist == other.Artist &&
+            Source == other.Source &&
+            Tags == other.Tags &&
+            Creator == other.Creator &&
+            DifficultyName == other.DifficultyName &&
+            Description == other.Description &&
+            Genre == other.Genre &&
+            TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer) &&
+            SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer) &&
+            InitialScrollVelocity == other.InitialScrollVelocity &&
+            BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity &&
+            LegacyLNRendering == other.LegacyLNRendering &&
+            HasScratchKey == other.HasScratchKey &&
+            HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer) &&
+            CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer) &&
+            SoundEffects.SequenceEqual(other.SoundEffects, SoundEffectInfo.ByValueComparer) &&
+            EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer) &&
+            Bookmarks.SequenceEqual(other.Bookmarks, BookmarkInfo.ByValueComparer) &&
+            RandomizeModifierSeed == other.RandomizeModifierSeed;
 
         /// <summary>
         ///     Loads a .qua file from a stream
@@ -284,6 +279,27 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public string Serialize()
         {
+            static HitObjectInfo SerializableHitObject(HitObjectInfo obj) =>
+                new HitObjectInfo
+                {
+                    EditorLayer = obj.EditorLayer, EndTime = obj.EndTime,
+                    HitSound = obj.HitSound == HitSounds.Normal ? 0 : obj.HitSound, KeySounds = obj
+                       .KeySounds
+                       .Select(x => new KeySoundInfo { Sample = x.Sample, Volume = x.Volume == 100 ? 0 : x.Volume })
+                       .ToList(),
+                    Lane = obj.Lane, StartTime = obj.StartTime,
+                };
+
+            static SoundEffectInfo SerializableSoundEffect(SoundEffectInfo x) =>
+                x.Volume == 100
+                    ? new SoundEffectInfo { StartTime = x.StartTime, Sample = x.Sample, Volume = 0 }
+                    : x;
+
+            static TimingPointInfo SerializableTimingPoint(TimingPointInfo x) =>
+                x.Signature is TimeSignature.Quadruple
+                    ? new TimingPointInfo { Bpm = x.Bpm, Signature = 0, StartTime = x.StartTime, Hidden = x.Hidden }
+                    : x;
+
             // Sort the object before saving.
             Sort();
 
@@ -293,74 +309,17 @@ namespace Quaver.API.Maps
             var originalSoundEffects = SoundEffects;
             var originalBookmarks = Bookmarks;
 
-            TimingPoints = new List<TimingPointInfo>();
-            foreach (var tp in originalTimingPoints)
-            {
-                if (tp.Signature == TimeSignature.Quadruple)
-                {
-                    TimingPoints.Add(new TimingPointInfo()
-                    {
-                        Bpm = tp.Bpm,
-                        Signature = 0,
-                        StartTime = tp.StartTime,
-                        Hidden = tp.Hidden
-                    });
-                }
-                else
-                {
-                    TimingPoints.Add(tp);
-                }
-            }
-
-            HitObjects = new List<HitObjectInfo>();
-            foreach (var obj in originalHitObjects)
-            {
-                var keySoundsWithDefaults = new List<KeySoundInfo>();
-                foreach (var keySound in obj.KeySounds)
-                {
-                    keySoundsWithDefaults.Add(new KeySoundInfo
-                    {
-                        Sample = keySound.Sample,
-                        Volume = keySound.Volume == 100 ? 0 : keySound.Volume
-                    });
-                }
-
-                HitObjects.Add(new HitObjectInfo()
-                {
-                    EndTime = obj.EndTime,
-                    HitSound = obj.HitSound == HitSounds.Normal ? 0 : obj.HitSound,
-                    KeySounds = keySoundsWithDefaults,
-                    Lane = obj.Lane,
-                    StartTime = obj.StartTime,
-                    EditorLayer = obj.EditorLayer
-                });
-            }
-
-            SoundEffects = new List<SoundEffectInfo>();
-            foreach (var info in originalSoundEffects)
-            {
-                if (info.Volume == 100)
-                {
-                    SoundEffects.Add(new SoundEffectInfo()
-                    {
-                        StartTime = info.StartTime,
-                        Sample = info.Sample,
-                        Volume = 0
-                    });
-                }
-                else
-                {
-                    SoundEffects.Add(info);
-                }
-            }
+            TimingPoints = originalTimingPoints.Select(SerializableTimingPoint).ToList();
+            HitObjects = originalHitObjects.Select(SerializableHitObject).ToList();
+            SoundEffects = originalSoundEffects.Select(SerializableSoundEffect).ToList();
 
             // Doing this to keep compatibility with older versions of .qua (.osu and .sm file conversions). It won't serialize
             // the bookmarks in the file.
             if (Bookmarks.Count == 0)
                 Bookmarks = null;
 
-            var serializer = new Serializer();
-            using var stringWriter = new StringWriter {NewLine = "\r\n"};
+            var serializer = new Serializer(); // ReSharper disable once UsingStatementResourceInitialization
+            using var stringWriter = new StringWriter { NewLine = "\r\n" };
             serializer.Serialize(stringWriter, this);
             var serialized = stringWriter.ToString();
 
@@ -557,10 +516,8 @@ namespace Quaver.API.Maps
                     durations[point.Bpm] += duration;
             }
 
-            if (durations.Count is 0) // osu! hangs on loading the map in this case; we return a sensible result.
-                return TimingPoints[0].Bpm;
-
-            return durations.OrderByDescending(x => x.Value).First().Key;
+            // osu! hangs on loading the map in this case; we return a sensible result.
+            return durations.Count is 0 ? TimingPoints[0].Bpm : durations.OrderByDescending(x => x.Value).First().Key;
         }
 
         /// <summary>
@@ -625,21 +582,19 @@ namespace Quaver.API.Maps
             var qua = this;
 
             // Create a new version of the qua with modifiers applied, and use that for calculations.
+            // ReSharper disable once InvertIf
             if (applyMods)
             {
                 qua = qua.DeepClone();
                 qua.ApplyMods(mods);
             }
 
-            switch (Mode)
+            return Mode switch
             {
-                case GameMode.Keys4:
-                    return new DifficultyProcessorKeys(qua, new StrainConstantsKeys(), mods);
-                case GameMode.Keys7:
-                    return new DifficultyProcessorKeys(qua, new StrainConstantsKeys(), mods);
-                default:
-                    throw new InvalidEnumArgumentException();
-            }
+                GameMode.Keys4 => new DifficultyProcessorKeys(qua, new StrainConstantsKeys(), mods),
+                GameMode.Keys7 => new DifficultyProcessorKeys(qua, new StrainConstantsKeys(), mods),
+                _ => throw new InvalidEnumArgumentException(),
+            };
         }
 
         /// <summary>
@@ -659,16 +614,20 @@ namespace Quaver.API.Maps
 
             // Create a list of important timestamps from the perspective of playing the map.
             var importantTimestamps = new List<float>();
+
             foreach (var hitObject in HitObjects)
             {
                 importantTimestamps.Add(hitObject.StartTime);
+
                 if (hitObject.IsLongNote)
                     importantTimestamps.Add(hitObject.EndTime);
             }
+
             importantTimestamps.Sort();
             var nextImportantTimestampIndex = 0;
 
             var sum = 0d;
+
             for (var i = 1; i < qua.SliderVelocities.Count; i++)
             {
                 var prevSv = qua.SliderVelocities[i - 1];
@@ -676,7 +635,7 @@ namespace Quaver.API.Maps
 
                 // Find the first important timestamp after the SV.
                 while (nextImportantTimestampIndex < importantTimestamps.Count &&
-                       importantTimestamps[nextImportantTimestampIndex] < sv.StartTime)
+                    importantTimestamps[nextImportantTimestampIndex] < sv.StartTime)
                     nextImportantTimestampIndex++;
 
                 // Don't count the SV if there's nothing important within 1 second after it.
@@ -723,7 +682,7 @@ namespace Quaver.API.Maps
             //
             // Ideally this should be computed in a smart way using the judgements so that it is always possible to get
             // perfects, but making map mods depend on the judgements (affected by strict/chill/accuracy adjustments) is
-            // a really bad idea. I'm setting these to values that will probably work fine for the majority of the
+            // a terrible idea. I'm setting these to values that will probably work fine for the majority of the
             // cases.
             const int MINIMAL_LN_LENGTH = 36;
             const int MINIMAL_GAP_LENGTH = 36;
@@ -734,6 +693,7 @@ namespace Quaver.API.Maps
 
             // An array indicating whether the currently processed HitObject is the first in its lane.
             var firstInLane = new bool[keyCount];
+
             for (var i = 0; i < firstInLane.Length; i++)
                 firstInLane[i] = true;
 
@@ -750,21 +710,18 @@ namespace Quaver.API.Maps
 
                 // Find the next and second next hit object in the lane.
                 HitObjectInfo nextObjectInLane = null, secondNextObjectInLane = null;
+
                 for (var j = i + 1; j < HitObjects.Count; j++)
-                {
                     if (HitObjects[j].Lane == currentObject.Lane)
                     {
                         if (nextObjectInLane == null)
-                        {
                             nextObjectInLane = HitObjects[j];
-                        }
                         else
                         {
                             secondNextObjectInLane = HitObjects[j];
                             break;
                         }
                     }
-                }
 
                 var isFirstInLane = firstInLane[currentObject.Lane - 1];
                 firstInLane[currentObject.Lane - 1] = false;
@@ -778,6 +735,7 @@ namespace Quaver.API.Maps
 
                 // Figure out the time gap between the end of the LN which we'll create and the next object.
                 int? timeGap = null;
+
                 if (nextObjectInLane != null)
                 {
                     var timingPoint = GetTimingPointAt(nextObjectInLane.StartTime);
@@ -787,7 +745,7 @@ namespace Quaver.API.Maps
                     // For example, consider a fast section of the map transitioning into a very low BPM ending starting
                     // with the next hit object. Since the LN release and the gap are still in the fast section, they
                     // should use the fast section's BPM.
-                    if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
+                    if ((int)Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
                     {
                         var prevTimingPointIndex = TimingPoints.IndexAtTimeBefore(timingPoint.StartTime);
 
@@ -799,12 +757,10 @@ namespace Quaver.API.Maps
                         bpm = TimingPoints[prevTimingPointIndex].Bpm;
                     }
                     else
-                    {
                         bpm = timingPoint.Bpm;
-                    }
 
                     // The time gap is quarter of the milliseconds per beat.
-                    timeGap = (int?) Math.Max(Math.Round(15000 / bpm), MINIMAL_GAP_LENGTH);
+                    timeGap = (int?)Math.Max(Math.Round(15000 / bpm), MINIMAL_GAP_LENGTH);
                 }
 
                 // Summary of the changes:
@@ -836,21 +792,19 @@ namespace Quaver.API.Maps
                         // Clear the keysounds as we're moving the start, so they won't make sense.
                         currentObject.KeySounds = new List<KeySoundInfo>();
 
-                        // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
+                        // If the next object is not an LN, and it's the last object in the lane, or if it's an LN and
                         // not the last object in the lane, create a regular object at the next object's start position.
                         if ((secondNextObjectInLane == null) != nextObjectInLane.IsLongNote)
                             currentObject.EndTime = nextObjectInLane.StartTime;
 
                         // Filter out really short LNs or even negative length resulting from jacks or weird BPM values.
                         if (currentObject.EndTime - currentObject.StartTime < MINIMAL_LN_LENGTH)
-                        {
                             // These get skipped entirely.
                             //
                             // Actually, there can be a degenerate pattern of multiple LNs with really short gaps
                             // in between them (less than MINIMAL_LN_LENGTH), which this logic will convert
                             // into nothing. That should be pretty rare though.
                             continue;
-                        }
                     }
                 }
                 else
@@ -858,27 +812,21 @@ namespace Quaver.API.Maps
                     // Regular objects are replaced with LNs starting from their start and ending quarter of a beat
                     // before the next object's start.
                     if (nextObjectInLane == null)
-                    {
                         // If this is the last object in lane, though, then it's not included, and instead the previous
                         // LN spans up to this object's StartTime.
                         continue;
-                    }
 
                     currentObject.EndTime = nextObjectInLane.StartTime - timeGap.Value;
 
-                    // If the next object is not an LN and it's the last object in the lane, or if it's an LN and
+                    // If the next object is not an LN, and it's the last object in the lane, or if it's an LN and
                     // not the last object in the lane, this LN should span until its start.
                     if ((secondNextObjectInLane == null) == (nextObjectInLane.EndTime == 0))
-                    {
                         currentObject.EndTime = nextObjectInLane.StartTime;
-                    }
 
                     // Filter out really short LNs or even negative length resulting from jacks or weird BPM values.
                     if (currentObject.EndTime - currentObject.StartTime < MINIMAL_LN_LENGTH)
-                    {
                         // These get converted back into regular objects.
                         currentObject.EndTime = 0;
-                    }
                 }
 
                 newHitObjects.Add(currentObject);
@@ -1021,8 +969,10 @@ namespace Quaver.API.Maps
             for (var i = 0; i < qua.TimingPoints.Count; i++)
             {
                 var tp = qua.TimingPoints[i];
+
                 if (tp.Signature == 0)
                     tp.Signature = TimeSignature.Quadruple;
+
                 qua.TimingPoints[i] = tp;
             }
 
@@ -1033,6 +983,7 @@ namespace Quaver.API.Maps
                 if (obj.HitSound == 0)
                     obj.HitSound = HitSounds.Normal;
 
+                // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
                 foreach (var keySound in obj.KeySounds)
                     if (keySound.Volume == 0)
                         keySound.Volume = 100;
@@ -1043,8 +994,10 @@ namespace Quaver.API.Maps
             for (var i = 0; i < qua.SoundEffects.Count; i++)
             {
                 var info = qua.SoundEffects[i];
+
                 if (info.Volume == 0)
                     info.Volume = 100;
+
                 qua.SoundEffects[i] = info;
             }
         }
@@ -1057,6 +1010,7 @@ namespace Quaver.API.Maps
         private static void AfterLoad(Qua qua, bool checkValidity)
         {
             var errors = qua.Validate();
+
             if (checkValidity && errors.Count > 0)
                 throw new ArgumentException(string.Join("\n", errors));
 
@@ -1090,9 +1044,8 @@ namespace Quaver.API.Maps
             {
                 var timingPoint = TimingPoints[i];
 
-                var nextTimingPointHasSameTimestamp = false;
-                if (i + 1 < TimingPoints.Count && TimingPoints[i + 1].StartTime == timingPoint.StartTime)
-                    nextTimingPointHasSameTimestamp = true;
+                var nextTimingPointHasSameTimestamp = i + 1 < TimingPoints.Count &&
+                    TimingPoints[i + 1].StartTime == timingPoint.StartTime;
 
                 while (true)
                 {
@@ -1100,6 +1053,7 @@ namespace Quaver.API.Maps
                         break;
 
                     var sv = SliderVelocities[currentSvIndex];
+
                     if (sv.StartTime > timingPoint.StartTime)
                         break;
 
@@ -1121,11 +1075,10 @@ namespace Quaver.API.Maps
                         // ReSharper disable once CompareOfFloatsByEqualityOperator
                         if (multiplier != currentAdjustedSvMultiplier.Value)
                         {
-                            normalizedScrollVelocities.Add(new SliderVelocityInfo
-                            {
-                                StartTime = sv.StartTime,
-                                Multiplier = multiplier,
-                            });
+                            normalizedScrollVelocities.Add(
+                                new SliderVelocityInfo { StartTime = sv.StartTime, Multiplier = multiplier }
+                            );
+
                             currentAdjustedSvMultiplier = multiplier;
                         }
                     }
@@ -1151,15 +1104,14 @@ namespace Quaver.API.Maps
                 }
 
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (multiplierToo != currentAdjustedSvMultiplier.Value)
-                {
-                    normalizedScrollVelocities.Add(new SliderVelocityInfo
-                    {
-                        StartTime = timingPoint.StartTime,
-                        Multiplier = multiplierToo,
-                    });
-                    currentAdjustedSvMultiplier = multiplierToo;
-                }
+                if (multiplierToo == currentAdjustedSvMultiplier.Value)
+                    continue;
+
+                normalizedScrollVelocities.Add(
+                    new SliderVelocityInfo { StartTime = timingPoint.StartTime, Multiplier = multiplierToo }
+                );
+
+                currentAdjustedSvMultiplier = multiplierToo;
             }
 
             for (; currentSvIndex < SliderVelocities.Count; currentSvIndex++)
@@ -1168,16 +1120,16 @@ namespace Quaver.API.Maps
                 var multiplier = sv.Multiplier * (currentBpm / baseBpm);
 
                 Debug.Assert(currentAdjustedSvMultiplier != null, nameof(currentAdjustedSvMultiplier) + " != null");
+
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (multiplier != currentAdjustedSvMultiplier.Value)
-                {
-                    normalizedScrollVelocities.Add(new SliderVelocityInfo
-                    {
-                        StartTime = sv.StartTime,
-                        Multiplier = multiplier,
-                    });
-                    currentAdjustedSvMultiplier = multiplier;
-                }
+                if (multiplier == currentAdjustedSvMultiplier.Value)
+                    continue;
+
+                normalizedScrollVelocities.Add(
+                    new SliderVelocityInfo { StartTime = sv.StartTime, Multiplier = multiplier }
+                );
+
+                currentAdjustedSvMultiplier = multiplier;
             }
 
             normalizedScrollVelocities.Sort();
@@ -1214,12 +1166,14 @@ namespace Quaver.API.Maps
             for (var i = 0; i < TimingPoints.Count; i++)
             {
                 var timingPoint = TimingPoints[i];
+
                 while (true)
                 {
                     if (currentSvIndex >= SliderVelocities.Count)
                         break;
 
                     var sv = SliderVelocities[currentSvIndex];
+
                     if (sv.StartTime > timingPoint.StartTime)
                         break;
 
@@ -1232,20 +1186,19 @@ namespace Quaver.API.Maps
                         {
                             // ReSharper disable once CompareOfFloatsByEqualityOperator
                             if (currentAdjustedSvMultiplier == null && sv.Multiplier != InitialScrollVelocity)
-                            {
                                 // Insert an SV 1 ms earlier to simulate the initial scroll speed multiplier.
-                                denormalizedScrollVelocities.Add(new SliderVelocityInfo
-                                {
-                                    StartTime = sv.StartTime - 1,
-                                    Multiplier = InitialScrollVelocity / (currentBpm / baseBpm),
-                                });
-                            }
+                                denormalizedScrollVelocities.Add(
+                                    new SliderVelocityInfo
+                                    {
+                                        StartTime = sv.StartTime - 1,
+                                        Multiplier = InitialScrollVelocity / (currentBpm / baseBpm),
+                                    }
+                                );
 
-                            denormalizedScrollVelocities.Add(new SliderVelocityInfo
-                            {
-                                StartTime = sv.StartTime,
-                                Multiplier = multiplier,
-                            });
+                            denormalizedScrollVelocities.Add(
+                                new SliderVelocityInfo { StartTime = sv.StartTime, Multiplier = multiplier }
+                            );
+
                             currentAdjustedSvMultiplier = multiplier;
                         }
                     }
@@ -1263,14 +1216,14 @@ namespace Quaver.API.Maps
 
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
                 if (currentAdjustedSvMultiplier == null && currentSvMultiplier != InitialScrollVelocity)
-                {
                     // Insert an SV 1 ms earlier to simulate the initial scroll speed multiplier.
-                    denormalizedScrollVelocities.Add(new SliderVelocityInfo
-                    {
-                        StartTime = timingPoint.StartTime - 1,
-                        Multiplier = InitialScrollVelocity / (currentBpm / baseBpm),
-                    });
-                }
+                    denormalizedScrollVelocities.Add(
+                        new SliderVelocityInfo
+                        {
+                            StartTime = timingPoint.StartTime - 1,
+                            Multiplier = InitialScrollVelocity / (currentBpm / baseBpm),
+                        }
+                    );
 
                 // Timing points reset the SV multiplier.
                 currentAdjustedSvMultiplier = 1;
@@ -1284,15 +1237,14 @@ namespace Quaver.API.Maps
                 var multiplierToo = currentSvMultiplier / (currentBpm / baseBpm);
 
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (multiplierToo != currentAdjustedSvMultiplier.Value)
-                {
-                    denormalizedScrollVelocities.Add(new SliderVelocityInfo
-                    {
-                        StartTime = timingPoint.StartTime,
-                        Multiplier = multiplierToo,
-                    });
-                    currentAdjustedSvMultiplier = multiplierToo;
-                }
+                if (multiplierToo == currentAdjustedSvMultiplier.Value)
+                    continue;
+
+                denormalizedScrollVelocities.Add(
+                    new SliderVelocityInfo { StartTime = timingPoint.StartTime, Multiplier = multiplierToo }
+                );
+
+                currentAdjustedSvMultiplier = multiplierToo;
             }
 
             for (; currentSvIndex < SliderVelocities.Count; currentSvIndex++)
@@ -1301,16 +1253,16 @@ namespace Quaver.API.Maps
                 var multiplier = sv.Multiplier / (currentBpm / baseBpm);
 
                 Debug.Assert(currentAdjustedSvMultiplier != null, nameof(currentAdjustedSvMultiplier) + " != null");
+
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
-                if (multiplier != currentAdjustedSvMultiplier.Value)
-                {
-                    denormalizedScrollVelocities.Add(new SliderVelocityInfo
-                    {
-                        StartTime = sv.StartTime,
-                        Multiplier = multiplier,
-                    });
-                    currentAdjustedSvMultiplier = multiplier;
-                }
+                if (multiplier == currentAdjustedSvMultiplier.Value)
+                    continue;
+
+                denormalizedScrollVelocities.Add(
+                    new SliderVelocityInfo { StartTime = sv.StartTime, Multiplier = multiplier }
+                );
+
+                currentAdjustedSvMultiplier = multiplier;
             }
 
             InitialScrollVelocity = 0;
@@ -1325,7 +1277,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public Qua WithNormalizedSVs()
         {
-            var qua = (Qua) MemberwiseClone();
+            var qua = (Qua)MemberwiseClone();
             // Relies on NormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
             qua.NormalizeSVs();
             return qua;
@@ -1337,7 +1289,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public Qua WithDenormalizedSVs()
         {
-            var qua = (Qua) MemberwiseClone();
+            var qua = (Qua)MemberwiseClone();
             // Relies on DenormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
             qua.DenormalizeSVs();
             return qua;
@@ -1365,6 +1317,5 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <returns></returns>
         public string GetAudioPath() => GetFullPath(AudioFile);
-
     }
 }

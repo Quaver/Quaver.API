@@ -45,6 +45,7 @@ namespace Quaver.API.Maps.Structures
                 if (ReferenceEquals(x, null)) return false;
                 if (ReferenceEquals(y, null)) return false;
                 if (x.GetType() != y.GetType()) return false;
+
                 return x.StartTime.Equals(y.StartTime) && x.Sample == y.Sample && x.Volume == y.Volume;
             }
 
