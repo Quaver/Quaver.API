@@ -28,7 +28,8 @@ namespace Quaver.Tools
                                   $"-convertosu <file_path.osu> <output.qua>\n" +
                                   $"-convertsm <file_path.sm> <output directory>\n" +
                                   $"-changequaids <file_path.qua> <output_path.qua> <map_id> <mapset_id>\n" +
-                                  $"-recalculate <user_id> <mode> Recalculates a given user's top 50 scores for a game mode.");
+                                  $"-recalculate <user_id> <mode> Recalculates a given user's top 50 scores for a game mode.\n" +
+                                  $"-automod <directory> Runs AutoMod on all files in a .qua directory and returns if there are any issues.");
                 return;
             }
 
@@ -63,6 +64,9 @@ namespace Quaver.Tools
                     break;
                 case "-recalculate":
                     new RecalculateCommand(args).Execute();
+                    break;
+                case "-automod":
+                    new AutoModCommand(args).Execute();
                     break;
                 default:
                     throw new ArgumentException();
