@@ -173,8 +173,7 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <returns></returns>
         [YamlIgnore]
-        public int Length =>
-            HitObjects.Count is 0 ? 0 : Math.Max(HitObjects[^1].StartTime, HitObjects.Max(x => x.EndTime));
+        public int Length => HitObjects.Count is 0 ? 0 : MaxObjectTime();
 
         /// <summary>
         ///     Integer based seed used for shuffling the lanes when randomize mod is active.
@@ -1317,5 +1316,23 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <returns></returns>
         public string GetAudioPath() => GetFullPath(AudioFile);
+
+        private int MaxObjectTime()
+        {
+            Debug.Assert(HitObjects.Count != 0, "HitObjects.Count != 0");
+            var max = HitObjects[^1].StartTime;
+            var span = ListHelper.GetUnderlyingArray(HitObjects).AsSpan(0, HitObjects.Count);
+
+            // Incredibly niche micro-optimization: CPUs are able to perform better branch prediction when this is done
+            // backwards because matches are likely to only ever occur at the end of the span, which means that the CPU
+            // will default to predicting false after the first few loops, which is almost always correct. Theoretically
+            // this could be even faster if we implement SIMD, but since this requires far more rewriting than just a
+            // for-loop, I will leave it as is until we specifically require this function to be as fast as possible.
+            for (var i = span.Length - 1; i >= 0; i--)
+                if (span[i].EndTime is var end && end > max)
+                    max = end;
+
+            return max;
+        }
     }
 }
