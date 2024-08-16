@@ -4,6 +4,7 @@ using System.Linq;
 using Newtonsoft.Json.Linq;
 using Quaver.API.Maps;
 using Quaver.API.Maps.AutoMod;
+using Quaver.API.Maps.AutoMod.Issues;
 
 namespace Quaver.Tools.Commands
 {
@@ -31,7 +32,7 @@ namespace Quaver.Tools.Commands
                 var automod = new AutoMod(qua);
                 automod.Run();
 
-                totalIssues += automod.Issues.Count;
+                totalIssues += automod.Issues.Count(x => x.Level != AutoModIssueLevel.Warning);
             }
 
             Console.WriteLine(JObject.FromObject(new
