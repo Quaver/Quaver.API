@@ -556,12 +556,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var mapStart = StrainSolverData.Min(s => s.StartTime);
             var mapEnd = StrainSolverData.Max(s => Math.Max(s.StartTime, s.EndTime));
 
+            var l = 0;
+            var r = 0;
+            while (l < StrainSolverData.Count && StrainSolverData[l].StartTime < mapStart)
+                l++;
             for (var i = mapStart; i < mapEnd; i += binSize)
             {
-                var valuesInBin = StrainSolverData.Where(s => s.StartTime >= i && s.StartTime < i + binSize).ToList();
+                while (r < StrainSolverData.Count - 1 && StrainSolverData[r + 1].StartTime < i + binSize)
+                    r++;
+                if (l >= StrainSolverData.Count)
+                    break;
+
+                var valuesInBin = StrainSolverData.GetRange(l, r - l + 1);
                 var averageRating = valuesInBin.Count > 0 ? valuesInBin.Average(s => s.TotalStrainValue) : 0;
 
                 bins.Add(averageRating);
+                l = r + 1;
             }
 
             if (!bins.Any(strain => strain > 0)) return 0;
