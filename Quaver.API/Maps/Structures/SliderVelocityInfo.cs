@@ -26,7 +26,8 @@ namespace Quaver.API.Maps.Structures
         public float StartTime
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -35,7 +36,8 @@ namespace Quaver.API.Maps.Structures
         public float Multiplier
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -45,7 +47,8 @@ namespace Quaver.API.Maps.Structures
         public bool IsEditableInLuaScript
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>

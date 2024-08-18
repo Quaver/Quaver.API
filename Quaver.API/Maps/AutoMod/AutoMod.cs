@@ -139,12 +139,12 @@ namespace Quaver.API.Maps.AutoMod
                     Issues.Add(new AutoModIssueShortLongNote(hitObject));
 
                 // Check if the object is before the object is before the audio begins
-                if (hitObject.StartTime < 0 || ( hitObject.IsLongNote && hitObject.EndTime < 0 ))
+                if (hitObject.StartTime < 0 || (hitObject.IsLongNote && hitObject.EndTime < 0))
                     Issues.Add(new AutoModIssueObjectBeforeStart(hitObject));
 
                 // Check if object is after the audio ends
-                if (AudioTrackInfo != null && ( hitObject.StartTime > AudioTrackInfo.DurationMs
-                                                || hitObject.EndTime > AudioTrackInfo.DurationMs ))
+                if (AudioTrackInfo != null && (hitObject.StartTime > AudioTrackInfo.DurationMs
+                                                || hitObject.EndTime > AudioTrackInfo.DurationMs))
                 {
                     Issues.Add(new AutoModIssueObjectAfterAudioEnd(hitObject));
                 }
@@ -161,7 +161,7 @@ namespace Quaver.API.Maps.AutoMod
 
                 // Check for excessive break time.
                 if (hitObject.StartTime - previousObjInMap.StartTime >= BreakTime ||
-                    ( previousObjInMap.IsLongNote && hitObject.StartTime - previousObjInMap.EndTime >= BreakTime ))
+                    (previousObjInMap.IsLongNote && hitObject.StartTime - previousObjInMap.EndTime >= BreakTime))
                 {
                     Issues.Add(new AutoModIssueExcessiveBreakTime(previousObjInMap));
                 }
@@ -228,7 +228,7 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var current = Qua.TimingPoints[i];
 
-                if (AudioTrackInfo != null && ( current.StartTime > AudioTrackInfo.DurationMs ))
+                if (AudioTrackInfo != null && (current.StartTime > AudioTrackInfo.DurationMs))
                     Issues.Add(new AutoModIssueTimingPointAfterAudioEnd(current));
 
                 if (i == 0)
@@ -251,7 +251,7 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var current = Qua.SliderVelocities[i];
 
-                if (AudioTrackInfo != null && ( current.StartTime > AudioTrackInfo.DurationMs ))
+                if (AudioTrackInfo != null && (current.StartTime > AudioTrackInfo.DurationMs))
                     Issues.Add(new AutoModIssueScrollVelocityAfterEnd(current));
 
                 if (i == 0)
