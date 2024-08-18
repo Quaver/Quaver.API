@@ -560,11 +560,11 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var mapStart = StrainSolverData.Min(s => s.StartTime);
             var mapEnd = StrainSolverData.Max(s => Math.Max(s.StartTime, s.EndTime));
 
-            var l = 0;
-            var r = 0;
-            var useFallback = Map.GetKeyCount() != 4;
-            while (l < StrainSolverData.Count && StrainSolverData[l].StartTime < mapStart)
-                l++;
+            var leftIndex = 0;
+            var rightIndex = 0;
+            var useFallback = Map.GetKeyCount(false) % 2 == 1;
+            while (leftIndex < StrainSolverData.Count && StrainSolverData[leftIndex].StartTime < mapStart)
+                leftIndex++;
             for (var i = mapStart; i < mapEnd; i += binSize)
             {
                 List<StrainSolverData> valuesInBin;
@@ -575,21 +575,22 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 }
                 else
                 {
-                    while (r < StrainSolverData.Count - 1 && StrainSolverData[r + 1].StartTime < i + binSize)
-                        r++;
-                    if (l >= StrainSolverData.Count)
+                    while (rightIndex < StrainSolverData.Count - 1 && StrainSolverData[rightIndex + 1].StartTime < i + binSize)
+                        rightIndex++;
+
+                    if (leftIndex >= StrainSolverData.Count)
                     {
                         bins.Add(0);
                         continue;
                     }
 
-                    valuesInBin = StrainSolverData.GetRange(l, r - l + 1);
+                    valuesInBin = StrainSolverData.GetRange(leftIndex, rightIndex - leftIndex + 1);
                 }
 
                 var averageRating = valuesInBin.Count > 0 ? valuesInBin.Average(s => s.TotalStrainValue) : 0;
 
                 bins.Add(averageRating);
-                l = r + 1;
+                leftIndex = rightIndex + 1;
             }
 
             if (!bins.Any(strain => strain > 0)) return 0;
