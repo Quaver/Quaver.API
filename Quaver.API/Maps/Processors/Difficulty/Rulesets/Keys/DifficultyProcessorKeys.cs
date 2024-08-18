@@ -541,6 +541,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <returns></returns>
         private float CalculateOverallDifficulty()
         {
+            // When the map has only scratch key notes, StrainSolverData would be empty, so we return 0
+            if (StrainSolverData.Count == 0)
+                return 0;
+
             float calculatedDiff;
 
             // Solve strain value of every data point
