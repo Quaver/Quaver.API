@@ -562,19 +562,30 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             var l = 0;
             var r = 0;
+            var useFallback = Map.GetKeyCount() != 4;
             while (l < StrainSolverData.Count && StrainSolverData[l].StartTime < mapStart)
                 l++;
             for (var i = mapStart; i < mapEnd; i += binSize)
             {
-                while (r < StrainSolverData.Count - 1 && StrainSolverData[r + 1].StartTime < i + binSize)
-                    r++;
-                if (l >= StrainSolverData.Count)
+                List<StrainSolverData> valuesInBin;
+                if (useFallback)
                 {
-                    bins.Add(0);
-                    continue;
+                    valuesInBin = StrainSolverData.Where(s => s.StartTime >= i && s.StartTime < i + binSize)
+                        .ToList();
+                }
+                else
+                {
+                    while (r < StrainSolverData.Count - 1 && StrainSolverData[r + 1].StartTime < i + binSize)
+                        r++;
+                    if (l >= StrainSolverData.Count)
+                    {
+                        bins.Add(0);
+                        continue;
+                    }
+
+                    valuesInBin = StrainSolverData.GetRange(l, r - l + 1);
                 }
 
-                var valuesInBin = StrainSolverData.GetRange(l, r - l + 1);
                 var averageRating = valuesInBin.Count > 0 ? valuesInBin.Average(s => s.TotalStrainValue) : 0;
 
                 bins.Add(averageRating);
