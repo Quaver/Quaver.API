@@ -569,7 +569,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 while (r < StrainSolverData.Count - 1 && StrainSolverData[r + 1].StartTime < i + binSize)
                     r++;
                 if (l >= StrainSolverData.Count)
-                    break;
+                {
+                    bins.Add(0);
+                    continue;
+                }
 
                 var valuesInBin = StrainSolverData.GetRange(l, r - l + 1);
                 var averageRating = valuesInBin.Count > 0 ? valuesInBin.Average(s => s.TotalStrainValue) : 0;
