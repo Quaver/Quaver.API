@@ -18,7 +18,7 @@ namespace Quaver.API.Replays.Virtual
 {
     public class VirtualReplayPlayer
     {
-         /// <summary>
+        /// <summary>
         ///     The replay that's being played.
         /// </summary>
         public Replay Replay { get; }

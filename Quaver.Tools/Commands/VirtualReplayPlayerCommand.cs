@@ -47,7 +47,7 @@ namespace Quaver.Tools.Commands
                     readHeaderLess = true;
             }
 
-            Replay = new Replay(args[1], readHeaderLess) { Mods = (ModIdentifier) long.Parse(args[3]) };
+            Replay = new Replay(args[1], readHeaderLess) { Mods = (ModIdentifier)long.Parse(args[3]) };
 
             if (args[2].EndsWith(".qua"))
                 Map = Qua.Parse(args[2]);

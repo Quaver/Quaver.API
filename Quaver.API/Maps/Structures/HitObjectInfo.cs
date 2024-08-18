@@ -29,7 +29,8 @@ namespace Quaver.API.Maps.Structures
         public int StartTime
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -38,7 +39,8 @@ namespace Quaver.API.Maps.Structures
         public int Lane
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -47,7 +49,8 @@ namespace Quaver.API.Maps.Structures
         public int EndTime
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -56,7 +59,8 @@ namespace Quaver.API.Maps.Structures
         public HitSounds HitSound
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -71,7 +75,8 @@ namespace Quaver.API.Maps.Structures
         public int EditorLayer
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -87,7 +92,8 @@ namespace Quaver.API.Maps.Structures
         public bool IsEditableInLuaScript
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -173,7 +179,7 @@ namespace Quaver.API.Maps.Structures
                     var hashCode = obj.StartTime;
                     hashCode = (hashCode * 397) ^ obj.Lane;
                     hashCode = (hashCode * 397) ^ obj.EndTime;
-                    hashCode = (hashCode * 397) ^ (int) obj.HitSound;
+                    hashCode = (hashCode * 397) ^ (int)obj.HitSound;
                     foreach (var keySound in obj.KeySounds)
                         hashCode = (hashCode * 397) ^ KeySoundInfo.ByValueComparer.GetHashCode(keySound);
                     hashCode = (hashCode * 397) ^ obj.EditorLayer;

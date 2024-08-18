@@ -362,7 +362,7 @@ namespace Quaver.API.Maps
                 Bookmarks = null;
 
             var serializer = new Serializer();
-            using var stringWriter = new StringWriter {NewLine = "\r\n"};
+            using var stringWriter = new StringWriter { NewLine = "\r\n" };
             serializer.Serialize(stringWriter, this);
             var serialized = stringWriter.ToString();
 
@@ -565,7 +565,7 @@ namespace Quaver.API.Maps
                 if (point.StartTime > lastTime)
                     continue;
 
-                var duration = (int) (lastTime - (i == 0 ? 0 : point.StartTime));
+                var duration = (int)(lastTime - (i == 0 ? 0 : point.StartTime));
                 lastTime = point.StartTime;
 
                 if (durations.ContainsKey(point.Bpm))
@@ -819,7 +819,7 @@ namespace Quaver.API.Maps
                     // For example, consider a fast section of the map transitioning into a very low BPM ending starting
                     // with the next hit object. Since the LN release and the gap are still in the fast section, they
                     // should use the fast section's BPM.
-                    if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
+                    if ((int)Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
                     {
                         var prevTimingPointIndex = TimingPoints.FindLastIndex(x => x.StartTime < timingPoint.StartTime);
 
@@ -836,7 +836,7 @@ namespace Quaver.API.Maps
                     }
 
                     // The time gap is quarter of the milliseconds per beat.
-                    timeGap = (int?) Math.Max(Math.Round(15000 / bpm), MINIMAL_GAP_LENGTH);
+                    timeGap = (int?)Math.Max(Math.Round(15000 / bpm), MINIMAL_GAP_LENGTH);
                 }
 
                 // Summary of the changes:
@@ -1380,7 +1380,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public Qua WithNormalizedSVs()
         {
-            var qua = (Qua) MemberwiseClone();
+            var qua = (Qua)MemberwiseClone();
             // Relies on NormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
             qua.NormalizeSVs();
             return qua;
@@ -1392,7 +1392,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public Qua WithDenormalizedSVs()
         {
-            var qua = (Qua) MemberwiseClone();
+            var qua = (Qua)MemberwiseClone();
             // Relies on DenormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
             qua.DenormalizeSVs();
             return qua;
