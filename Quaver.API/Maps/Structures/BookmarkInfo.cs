@@ -11,14 +11,16 @@ namespace Quaver.API.Maps.Structures
     {
         public int StartTime
         {
-            get; 
-            [MoonSharpVisible(false)] set;
+            get;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         public string Note
         {
-            get; 
-            [MoonSharpVisible(false)] set;
+            get;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         private sealed class TimeNoteEqualityComparer : IEqualityComparer<BookmarkInfo>

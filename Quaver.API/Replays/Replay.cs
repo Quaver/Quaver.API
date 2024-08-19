@@ -195,11 +195,11 @@ namespace Quaver.API.Replays
                             mods &= ~(1 << 31);
                         }
                         // Add the rest of the mods.
-                        Mods |= (ModIdentifier) mods;
+                        Mods |= (ModIdentifier)mods;
                     }
                     else
                     {
-                        Mods = (ModIdentifier) br.ReadInt64();
+                        Mods = (ModIdentifier)br.ReadInt64();
                     }
 
                     Score = br.ReadInt32();
@@ -279,9 +279,9 @@ namespace Quaver.API.Replays
                 // This check is to keep compatibility with older clients.
                 // We only want to write a 64-bit integer for replays with newer mods activated
                 if (ReplayVersion == "0.0.1" || Mods < ModIdentifier.Speed105X)
-                    bw.Write((int) Mods);
+                    bw.Write((int)Mods);
                 else
-                    bw.Write((long) Mods);
+                    bw.Write((long)Mods);
                 bw.Write(Score);
                 bw.Write(Accuracy);
                 bw.Write(MaxCombo);
@@ -438,7 +438,7 @@ namespace Quaver.API.Replays
             if (keys.HasFlag(ReplayKeyPressState.K9))
                 lanes.Add(8);
 
-             return lanes;
+            return lanes;
         }
 
         /// <summary>
@@ -511,8 +511,8 @@ namespace Quaver.API.Replays
         /// <returns></returns>
         public string GetMd5(string frames)
         {
-            return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
-                                            $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
+            return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int)Mode}-" +
+                                            $"{(int)Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
                                             $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{RandomizeModifierSeed}-{frames}");
         }
     }
