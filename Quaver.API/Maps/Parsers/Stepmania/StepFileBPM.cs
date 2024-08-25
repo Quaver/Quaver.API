@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Quaver.API.Maps.Parsers.Stepmania
 {
-    public class StepFileBPM
+    public class StepFileBPM : IStepWithBeat
     {
         /// <summary>
         /// </summary>

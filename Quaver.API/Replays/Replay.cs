@@ -195,11 +195,11 @@ namespace Quaver.API.Replays
                             mods &= ~(1 << 31);
                         }
                         // Add the rest of the mods.
-                        Mods |= (ModIdentifier) mods;
+                        Mods |= (ModIdentifier)mods;
                     }
                     else
                     {
-                        Mods = (ModIdentifier) br.ReadInt64();
+                        Mods = (ModIdentifier)br.ReadInt64();
                     }
 
                     Score = br.ReadInt32();
@@ -231,27 +231,21 @@ namespace Quaver.API.Replays
 
                 if (!readHeaderless)
                 {
-                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.BaseStream).ToArray()).Split(',').ToList();
+                    using var stream = LZMACoder.Decompress(br.BaseStream);
+                    frames = Encoding.ASCII.GetString(stream.ToArray()).Split(',').ToList();
                 }
                 else
-                {
-                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.ReadBytes((int) br.BaseStream.Length))).Split(',').ToList();
-                }
+                    frames = Encoding.ASCII.GetString(LZMACoder.Decompress(br.ReadBytes((int)br.BaseStream.Length))).Split(',').ToList();
 
                 // Add all the replay frames to the object
                 foreach (var frame in frames)
                 {
-                    try
-                    {
-                        // Split up the frame string by SongTime|KeyPressState
-                        var frameSplit = frame.Split('|');
+                    // Split up the frame string by SongTime|KeyPressState
+                    var (tTime, (tKeys, _)) = new Drain<char>(frame, '|');
 
-                        Frames.Add(new ReplayFrame(int.Parse(frameSplit[0]), (ReplayKeyPressState)Enum.Parse(typeof(ReplayKeyPressState), frameSplit[1])));
-                    }
-                    catch (Exception e)
-                    {
-                        continue;
-                    }
+                    if (int.TryParse(tTime, out var time) &&
+                        Enum.TryParse(tKeys.ToString(), out ReplayKeyPressState keys))
+                        Frames.Add(new ReplayFrame(time, keys));
                 }
             }
         }
@@ -285,9 +279,9 @@ namespace Quaver.API.Replays
                 // This check is to keep compatibility with older clients.
                 // We only want to write a 64-bit integer for replays with newer mods activated
                 if (ReplayVersion == "0.0.1" || Mods < ModIdentifier.Speed105X)
-                    bw.Write((int) Mods);
+                    bw.Write((int)Mods);
                 else
-                    bw.Write((long) Mods);
+                    bw.Write((long)Mods);
                 bw.Write(Score);
                 bw.Write(Accuracy);
                 bw.Write(MaxCombo);
@@ -299,7 +293,9 @@ namespace Quaver.API.Replays
                 bw.Write(CountMiss);
                 bw.Write(PauseCount);
                 bw.Write(RandomizeModifierSeed);
-                bw.Write(StreamHelper.ConvertStreamToByteArray(LZMACoder.Compress(replayDataStream)));
+
+                using var stream = LZMACoder.Compress(replayDataStream);
+                bw.Write(StreamHelper.ConvertStreamToByteArray(stream));
             }
         }
 
@@ -368,7 +364,7 @@ namespace Quaver.API.Replays
                             state |= KeyLaneToPressState(frame.HitObject.Lane);
                             break;
                         case ReplayAutoplayFrameType.Release:
-                            state -= KeyLaneToPressState(frame.HitObject.Lane);
+                            state &= ~KeyLaneToPressState(frame.HitObject.Lane);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -442,7 +438,7 @@ namespace Quaver.API.Replays
             if (keys.HasFlag(ReplayKeyPressState.K9))
                 lanes.Add(8);
 
-             return lanes;
+            return lanes;
         }
 
         /// <summary>
@@ -515,8 +511,8 @@ namespace Quaver.API.Replays
         /// <returns></returns>
         public string GetMd5(string frames)
         {
-            return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int) Mode}-" +
-                                            $"{(int) Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
+            return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int)Mode}-" +
+                                            $"{(int)Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
                                             $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{RandomizeModifierSeed}-{frames}");
         }
     }

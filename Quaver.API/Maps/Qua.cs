@@ -110,6 +110,11 @@ namespace Quaver.API.Maps
         public string Genre { get; set; }
 
         /// <summary>
+        ///     Gets the value determining whether to use the old LN rendering system. (earliest/latest -> start/end)
+        /// </summary>
+        public bool LegacyLNRendering { get; set; }
+
+        /// <summary>
         ///     Indicates if the BPM changes in affect scroll velocity.
         ///
         ///     If this is set to false, SliderVelocities are in the denormalized format (BPM affects SV),
@@ -225,6 +230,7 @@ namespace Quaver.API.Maps
                    // ReSharper disable once CompareOfFloatsByEqualityOperator
                    && InitialScrollVelocity == other.InitialScrollVelocity
                    && BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity
+                   && LegacyLNRendering == other.LegacyLNRendering
                    && HasScratchKey == other.HasScratchKey
                    && HitObjects.SequenceEqual(other.HitObjects, HitObjectInfo.ByValueComparer)
                    && CustomAudioSamples.SequenceEqual(other.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer)
@@ -242,7 +248,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public static Qua Parse(byte[] buffer, bool checkValidity = true)
         {
-            var input = new StringReader(Encoding.UTF8.GetString(buffer, 0, buffer.Length));
+            using var input = new StringReader(Encoding.UTF8.GetString(buffer, 0, buffer.Length));
 
             var deserializer = new DeserializerBuilder();
             deserializer.IgnoreUnmatchedProperties();
@@ -361,7 +367,7 @@ namespace Quaver.API.Maps
                 Bookmarks = null;
 
             var serializer = new Serializer();
-            var stringWriter = new StringWriter {NewLine = "\r\n"};
+            using var stringWriter = new StringWriter { NewLine = "\r\n" };
             serializer.Serialize(stringWriter, this);
             var serialized = stringWriter.ToString();
 
@@ -384,30 +390,38 @@ namespace Quaver.API.Maps
         ///     If the .qua file is actually valid.
         /// </summary>
         /// <returns></returns>
-        public bool IsValid()
+        public bool IsValid() => Validate().Count == 0;
+
+        /// <summary>
+        ///     Returns all validation errors in the .qua file.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> Validate()
         {
+            var errors = new List<string>();
+
             // If there aren't any HitObjects
             if (HitObjects.Count == 0)
-                return false;
+                errors.Add("There are no HitObjects.");
 
             // If there aren't any TimingPoints
             if (TimingPoints.Count == 0)
-                return false;
+                errors.Add("There are no TimingPoints.");
 
             // Check if the mode is actually valid
             if (!Enum.IsDefined(typeof(GameMode), Mode))
-                return false;
+                errors.Add($"The GameMode '{Mode}' is invalid.");
 
             // Check that sound effects are valid.
             foreach (var info in SoundEffects)
             {
                 // Sample should be a valid array index.
                 if (info.Sample < 1 || info.Sample >= CustomAudioSamples.Count + 1)
-                    return false;
+                    errors.Add($"SoundEffect at {info.StartTime} has an invalid Sample index.");
 
                 // The sample volume should be between 1 and 100.
                 if (info.Volume < 1 || info.Volume > 100)
-                    return false;
+                    errors.Add($"SoundEffect at {info.StartTime} has an invalid Volume.");
             }
 
             // Check that hit objects are valid.
@@ -415,22 +429,22 @@ namespace Quaver.API.Maps
             {
                 // LN end times should be > start times.
                 if (info.IsLongNote && info.EndTime <= info.StartTime)
-                    return false;
+                    errors.Add($"LongNote at {info.StartTime} has an invalid EndTime.");
 
                 // Check that key sounds are valid.
                 foreach (var keySound in info.KeySounds)
                 {
                     // Sample should be a valid array index.
                     if (keySound.Sample < 1 || keySound.Sample >= CustomAudioSamples.Count + 1)
-                        return false;
+                        errors.Add($"KeySound at {info.StartTime} has an invalid Sample index.");
 
                     // The sample volume should be above 0.
                     if (keySound.Volume < 1)
-                        return false;
+                        errors.Add($"KeySound at {info.StartTime} has an invalid Volume.");
                 }
             }
 
-            return true;
+            return errors;
         }
 
         /// <summary>
@@ -556,7 +570,7 @@ namespace Quaver.API.Maps
                 if (point.StartTime > lastTime)
                     continue;
 
-                var duration = (int) (lastTime - (i == 0 ? 0 : point.StartTime));
+                var duration = (int)(lastTime - (i == 0 ? 0 : point.StartTime));
                 lastTime = point.StartTime;
 
                 if (durations.ContainsKey(point.Bpm))
@@ -810,7 +824,7 @@ namespace Quaver.API.Maps
                     // For example, consider a fast section of the map transitioning into a very low BPM ending starting
                     // with the next hit object. Since the LN release and the gap are still in the fast section, they
                     // should use the fast section's BPM.
-                    if ((int) Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
+                    if ((int)Math.Round(timingPoint.StartTime) == nextObjectInLane.StartTime)
                     {
                         var prevTimingPointIndex = TimingPoints.FindLastIndex(x => x.StartTime < timingPoint.StartTime);
 
@@ -827,7 +841,7 @@ namespace Quaver.API.Maps
                     }
 
                     // The time gap is quarter of the milliseconds per beat.
-                    timeGap = (int?) Math.Max(Math.Round(15000 / bpm), MINIMAL_GAP_LENGTH);
+                    timeGap = (int?)Math.Max(Math.Round(15000 / bpm), MINIMAL_GAP_LENGTH);
                 }
 
                 // Summary of the changes:
@@ -1101,8 +1115,12 @@ namespace Quaver.API.Maps
         /// <exception cref="ArgumentException"></exception>
         private static void AfterLoad(Qua qua, bool checkValidity)
         {
-            if (checkValidity && !qua.IsValid())
-                throw new ArgumentException("The .qua file is invalid. It does not have HitObjects, TimingPoints, its Mode is invalid or some hit objects are invalid.");
+            if (checkValidity)
+            {
+                var errors = qua.Validate();
+                if (errors.Count > 0)
+                    throw new ArgumentException(string.Join("\n", errors));
+            }
 
             // Try to sort the Qua before returning.
             qua.Sort();
@@ -1367,7 +1385,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public Qua WithNormalizedSVs()
         {
-            var qua = (Qua) MemberwiseClone();
+            var qua = (Qua)MemberwiseClone();
             // Relies on NormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
             qua.NormalizeSVs();
             return qua;
@@ -1379,7 +1397,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public Qua WithDenormalizedSVs()
         {
-            var qua = (Qua) MemberwiseClone();
+            var qua = (Qua)MemberwiseClone();
             // Relies on DenormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
             qua.DenormalizeSVs();
             return qua;

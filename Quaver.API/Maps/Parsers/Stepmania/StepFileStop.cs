@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Quaver.API.Maps.Parsers.Stepmania
 {
-    public class StepFileStop
+    public class StepFileStop : IStepWithBeat
     {
         /// <summary>
         /// </summary>
