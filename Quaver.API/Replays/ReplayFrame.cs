@@ -39,7 +39,7 @@ namespace Quaver.API.Replays
             Keys = keys;
         }
 
-        public override string ToString() => $"{Time}|{(int) Keys}";
+        public override string ToString() => $"{Time}|{(int)Keys}";
 
         public string ToDebugString() => $"{Time}|{Keys}";
     }

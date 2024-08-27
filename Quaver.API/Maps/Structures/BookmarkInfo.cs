@@ -19,13 +19,15 @@ namespace Quaver.API.Maps.Structures
         public int StartTime
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         public string Note
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         float IStartTime.StartTime

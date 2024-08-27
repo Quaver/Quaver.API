@@ -54,39 +54,39 @@ namespace Quaver.Tools.Commands
                 // Make a dummy Qua for this score
                 var qua = new Qua();
 
-                var totalObjects = (int) score["count_marv"] + (int) score["count_perf"] + (int) score["count_great"] +
-                                   (int) score["count_good"] + (int) score["count_okay"] + (int)score["count_miss"];
+                var totalObjects = (int)score["count_marv"] + (int)score["count_perf"] + (int)score["count_great"] +
+                                   (int)score["count_good"] + (int)score["count_okay"] + (int)score["count_miss"];
 
                 for (var i = 0; i < totalObjects; i++)
                     qua.HitObjects.Add(new HitObjectInfo());
 
                 var processor = new ScoreProcessorKeys(qua, 0);
 
-                for (var i = 0; i < (int) score["count_marv"]; i++)
+                for (var i = 0; i < (int)score["count_marv"]; i++)
                     processor.CalculateScore(Judgement.Marv);
 
-                for (var i = 0; i < (int) score["count_perf"]; i++)
+                for (var i = 0; i < (int)score["count_perf"]; i++)
                     processor.CalculateScore(Judgement.Perf);
 
-                for (var i = 0; i < (int) score["count_great"]; i++)
+                for (var i = 0; i < (int)score["count_great"]; i++)
                     processor.CalculateScore(Judgement.Great);
 
-                for (var i = 0; i < (int) score["count_good"]; i++)
+                for (var i = 0; i < (int)score["count_good"]; i++)
                     processor.CalculateScore(Judgement.Good);
 
-                for (var i = 0; i < (int) score["count_okay"]; i++)
+                for (var i = 0; i < (int)score["count_okay"]; i++)
                     processor.CalculateScore(Judgement.Okay);
 
-                for (var i = 0; i < (int) score["count_miss"]; i++)
+                for (var i = 0; i < (int)score["count_miss"]; i++)
                     processor.CalculateScore(Judgement.Miss);
 
-                var difficultyRating = (double) score["performance_rating"] / Math.Pow((double) score["accuracy"] / 98, 6);
+                var difficultyRating = (double)score["performance_rating"] / Math.Pow((double)score["accuracy"] / 98, 6);
 
                 comparedScores.Add(new ComparedScores($"{score["map"]["artist"]} - {score["map"]["title"]} [{score["map"]["difficulty_name"]}]",
-                    (double) score["accuracy"], processor.Accuracy, (double) score["performance_rating"], difficultyRating));
+                    (double)score["accuracy"], processor.Accuracy, (double)score["performance_rating"], difficultyRating));
             }
 
-            Console.WriteLine(comparedScores.ToStringTable(new []
+            Console.WriteLine(comparedScores.ToStringTable(new[]
             {
                 "Map Name",
                 "Difficulty",

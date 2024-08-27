@@ -26,12 +26,22 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     The time in milliseconds when the HitObject is supposed to be hit.
         /// </summary>
-        public int StartTime { get; [MoonSharpVisible(false)] set; }
+        public int StartTime
+        {
+            get;
+            [MoonSharpVisible(false)]
+            set;
+        }
 
         /// <summary>
         ///     The lane the HitObject falls in
         /// </summary>
-        public int Lane { get; [MoonSharpVisible(false)] set; }
+        public int Lane
+        {
+            get;
+            [MoonSharpVisible(false)]
+            set;
+        }
 
         /// <summary>
         ///     The endtime of the HitObject (if greater than 0, it's considered a hold note.)
@@ -47,7 +57,12 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     Bitwise combination of hit sounds for this object
         /// </summary>
-        public HitSounds HitSound { get; [MoonSharpVisible(false)] set; }
+        public HitSounds HitSound
+        {
+            get;
+            [MoonSharpVisible(false)]
+            set;
+        }
 
         /// <summary>
         ///     Key sounds to play when this object is hit.
@@ -58,7 +73,12 @@ namespace Quaver.API.Maps.Structures
         /// <summary>
         ///     The layer in the editor that the object belongs to.
         /// </summary>
-        public int EditorLayer { get; [MoonSharpVisible(false)] set; }
+        public int EditorLayer
+        {
+            get;
+            [MoonSharpVisible(false)]
+            set;
+        }
 
         /// <summary>
         ///     If the object is a long note. (EndTime > 0)
@@ -70,7 +90,12 @@ namespace Quaver.API.Maps.Structures
         ///     Returns if the object is allowed to be edited in lua scripts
         /// </summary>
         [YamlIgnore]
-        public bool IsEditableInLuaScript { get; [MoonSharpVisible(false)] set; }
+        public bool IsEditableInLuaScript
+        {
+            get;
+            [MoonSharpVisible(false)]
+            set;
+        }
 
         /// <summary>
         ///     Gets the timing point this object is in range of.
@@ -153,10 +178,8 @@ namespace Quaver.API.Maps.Structures
                     hashCode = (hashCode * 397) ^ obj.EndTime;
                     hashCode = (hashCode * 397) ^ (int)obj.HitSound;
 
-                    hashCode = obj.KeySounds.Aggregate(
-                        hashCode,
-                        (current, keySound) => (current * 397) ^ KeySoundInfo.ByValueComparer.GetHashCode(keySound)
-                    );
+                    foreach (var keySound in obj.KeySounds)
+                        hashCode = (hashCode * 397) ^ KeySoundInfo.ByValueComparer.GetHashCode(keySound);
 
                     hashCode = (hashCode * 397) ^ obj.EditorLayer;
                     return hashCode;

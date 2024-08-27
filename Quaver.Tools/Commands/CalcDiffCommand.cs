@@ -40,7 +40,7 @@ namespace Quaver.Tools.Commands
             else if (path.EndsWith(".osu"))
                 Map = new OsuBeatmap(path).ToQua();
 
-            Mods = (ModIdentifier) Enum.Parse(typeof(ModIdentifier), args[2]);
+            Mods = (ModIdentifier)Enum.Parse(typeof(ModIdentifier), args[2]);
             Map.ApplyMods(Mods);
         }
 

@@ -23,7 +23,7 @@ namespace Quaver.API.Tests.Quaver
             var qua = new Qua { Mode = GameMode.Keys4 };
 
             for (var i = 0; i < qua.GetKeyCount(); i++)
-                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1});
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1 });
 
             qua.MirrorHitObjects();
 
@@ -39,7 +39,7 @@ namespace Quaver.API.Tests.Quaver
             var qua = new Qua { Mode = GameMode.Keys7 };
 
             for (var i = 0; i < qua.GetKeyCount(); i++)
-                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1});
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1 });
 
             qua.MirrorHitObjects();
 
@@ -58,7 +58,7 @@ namespace Quaver.API.Tests.Quaver
             var qua = new Qua { Mode = GameMode.Keys7, HasScratchKey = true };
 
             for (var i = 0; i < qua.GetKeyCount(); i++)
-                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1});
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1 });
 
             qua.MirrorHitObjects();
 
@@ -165,7 +165,7 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/sound-effects.qua");
             Assert.True(qua.IsValid());
-            Assert.Equal(new []
+            Assert.Equal(new[]
             {
                 new CustomAudioSampleInfo()
                 {
@@ -178,7 +178,7 @@ namespace Quaver.API.Tests.Quaver
                     UnaffectedByRate = true
                 }
             }, qua.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer);
-            Assert.Equal(new []
+            Assert.Equal(new[]
             {
                 new SoundEffectInfo()
                 {
@@ -207,7 +207,7 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/keysounds.qua");
             Assert.True(qua.IsValid());
-            Assert.Equal(new []
+            Assert.Equal(new[]
             {
                 new CustomAudioSampleInfo()
                 {

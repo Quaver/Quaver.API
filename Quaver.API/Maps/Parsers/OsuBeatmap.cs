@@ -356,8 +356,8 @@ namespace Quaver.API.Maps.Parsers
                                 var timingPoint = new OsuTimingPoint
                                 {
                                     Offset = float.Parse(values[0], CultureInfo.InvariantCulture),
-                                    MillisecondsPerBeat = (float) msecPerBeat,
-                                    Signature = values[2][0] == '0' ? TimeSignature.Quadruple : (TimeSignature) int.Parse(values[2], CultureInfo.InvariantCulture),
+                                    MillisecondsPerBeat = (float)msecPerBeat,
+                                    Signature = values[2][0] == '0' ? TimeSignature.Quadruple : (TimeSignature)int.Parse(values[2], CultureInfo.InvariantCulture),
                                     SampleType = int.Parse(values[3], CultureInfo.InvariantCulture),
                                     SampleSet = int.Parse(values[4], CultureInfo.InvariantCulture),
                                     Volume = Math.Max(0, int.Parse(values[5], CultureInfo.InvariantCulture)),
@@ -389,8 +389,8 @@ namespace Quaver.API.Maps.Parsers
                                 X = int.Parse(values[0], CultureInfo.InvariantCulture),
                                 Y = int.Parse(values[1], CultureInfo.InvariantCulture),
                                 StartTime = int.Parse(values[2], CultureInfo.InvariantCulture),
-                                Type = (HitObjectType) int.Parse(values[3], CultureInfo.InvariantCulture),
-                                HitSound = (HitSoundType) int.Parse(values[4], CultureInfo.InvariantCulture),
+                                Type = (HitObjectType)int.Parse(values[3], CultureInfo.InvariantCulture),
+                                HitSound = (HitSoundType)int.Parse(values[4], CultureInfo.InvariantCulture),
                                 Additions = "0:0:0:0:",
                                 KeySound = -1
                             };
@@ -558,7 +558,7 @@ namespace Quaver.API.Maps.Parsers
             foreach (var hitObject in HitObjects)
             {
                 // Get the keyLane the hitObject is in
-                var keyLane = (int) (hitObject.X / (512d / KeyCount)).Clamp(0, KeyCount - 1) + 1;
+                var keyLane = (int)(hitObject.X / (512d / KeyCount)).Clamp(0, KeyCount - 1) + 1;
 
                 // osu! considers objects in lane 1 to be the special key, Quaver considers it to be the last lane.
                 // Lane 8 on 7K+1
@@ -679,13 +679,13 @@ namespace Quaver.API.Maps.Parsers
         /// <returns></returns>
         public static HitSounds ToQuaverHitSounds(this HitSoundType hitSoundType)
         {
-            var value = (int) hitSoundType & 15; // Clear any higher bits.
+            var value = (int)hitSoundType & 15; // Clear any higher bits.
 
             if (value == 0)
                 return HitSounds.Normal;
 
             // HitSounds happens to have the same values.
-            return (HitSounds) hitSoundType;
+            return (HitSounds)hitSoundType;
         }
     }
 
