@@ -101,7 +101,8 @@ namespace Quaver.API.Maps.Structures
         ///     Gets the timing point this object is in range of.
         /// </summary>
         /// <returns></returns>
-        public TimingPointInfo GetTimingPoint(List<TimingPointInfo> timingPoints) => timingPoints.AtTime(StartTime);
+        public TimingPointInfo GetTimingPoint(List<TimingPointInfo> timingPoints) =>
+            timingPoints.AtTime(StartTime) ?? timingPoints[0];
 
         /// <summary>
         /// </summary>
