@@ -19,7 +19,7 @@ namespace Quaver.API.Maps.Structures
     /// </summary>
     [Serializable]
     [MoonSharpUserData]
-    public class TimingPointInfo
+    public class TimingPointInfo : IStartTime
     {
         /// <summary>
         ///     The time in milliseconds for when this timing point begins
@@ -27,7 +27,8 @@ namespace Quaver.API.Maps.Structures
         public float StartTime
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -36,7 +37,8 @@ namespace Quaver.API.Maps.Structures
         public float Bpm
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -45,7 +47,8 @@ namespace Quaver.API.Maps.Structures
         public TimeSignature Signature
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -54,14 +57,16 @@ namespace Quaver.API.Maps.Structures
         public bool Hidden
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         [YamlIgnore]
         public bool IsEditableInLuaScript
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -81,6 +86,7 @@ namespace Quaver.API.Maps.Structures
                 if (ReferenceEquals(x, null)) return false;
                 if (ReferenceEquals(y, null)) return false;
                 if (x.GetType() != y.GetType()) return false;
+
                 return x.StartTime.Equals(y.StartTime) && x.Bpm.Equals(y.Bpm) && x.Signature == y.Signature && x.Hidden == y.Hidden;
             }
 
@@ -90,7 +96,7 @@ namespace Quaver.API.Maps.Structures
                 {
                     var hashCode = obj.StartTime.GetHashCode();
                     hashCode = (hashCode * 397) ^ obj.Bpm.GetHashCode();
-                    hashCode = (hashCode * 397) ^ (int) obj.Signature;
+                    hashCode = (hashCode * 397) ^ (int)obj.Signature;
                     hashCode = (hashCode * 397) ^ (obj.Hidden ? 1 : 0);
                     return hashCode;
                 }

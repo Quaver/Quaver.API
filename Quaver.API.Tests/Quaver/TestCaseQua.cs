@@ -4,10 +4,12 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Force.DeepCloner;
 using Quaver.API.Enums;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Structures;
 using Xunit;
+using YamlDotNet.Serialization;
 
 namespace Quaver.API.Tests.Quaver
 {
@@ -21,7 +23,7 @@ namespace Quaver.API.Tests.Quaver
             var qua = new Qua { Mode = GameMode.Keys4 };
 
             for (var i = 0; i < qua.GetKeyCount(); i++)
-                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1});
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1 });
 
             qua.MirrorHitObjects();
 
@@ -37,7 +39,7 @@ namespace Quaver.API.Tests.Quaver
             var qua = new Qua { Mode = GameMode.Keys7 };
 
             for (var i = 0; i < qua.GetKeyCount(); i++)
-                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1});
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1 });
 
             qua.MirrorHitObjects();
 
@@ -56,7 +58,7 @@ namespace Quaver.API.Tests.Quaver
             var qua = new Qua { Mode = GameMode.Keys7, HasScratchKey = true };
 
             for (var i = 0; i < qua.GetKeyCount(); i++)
-                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1});
+                qua.HitObjects.Add(new HitObjectInfo { Lane = i + 1 });
 
             qua.MirrorHitObjects();
 
@@ -163,7 +165,7 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/sound-effects.qua");
             Assert.True(qua.IsValid());
-            Assert.Equal(new []
+            Assert.Equal(new[]
             {
                 new CustomAudioSampleInfo()
                 {
@@ -176,7 +178,7 @@ namespace Quaver.API.Tests.Quaver
                     UnaffectedByRate = true
                 }
             }, qua.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer);
-            Assert.Equal(new []
+            Assert.Equal(new[]
             {
                 new SoundEffectInfo()
                 {
@@ -205,7 +207,7 @@ namespace Quaver.API.Tests.Quaver
         {
             var qua = Qua.Parse("./Quaver/Resources/keysounds.qua");
             Assert.True(qua.IsValid());
-            Assert.Equal(new []
+            Assert.Equal(new[]
             {
                 new CustomAudioSampleInfo()
                 {
@@ -250,6 +252,22 @@ namespace Quaver.API.Tests.Quaver
         }
 
         [Fact]
+        public void StableSorting()
+        {
+            const string Q = "./Quaver/Resources/stable-sorting.qua";
+            var unsorted = new Deserializer().Deserialize<Qua>(File.ReadAllText(Q));
+            var sorted = unsorted.DeepClone();
+            sorted.Sort();
+
+            Assert.Equal(unsorted.TimingPoints, sorted.TimingPoints, TimingPointInfo.ByValueComparer);
+            Assert.Equal(unsorted.SliderVelocities, sorted.SliderVelocities, SliderVelocityInfo.ByValueComparer);
+            Assert.Equal(unsorted.HitObjects, sorted.HitObjects, HitObjectInfo.ByValueComparer);
+            Assert.Equal(unsorted.CustomAudioSamples, sorted.CustomAudioSamples, CustomAudioSampleInfo.ByValueComparer);
+            Assert.Equal(unsorted.EditorLayers, sorted.EditorLayers, EditorLayerInfo.ByValueComparer);
+            Assert.Equal(unsorted.Bookmarks, sorted.Bookmarks, BookmarkInfo.ByValueComparer);
+        }
+
+        [Fact]
         public void SVNormalization()
         {
             var tests = new[]
@@ -282,21 +300,21 @@ namespace Quaver.API.Tests.Quaver
 
                 // Check that the normalization gives the correct result.
                 var quaDenormalizedNormalized = quaDenormalized.WithNormalizedSVs();
-                Assert.True(quaDenormalizedNormalized.EqualByValue(quaNormalized));
+                Assert.True(quaDenormalizedNormalized.EqualByValue(quaNormalized), $"Expected {test} to normalize correctly.");
 
                 // Denormalization can move the first SV (it doesn't matter where to put the InitialScrollVelocity SV).
                 // So check back-and-forth instead of just denormalization.
                 var quaNormalizedDenormalizedNormalized = quaNormalized.WithDenormalizedSVs().WithNormalizedSVs();
-                Assert.True(quaNormalizedDenormalizedNormalized.EqualByValue(quaNormalized));
+                Assert.True(quaNormalizedDenormalizedNormalized.EqualByValue(quaNormalized), $"Expected {test} to remain the same after denormalization and subsequent normalization.");
 
                 // Check that serializing and parsing the result does not change it.
                 var bufferDenormalized = Encoding.UTF8.GetBytes(quaDenormalized.Serialize());
                 var quaDenormalized2 = Qua.Parse(bufferDenormalized, false);
-                Assert.True(quaDenormalized.EqualByValue(quaDenormalized2));
+                Assert.True(quaDenormalized.EqualByValue(quaDenormalized2), $"Expected {test} denormalized to remain the same after serialization and parsing.");
 
                 var bufferNormalized = Encoding.UTF8.GetBytes(quaNormalized.Serialize());
                 var quaNormalized2 = Qua.Parse(bufferNormalized, false);
-                Assert.True(quaNormalized.EqualByValue(quaNormalized2));
+                Assert.True(quaNormalized.EqualByValue(quaNormalized2), $"Expected {test} to normalized to remain the same after serialization and parsing.");
             }
         }
     }

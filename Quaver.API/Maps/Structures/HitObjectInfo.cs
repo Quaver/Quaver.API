@@ -11,17 +11,17 @@ using System.Linq;
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Interop;
 using Quaver.API.Enums;
+using Quaver.API.Helpers;
 using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
 {
-
     /// <summary>
     ///     HitObjects section of the .qua
     /// </summary>
     [MoonSharpUserData]
     [Serializable]
-    public class HitObjectInfo
+    public class HitObjectInfo : IStartTime
     {
         /// <summary>
         ///     The time in milliseconds when the HitObject is supposed to be hit.
@@ -29,7 +29,8 @@ namespace Quaver.API.Maps.Structures
         public int StartTime
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -38,16 +39,19 @@ namespace Quaver.API.Maps.Structures
         public int Lane
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
         ///     The endtime of the HitObject (if greater than 0, it's considered a hold note.)
         /// </summary>
-        public int EndTime
+        public int EndTime { get; [MoonSharpVisible(false)] set; }
+
+        float IStartTime.StartTime
         {
-            get;
-            [MoonSharpVisible(false)] set;
+            get => StartTime;
+            set => StartTime = (int)value;
         }
 
         /// <summary>
@@ -56,7 +60,8 @@ namespace Quaver.API.Maps.Structures
         public HitSounds HitSound
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -71,7 +76,8 @@ namespace Quaver.API.Maps.Structures
         public int EditorLayer
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -87,24 +93,16 @@ namespace Quaver.API.Maps.Structures
         public bool IsEditableInLuaScript
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
         ///     Gets the timing point this object is in range of.
         /// </summary>
         /// <returns></returns>
-        public TimingPointInfo GetTimingPoint(List<TimingPointInfo> timingPoints)
-        {
-            // Search through the entire list for the correct point
-            for (var i = timingPoints.Count - 1; i >= 0; i--)
-            {
-                if (StartTime >= timingPoints[i].StartTime)
-                    return timingPoints[i];
-            }
-
-            return timingPoints.First();
-        }
+        public TimingPointInfo GetTimingPoint(List<TimingPointInfo> timingPoints) =>
+            timingPoints.AtTime(StartTime) ?? timingPoints[0];
 
         /// <summary>
         /// </summary>
@@ -163,7 +161,13 @@ namespace Quaver.API.Maps.Structures
                 if (ReferenceEquals(x, null)) return false;
                 if (ReferenceEquals(y, null)) return false;
                 if (x.GetType() != y.GetType()) return false;
-                return x.StartTime == y.StartTime && x.Lane == y.Lane && x.EndTime == y.EndTime && x.HitSound == y.HitSound && x.KeySounds.SequenceEqual(y.KeySounds, KeySoundInfo.ByValueComparer) && x.EditorLayer == y.EditorLayer;
+
+                return x.StartTime == y.StartTime &&
+                    x.Lane == y.Lane &&
+                    x.EndTime == y.EndTime &&
+                    x.HitSound == y.HitSound &&
+                    x.KeySounds.SequenceEqual(y.KeySounds, KeySoundInfo.ByValueComparer) &&
+                    x.EditorLayer == y.EditorLayer;
             }
 
             public int GetHashCode(HitObjectInfo obj)
@@ -173,9 +177,11 @@ namespace Quaver.API.Maps.Structures
                     var hashCode = obj.StartTime;
                     hashCode = (hashCode * 397) ^ obj.Lane;
                     hashCode = (hashCode * 397) ^ obj.EndTime;
-                    hashCode = (hashCode * 397) ^ (int) obj.HitSound;
+                    hashCode = (hashCode * 397) ^ (int)obj.HitSound;
+
                     foreach (var keySound in obj.KeySounds)
                         hashCode = (hashCode * 397) ^ KeySoundInfo.ByValueComparer.GetHashCode(keySound);
+
                     hashCode = (hashCode * 397) ^ obj.EditorLayer;
                     return hashCode;
                 }

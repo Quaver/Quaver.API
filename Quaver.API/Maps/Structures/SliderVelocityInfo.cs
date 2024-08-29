@@ -18,7 +18,7 @@ namespace Quaver.API.Maps.Structures
     /// </summary>
     [Serializable]
     [MoonSharpUserData]
-    public class SliderVelocityInfo
+    public class SliderVelocityInfo : IStartTime
     {
         /// <summary>
         ///     The time in milliseconds when the new SliderVelocity section begins
@@ -26,7 +26,8 @@ namespace Quaver.API.Maps.Structures
         public float StartTime
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -35,7 +36,8 @@ namespace Quaver.API.Maps.Structures
         public float Multiplier
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -45,7 +47,8 @@ namespace Quaver.API.Maps.Structures
         public bool IsEditableInLuaScript
         {
             get;
-            [MoonSharpVisible(false)] set;
+            [MoonSharpVisible(false)]
+            set;
         }
 
         /// <summary>
@@ -92,6 +95,7 @@ namespace Quaver.API.Maps.Structures
                 if (ReferenceEquals(x, null)) return false;
                 if (ReferenceEquals(y, null)) return false;
                 if (x.GetType() != y.GetType()) return false;
+
                 return x.StartTime.Equals(y.StartTime) && x.Multiplier.Equals(y.Multiplier);
             }
 

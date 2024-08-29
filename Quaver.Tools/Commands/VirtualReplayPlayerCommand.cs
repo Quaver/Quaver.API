@@ -47,7 +47,7 @@ namespace Quaver.Tools.Commands
                     readHeaderLess = true;
             }
 
-            Replay = new Replay(args[1], readHeaderLess) { Mods = (ModIdentifier) long.Parse(args[3]) };
+            Replay = new Replay(args[1], readHeaderLess) { Mods = (ModIdentifier)long.Parse(args[3]) };
 
             if (args[2].EndsWith(".qua"))
                 Map = Qua.Parse(args[2]);
@@ -73,7 +73,7 @@ namespace Quaver.Tools.Commands
 
             foreach (var stat in virtualPlayer.ScoreProcessor.Stats)
             {
-                var val = $"{stat.HitDifference}";
+                var val = $"{stat.SongPosition},{stat.HitDifference}";
 
                 if (stat.KeyPressType == KeyPressType.Release && stat.Judgement != Judgement.Miss)
                     val += "L";
