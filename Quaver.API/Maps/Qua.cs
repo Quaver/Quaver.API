@@ -414,10 +414,7 @@ namespace Quaver.API.Maps
             SortSoundEffects();
             SortTimingPoints();
             SortSliderVelocities();
-            ScrollSpeedFactors = ScrollSpeedFactors
-                .OrderBy(x => x.StartTime)
-                .ThenByDescending(x => MathHelper.Reverse((uint)x.LaneMask, keyCount))
-                .ToList();
+            SortScrollSpeedFactors();
         }
 
         /// <summary>
@@ -562,11 +559,7 @@ namespace Quaver.API.Maps
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public ScrollSpeedFactorInfo GetScrollSpeedFactorAt(double time)
-        {
-            var index = ScrollSpeedFactors.FindLastIndex(x => x.StartTime <= time);
-            return index == -1 ? null : ScrollSpeedFactors[index];
-        }
+        public ScrollSpeedFactorInfo GetScrollSpeedFactorAt(double time) => ScrollSpeedFactors.AtTime((float)time);
 
         /// <summary>
         ///    Finds the length of a timing point.
@@ -929,7 +922,7 @@ namespace Quaver.API.Maps
 
         /// <summary>
         /// </summary>
-        public void SortScrollSpeedFactors() => ScrollSpeedFactors = ScrollSpeedFactors.OrderBy(x => x.StartTime).ToList();
+        public void SortScrollSpeedFactors() => ScrollSpeedFactors.HybridSort();
 
         /// <summary>
         /// </summary>

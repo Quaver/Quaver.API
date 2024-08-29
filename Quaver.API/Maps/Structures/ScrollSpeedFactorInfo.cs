@@ -10,7 +10,7 @@ namespace Quaver.API.Maps.Structures
     /// </summary>
     [Serializable]
     [MoonSharpUserData]
-    public class ScrollSpeedFactorInfo
+    public class ScrollSpeedFactorInfo : IStartTime
     {
         /// <summary>
         ///     The time in milliseconds at which the scroll speed factor will be exactly <see cref="Factor"/>
