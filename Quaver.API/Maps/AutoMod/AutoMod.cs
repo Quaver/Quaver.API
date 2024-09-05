@@ -346,8 +346,8 @@ namespace Quaver.API.Maps.AutoMod
             if (!fieldValue.Contains("vs.") && vsMatch.Success)
                 Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, vsMatch.Groups[1].Value, "vs."));
 
-            var featMatch = new Regex(@"\b(ft\.?|feat\.?)", RegexOptions.IgnoreCase).Match(fieldValue);
-            if (!fieldValue.Contains("feat.") && featMatch.Success)
+            var featMatch = new Regex(@"\b(ft[\s|.]|feat\s)", RegexOptions.IgnoreCase).Match(fieldValue);
+            if (featMatch.Success)
                 Issues.Add(new AutoModIssueNonStandardizedMetadata(fieldName, featMatch.Groups[1].Value, "feat."));
         }
 
