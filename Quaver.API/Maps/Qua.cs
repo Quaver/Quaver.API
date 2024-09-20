@@ -169,6 +169,14 @@ namespace Quaver.API.Maps
         public List<HitObjectInfo> HitObjects { get; private set; } = new List<HitObjectInfo>();
 
         /// <summary>
+        ///     The list of <see cref="ScrollGroup"/>s used in the map.
+        ///     All <see cref="HitObjectInfo.TimingGroup"/>s must refer to a valid timing group,
+        ///     either in here or in the other list when extended.
+        /// </summary>
+        public HashSet<ScrollGroup> ScrollControllers { get; private set; } =
+            new HashSet<ScrollGroup>(TimingGroup.IdComparer);
+
+        /// <summary>
         ///     Finds the length of the map
         /// </summary>
         /// <returns></returns>
