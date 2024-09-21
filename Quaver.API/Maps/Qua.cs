@@ -173,7 +173,7 @@ namespace Quaver.API.Maps
         ///     All <see cref="HitObjectInfo.TimingGroup"/>s must refer to a valid timing group,
         ///     either in here or in the other list when extended.
         /// </summary>
-        public HashSet<ScrollGroup> ScrollControllers { get; private set; } =
+        public HashSet<ScrollGroup> ScrollGroups { get; private set; } =
             new HashSet<ScrollGroup>(TimingGroup.IdComparer);
 
         /// <summary>
