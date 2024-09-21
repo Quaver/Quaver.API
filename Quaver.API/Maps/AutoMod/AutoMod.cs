@@ -123,10 +123,10 @@ namespace Quaver.API.Maps.AutoMod
 
         private void LoadTimingGroupIdsAndDetectDuplicate()
         {
-            foreach (var scrollGroup in Qua.ScrollGroups)
+            foreach (var (id, scrollGroup) in Qua.TimingGroups)
             {
-                if (!_timingGroups.TryAdd(scrollGroup.Id, scrollGroup))
-                    Issues.Add(new AutoModIssueDuplicateTimingGroupId(_timingGroups[scrollGroup.Id], scrollGroup));
+                if (!_timingGroups.TryAdd(id, scrollGroup))
+                    Issues.Add(new AutoModIssueDuplicateTimingGroupId(id));
             }
         }
 

@@ -6,19 +6,13 @@ namespace Quaver.API.Maps.AutoMod.Issues.TimingGroups
     {
         /// <summary>
         /// </summary>
-        public TimingGroup FirstGroup { get; }
+        public string Id { get; }
 
-        /// <summary>
-        /// </summary>
-        public TimingGroup DuplicateGroup { get; }
-
-        public AutoModIssueDuplicateTimingGroupId(TimingGroup firstGroup, TimingGroup duplicateGroup) : base(
+        public AutoModIssueDuplicateTimingGroupId(string id) : base(
             AutoModIssueLevel.Critical)
         {
-            FirstGroup = firstGroup;
-            DuplicateGroup = duplicateGroup;
-            Text = $"Duplicate timing group ID '{firstGroup.Id}' " +
-                   $"('{firstGroup.GetType().Name}' and '{duplicateGroup.GetType().Name}').";
+            Id = id;
+            Text = $"Duplicate timing group ID '{id}'.";
         }
 
         public override AutoModIssueCategory Category { get; protected set; } = AutoModIssueCategory.TimingGroups;

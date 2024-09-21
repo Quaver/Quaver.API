@@ -123,7 +123,11 @@ namespace Quaver.API.Maps
         ///
         ///    Only matters if BPMDoesNotAffectScrollVelocity is true.
         /// </summary>
-        public float InitialScrollVelocity { get; set; }
+        public float InitialScrollVelocity
+        {
+            get => GlobalScrollGroup.InitialScrollVelocity;
+            set => GlobalScrollGroup.InitialScrollVelocity = value;
+        }
 
         /// <summary>
         ///     If true, the map will have a +1 scratch key, allowing for 5/8 key play
@@ -161,20 +165,21 @@ namespace Quaver.API.Maps
         ///     Note that SVs can be both in normalized and denormalized form, depending on BPMDoesNotAffectSV.
         ///     Check WithNormalizedSVs if you need normalized SVs.
         /// </summary>
-        public List<SliderVelocityInfo> SliderVelocities { get; private set; } = new List<SliderVelocityInfo>();
+        public List<SliderVelocityInfo> SliderVelocities
+        {
+            get => GlobalScrollGroup.ScrollVelocities;
+            private set => GlobalScrollGroup.ScrollVelocities = value;
+        }
 
         /// <summary>
         ///     HitObject .qua data
         /// </summary>
         public List<HitObjectInfo> HitObjects { get; private set; } = new List<HitObjectInfo>();
 
-        /// <summary>
-        ///     The list of <see cref="ScrollGroup"/>s used in the map.
-        ///     All <see cref="HitObjectInfo.TimingGroup"/>s must refer to a valid timing group,
-        ///     either in here or in the other list when extended.
-        /// </summary>
-        public HashSet<ScrollGroup> ScrollGroups { get; private set; } =
-            new HashSet<ScrollGroup>(TimingGroup.IdComparer);
+        public Dictionary<string, TimingGroup> TimingGroups { get; private set; } = new Dictionary<string, TimingGroup>();
+
+        [YamlIgnore]
+        public ScrollGroup GlobalScrollGroup { get; } = new ScrollGroup();
 
         /// <summary>
         ///     Finds the length of the map
@@ -199,7 +204,10 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     Ctor
         /// </summary>
-        public Qua() { }
+        public Qua()
+        {
+            TimingGroups[""] = GlobalScrollGroup;
+        }
 
         /// <summary>
         ///     Returns true if the two maps are equal by value.
@@ -235,6 +243,17 @@ namespace Quaver.API.Maps
             Bookmarks.SequenceEqual(other.Bookmarks, BookmarkInfo.ByValueComparer) &&
             RandomizeModifierSeed == other.RandomizeModifierSeed;
 
+        private static IDeserializer Deserializer =>
+            new DeserializerBuilder()
+                .IgnoreUnmatchedProperties()
+                .WithTagMapping("!ScrollGroup", typeof(ScrollGroup))
+                .Build();
+
+        private static ISerializer Serializer =>
+            new SerializerBuilder()
+                .WithTagMapping("!ScrollGroup", typeof(ScrollGroup))
+                .Build();
+
         /// <summary>
         ///     Loads a .qua file from a stream
         /// </summary>
@@ -245,9 +264,7 @@ namespace Quaver.API.Maps
         {
             using var input = new StringReader(Encoding.UTF8.GetString(buffer, 0, buffer.Length));
 
-            var deserializer = new DeserializerBuilder();
-            deserializer.IgnoreUnmatchedProperties();
-            var qua = (Qua)deserializer.Build().Deserialize(input, typeof(Qua));
+            var qua = (Qua)Deserializer.Deserialize(input, typeof(Qua));
 
             RestoreDefaultValues(qua);
             AfterLoad(qua, checkValidity);
@@ -267,9 +284,7 @@ namespace Quaver.API.Maps
 
             using (var file = File.OpenText(path))
             {
-                var deserializer = new DeserializerBuilder();
-                deserializer.IgnoreUnmatchedProperties();
-                qua = (Qua)deserializer.Build().Deserialize(file, typeof(Qua));
+                qua = (Qua)Deserializer.Deserialize(file, typeof(Qua));
                 qua.FilePath = path;
 
                 RestoreDefaultValues(qua);
@@ -319,15 +334,15 @@ namespace Quaver.API.Maps
             TimingPoints = originalTimingPoints.Select(SerializableTimingPoint).ToList();
             HitObjects = originalHitObjects.Select(SerializableHitObject).ToList();
             SoundEffects = originalSoundEffects.Select(SerializableSoundEffect).ToList();
+            TimingGroups.Remove("");
 
             // Doing this to keep compatibility with older versions of .qua (.osu and .sm file conversions). It won't serialize
             // the bookmarks in the file.
             if (Bookmarks.Count == 0)
                 Bookmarks = null;
 
-            var serializer = new Serializer(); // ReSharper disable once UsingStatementResourceInitialization
             using var stringWriter = new StringWriter { NewLine = "\r\n" };
-            serializer.Serialize(stringWriter, this);
+            Serializer.Serialize(stringWriter, this);
             var serialized = stringWriter.ToString();
 
             // Restore the original lists.
@@ -335,6 +350,7 @@ namespace Quaver.API.Maps
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
             Bookmarks = originalBookmarks;
+            TimingGroups[""] = GlobalScrollGroup;
 
             return serialized;
         }
@@ -1021,6 +1037,7 @@ namespace Quaver.API.Maps
 
             // Try to sort the Qua before returning.
             qua.Sort();
+            qua.TimingGroups[""] = qua.GlobalScrollGroup;
         }
 
         /// <summary>
