@@ -26,7 +26,7 @@ namespace Quaver.API.Maps.Structures
             [MoonSharpHidden]
             set
             {
-                if (!Regex.IsMatch(value, IdRegexPattern))
+                if (!IdRegex.IsMatch(value))
                     throw new FormatException($"Invalid timing group ID: {value}");
                 _id = value;
             }
