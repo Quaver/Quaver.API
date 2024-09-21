@@ -14,6 +14,7 @@ using Quaver.API.Maps.AutoMod.Issues.Images;
 using Quaver.API.Maps.AutoMod.Issues.Map;
 using Quaver.API.Maps.AutoMod.Issues.Metadata;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
+using Quaver.API.Maps.AutoMod.Issues.TimingGroups;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Quaver.API.Maps.Structures;
 using Quaver.API.Replays;
@@ -31,6 +32,13 @@ namespace Quaver.API.Maps.AutoMod
         /// <summary>
         /// </summary>
         public Track AudioTrackInfo { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        private readonly Dictionary<string, TimingGroup> _timingGroups = new Dictionary<string, TimingGroup>
+        {
+            [""] = new ScrollGroup()
+        };
 
         /// <summary>
         /// </summary>
@@ -80,6 +88,7 @@ namespace Quaver.API.Maps.AutoMod
             Issues = new List<AutoModIssue>();
 
             LoadAudioTrackData();
+            LoadTimingGroupIdsAndDetectDuplicate();
             DetectHitObjectIssues();
             DetectTimingPointIssues();
             DetectScrollVelocityIssues();
@@ -112,6 +121,15 @@ namespace Quaver.API.Maps.AutoMod
             }
         }
 
+        private void LoadTimingGroupIdsAndDetectDuplicate()
+        {
+            foreach (var scrollGroup in Qua.ScrollGroups)
+            {
+                if (!_timingGroups.TryAdd(scrollGroup.Id, scrollGroup))
+                    Issues.Add(new AutoModIssueDuplicateTimingGroupId(_timingGroups[scrollGroup.Id], scrollGroup));
+            }
+        }
+
         /// <summary>
         ///     Detects issues related to HitObjects.
         ///
@@ -133,6 +151,9 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var hitObject = Qua.HitObjects[i];
                 var laneIndex = hitObject.Lane - 1;
+
+                if (!_timingGroups.ContainsKey(hitObject.TimingGroup))
+                    Issues.Add(new AutoModIssueObjectInvalidTimingGroup(hitObject));
 
                 // Check if the long note is too short
                 if (hitObject.IsLongNote && Math.Abs(hitObject.EndTime - hitObject.StartTime) < ShortLongNoteThreshold)
