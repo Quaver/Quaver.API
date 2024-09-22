@@ -12,14 +12,12 @@ namespace Quaver.API.Maps.Structures
     [MoonSharpUserData]
     public class ScrollGroup : TimingGroup
     {
-        [YamlMember(Alias = "InitialSliderVelocity")]
         public float InitialScrollVelocity
         {
             get;
             [MoonSharpHidden] set;
         } = 1;
 
-        [YamlMember(Alias = "SliderVelocities")]
         public List<SliderVelocityInfo> ScrollVelocities
         {
             get;
