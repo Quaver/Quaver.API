@@ -228,6 +228,11 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                 else if (currentChart != null && currentChart.GrooveRadarValues != null &&
                          !string.IsNullOrEmpty(trimmedLine))
                 {
+                    // Last line is a ';', skip that as we would add a new row to the measure otherwise
+                    // which would break the last measure
+                    if (trimmedLine.StartsWith(";"))
+                        continue;
+
                     // Denotes a new measure
                     if (trimmedLine.StartsWith(","))
                     {
