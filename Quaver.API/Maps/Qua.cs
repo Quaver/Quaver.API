@@ -182,6 +182,11 @@ namespace Quaver.API.Maps
         public ScrollGroup GlobalScrollGroup { get; } = new ScrollGroup();
 
         /// <summary>
+        ///     Reserved ID for global scroll group
+        /// </summary>
+        public const string GlobalScrollGroupId = "";
+
+        /// <summary>
         ///     Finds the length of the map
         /// </summary>
         /// <returns></returns>
@@ -206,7 +211,16 @@ namespace Quaver.API.Maps
         /// </summary>
         public Qua()
         {
-            TimingGroups[""] = GlobalScrollGroup;
+            LinkGlobalScrollGroup();
+        }
+
+        /// <summary>
+        ///     Link <see cref="GlobalScrollGroup"/> to <see cref="TimingGroups"/>
+        ///     so <see cref="TimingGroups"/>[<see cref="GlobalScrollGroupId"/>] points to that group.
+        /// </summary>
+        private void LinkGlobalScrollGroup()
+        {
+            TimingGroups[GlobalScrollGroupId] = GlobalScrollGroup;
         }
 
         /// <summary>
@@ -334,7 +348,7 @@ namespace Quaver.API.Maps
             TimingPoints = originalTimingPoints.Select(SerializableTimingPoint).ToList();
             HitObjects = originalHitObjects.Select(SerializableHitObject).ToList();
             SoundEffects = originalSoundEffects.Select(SerializableSoundEffect).ToList();
-            TimingGroups.Remove("");
+            TimingGroups.Remove(GlobalScrollGroupId);
 
             // Doing this to keep compatibility with older versions of .qua (.osu and .sm file conversions). It won't serialize
             // the bookmarks in the file.
@@ -350,7 +364,7 @@ namespace Quaver.API.Maps
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
             Bookmarks = originalBookmarks;
-            TimingGroups[""] = GlobalScrollGroup;
+            LinkGlobalScrollGroup();
 
             return serialized;
         }
@@ -1037,7 +1051,7 @@ namespace Quaver.API.Maps
 
             // Try to sort the Qua before returning.
             qua.Sort();
-            qua.TimingGroups[""] = qua.GlobalScrollGroup;
+            qua.LinkGlobalScrollGroup();
         }
 
         /// <summary>
