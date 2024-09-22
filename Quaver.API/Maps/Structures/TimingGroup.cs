@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using MoonSharp.Interpreter;
+using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
 {
@@ -14,5 +15,7 @@ namespace Quaver.API.Maps.Structures
     [MoonSharpUserData]
     public abstract class TimingGroup
     {
+        [YamlMember]
+        public List<HitObjectInfo> FakeHitObjects { get; protected set; } = new List<HitObjectInfo>();
     }
 }
