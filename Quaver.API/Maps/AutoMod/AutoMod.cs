@@ -35,13 +35,6 @@ namespace Quaver.API.Maps.AutoMod
 
         /// <summary>
         /// </summary>
-        private readonly Dictionary<string, TimingGroup> _timingGroups = new Dictionary<string, TimingGroup>
-        {
-            [""] = new ScrollGroup()
-        };
-
-        /// <summary>
-        /// </summary>
         public List<AutoModIssue> Issues { get; private set; } = new List<AutoModIssue>();
 
         /// <summary>
@@ -88,7 +81,6 @@ namespace Quaver.API.Maps.AutoMod
             Issues = new List<AutoModIssue>();
 
             LoadAudioTrackData();
-            LoadTimingGroupIdsAndDetectDuplicate();
             DetectHitObjectIssues();
             DetectTimingPointIssues();
             DetectScrollVelocityIssues();
@@ -121,15 +113,6 @@ namespace Quaver.API.Maps.AutoMod
             }
         }
 
-        private void LoadTimingGroupIdsAndDetectDuplicate()
-        {
-            foreach (var (id, scrollGroup) in Qua.TimingGroups)
-            {
-                if (!_timingGroups.TryAdd(id, scrollGroup))
-                    Issues.Add(new AutoModIssueDuplicateTimingGroupId(id));
-            }
-        }
-
         /// <summary>
         ///     Detects issues related to HitObjects.
         ///
@@ -152,7 +135,7 @@ namespace Quaver.API.Maps.AutoMod
                 var hitObject = Qua.HitObjects[i];
                 var laneIndex = hitObject.Lane - 1;
 
-                if (!_timingGroups.ContainsKey(hitObject.TimingGroup))
+                if (!Qua.TimingGroups.ContainsKey(hitObject.TimingGroup ?? Qua.GlobalScrollGroupId))
                     Issues.Add(new AutoModIssueObjectInvalidTimingGroup(hitObject));
 
                 // Check if the long note is too short
