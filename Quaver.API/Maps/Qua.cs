@@ -441,6 +441,8 @@ namespace Quaver.API.Maps
         /// </summary>
         public void Sort()
         {
+            LinkGlobalScrollGroup();
+
             SortBookmarks();
             SortHitObjects();
             SortSoundEffects();
@@ -950,7 +952,15 @@ namespace Quaver.API.Maps
 
         /// <summary>
         /// </summary>
-        public void SortSliderVelocities() => SliderVelocities.HybridSort();
+        public void SortSliderVelocities()
+        {
+            foreach (var (_, timingGroup) in TimingGroups)
+            {
+                if (!(timingGroup is ScrollGroup scrollGroup))
+                    continue;
+                scrollGroup.ScrollVelocities.HybridSort();
+            }
+        }
 
         /// <summary>
         /// </summary>
@@ -1051,7 +1061,6 @@ namespace Quaver.API.Maps
 
             // Try to sort the Qua before returning.
             qua.Sort();
-            qua.LinkGlobalScrollGroup();
         }
 
         /// <summary>
