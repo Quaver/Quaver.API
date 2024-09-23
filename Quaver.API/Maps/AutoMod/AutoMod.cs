@@ -135,7 +135,7 @@ namespace Quaver.API.Maps.AutoMod
                 var hitObject = Qua.HitObjects[i];
                 var laneIndex = hitObject.Lane - 1;
 
-                if (!Qua.TimingGroups.ContainsKey(hitObject.TimingGroup ?? Qua.GlobalScrollGroupId))
+                if (!Qua.TimingGroups.ContainsKey(hitObject.TimingGroup))
                     Issues.Add(new AutoModIssueObjectInvalidTimingGroup(hitObject));
 
                 // Check if the long note is too short

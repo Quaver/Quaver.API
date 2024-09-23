@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MoonSharp.Interpreter;
+using Quaver.API.Helpers;
 using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
@@ -23,5 +24,10 @@ namespace Quaver.API.Maps.Structures
             get;
             [MoonSharpHidden] set;
         } = new List<SliderVelocityInfo>();
+
+        public SliderVelocityInfo GetScrollVelocityAt(double time)
+        {
+            return ScrollVelocities.AtTime((float)time);
+        }
     }
 }

@@ -324,6 +324,7 @@ namespace Quaver.API.Maps
                        .Select(x => new KeySoundInfo { Sample = x.Sample, Volume = x.Volume == 100 ? 0 : x.Volume })
                        .ToList(),
                     Lane = obj.Lane, StartTime = obj.StartTime,
+                    TimingGroup = obj.TimingGroup == GlobalScrollGroupId ? null : obj.TimingGroup
                 };
 
             static SoundEffectInfo SerializableSoundEffect(SoundEffectInfo x) =>
@@ -584,8 +585,10 @@ namespace Quaver.API.Maps
         ///     Gets a scroll velocity at a particular time in the map
         /// </summary>
         /// <param name="time"></param>
+        /// <param name="timingGroupId"></param>
         /// <returns></returns>
-        public SliderVelocityInfo GetScrollVelocityAt(double time) => SliderVelocities.AtTime((float)time);
+        public SliderVelocityInfo GetScrollVelocityAt(double time, string timingGroupId = GlobalScrollGroupId) =>
+            ((ScrollGroup)TimingGroups[timingGroupId]).GetScrollVelocityAt(time);
 
         /// <summary>
         ///    Finds the length of a timing point.
@@ -1012,6 +1015,8 @@ namespace Quaver.API.Maps
         /// <param name="qua"></param>
         public static void RestoreDefaultValues(Qua qua)
         {
+            qua.LinkGlobalScrollGroup();
+
             // Restore default values.
             for (var i = 0; i < qua.TimingPoints.Count; i++)
             {
@@ -1029,6 +1034,8 @@ namespace Quaver.API.Maps
 
                 if (obj.HitSound == 0)
                     obj.HitSound = HitSounds.Normal;
+
+                obj.TimingGroup ??= GlobalScrollGroupId;
 
                 // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
                 foreach (var keySound in obj.KeySounds)
