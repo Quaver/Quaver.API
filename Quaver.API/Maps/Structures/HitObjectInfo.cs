@@ -87,7 +87,7 @@ namespace Quaver.API.Maps.Structures
         {
             get;
             [MoonSharpVisible(false)] set;
-        }
+        } = Qua.GlobalScrollGroupId;
 
         /// <summary>
         ///     If the object is a long note. (EndTime > 0)
