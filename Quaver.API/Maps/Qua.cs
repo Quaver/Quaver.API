@@ -613,6 +613,9 @@ namespace Quaver.API.Maps
             return Length - point.StartTime;
         }
 
+        public IEnumerable<HitObjectInfo> GetTimingGroupChildren(string id) =>
+            HitObjects.Where(hitObjectInfo => hitObjectInfo.TimingGroup == id);
+
         /// <summary>
         ///     Solves the difficulty of the map and returns the data for it.
         /// </summary>
