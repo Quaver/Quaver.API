@@ -179,7 +179,10 @@ namespace Quaver.API.Maps
         public Dictionary<string, TimingGroup> TimingGroups { get; private set; } = new Dictionary<string, TimingGroup>();
 
         [YamlIgnore]
-        public ScrollGroup GlobalScrollGroup { get; } = new ScrollGroup();
+        public ScrollGroup GlobalScrollGroup { get; } = new ScrollGroup
+        {
+            ColorRgb = "86,254,110"
+        };
 
         /// <summary>
         ///     Reserved ID for global scroll group
