@@ -14,6 +14,7 @@ using Quaver.API.Maps.AutoMod.Issues.Images;
 using Quaver.API.Maps.AutoMod.Issues.Map;
 using Quaver.API.Maps.AutoMod.Issues.Metadata;
 using Quaver.API.Maps.AutoMod.Issues.ScrollVelocities;
+using Quaver.API.Maps.AutoMod.Issues.TimingGroups;
 using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Quaver.API.Maps.Structures;
 using Quaver.API.Replays;
@@ -133,6 +134,9 @@ namespace Quaver.API.Maps.AutoMod
             {
                 var hitObject = Qua.HitObjects[i];
                 var laneIndex = hitObject.Lane - 1;
+
+                if (!Qua.TimingGroups.ContainsKey(hitObject.TimingGroup))
+                    Issues.Add(new AutoModIssueObjectInvalidTimingGroup(hitObject));
 
                 // Check if the long note is too short
                 if (hitObject.IsLongNote && Math.Abs(hitObject.EndTime - hitObject.StartTime) < ShortLongNoteThreshold)
