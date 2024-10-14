@@ -1061,7 +1061,10 @@ namespace Quaver.API.Maps
 
                     if (sv.StartTime < timingPoint.StartTime)
                     {
-                        var multiplier = sv.Multiplier * (currentBpm / baseBpm);
+                        // The way that osu! handles infinite BPM is more akin to "arbitrarily large SV".
+                        // We chose the smallest power of two greater than `MAX_MULTIPLIER`
+                        // from `SVFactor` to make `DenormalizeSVs` more accurate.
+                        var multiplier = float.IsInfinity(currentBpm) ? 128 : sv.Multiplier * (currentBpm / baseBpm);
 
                         if (currentAdjustedSvMultiplier == null)
                         {
@@ -1176,7 +1179,11 @@ namespace Quaver.API.Maps
 
                     if (sv.StartTime < timingPoint.StartTime)
                     {
-                        var multiplier = sv.Multiplier / (currentBpm / baseBpm);
+                        // The way that osu! handles infinite BPM is more akin to "arbitrarily large SV".
+                        // We chose the greatest power of two less than `MIN_MULTIPLIER`
+                        // from `SVFactor` to make `NormalizeSVs` more accurate.
+                        var multiplier =
+                            float.IsInfinity(currentBpm) ? 1 / 128f : sv.Multiplier / (currentBpm / baseBpm);
 
                         // ReSharper disable once CompareOfFloatsByEqualityOperator
                         if (currentAdjustedSvMultiplier == null || multiplier != currentAdjustedSvMultiplier)
