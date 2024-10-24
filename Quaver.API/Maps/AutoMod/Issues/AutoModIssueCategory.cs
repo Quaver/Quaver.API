@@ -8,6 +8,7 @@
         Mapset,
         Metadata,
         ScrollVelocities,
-        TimingPoints
+        TimingPoints,
+        TimingGroups
     }
 }
