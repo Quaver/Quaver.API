@@ -1061,7 +1061,10 @@ namespace Quaver.API.Maps
 
                     if (sv.StartTime < timingPoint.StartTime)
                     {
-                        var multiplier = sv.Multiplier * (currentBpm / baseBpm);
+                        // The way that osu! handles infinite BPM is more akin to "arbitrarily large SV".
+                        // We chose the smallest power of two greater than `MAX_MULTIPLIER`
+                        // from `SVFactor` to make `DenormalizeSVs` more accurate.
+                        var multiplier = float.IsInfinity(currentBpm) ? 128 : sv.Multiplier * (currentBpm / baseBpm);
 
                         if (currentAdjustedSvMultiplier == null)
                         {
@@ -1091,8 +1094,7 @@ namespace Quaver.API.Maps
 
                 currentBpm = timingPoint.Bpm;
 
-                // C# is stupid.
-                var multiplierToo = currentSvMultiplier * (currentBpm / baseBpm);
+                var multiplierToo = float.IsInfinity(currentBpm) ? 128 : currentSvMultiplier * (currentBpm / baseBpm);
 
                 if (currentAdjustedSvMultiplier == null)
                 {
@@ -1114,7 +1116,7 @@ namespace Quaver.API.Maps
             for (; currentSvIndex < SliderVelocities.Count; currentSvIndex++)
             {
                 var sv = SliderVelocities[currentSvIndex];
-                var multiplier = sv.Multiplier * (currentBpm / baseBpm);
+                var multiplier = float.IsInfinity(currentBpm) ? 128 : sv.Multiplier * (currentBpm / baseBpm);
 
                 Debug.Assert(currentAdjustedSvMultiplier != null, nameof(currentAdjustedSvMultiplier) + " != null");
 
@@ -1176,7 +1178,10 @@ namespace Quaver.API.Maps
 
                     if (sv.StartTime < timingPoint.StartTime)
                     {
-                        var multiplier = sv.Multiplier / (currentBpm / baseBpm);
+                        // The way that osu! handles infinite BPM is more akin to "arbitrarily large SV".
+                        // We chose the greatest power of two less than `MIN_MULTIPLIER`
+                        // from `SVFactor` to make `NormalizeSVs` more accurate.
+                        var multiplier = float.IsInfinity(currentBpm) ? 1 / 128f : sv.Multiplier / (currentBpm / baseBpm);
 
                         // ReSharper disable once CompareOfFloatsByEqualityOperator
                         if (currentAdjustedSvMultiplier == null || multiplier != currentAdjustedSvMultiplier)
@@ -1188,7 +1193,7 @@ namespace Quaver.API.Maps
                                     new SliderVelocityInfo
                                     {
                                         StartTime = sv.StartTime - 1,
-                                        Multiplier = InitialScrollVelocity / (currentBpm / baseBpm),
+                                        Multiplier = float.IsInfinity(currentBpm) ? 1 / 128f : InitialScrollVelocity / (currentBpm / baseBpm),
                                     }
                                 );
 
@@ -1218,7 +1223,7 @@ namespace Quaver.API.Maps
                         new SliderVelocityInfo
                         {
                             StartTime = timingPoint.StartTime - 1,
-                            Multiplier = InitialScrollVelocity / (currentBpm / baseBpm),
+                            Multiplier = float.IsInfinity(currentBpm) ? 1 / 128f : InitialScrollVelocity / (currentBpm / baseBpm),
                         }
                     );
 
@@ -1231,7 +1236,7 @@ namespace Quaver.API.Maps
                     continue;
 
                 // C# is stupid.
-                var multiplierToo = currentSvMultiplier / (currentBpm / baseBpm);
+                var multiplierToo = float.IsInfinity(currentBpm) ? 1 / 128f : currentSvMultiplier / (currentBpm / baseBpm);
 
                 // ReSharper disable once CompareOfFloatsByEqualityOperator
                 if (multiplierToo == currentAdjustedSvMultiplier.Value)
@@ -1247,7 +1252,7 @@ namespace Quaver.API.Maps
             for (; currentSvIndex < SliderVelocities.Count; currentSvIndex++)
             {
                 var sv = SliderVelocities[currentSvIndex];
-                var multiplier = sv.Multiplier / (currentBpm / baseBpm);
+                var multiplier = float.IsInfinity(currentBpm) ? 1 / 128f : sv.Multiplier / (currentBpm / baseBpm);
 
                 Debug.Assert(currentAdjustedSvMultiplier != null, nameof(currentAdjustedSvMultiplier) + " != null");
 
