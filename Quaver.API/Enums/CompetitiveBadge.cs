@@ -7,7 +7,7 @@
 
 namespace Quaver.API.Enums
 {
-    public enum CompetitveBadge
+    public enum CompetitiveBadge
     {
         Unranked
     }
