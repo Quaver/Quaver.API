@@ -125,8 +125,8 @@ namespace Quaver.API.Maps
         /// </summary>
         public float InitialScrollVelocity
         {
-            get => GlobalScrollGroup.InitialScrollVelocity;
-            set => GlobalScrollGroup.InitialScrollVelocity = value;
+            get => DefaultScrollGroup.InitialScrollVelocity;
+            set => DefaultScrollGroup.InitialScrollVelocity = value;
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Quaver.API.Maps
         /// </summary>
         public List<SliderVelocityInfo> SliderVelocities
         {
-            get => GlobalScrollGroup.ScrollVelocities;
-            private set => GlobalScrollGroup.ScrollVelocities = value;
+            get => DefaultScrollGroup.ScrollVelocities;
+            private set => DefaultScrollGroup.ScrollVelocities = value;
         }
 
         /// <summary>
@@ -179,15 +179,15 @@ namespace Quaver.API.Maps
         public Dictionary<string, TimingGroup> TimingGroups { get; private set; } = new Dictionary<string, TimingGroup>();
 
         [YamlIgnore]
-        public ScrollGroup GlobalScrollGroup { get; } = new ScrollGroup
+        public ScrollGroup DefaultScrollGroup { get; } = new ScrollGroup
         {
             ColorRgb = "86,254,110"
         };
 
         /// <summary>
-        ///     Reserved ID for global scroll group
+        ///     Reserved ID for default scroll group
         /// </summary>
-        public const string GlobalScrollGroupId = "";
+        public const string DefaultScrollGroupId = "";
 
         /// <summary>
         ///     Finds the length of the map
@@ -214,16 +214,16 @@ namespace Quaver.API.Maps
         /// </summary>
         public Qua()
         {
-            LinkGlobalScrollGroup();
+            LinkDefaultScrollGroup();
         }
 
         /// <summary>
-        ///     Link <see cref="GlobalScrollGroup"/> to <see cref="TimingGroups"/>
-        ///     so <see cref="TimingGroups"/>[<see cref="GlobalScrollGroupId"/>] points to that group.
+        ///     Link <see cref="DefaultScrollGroup"/> to <see cref="TimingGroups"/>
+        ///     so <see cref="TimingGroups"/>[<see cref="DefaultScrollGroupId"/>] points to that group.
         /// </summary>
-        private void LinkGlobalScrollGroup()
+        private void LinkDefaultScrollGroup()
         {
-            TimingGroups[GlobalScrollGroupId] = GlobalScrollGroup;
+            TimingGroups[DefaultScrollGroupId] = DefaultScrollGroup;
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Quaver.API.Maps
                        .Select(x => new KeySoundInfo { Sample = x.Sample, Volume = x.Volume == 100 ? 0 : x.Volume })
                        .ToList(),
                     Lane = obj.Lane, StartTime = obj.StartTime,
-                    TimingGroup = obj.TimingGroup == GlobalScrollGroupId ? null : obj.TimingGroup
+                    TimingGroup = obj.TimingGroup == DefaultScrollGroupId ? null : obj.TimingGroup
                 };
 
             static SoundEffectInfo SerializableSoundEffect(SoundEffectInfo x) =>
@@ -352,7 +352,7 @@ namespace Quaver.API.Maps
             TimingPoints = originalTimingPoints.Select(SerializableTimingPoint).ToList();
             HitObjects = originalHitObjects.Select(SerializableHitObject).ToList();
             SoundEffects = originalSoundEffects.Select(SerializableSoundEffect).ToList();
-            TimingGroups.Remove(GlobalScrollGroupId);
+            TimingGroups.Remove(DefaultScrollGroupId);
 
             // Doing this to keep compatibility with older versions of .qua (.osu and .sm file conversions). It won't serialize
             // the bookmarks in the file.
@@ -368,7 +368,7 @@ namespace Quaver.API.Maps
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
             Bookmarks = originalBookmarks;
-            LinkGlobalScrollGroup();
+            LinkDefaultScrollGroup();
 
             return serialized;
         }
@@ -445,7 +445,7 @@ namespace Quaver.API.Maps
         /// </summary>
         public void Sort()
         {
-            LinkGlobalScrollGroup();
+            LinkDefaultScrollGroup();
 
             SortBookmarks();
             SortHitObjects();
@@ -590,7 +590,7 @@ namespace Quaver.API.Maps
         /// <param name="time"></param>
         /// <param name="timingGroupId"></param>
         /// <returns></returns>
-        public SliderVelocityInfo GetScrollVelocityAt(double time, string timingGroupId = GlobalScrollGroupId) =>
+        public SliderVelocityInfo GetScrollVelocityAt(double time, string timingGroupId = DefaultScrollGroupId) =>
             ((ScrollGroup)TimingGroups[timingGroupId]).GetScrollVelocityAt(time);
 
         /// <summary>
@@ -1021,7 +1021,7 @@ namespace Quaver.API.Maps
         /// <param name="qua"></param>
         public static void RestoreDefaultValues(Qua qua)
         {
-            qua.LinkGlobalScrollGroup();
+            qua.LinkDefaultScrollGroup();
 
             // Restore default values.
             for (var i = 0; i < qua.TimingPoints.Count; i++)
@@ -1041,7 +1041,7 @@ namespace Quaver.API.Maps
                 if (obj.HitSound == 0)
                     obj.HitSound = HitSounds.Normal;
 
-                obj.TimingGroup ??= GlobalScrollGroupId;
+                obj.TimingGroup ??= DefaultScrollGroupId;
 
                 // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
                 foreach (var keySound in obj.KeySounds)
