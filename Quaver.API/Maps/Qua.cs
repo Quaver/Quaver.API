@@ -184,10 +184,28 @@ namespace Quaver.API.Maps
             ColorRgb = "86,254,110"
         };
 
+        [YamlIgnore]
+        public ScrollGroup GlobalScrollGroup
+        {
+            get
+            {
+                if (TimingGroups.TryGetValue(GlobalScrollGroupId, out var timingGroup) && timingGroup is ScrollGroup scrollGroup)
+                    return scrollGroup;
+                var group = new ScrollGroup();
+                TimingGroups.Add(GlobalScrollGroupId, group);
+                return group;
+            }
+        }
+
         /// <summary>
         ///     Reserved ID for default scroll group
         /// </summary>
         public const string DefaultScrollGroupId = "";
+
+        /// <summary>
+        ///     Reserved ID for global scroll group (applied to every scroll groups)
+        /// </summary>
+        public const string GlobalScrollGroupId = "*";
 
         /// <summary>
         ///     Finds the length of the map
@@ -354,6 +372,11 @@ namespace Quaver.API.Maps
             SoundEffects = originalSoundEffects.Select(SerializableSoundEffect).ToList();
             TimingGroups.Remove(DefaultScrollGroupId);
 
+            // Remove empty global scroll group
+            var globalScrollGroup = GlobalScrollGroup;
+            if (globalScrollGroup.ScrollVelocities.Count == 0)
+                TimingGroups.Remove(GlobalScrollGroupId);
+
             // Doing this to keep compatibility with older versions of .qua (.osu and .sm file conversions). It won't serialize
             // the bookmarks in the file.
             if (Bookmarks.Count == 0)
@@ -369,6 +392,7 @@ namespace Quaver.API.Maps
             SoundEffects = originalSoundEffects;
             Bookmarks = originalBookmarks;
             LinkDefaultScrollGroup();
+            TimingGroups.TryAdd(GlobalScrollGroupId, globalScrollGroup);
 
             return serialized;
         }
@@ -1022,6 +1046,8 @@ namespace Quaver.API.Maps
         public static void RestoreDefaultValues(Qua qua)
         {
             qua.LinkDefaultScrollGroup();
+
+            qua.TimingGroups.TryAdd(GlobalScrollGroupId, new ScrollGroup());
 
             // Restore default values.
             for (var i = 0; i < qua.TimingPoints.Count; i++)
