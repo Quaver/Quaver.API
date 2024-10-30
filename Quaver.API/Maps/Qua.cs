@@ -640,8 +640,35 @@ namespace Quaver.API.Maps
             return Length - point.StartTime;
         }
 
-        public IEnumerable<HitObjectInfo> GetTimingGroupChildren(string id) =>
+        /// <summary>
+        ///     O(n)
+        ///     Returns the list of hit objects that are in the specified group
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IEnumerable<HitObjectInfo> GetTimingGroupObjects(string id) =>
             HitObjects.Where(hitObjectInfo => hitObjectInfo.TimingGroup == id);
+
+        /// <summary>
+        ///     O(n log m) Given a list of timing group IDs, return a dictionary of (ID, [HitObject])
+        /// </summary>
+        /// <param name="timingGroupIds"></param>
+        /// <returns></returns>
+        public Dictionary<string, List<HitObjectInfo>> GetTimingGroupObjects(HashSet<string> timingGroupIds)
+        {
+            var result = new Dictionary<string, List<HitObjectInfo>>();
+            foreach (var hitObjectInfo in HitObjects.Where(hitObjectInfo =>
+                         timingGroupIds.Contains(hitObjectInfo.TimingGroup)))
+            {
+                if (!result.TryGetValue(hitObjectInfo.TimingGroup, out var list))
+                {
+                    list = new List<HitObjectInfo>();
+                    result.Add(hitObjectInfo.TimingGroup, list);
+                }
+                list.Add(hitObjectInfo);
+            }
+            return result;
+        }
 
         /// <summary>
         ///     Solves the difficulty of the map and returns the data for it.
