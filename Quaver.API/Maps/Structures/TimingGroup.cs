@@ -18,9 +18,6 @@ namespace Quaver.API.Maps.Structures
     [MoonSharpUserData]
     public abstract class TimingGroup
     {
-        [YamlMember]
-        public List<HitObjectInfo> FakeHitObjects { get; protected set; } = new List<HitObjectInfo>();
-
         /// <summary>
         ///     The color of the layer (default is white)
         /// </summary>
