@@ -259,7 +259,7 @@ namespace Quaver.API.Maps
             TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer) &&
             SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer) &&
             InitialScrollVelocity == other.InitialScrollVelocity &&
-            TimingGroups.SequenceEqual(other.TimingGroups) &&
+            CompareTimingGroups(other.TimingGroups) &&
             BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity &&
             LegacyLNRendering == other.LegacyLNRendering &&
             HasScratchKey == other.HasScratchKey &&
@@ -269,6 +269,19 @@ namespace Quaver.API.Maps
             EditorLayers.SequenceEqual(other.EditorLayers, EditorLayerInfo.ByValueComparer) &&
             Bookmarks.SequenceEqual(other.Bookmarks, BookmarkInfo.ByValueComparer) &&
             RandomizeModifierSeed == other.RandomizeModifierSeed;
+
+        private bool CompareTimingGroups(Dictionary<string, TimingGroup> other)
+        {
+            if (TimingGroups == null || other == null || TimingGroups.Count != other.Count)
+                return false;
+            foreach (var (key, value) in TimingGroups)
+            {
+                if (!other.TryGetValue(key, out var otherGroup) || !otherGroup.Equals(value))
+                    return false;
+            }
+
+            return true;
+        }
 
         private static IDeserializer Deserializer =>
             new DeserializerBuilder()

@@ -268,6 +268,26 @@ namespace Quaver.API.Tests.Quaver
         }
 
         [Fact]
+        public void TimingGroupsComparison()
+        {
+            var q1 = new Qua();
+            var q2 = new Qua();
+            Assert.True(q1.EqualByValue(q2));
+
+            q2.TimingGroups["a"] = new ScrollGroup();
+            Assert.False(q1.EqualByValue(q2));
+
+            q1.TimingGroups["a"] = new ScrollGroup();
+            Assert.True(q1.EqualByValue(q2));
+
+            ((ScrollGroup)q2.TimingGroups["a"]).ScrollVelocities.Add(new SliderVelocityInfo {Multiplier = 2});
+            Assert.False(q1.EqualByValue(q2));
+
+            ((ScrollGroup)q1.TimingGroups["a"]).ScrollVelocities.Add(new SliderVelocityInfo {Multiplier = 2});
+            Assert.True(q1.EqualByValue(q2));
+        }
+
+        [Fact]
         public void SVNormalization()
         {
             var tests = new[]
