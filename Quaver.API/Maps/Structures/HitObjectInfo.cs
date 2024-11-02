@@ -81,6 +81,15 @@ namespace Quaver.API.Maps.Structures
         }
 
         /// <summary>
+        ///     ID of the timing group this note belongs to. Leave empty for default timing group.
+        /// </summary>
+        public string TimingGroup
+        {
+            get;
+            [MoonSharpVisible(false)] set;
+        } = Qua.DefaultScrollGroupId;
+
+        /// <summary>
         ///     If the object is a long note. (EndTime > 0)
         /// </summary>
         [YamlIgnore]
