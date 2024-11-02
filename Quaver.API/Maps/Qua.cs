@@ -489,6 +489,7 @@ namespace Quaver.API.Maps
             SortSoundEffects();
             SortTimingPoints();
             SortSliderVelocities();
+            SortScrollSpeedFactors();
         }
 
         /// <summary>
@@ -629,6 +630,14 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public SliderVelocityInfo GetScrollVelocityAt(double time, string timingGroupId = DefaultScrollGroupId) =>
             ((ScrollGroup)TimingGroups[timingGroupId]).GetScrollVelocityAt(time);
+
+        /// <summary>
+        ///     Gets a scroll velocity at a particular time in the map
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public ScrollSpeedFactorInfo GetScrollSpeedFactorAt(double time, string timingGroupId = DefaultScrollGroupId) =>
+            ((ScrollGroup)TimingGroups[timingGroupId]).GetScrollSpeedFactorAt(time);
 
         /// <summary>
         ///    Finds the length of a timing point.
@@ -1018,6 +1027,18 @@ namespace Quaver.API.Maps
         /// <summary>
         /// </summary>
         public void SortBookmarks() => Bookmarks.HybridSort();
+
+        /// <summary>
+        /// </summary>
+        public void SortScrollSpeedFactors()
+        {
+            foreach (var (_, timingGroup) in TimingGroups)
+            {
+                if (!(timingGroup is ScrollGroup scrollGroup))
+                    continue;
+                scrollGroup.ScrollSpeedFactors.HybridSort();
+            }
+        }
 
         /// <summary>
         /// </summary>
