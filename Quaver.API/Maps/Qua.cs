@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Copyright (c) 2017-2019 Swan & The Quaver Team <support@quavergame.com>.
-*/
+ */
 
 using System;
 using System.Collections.Generic;
@@ -176,7 +176,8 @@ namespace Quaver.API.Maps
         /// </summary>
         public List<HitObjectInfo> HitObjects { get; private set; } = new List<HitObjectInfo>();
 
-        public Dictionary<string, TimingGroup> TimingGroups { get; private set; } = new Dictionary<string, TimingGroup>();
+        public Dictionary<string, TimingGroup> TimingGroups { get; private set; } =
+            new Dictionary<string, TimingGroup>();
 
         [YamlIgnore]
         public ScrollGroup DefaultScrollGroup { get; } = new ScrollGroup
@@ -184,18 +185,7 @@ namespace Quaver.API.Maps
             ColorRgb = "86,254,110"
         };
 
-        [YamlIgnore]
-        public ScrollGroup GlobalScrollGroup
-        {
-            get
-            {
-                if (TimingGroups.TryGetValue(GlobalScrollGroupId, out var timingGroup) && timingGroup is ScrollGroup scrollGroup)
-                    return scrollGroup;
-                var group = new ScrollGroup();
-                TimingGroups.Add(GlobalScrollGroupId, group);
-                return group;
-            }
-        }
+        [YamlIgnore] public ScrollGroup GlobalScrollGroup { get; } = new ScrollGroup();
 
         /// <summary>
         ///     Reserved ID for default scroll group
@@ -242,6 +232,7 @@ namespace Quaver.API.Maps
         private void LinkDefaultScrollGroup()
         {
             TimingGroups[DefaultScrollGroupId] = DefaultScrollGroup;
+            TimingGroups[GlobalScrollGroupId] = GlobalScrollGroup;
         }
 
         /// <summary>
@@ -268,6 +259,7 @@ namespace Quaver.API.Maps
             TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer) &&
             SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer) &&
             InitialScrollVelocity == other.InitialScrollVelocity &&
+            TimingGroups.SequenceEqual(other.TimingGroups) &&
             BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity &&
             LegacyLNRendering == other.LegacyLNRendering &&
             HasScratchKey == other.HasScratchKey &&
@@ -366,16 +358,22 @@ namespace Quaver.API.Maps
             var originalHitObjects = HitObjects;
             var originalSoundEffects = SoundEffects;
             var originalBookmarks = Bookmarks;
+            var originalTimingGroups = TimingGroups;
 
             TimingPoints = originalTimingPoints.Select(SerializableTimingPoint).ToList();
             HitObjects = originalHitObjects.Select(SerializableHitObject).ToList();
             SoundEffects = originalSoundEffects.Select(SerializableSoundEffect).ToList();
+            TimingGroups = originalTimingGroups.ToDictionary(x => x.Key, x => x.Value);
             TimingGroups.Remove(DefaultScrollGroupId);
 
             // Remove empty global scroll group
             var globalScrollGroup = GlobalScrollGroup;
             if (globalScrollGroup.ScrollVelocities.Count == 0)
                 TimingGroups.Remove(GlobalScrollGroupId);
+
+            // Don't serialize the field at all if we dont have additional timing groups
+            if (TimingGroups.Count == 0)
+                TimingGroups = null;
 
             // Doing this to keep compatibility with older versions of .qua (.osu and .sm file conversions). It won't serialize
             // the bookmarks in the file.
@@ -391,8 +389,10 @@ namespace Quaver.API.Maps
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
             Bookmarks = originalBookmarks;
+
+            TimingGroups = originalTimingGroups;
             LinkDefaultScrollGroup();
-            TimingGroups.TryAdd(GlobalScrollGroupId, globalScrollGroup);
+            Debug.Assert(TimingGroups != null && TimingGroups.Count >= 2);
 
             return serialized;
         }
