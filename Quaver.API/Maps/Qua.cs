@@ -190,12 +190,12 @@ namespace Quaver.API.Maps
         /// <summary>
         ///     Reserved ID for default scroll group
         /// </summary>
-        public const string DefaultScrollGroupId = "";
+        public const string DefaultScrollGroupId = "$Default";
 
         /// <summary>
         ///     Reserved ID for global scroll group (applied to every scroll groups)
         /// </summary>
-        public const string GlobalScrollGroupId = "*";
+        public const string GlobalScrollGroupId = "$Global";
 
         /// <summary>
         ///     Finds the length of the map
