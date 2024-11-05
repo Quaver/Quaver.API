@@ -19,9 +19,20 @@ namespace Quaver.API.Maps.Structures
         public List<SliderVelocityInfo> ScrollVelocities { get; [MoonSharpHidden] set; } =
             new List<SliderVelocityInfo>();
 
+        /// <summary>
+        ///     Scroll Speed Factor .qua data
+        /// </summary>
+        public List<ScrollSpeedFactorInfo> ScrollSpeedFactors { get; [MoonSharpHidden] set; } =
+            new List<ScrollSpeedFactorInfo>();
+
         public SliderVelocityInfo GetScrollVelocityAt(double time)
         {
             return ScrollVelocities.AtTime((float)time);
+        }
+
+        public ScrollSpeedFactorInfo GetScrollSpeedFactorAt(double time)
+        {
+            return ScrollSpeedFactors.AtTime((float)time);
         }
 
         /// <summary>
@@ -31,7 +42,8 @@ namespace Quaver.API.Maps.Structures
         protected bool Equals(ScrollGroup other)
         {
             return base.Equals(other) && InitialScrollVelocity.Equals(other.InitialScrollVelocity) &&
-                   ScrollVelocities.SequenceEqual(other.ScrollVelocities, SliderVelocityInfo.ByValueComparer);
+                   ScrollVelocities.SequenceEqual(other.ScrollVelocities, SliderVelocityInfo.ByValueComparer) &&
+                   ScrollSpeedFactors.SequenceEqual(other.ScrollSpeedFactors, ScrollSpeedFactorInfo.ByValueComparer);
         }
 
         /// <summary>
