@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MoonSharp.Interpreter;
+using MoonSharp.Interpreter.Interop;
+using YamlDotNet.Serialization;
 
 namespace Quaver.API.Maps.Structures
 {
@@ -22,6 +24,50 @@ namespace Quaver.API.Maps.Structures
         ///     It will be lerped to the next scroll speed factor like keyframes, unless this is the last factor change.
         /// </summary>
         public float Multiplier { get; [MoonSharpHidden] set; }
+
+        /// <summary>
+        ///     Returns if the SSF is allowed to be edited in lua scripts
+        /// </summary>
+        [YamlIgnore]
+        public bool IsEditableInLuaScript
+        {
+            get;
+            [MoonSharpVisible(false)]
+            set;
+        }
+
+        /// <summary>
+        ///     Sets the start time of the SSF.
+        ///     FOR USE IN LUA SCRIPTS ONLY.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void SetStartTime(float time)
+        {
+            ThrowUneditableException();
+            StartTime = time;
+        }
+
+        /// <summary>
+        ///     Sets the multiplier of the SSF.
+        ///     FOR USE IN LUA SCRIPTS ONLY.
+        /// </summary>
+        /// <param name="multiplier"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void SetMultiplier(float multiplier)
+        {
+            ThrowUneditableException();
+            Multiplier = multiplier;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
+        private void ThrowUneditableException()
+        {
+            if (!IsEditableInLuaScript)
+                throw new InvalidOperationException("Value is not allowed to be edited in lua scripts.");
+        }
 
         private sealed class StartTimeRelationalComparer : IComparer<ScrollSpeedFactorInfo>
         {
