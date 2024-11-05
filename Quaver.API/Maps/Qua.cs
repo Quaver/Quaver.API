@@ -172,11 +172,6 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
-        ///     Scroll Speed Factor .qua data
-        /// </summary>
-        public List<ScrollSpeedFactorInfo> ScrollSpeedFactors { get; private set; } = new List<ScrollSpeedFactorInfo>();
-
-        /// <summary>
         ///     HitObject .qua data
         /// </summary>
         public List<HitObjectInfo> HitObjects { get; private set; } = new List<HitObjectInfo>();
@@ -263,7 +258,6 @@ namespace Quaver.API.Maps
             Genre == other.Genre &&
             TimingPoints.SequenceEqual(other.TimingPoints, TimingPointInfo.ByValueComparer) &&
             SliderVelocities.SequenceEqual(other.SliderVelocities, SliderVelocityInfo.ByValueComparer) &&
-            ScrollSpeedFactors.SequenceEqual(other.ScrollSpeedFactors, ScrollSpeedFactorInfo.ByValueComparer) &&
             InitialScrollVelocity == other.InitialScrollVelocity &&
             CompareTimingGroups(other.TimingGroups) &&
             BPMDoesNotAffectScrollVelocity == other.BPMDoesNotAffectScrollVelocity &&
@@ -495,7 +489,6 @@ namespace Quaver.API.Maps
             SortSoundEffects();
             SortTimingPoints();
             SortSliderVelocities();
-            SortScrollSpeedFactors();
         }
 
         /// <summary>
@@ -636,13 +629,6 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public SliderVelocityInfo GetScrollVelocityAt(double time, string timingGroupId = DefaultScrollGroupId) =>
             ((ScrollGroup)TimingGroups[timingGroupId]).GetScrollVelocityAt(time);
-
-        /// <summary>
-        ///     Gets a scroll velocity at a particular time in the map
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
-        public ScrollSpeedFactorInfo GetScrollSpeedFactorAt(double time) => ScrollSpeedFactors.AtTime((float)time);
 
         /// <summary>
         ///    Finds the length of a timing point.
@@ -1032,10 +1018,6 @@ namespace Quaver.API.Maps
         /// <summary>
         /// </summary>
         public void SortBookmarks() => Bookmarks.HybridSort();
-
-        /// <summary>
-        /// </summary>
-        public void SortScrollSpeedFactors() => ScrollSpeedFactors.HybridSort();
 
         /// <summary>
         /// </summary>
