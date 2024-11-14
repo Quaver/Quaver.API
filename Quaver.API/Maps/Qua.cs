@@ -172,6 +172,15 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
+        ///     SSF for default group
+        /// </summary>
+        public List<ScrollSpeedFactorInfo> ScrollSpeedFactors
+        {
+            get => DefaultScrollGroup.ScrollSpeedFactors;
+            private set => DefaultScrollGroup.ScrollSpeedFactors = value;
+        }
+
+        /// <summary>
         ///     HitObject .qua data
         /// </summary>
         public List<HitObjectInfo> HitObjects { get; private set; } = new List<HitObjectInfo>();
@@ -372,6 +381,7 @@ namespace Quaver.API.Maps
             var originalSoundEffects = SoundEffects;
             var originalBookmarks = Bookmarks;
             var originalTimingGroups = TimingGroups;
+            var originalDefaultSsfs = ScrollSpeedFactors;
 
             TimingPoints = originalTimingPoints.Select(SerializableTimingPoint).ToList();
             HitObjects = originalHitObjects.Select(SerializableHitObject).ToList();
@@ -381,7 +391,7 @@ namespace Quaver.API.Maps
 
             // Remove empty global scroll group
             var globalScrollGroup = GlobalScrollGroup;
-            if (globalScrollGroup.ScrollVelocities.Count == 0)
+            if (globalScrollGroup.ScrollVelocities.Count == 0 && globalScrollGroup.ScrollSpeedFactors.Count == 0)
                 TimingGroups.Remove(GlobalScrollGroupId);
 
             // Don't serialize the field at all if we dont have additional timing groups
@@ -393,6 +403,9 @@ namespace Quaver.API.Maps
             if (Bookmarks.Count == 0)
                 Bookmarks = null;
 
+            if (ScrollSpeedFactors.Count == 0)
+                ScrollSpeedFactors = null;
+
             using var stringWriter = new StringWriter { NewLine = "\r\n" };
             Serializer.Serialize(stringWriter, this);
             var serialized = stringWriter.ToString();
@@ -402,6 +415,7 @@ namespace Quaver.API.Maps
             HitObjects = originalHitObjects;
             SoundEffects = originalSoundEffects;
             Bookmarks = originalBookmarks;
+            ScrollSpeedFactors = originalDefaultSsfs;
 
             TimingGroups = originalTimingGroups;
             LinkDefaultScrollGroup();
