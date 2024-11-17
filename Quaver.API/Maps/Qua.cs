@@ -1441,8 +1441,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public Qua WithNormalizedSVs()
         {
-            var qua = (Qua)MemberwiseClone();
-            // Relies on NormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
+            var qua = this.DeepClone();
             qua.NormalizeSVs();
             return qua;
         }
@@ -1453,8 +1452,7 @@ namespace Quaver.API.Maps
         /// <returns></returns>
         public Qua WithDenormalizedSVs()
         {
-            var qua = (Qua)MemberwiseClone();
-            // Relies on DenormalizeSVs not changing anything within the by-reference members (but rather creating a new List).
+            var qua = this.DeepClone();
             qua.DenormalizeSVs();
             return qua;
         }
