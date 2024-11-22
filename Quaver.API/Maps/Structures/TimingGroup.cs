@@ -24,6 +24,11 @@ namespace Quaver.API.Maps.Structures
         public string ColorRgb { get; [MoonSharpVisible(false)] set; }
 
         /// <summary>
+        ///     Is the timing group hidden in the editor?
+        /// </summary>
+        public bool Hidden { get; [MoonSharpVisible(false)] set; }
+
+        /// <summary>
         ///     Converts the stringified color to a System.Drawing color
         /// </summary>
         /// <returns></returns>
@@ -42,7 +47,7 @@ namespace Quaver.API.Maps.Structures
         /// <returns></returns>
         protected bool Equals(TimingGroup other)
         {
-            return ColorRgb == other.ColorRgb;
+            return ColorRgb == other.ColorRgb && Hidden == other.Hidden;
         }
 
         /// <summary>
