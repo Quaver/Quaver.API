@@ -194,7 +194,7 @@ namespace Quaver.API.Maps
             ColorRgb = "86,254,110"
         };
 
-        [YamlIgnore] public ScrollGroup GlobalScrollGroup { get; } = new ScrollGroup();
+        [YamlIgnore] public ScrollGroup GlobalScrollGroup => (ScrollGroup)TimingGroups[GlobalScrollGroupId];
 
         /// <summary>
         ///     Reserved ID for default scroll group
@@ -241,7 +241,7 @@ namespace Quaver.API.Maps
         private void LinkDefaultScrollGroup()
         {
             TimingGroups[DefaultScrollGroupId] = DefaultScrollGroup;
-            TimingGroups[GlobalScrollGroupId] = GlobalScrollGroup;
+            TimingGroups.TryAdd(GlobalScrollGroupId, new ScrollGroup());
         }
 
         /// <summary>
@@ -418,6 +418,7 @@ namespace Quaver.API.Maps
             ScrollSpeedFactors = originalDefaultSsfs;
 
             TimingGroups = originalTimingGroups;
+            TimingGroups[GlobalScrollGroupId] = globalScrollGroup;
             LinkDefaultScrollGroup();
             Debug.Assert(TimingGroups != null && TimingGroups.Count >= 2);
 
