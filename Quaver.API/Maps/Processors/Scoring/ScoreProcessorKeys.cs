@@ -14,6 +14,7 @@ using Quaver.API.Helpers;
 using Quaver.API.Maps.Processors.Scoring.Data;
 using Quaver.API.Maps.Processors.Scoring.Multiplayer;
 using Quaver.API.Replays;
+using HitObjectType = Quaver.API.Enums.HitObjectType;
 
 namespace Quaver.API.Maps.Processors.Scoring
 {
@@ -364,17 +365,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <returns></returns>
         public int GetTotalJudgementCount()
         {
-            var judgements = 0;
-
-            foreach (var o in Map.HitObjects)
-            {
-                if (o.IsLongNote)
-                    judgements += 2;
-                else
-                    judgements++;
-            }
-
-            return judgements;
+            return Map.HitObjects.Sum(o => o.JudgementCount);
         }
 
         /// <summary>
