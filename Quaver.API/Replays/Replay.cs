@@ -383,32 +383,7 @@ namespace Quaver.API.Replays
         /// </summary>
         /// <param name="lane"></param>
         /// <returns></returns>
-        public static ReplayKeyPressState KeyLaneToPressState(int lane)
-        {
-            switch (lane)
-            {
-                case 1:
-                    return ReplayKeyPressState.K1;
-                case 2:
-                    return ReplayKeyPressState.K2;
-                case 3:
-                    return ReplayKeyPressState.K3;
-                case 4:
-                    return ReplayKeyPressState.K4;
-                case 5:
-                    return ReplayKeyPressState.K5;
-                case 6:
-                    return ReplayKeyPressState.K6;
-                case 7:
-                    return ReplayKeyPressState.K7;
-                case 8:
-                    return ReplayKeyPressState.K8;
-                case 9:
-                    return ReplayKeyPressState.K9;
-                default:
-                    throw new ArgumentException("Lane specified must be between 1 and 7");
-            }
-        }
+        public static ReplayKeyPressState KeyLaneToPressState(int lane) => (ReplayKeyPressState)(1 << (lane - 1));
 
         /// <summary>
         ///     Converts a key press state to a list of lanes that are active.
@@ -419,24 +394,12 @@ namespace Quaver.API.Replays
         {
             var lanes = new List<int>();
 
-            if (keys.HasFlag(ReplayKeyPressState.K1))
-                lanes.Add(0);
-            if (keys.HasFlag(ReplayKeyPressState.K2))
-                lanes.Add(1);
-            if (keys.HasFlag(ReplayKeyPressState.K3))
-                lanes.Add(2);
-            if (keys.HasFlag(ReplayKeyPressState.K4))
-                lanes.Add(3);
-            if (keys.HasFlag(ReplayKeyPressState.K5))
-                lanes.Add(4);
-            if (keys.HasFlag(ReplayKeyPressState.K6))
-                lanes.Add(5);
-            if (keys.HasFlag(ReplayKeyPressState.K7))
-                lanes.Add(6);
-            if (keys.HasFlag(ReplayKeyPressState.K8))
-                lanes.Add(7);
-            if (keys.HasFlag(ReplayKeyPressState.K9))
-                lanes.Add(8);
+            // MaxKeyCount + 2 to include the 2 keys used for scratch
+            for (var i = 0; i < ModeHelper.MaxKeyCount + 2; i++)
+            {
+                if (keys.HasFlag((ReplayKeyPressState)(1 << i)))
+                    lanes.Add(i);
+            }
 
             return lanes;
         }
