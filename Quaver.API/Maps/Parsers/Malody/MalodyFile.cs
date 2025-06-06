@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Quaver.API.Enums;
+using Quaver.API.Helpers;
 using Quaver.API.Maps.Structures;
 using System;
 using System.Collections.Generic;
@@ -57,17 +58,7 @@ namespace Quaver.API.Maps.Parsers.Malody
             if (Meta.Mode != 0)
                 throw new ArgumentException("Only the 'Key' Malody game mode can be converted to Qua");
 
-            switch (Meta.Keymode.Keymode)
-            {
-                case 4:
-                    qua.Mode = GameMode.Keys4;
-                    break;
-                case 7:
-                    qua.Mode = GameMode.Keys7;
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException();
-            }
+            qua.Mode = ModeHelper.FromKeyCount(Meta.Keymode.Keymode);
 
             foreach (var tp in TimingPoints)
             {
