@@ -174,10 +174,12 @@ namespace Quaver.API.Replays.Virtual
                     {
                         var obj = Map.GetHitObjectAtJudgementIndex(i);
 
-                        ScoreProcessor.CalculateScore(Judgement.Miss);
+                        var hitStat = new HitStat(HitStatType.Miss, KeyPressType.None, obj, obj.StartTime,
+                            Judgement.Miss, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
-                        ScoreProcessor.Stats.Add(new HitStat(HitStatType.Miss, KeyPressType.None, obj, obj.StartTime,
-                            Judgement.Miss, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health));
+                        ScoreProcessor.CalculateScore(hitStat);
+
+                        ScoreProcessor.Stats.Add(hitStat);
 
                         if (!ScoreProcessor.Failed)
                             continue;
@@ -310,7 +312,7 @@ namespace Quaver.API.Replays.Virtual
                             // Add another miss for an LN (head and tail)
                             if (hitObject.IsLongNote)
                             {
-                                ScoreProcessor.CalculateScore(Judgement.Miss, true);
+                                ScoreProcessor.CalculateScore(Judgement.Miss, true, false);
 
                                 ScoreProcessor.Stats.Add(new HitStat(HitStatType.Miss, KeyPressType.Press, hitObject, Time, Judgement.Miss, int.MinValue,
                                     ScoreProcessor.Accuracy, ScoreProcessor.Health));
@@ -361,7 +363,7 @@ namespace Quaver.API.Replays.Virtual
                         // The LN was released too early (miss)
                         else
                         {
-                            ScoreProcessor.CalculateScore(Judgement.Miss, true);
+                            ScoreProcessor.CalculateScore(Judgement.Miss, true, false);
 
                             // Add a new stat to ScoreProcessor.
                             var stat = new HitStat(HitStatType.Hit, KeyPressType.Release, hitObject, Time, Judgement.Miss, hitDifference,
@@ -399,7 +401,7 @@ namespace Quaver.API.Replays.Virtual
                 // Judgement when a user doesn't release an LN.
                 var missedReleaseJudgement = Judgement.Good;
 
-                ScoreProcessor.CalculateScore(missedReleaseJudgement, true);
+                ScoreProcessor.CalculateScore(missedReleaseJudgement, true, false);
 
                 // Add new miss stat.
                 var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, missedReleaseJudgement, int.MinValue,
@@ -424,19 +426,20 @@ namespace Quaver.API.Replays.Virtual
             {
                 if (Time > hitObject.StartTime + ScoreProcessor.JudgementWindow[Judgement.Okay])
                 {
-                    // Add a miss to the score.
-                    ScoreProcessor.CalculateScore(Judgement.Miss);
-
                     // Create a new HitStat to add to the ScoreProcessor.
                     var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.StartTime, Judgement.Miss, int.MinValue,
                         ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
+                    // Add a miss to the score.
+                    ScoreProcessor.CalculateScore(stat);
+
 
                     ScoreProcessor.Stats.Add(stat);
 
                     // Long notes count as two misses, so add another one if the object is one.
                     if (hitObject.IsLongNote)
                     {
-                        ScoreProcessor.CalculateScore(Judgement.Miss, true);
+                        ScoreProcessor.CalculateScore(Judgement.Miss, true, false);
                         ScoreProcessor.Stats.Add(stat);
                     }
 
@@ -453,12 +456,12 @@ namespace Quaver.API.Replays.Virtual
                 var endTime = hitObject.IsLongNote ? hitObject.EndTime : hitObject.StartTime;
                 if (Time > endTime + ScoreProcessor.JudgementWindow[Judgement.Marv])
                 {
-                    // Add a miss to the score.
-                    ScoreProcessor.CalculateScore(Judgement.Marv);
-
                     // Create a new HitStat to add to the ScoreProcessor.
                     var stat = new HitStat(HitStatType.Hit, KeyPressType.None, hitObject, hitObject.StartTime, Judgement.Marv, 0,
                         ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
+                    // Add a miss to the score.
+                    ScoreProcessor.CalculateScore(stat);
 
                     ScoreProcessor.Stats.Add(stat);
                     ActiveMinesToRemove.Add(hitObject);
