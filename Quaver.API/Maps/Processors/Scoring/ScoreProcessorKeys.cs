@@ -216,7 +216,7 @@ namespace Quaver.API.Maps.Processors.Scoring
                 return judgement;
 
             if (calculateAllStats)
-                CalculateScore(judgement, keyPressType == KeyPressType.Release);
+                CalculateScore(judgement, keyPressType == KeyPressType.Release, isMine);
 
             return judgement;
         }
@@ -234,7 +234,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="judgement"></param>
         /// <param name="isLongNoteRelease"></param>
         /// <param name="isMine"></param>
-        public override void CalculateScore(Judgement judgement, bool isLongNoteRelease = false, bool isMine = false)
+        public override void CalculateScore(Judgement judgement, bool isLongNoteRelease, bool isMine)
         {
             // Update Judgement count
             CurrentJudgements[judgement]++;
