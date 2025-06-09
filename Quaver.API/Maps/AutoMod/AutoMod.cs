@@ -399,7 +399,7 @@ namespace Quaver.API.Maps.AutoMod
             var bannerPath = Qua.GetBannerPath();
             if (bannerPath == null || !File.Exists(bannerPath)) return;
 
-            DetectImageFileIssues("banner", bannerPath, MaxBannerFileSize, 421, 82, 1263, 243);
+            DetectImageFileIssues("banner", bannerPath, MaxBannerFileSize, 421, 82, 1263, 246);
         }
 
         /// <summary>
