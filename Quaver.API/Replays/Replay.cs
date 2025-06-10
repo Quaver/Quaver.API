@@ -332,6 +332,9 @@ namespace Quaver.API.Replays
 
             foreach (var hitObject in map.HitObjects)
             {
+                if (hitObject.Type is HitObjectType.Mine)
+                    continue;
+
                 // Add key press frame
                 nonCombined.Add(new ReplayAutoplayFrame(hitObject, ReplayAutoplayFrameType.Press, hitObject.StartTime, KeyLaneToPressState(hitObject.Lane)));
 
