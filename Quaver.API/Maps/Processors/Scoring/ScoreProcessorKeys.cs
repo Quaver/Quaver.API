@@ -234,7 +234,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="judgement"></param>
         /// <param name="isLongNoteRelease"></param>
         /// <param name="isMine"></param>
-        public override void CalculateScore(Judgement judgement, bool isLongNoteRelease, bool isMine)
+        public override void CalculateScore(Judgement judgement, bool isLongNoteRelease = false, bool isMine = false)
         {
             // Update Judgement count
             CurrentJudgements[judgement]++;
