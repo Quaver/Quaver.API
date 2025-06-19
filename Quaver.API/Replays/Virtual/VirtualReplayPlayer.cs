@@ -340,7 +340,7 @@ namespace Quaver.API.Replays.Virtual
                     continue;
 
                 // Judgement when a user doesn't release an LN.
-                var missedReleaseJudgement = Judgement.Good;
+                var missedReleaseJudgement = ScoreProcessor.Windows.LNMissJudgement;
 
                 ScoreProcessor.CalculateScore(missedReleaseJudgement, true);
 

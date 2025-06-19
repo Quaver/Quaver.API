@@ -35,6 +35,8 @@ namespace Quaver.API.Maps.Processors.Scoring
 
         public Judgement ComboBreakJudgement { get; set; } = Judgement.Miss;
 
+        public Judgement LNMissJudgement { get; set; } = Judgement.Good;
+
         /// <summary>
         ///     Returns the value of the window from <see cref="Judgement"/>
         /// </summary>
