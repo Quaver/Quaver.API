@@ -173,9 +173,10 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// </summary>
         /// <param name="hitDifference"></param>
         /// <param name="keyPressType"></param>
-        /// <param name="isMine"></param>
         /// <param name="calculateAllStats"></param>
-        public Judgement CalculateScore(int hitDifference, KeyPressType keyPressType, bool isMine, bool calculateAllStats = true)
+        /// <param name="isMine"></param>
+        public Judgement CalculateScore(int hitDifference, KeyPressType keyPressType, bool calculateAllStats = true,
+            bool isMine = false)
         {
             var absoluteDifference = 0;
 
@@ -234,7 +235,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <param name="judgement"></param>
         /// <param name="isLongNoteRelease"></param>
         /// <param name="isMine"></param>
-        public override void CalculateScore(Judgement judgement, bool isLongNoteRelease, bool isMine)
+        public override void CalculateScore(Judgement judgement, bool isLongNoteRelease = false, bool isMine = false)
         {
             // Update Judgement count
             CurrentJudgements[judgement]++;

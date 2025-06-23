@@ -300,7 +300,7 @@ namespace Quaver.API.Replays.Virtual
                     var hitDifference = hitObject.StartTime - Time;
 
                     // Calculate Score.
-                    var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Press, false);
+                    var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Press, isMine: false);
 
                     switch (judgement)
                     {
@@ -349,7 +349,7 @@ namespace Quaver.API.Replays.Virtual
                         var hitDifference = hitObject.EndTime - Time;
 
                         // Calculate Score
-                        var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Release, false);
+                        var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Release, isMine: false);
 
                         // LN was released during a hit window.
                         if (judgement != Judgement.Ghost && judgement != Judgement.Miss)
