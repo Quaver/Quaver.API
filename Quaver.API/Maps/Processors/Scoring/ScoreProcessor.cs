@@ -223,7 +223,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         /// <summary>
         ///     Adds a judgement to the score and recalculates the score.
         /// </summary>
-        public abstract void CalculateScore(Judgement judgement, bool isLongNoteRelease = false);
+        public abstract void CalculateScore(Judgement judgement, bool isLongNoteRelease = false, bool isMine = false);
 
         /// <summary>
         ///     Calculates the accuracy of the current play session.
