@@ -35,7 +35,8 @@ namespace Quaver.API.Maps.Processors.Scoring
 
         public Judgement ComboBreakJudgement { get; set; } = Judgement.Miss;
 
-        public Judgement LNMissJudgement { get; set; } = Judgement.Good;
+        // Never actually null; the nullability is to allow migration from the old database schema without this column.
+        public Judgement? LNMissJudgement { get; set; } = Judgement.Good;
 
         /// <summary>
         ///     Returns the value of the window from <see cref="Judgement"/>

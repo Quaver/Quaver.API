@@ -202,7 +202,7 @@ namespace Quaver.API.Maps.Processors.Scoring
                 // On Default*, this rounds up to a Good
                 if (keyPressType == KeyPressType.Release && hitDifference < 0 && i > (int)Windows.LNMissJudgement)
                 {
-                    judgement = Windows.LNMissJudgement;
+                    judgement = Windows.LNMissJudgement.Value;
                     break;
                 }
 
