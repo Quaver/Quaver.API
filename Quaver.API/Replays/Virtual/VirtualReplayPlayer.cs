@@ -319,12 +319,12 @@ namespace Quaver.API.Replays.Virtual
                     continue;
 
                 // Judgement when a user doesn't release an LN.
-                var missedReleaseJudgement = Judgement.Good;
+                var missedReleaseJudgement = ScoreProcessor.Windows.LNMissJudgement;
 
-                ScoreProcessor.CalculateScore(missedReleaseJudgement, true);
+                ScoreProcessor.CalculateScore(missedReleaseJudgement.Value, true);
 
                 // Add new miss stat.
-                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, missedReleaseJudgement, int.MinValue,
+                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, missedReleaseJudgement.Value, int.MinValue,
                     ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                 ScoreProcessor.Stats.Add(stat);
