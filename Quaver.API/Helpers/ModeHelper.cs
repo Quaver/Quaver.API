@@ -12,7 +12,7 @@ namespace Quaver.API.Helpers
 {
     public static class ModeHelper
     {
-        public static int MaxKeyCount => Enum.GetValues(typeof(GameMode)).Length;
+        public static int MaxKeyCount => AllModes.Length;
 
         /// <summary>
         ///     Converts game mode to short hand version.
@@ -118,5 +118,18 @@ namespace Quaver.API.Helpers
             // we only have keys gamemode for now...
             return true;
         }
+
+        public static bool IsRanked(GameMode mode){
+            switch (mode)
+            {
+                case GameMode.Keys4:
+                case GameMode.Keys7:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static readonly GameMode[] AllModes = (GameMode[])Enum.GetValues(typeof(GameMode));
     }
 }
