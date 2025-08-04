@@ -198,8 +198,16 @@ namespace Quaver.API.Maps.Processors.Scoring
                 if (!(absoluteDifference <= window))
                     continue;
 
-                // Make Okays no longer possible on releases (good window increases)
-                if (keyPressType == KeyPressType.Release && j == Judgement.Okay)
+                // Releasing an LN late rounds the judgement up to what holding it forever would give
+                // On Default*, this rounds up to a Good
+                if (keyPressType == KeyPressType.Release && hitDifference < 0 && i > (int)Windows.LNMissJudgement)
+                {
+                    judgement = Windows.LNMissJudgement.Value;
+                    break;
+                }
+
+                // Make Okays no longer possible on releases (good window increases) unless LNMissJudgement is Okay or worse
+                if (keyPressType == KeyPressType.Release && j == Judgement.Okay && (int)Windows.LNMissJudgement < (int)Judgement.Okay)
                 {
                     judgement = Judgement.Good;
                     break;
