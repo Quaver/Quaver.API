@@ -46,52 +46,72 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         /// <summary>
         ///     Assumes that the assigned hand will be the one to press that key
         /// </summary>
-        private Dictionary<int, Hand> LaneToHand4K { get; set; } = new Dictionary<int, Hand>()
+        private static Hand LaneToHand(int lane, int keyCount)
         {
-            {1, Hand.Left},
-            {2, Hand.Left},
-            {3, Hand.Right},
-            {4, Hand.Right}
-        };
+            if (lane < 1 || lane > keyCount)
+                throw new ArgumentOutOfRangeException(nameof(lane), "Lane must be between 1 and keyCount");
 
-        /// <summary>
-        ///     Assumes that the assigned hand will be the one to press that key
-        /// </summary>
-        private Dictionary<int, Hand> LaneToHand7K { get; set; } = new Dictionary<int, Hand>()
-        {
-            {1, Hand.Left},
-            {2, Hand.Left},
-            {3, Hand.Left},
-            {4, Hand.Ambiguous},
-            {5, Hand.Right},
-            {6, Hand.Right},
-            {7, Hand.Right}
-        };
+            var half = keyCount / 2;
 
-        /// <summary>
-        ///     Assumes that the assigned finger will be the one to press that key.
-        /// </summary>
-        private Dictionary<int, FingerState> LaneToFinger4K { get; set; } = new Dictionary<int, FingerState>()
-        {
-            {1, FingerState.Middle},
-            {2, FingerState.Index},
-            {3, FingerState.Index},
-            {4, FingerState.Middle}
-        };
+            if (keyCount % 2 == 0)
+            {
+                if (lane <= half)
+                    return Hand.Left;
+                else
+                    return Hand.Right;
+            }
+            else
+            {
+                if (lane <= half)
+                    return Hand.Left;
+
+                if (lane == half + 1)
+                    return Hand.Ambiguous;
+                else
+                    return Hand.Right;
+            }
+        }
 
         /// <summary>
         ///     Assumes that the assigned finger will be the one to press that key.
         /// </summary>
-        private Dictionary<int, FingerState> LaneToFinger7K { get; set; } = new Dictionary<int, FingerState>()
+        private static FingerState LaneToFinger(int lane, int keyCount)
         {
-            {1, FingerState.Ring},
-            {2, FingerState.Middle},
-            {3, FingerState.Index},
-            {4, FingerState.Thumb},
-            {5, FingerState.Index},
-            {6, FingerState.Middle},
-            {7, FingerState.Ring}
-        };
+            if (lane < 1 || lane > keyCount)
+                throw new ArgumentOutOfRangeException(nameof(lane), "Lane must be between 1 and keyCount");
+
+            var half = keyCount / 2;
+
+            if (keyCount <= 9)
+            {
+                // even key count
+                if (keyCount % 2 == 0)
+                {
+                    if (lane <= half)
+                        return (FingerState)(1 << (half - lane));
+                    else
+                        return (FingerState)(1 << (lane - (half + 1)));
+                }
+
+                // odd key count
+                if (lane <= half)
+                    return (FingerState)(1 << (half - lane));
+                if (lane == half + 1)
+                    return FingerState.Thumb;
+                return (FingerState)(1 << (lane - (half + 2)));
+            }
+
+            if (keyCount == 10)
+            {
+                if (lane <= half - 1)
+                    return (FingerState)(1 << (half - 1 - lane));
+                if (lane == half || lane == half + 1)
+                    return FingerState.Thumb;
+                return (FingerState)(1 << (lane - (half + 2)));
+            }
+
+            throw new ArgumentOutOfRangeException(nameof(keyCount), "Key count must be between 1 and 10");
+        }
 
         /// <summary>
         ///     Value of confidence that there's vibro manipulation in the calculated map.
@@ -114,7 +134,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             bool detailedSolve = false) : base(map, constants, mods)
         {
             // Cast the current Strain Constants Property to the correct type.
-            StrainConstants = (StrainConstantsKeys) constants;
+            StrainConstants = (StrainConstantsKeys)constants;
 
             // Don't bother calculating map difficulty if there's less than 2 hit objects
             if (map.HitObjects.Count < 2)
@@ -144,15 +164,10 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             var rate = ModHelper.GetRateFromMods(mods);
 
             // Compute for overall difficulty
-            switch (Map.Mode)
-            {
-                case GameMode.Keys4:
-                    OverallDifficulty = ComputeForOverallDifficulty(rate);
-                    break;
-                case GameMode.Keys7:
-                    OverallDifficulty = (ComputeForOverallDifficulty(rate, Hand.Left) + ComputeForOverallDifficulty(rate, Hand.Right) ) / 2;
-                    break;
-            }
+            if (ModeHelper.ToKeyCount(Map.Mode) % 2 == 0)
+                OverallDifficulty = ComputeForOverallDifficulty(rate);
+            else
+                OverallDifficulty = (ComputeForOverallDifficulty(rate, Hand.Left) + ComputeForOverallDifficulty(rate, Hand.Right)) / 2;
         }
 
         /// <summary>
@@ -193,19 +208,12 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                 var curStrainData = new StrainSolverData(curHitOb, rate);
 
                 // Assign Finger and Hand States
-                switch (Map.Mode)
-                {
-                    case GameMode.Keys4:
-                        curHitOb.FingerState = LaneToFinger4K[Map.HitObjects[i].Lane];
-                        curStrainData.Hand = LaneToHand4K[Map.HitObjects[i].Lane];
-                        break;
-                    case GameMode.Keys7:
-                        curHitOb.FingerState = LaneToFinger7K[Map.HitObjects[i].Lane];
-                        curStrainData.Hand = LaneToHand7K[Map.HitObjects[i].Lane] == Hand.Ambiguous
-                            ? assumeHand
-                            : LaneToHand7K[Map.HitObjects[i].Lane];
-                        break;
-                }
+                var keyCount = ModeHelper.ToKeyCount(Map.Mode);
+
+                curHitOb.FingerState = LaneToFinger(Map.HitObjects[i].Lane, keyCount);
+
+                var hand = LaneToHand(Map.HitObjects[i].Lane, keyCount);
+                curStrainData.Hand = hand == Hand.Ambiguous ? assumeHand : hand;
 
                 // Add Strain Solver Data to list
                 StrainSolverData.Add(curStrainData);
@@ -283,7 +291,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                     if (curHitOb.Hand == nextHitOb.Hand && nextHitOb.StartTime > curHitOb.StartTime)
                     {
                         // Determined by if there's a minijack within 2 set of chords/single notes
-                        var actionJackFound = ( curHitOb.FingerState & nextHitOb.FingerState ) != 0;
+                        var actionJackFound = (curHitOb.FingerState & nextHitOb.FingerState) != 0;
 
                         // Determined by if a chord is found in either finger state
                         var actionChordFound = curHitOb.HandChord || nextHitOb.HandChord;
@@ -437,7 +445,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
                         //          93.7ms = 160bpm 1/4 vibro
 
                         // 35f = 35ms tolerance before hitting vibro point (88.2ms, 170bpm vibro)
-                        var durationValue = Math.Min(1, Math.Max(0, (StrainConstants.VibroActionDurationMs + StrainConstants.VibroActionToleranceMs - data.FingerActionDurationMs ) / StrainConstants.VibroActionToleranceMs));
+                        var durationValue = Math.Min(1, Math.Max(0, (StrainConstants.VibroActionDurationMs + StrainConstants.VibroActionToleranceMs - data.FingerActionDurationMs) / StrainConstants.VibroActionToleranceMs));
 
                         var durationMultiplier = 1 - durationValue * (1 - StrainConstants.VibroMultiplier);
                         var manipulationFoundRatio = 1 - longJackSize / StrainConstants.VibroMaxLength * (1 - StrainConstants.VibroLengthMultiplier);
@@ -479,7 +487,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
                     if (next != null)
                     {
-                         // Check to see if the target hitobject is layered inside the current LN
+                        // Check to see if the target hitobject is layered inside the current LN
                         if (next.StartTime < data.EndTime - StrainConstants.LnEndThresholdMs)
                         {
                             if (next.StartTime >= data.StartTime + StrainConstants.LnEndThresholdMs)
@@ -614,7 +622,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             // We do not consider sections without notes, since there are no "easy notes". Those sections have barely
             // affected the rating in the old difficulty calculator.
-            var continuity = (float) bins.Where(strain => strain > 0)
+            var continuity = (float)bins.Where(strain => strain > 0)
                 .Average(strain => Math.Sqrt(strain / easyRatingCutoff));
 
             // The average continuity of maps in our dataset has been observed to be around 0.85, so we take that
@@ -631,13 +639,13 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
 
             if (continuity > avgContinuity)
             {
-                var continuityFactor = 1 - (continuity - avgContinuity)/(maxContinuity - avgContinuity);
-                continuityAdjustment = Math.Min(avgAdjustment, Math.Max(minAdjustment, continuityFactor * ( avgAdjustment - minAdjustment ) + minAdjustment
+                var continuityFactor = 1 - (continuity - avgContinuity) / (maxContinuity - avgContinuity);
+                continuityAdjustment = Math.Min(avgAdjustment, Math.Max(minAdjustment, continuityFactor * (avgAdjustment - minAdjustment) + minAdjustment
                 ));
             }
             else
             {
-                var continuityFactor = 1 - (continuity - minContinuity)/(avgContinuity - minContinuity);
+                var continuityFactor = 1 - (continuity - minContinuity) / (avgContinuity - minContinuity);
                 continuityAdjustment = Math.Min(maxAdjustment, Math.Max(avgAdjustment, continuityFactor * (maxAdjustment - avgAdjustment) + avgAdjustment));
             }
 
@@ -667,7 +675,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
         private void ComputeNoteDensityData(float rate)
         {
             //MapLength = Qua.Length;
-            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / ( Map.Length * ( -.5f * rate + 1.5f ) );
+            AverageNoteDensity = SECONDS_TO_MILLISECONDS * Map.HitObjects.Count / (Map.Length * (-.5f * rate + 1.5f));
         }
 
         /// <summary>
@@ -695,7 +703,7 @@ namespace Quaver.API.Maps.Processors.Difficulty.Rulesets.Keys
             }
 
             // compute for difficulty
-            return lowestDifficulty + (strainMax - lowestDifficulty) * (float) Math.Pow(ratio, exp);
+            return lowestDifficulty + (strainMax - lowestDifficulty) * (float)Math.Pow(ratio, exp);
         }
     }
 }

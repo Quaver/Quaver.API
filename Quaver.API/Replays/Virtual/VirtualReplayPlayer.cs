@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Quaver.API.Enums;
+using Quaver.API.Helpers;
 using Quaver.API.Maps;
 using Quaver.API.Maps.Processors.Scoring;
 using Quaver.API.Maps.Processors.Scoring.Data;
@@ -125,35 +126,13 @@ namespace Quaver.API.Replays.Virtual
             });
 
             // Add virtual key bindings based on the game mode of the replay.
-            switch (Map.Mode)
-            {
-                case GameMode.Keys4:
-                    InputKeyStore = new List<VirtualReplayKeyBinding>()
-                    {
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K1),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K2),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K3),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K4),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K5),
-                    };
-                    break;
-                case GameMode.Keys7:
-                    InputKeyStore = new List<VirtualReplayKeyBinding>()
-                    {
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K1),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K2),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K3),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K4),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K5),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K6),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K7),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K8),
-                        new VirtualReplayKeyBinding(ReplayKeyPressState.K9),
-                    };
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            InputKeyStore = new List<VirtualReplayKeyBinding>();
+            var keyCount = ModeHelper.ToKeyCount(map.Mode);
+            if (map.HasScratchKey)
+                keyCount += 2; // Scratch can be pressed by 2 keys
+
+            for (var i = 0; i < keyCount; i++)
+                InputKeyStore.Add(new VirtualReplayKeyBinding((ReplayKeyPressState)(1 << i)));
         }
 
         /// <summary>
@@ -280,8 +259,8 @@ namespace Quaver.API.Replays.Virtual
             {
                 var inputLane = key;
 
-                // Allow scratch key to be dual-binded to lane 8
-                if (Map.HasScratchKey && Map.Mode == GameMode.Keys7 && key + 1 == 9)
+                // Allow scratch key to be dual-binded
+                if (Map.HasScratchKey && key + 1 == ModeHelper.ToKeyCount(Map.Mode) + 2)
                     inputLane--;
 
                 // This key was uniquely pressed during this frame.
@@ -399,12 +378,12 @@ namespace Quaver.API.Replays.Virtual
                     continue;
 
                 // Judgement when a user doesn't release an LN.
-                var missedReleaseJudgement = Judgement.Good;
+                var missedReleaseJudgement = ScoreProcessor.Windows.LNMissJudgement;
 
-                ScoreProcessor.CalculateScore(missedReleaseJudgement, true, false);
+                ScoreProcessor.CalculateScore(missedReleaseJudgement.Value, true);
 
                 // Add new miss stat.
-                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, missedReleaseJudgement, int.MinValue,
+                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime, missedReleaseJudgement.Value, int.MinValue,
                     ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
                 ScoreProcessor.Stats.Add(stat);
