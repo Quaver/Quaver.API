@@ -33,6 +33,18 @@ namespace Quaver.API.Replays.Virtual
         ///     The score processor for the virtual replay.
         /// </summary>
         public ScoreProcessorKeys ScoreProcessor { get; }
+        
+
+        /// <summary>
+        ///     All of the mines that are currently active and available.
+        /// </summary>
+        public List<HitObjectInfo> ActiveMines { get; }
+        
+
+        /// <summary>
+        ///     The list of active mines that are scheduled for removal.
+        /// </summary>
+        public List<HitObjectInfo> ActiveMinesToRemove { get; set; }
 
         /// <summary>
         ///     All of the HitObjects that are currently active and available.
@@ -96,8 +108,22 @@ namespace Quaver.API.Replays.Virtual
 
             ActiveHitObjects = new List<HitObjectInfo>();
             ActiveHeldLongNotes = new List<HitObjectInfo>();
+            ActiveMines = new List<HitObjectInfo>();
 
-            map.HitObjects.ForEach(x => ActiveHitObjects.Add(x));
+            map.HitObjects.ForEach(x =>
+            {
+                switch (x.Type)
+                {
+                    case HitObjectType.Normal:
+                        ActiveHitObjects.Add(x);
+                        break;
+                    case HitObjectType.Mine:
+                        ActiveMines.Add(x);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            });
 
             // Add virtual key bindings based on the game mode of the replay.
             InputKeyStore = new List<VirtualReplayKeyBinding>();
@@ -127,10 +153,12 @@ namespace Quaver.API.Replays.Virtual
                     {
                         var obj = Map.GetHitObjectAtJudgementIndex(i);
 
-                        ScoreProcessor.CalculateScore(Judgement.Miss);
+                        var hitStat = new HitStat(HitStatType.Miss, KeyPressType.None, obj, obj.StartTime,
+                            Judgement.Miss, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health);
 
-                        ScoreProcessor.Stats.Add(new HitStat(HitStatType.Miss, KeyPressType.None, obj, obj.StartTime,
-                            Judgement.Miss, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health));
+                        ScoreProcessor.CalculateScore(hitStat);
+
+                        ScoreProcessor.Stats.Add(hitStat);
 
                         if (!ScoreProcessor.Failed)
                             continue;
@@ -150,6 +178,7 @@ namespace Quaver.API.Replays.Virtual
             // Store the objects that need to be removed from the list of active objects.
             ActiveHitObjectsToRemove = new List<HitObjectInfo>();
             ActiveHeldLongNotesToRemove = new List<HitObjectInfo>();
+            ActiveMinesToRemove = new List<HitObjectInfo>();
 
             if (CurrentFrame < Replay.Frames.Count)
             {
@@ -186,6 +215,8 @@ namespace Quaver.API.Replays.Virtual
             // Retrieve a list of the key press states in integer form.
             var currentFramePressed = Replay.KeyPressStateToLanes(Replay.Frames[CurrentFrame].Keys);
             var previousFramePressed = CurrentFrame > 0 ? Replay.KeyPressStateToLanes(Replay.Frames[CurrentFrame - 1].Keys) : new List<int>();
+            
+            var previousFrameTime = CurrentFrame > 0 ? Replay.Frames[CurrentFrame - 1].Time : Time;
 
             // Update the key press state in the store.
             for (var i = 0; i < InputKeyStore.Count; i++)
@@ -195,6 +226,33 @@ namespace Quaver.API.Replays.Virtual
             var keyDifferences = currentFramePressed.Except(previousFramePressed)
                                 .Concat(previousFramePressed.Except(currentFramePressed))
                                 .ToList();
+
+            foreach (var lane in previousFramePressed)
+            {
+                foreach (var mine in ActiveMines)
+                {
+                    var endTime = mine.IsLongNote ? mine.EndTime : mine.StartTime;
+                    if (mine.Lane == lane + 1 
+                        && endTime + ScoreProcessor.JudgementWindow[Judgement.Marv] > previousFrameTime
+                        && Time >= mine.StartTime - ScoreProcessor.JudgementWindow[Judgement.Marv])
+                    {
+                        // Calculate the hit difference.
+                        var hitDifference = 
+                            mine.StartTime - ScoreProcessor.JudgementWindow[Judgement.Marv] > previousFrameTime
+                            ? (int)ScoreProcessor.JudgementWindow[Judgement.Marv]
+                            : mine.StartTime - previousFrameTime;
+
+                        // Add a new hit stat to the score processor.
+                        var stat = new HitStat(HitStatType.Miss, KeyPressType.Press, mine, Time, Judgement.Miss, hitDifference,
+                            ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
+                        ScoreProcessor.Stats.Add(stat);
+
+                        // Object needs to be removed from ActiveObjects.
+                        ActiveMinesToRemove.Add(mine);
+                    }
+                }
+            }
 
             // Go through each frame and handle key presses/releases.
             foreach (var key in keyDifferences)
@@ -221,7 +279,7 @@ namespace Quaver.API.Replays.Virtual
                     var hitDifference = hitObject.StartTime - Time;
 
                     // Calculate Score.
-                    var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Press);
+                    var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Press, isMine: false);
 
                     switch (judgement)
                     {
@@ -233,7 +291,7 @@ namespace Quaver.API.Replays.Virtual
                             // Add another miss for an LN (head and tail)
                             if (hitObject.IsLongNote)
                             {
-                                ScoreProcessor.CalculateScore(Judgement.Miss, true);
+                                ScoreProcessor.CalculateScore(Judgement.Miss, true, false);
 
                                 ScoreProcessor.Stats.Add(new HitStat(HitStatType.Miss, KeyPressType.Press, hitObject, Time, Judgement.Miss, int.MinValue,
                                     ScoreProcessor.Accuracy, ScoreProcessor.Health));
@@ -270,7 +328,7 @@ namespace Quaver.API.Replays.Virtual
                         var hitDifference = hitObject.EndTime - Time;
 
                         // Calculate Score
-                        var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Release);
+                        var judgement = ScoreProcessor.CalculateScore(hitDifference, KeyPressType.Release, isMine: false);
 
                         // LN was released during a hit window.
                         if (judgement != Judgement.Ghost && judgement != Judgement.Miss)
@@ -284,7 +342,7 @@ namespace Quaver.API.Replays.Virtual
                         // The LN was released too early (miss)
                         else
                         {
-                            ScoreProcessor.CalculateScore(Judgement.Miss, true);
+                            ScoreProcessor.CalculateScore(Judgement.Miss, true, false);
 
                             // Add a new stat to ScoreProcessor.
                             var stat = new HitStat(HitStatType.Hit, KeyPressType.Release, hitObject, Time, Judgement.Miss, hitDifference,
@@ -302,6 +360,7 @@ namespace Quaver.API.Replays.Virtual
             // Remove all active objects after handling key presses/releases.
             ActiveHitObjectsToRemove.ForEach(x => ActiveHitObjects.Remove(x));
             ActiveHeldLongNotesToRemove.ForEach(x => ActiveHeldLongNotes.Remove(x));
+            ActiveMinesToRemove.ForEach(x => ActiveMines.Remove(x));
         }
 
         /// <summary>
@@ -346,19 +405,20 @@ namespace Quaver.API.Replays.Virtual
             {
                 if (Time > hitObject.StartTime + ScoreProcessor.JudgementWindow[Judgement.Okay])
                 {
-                    // Add a miss to the score.
-                    ScoreProcessor.CalculateScore(Judgement.Miss);
-
                     // Create a new HitStat to add to the ScoreProcessor.
                     var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.StartTime, Judgement.Miss, int.MinValue,
                         ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
+                    // Add a miss to the score.
+                    ScoreProcessor.CalculateScore(stat);
+
 
                     ScoreProcessor.Stats.Add(stat);
 
                     // Long notes count as two misses, so add another one if the object is one.
                     if (hitObject.IsLongNote)
                     {
-                        ScoreProcessor.CalculateScore(Judgement.Miss, true);
+                        ScoreProcessor.CalculateScore(Judgement.Miss, true, false);
                         ScoreProcessor.Stats.Add(stat);
                     }
 
@@ -369,10 +429,32 @@ namespace Quaver.API.Replays.Virtual
                     break;
                 }
             }
+            // Handle missed mines.
+            foreach (var hitObject in ActiveMines)
+            {
+                var endTime = hitObject.IsLongNote ? hitObject.EndTime : hitObject.StartTime;
+                if (Time > endTime + ScoreProcessor.JudgementWindow[Judgement.Marv])
+                {
+                    // Create a new HitStat to add to the ScoreProcessor.
+                    var stat = new HitStat(HitStatType.Hit, KeyPressType.None, hitObject, hitObject.StartTime, Judgement.Marv, 0,
+                        ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
+                    // Add a miss to the score.
+                    ScoreProcessor.CalculateScore(stat);
+
+                    ScoreProcessor.Stats.Add(stat);
+                    ActiveMinesToRemove.Add(hitObject);
+                }
+                else if (Time < hitObject.StartTime - ScoreProcessor.JudgementWindow[Judgement.Marv])
+                {
+                    break;
+                }
+            }
 
             // Remove all objects
             ActiveHitObjectsToRemove.ForEach(x => ActiveHitObjects.Remove(x));
             ActiveHeldLongNotesToRemove.ForEach(x => ActiveHeldLongNotes.Remove(x));
+            ActiveMinesToRemove.ForEach(x => ActiveMines.Remove(x));
         }
 
         /// <summary>
