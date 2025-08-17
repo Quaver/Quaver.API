@@ -61,6 +61,8 @@ namespace Quaver.API.Enums
         Speed185X = 1L << 41, // Speed 1.85x
         Speed195X = 1L << 42, // Speed 1.95x
         HeatlthAdjust = 1L << 43, // Test mod for making long note windows easier
-        NoMiss = 1L << 44 // You miss, you die
+        NoMiss = 1L << 44, // You miss, you die
+
+        SpeedMods = Speed05X | Speed055X | Speed06X | Speed065X | Speed07X | Speed075X | Speed08X | Speed085X | Speed09X | Speed095X | Speed105X | Speed11X | Speed115X | Speed12X | Speed125X | Speed13X | Speed135X | Speed14X | Speed145X | Speed15X | Speed155X | Speed16X | Speed165X | Speed17X | Speed175X | Speed18X | Speed185X | Speed19X | Speed195X | Speed20X
     }
 }
