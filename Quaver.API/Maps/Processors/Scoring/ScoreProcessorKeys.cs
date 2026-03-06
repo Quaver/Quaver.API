@@ -255,6 +255,8 @@ namespace Quaver.API.Maps.Processors.Scoring
             // Update Judgement count
             CurrentJudgements[judgement]++;
 
+            if (isMine) CountMineHit++;
+
             // Calculate and set the new accuracy.
             Accuracy = CalculateAccuracy();
 

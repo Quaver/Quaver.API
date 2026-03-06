@@ -24,7 +24,9 @@ namespace Quaver.API.Replays
         /// <summary>
         ///     The version of the replay.
         /// </summary>
-        public static string CurrentVersion { get; } = "0.0.2";
+        public static string CurrentVersion { get; } = "0.0.3";
+
+        public static readonly Version VersionMineHit = new Version(0, 0, 3);
 
         /// <summary>
         ///     The game mode this replay is for.
@@ -115,6 +117,11 @@ namespace Quaver.API.Replays
         ///     Amount of miss judgements.
         /// </summary>
         public int CountMiss { get; set; }
+        
+        /// <summary>
+        ///     Amount of mine hits.
+        /// </summary>
+        public int CountMineHit { get; set; }
 
         /// <summary>
         ///     The amount of times paused in the play.
@@ -211,6 +218,12 @@ namespace Quaver.API.Replays
                     CountGood = br.ReadInt32();
                     CountOkay = br.ReadInt32();
                     CountMiss = br.ReadInt32();
+
+                    if (Version.TryParse(ReplayVersion, out var ver) && ver >= VersionMineHit)
+                    {
+                        CountMineHit = br.ReadInt32();
+                    }
+                    
                     PauseCount = br.ReadInt32();
 
                     // Versions beyond None
@@ -291,6 +304,12 @@ namespace Quaver.API.Replays
                 bw.Write(CountGood);
                 bw.Write(CountOkay);
                 bw.Write(CountMiss);
+
+                if (Version.TryParse(ReplayVersion, out var ver) && ver >= VersionMineHit)
+                {
+                    bw.Write(CountMineHit);
+                }
+
                 bw.Write(PauseCount);
                 bw.Write(RandomizeModifierSeed);
 
@@ -318,6 +337,7 @@ namespace Quaver.API.Replays
             CountGood = processor.CurrentJudgements[Judgement.Good];
             CountOkay = processor.CurrentJudgements[Judgement.Okay];
             CountMiss = processor.CurrentJudgements[Judgement.Miss];
+            CountMineHit = processor.CountMineHit;
         }
 
         /// <summary>
@@ -481,6 +501,12 @@ namespace Quaver.API.Replays
         /// <returns></returns>
         public string GetMd5(string frames)
         {
+            if (Version.TryParse(CurrentVersion, out var ver) && ver >= VersionMineHit)
+            {
+                return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int)Mode}-" +
+                                                $"{(int)Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
+                                                $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{CountMineHit}-{PauseCount}-{RandomizeModifierSeed}-{frames}");
+            }
             return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int)Mode}-" +
                                             $"{(int)Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
                                             $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{RandomizeModifierSeed}-{frames}");

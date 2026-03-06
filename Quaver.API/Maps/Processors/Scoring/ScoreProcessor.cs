@@ -114,6 +114,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         };
 
         /// <summary>
+        ///     The amount of mine hits the user got.
+        /// </summary>
+        public int CountMineHit { get; set; } = 0;
+
+        /// <summary>
         ///     The judgement windows defined per mode.
         /// </summary>
         public abstract SortedDictionary<Judgement, float> JudgementWindow { get; set; }
@@ -215,6 +220,7 @@ namespace Quaver.API.Maps.Processors.Scoring
             CurrentJudgements[Judgement.Good] = replay.CountGood;
             CurrentJudgements[Judgement.Okay] = replay.CountOkay;
             CurrentJudgements[Judgement.Miss] = replay.CountMiss;
+            CountMineHit = replay.CountMineHit;
 
             InitializeJudgementWindows(windows);
             InitializeMods();
