@@ -446,20 +446,13 @@ namespace Quaver.API.Replays.Virtual
                 }
             }
             // Handle missed mines.
-            // 'Missed' as in the mines were not triggered, meaning a marvelous judgement should be given.
+            // 'Missed' as in the mines were not triggered. This will not reward the player by design.
             foreach (var hitObject in ActiveMines)
             {
                 var endTime = hitObject.IsLongNote ? hitObject.EndTime : hitObject.StartTime;
                 if (Time > endTime + ScoreProcessor.JudgementWindow[Judgement.Marv])
                 {
-                    // Create a new HitStat to add to the ScoreProcessor.
-                    // Award a Marvelous for successfully avoiding the mine.
-                    var stat = new HitStat(HitStatType.Hit, KeyPressType.None, hitObject, hitObject.StartTime, Judgement.Marv, 0,
-                        ScoreProcessor.Accuracy, ScoreProcessor.Health);
-
-                    ScoreProcessor.CalculateScore(stat);
-
-                    ScoreProcessor.Stats.Add(stat);
+                    // Simply remove the mine. We do not count a cleared mine into statistics.
                     ActiveMinesToRemove.Add(hitObject);
                 }
                 else if (Time < hitObject.StartTime - ScoreProcessor.JudgementWindow[Judgement.Marv])
