@@ -403,6 +403,15 @@ namespace Quaver.API.Maps.Parsers.Stepmania
                         if (longNote != null)
                             longNote.EndTime = (int)Math.Round(currentTime, MidpointRounding.AwayFromZero);
                         break;
+                    // Create mines for Mine notes
+                    case StepFileChartNoteType.Mine:
+                        qua.HitObjects.Add(new HitObjectInfo
+                        {
+                            StartTime = (int)Math.Truncate(currentTime),
+                            Lane = i + 1,
+                            Type = Enums.HitObjectType.Mine
+                        });
+                        break;
                 }
             }
         }
