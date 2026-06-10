@@ -22,11 +22,16 @@ namespace Quaver.API.Replays
     public class Replay
     {
         /// <summary>
-        ///     The version of the replay.
+        ///     The version string of the replay.
         /// </summary>
-        public static string CurrentVersion { get; } = "0.0.3";
+        public static string CurrentVersionString => CurrentVersion.ToString();
 
         public static readonly Version VersionMineHit = new Version(0, 0, 3);
+
+        /// <summary>
+        ///     The version of the replay.
+        /// </summary>
+        public static Version CurrentVersion => VersionMineHit;
 
         /// <summary>
         ///     The game mode this replay is for.
@@ -169,6 +174,16 @@ namespace Quaver.API.Replays
                 {
                     // Version None (Original data)
                     ReplayVersion = br.ReadString();
+
+                    // Reject future versions
+                    if (ReplayVersion != "None")
+                    {
+                        if (!Version.TryParse(ReplayVersion, out var version) || version > CurrentVersion)
+                        {
+                            throw new ArgumentOutOfRangeException($"Replay version {version} is newer than current version {CurrentVersion}");
+                        }
+                    }
+
                     MapMd5 = br.ReadString();
                     Md5 = br.ReadString();
                     PlayerName = br.ReadString();
@@ -501,7 +516,7 @@ namespace Quaver.API.Replays
         /// <returns></returns>
         public string GetMd5(string frames)
         {
-            if (Version.TryParse(CurrentVersion, out var ver) && ver >= VersionMineHit)
+            if (Version.TryParse(CurrentVersionString, out var ver) && ver >= VersionMineHit)
             {
                 return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int)Mode}-" +
                                                 $"{(int)Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
