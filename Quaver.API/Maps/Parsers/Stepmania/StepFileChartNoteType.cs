@@ -6,5 +6,6 @@ namespace Quaver.API.Maps.Parsers.Stepmania
         Normal,
         Head,
         Tail,
+        Mine,
     }
 }
