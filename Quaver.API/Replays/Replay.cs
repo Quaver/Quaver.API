@@ -287,12 +287,7 @@ namespace Quaver.API.Replays
         {
             var frames = FramesToString();
 
-            // TOOD: This should be removed when everyone is running the new redesign client
-            // This will manually downgrade the replay version if the user isn't using new modifiers to keep
-            // compatibility between old and new clients.
-            // 0.0.1 used to write the modifiers as a 32-bit integer, but because of the amount of new mods, they need
-            // to be written as 64-bit.
-            ReplayVersion = Mods < ModIdentifier.Speed105X ? "0.0.1" : CurrentVersion;
+            ReplayVersion = CurrentVersionString;
 
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(frames)))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
