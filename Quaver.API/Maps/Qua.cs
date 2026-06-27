@@ -841,6 +841,11 @@ namespace Quaver.API.Maps
         }
 
         /// <summary>
+        ///     Removes all mines from the map.
+        /// </summary>
+        public void RemoveMines() => HitObjects = HitObjects.Where(x => x.Type != HitObjectType.Mine).ToList();
+
+        /// <summary>
         ///     Replaces regular notes with long notes and vice versa.
         ///
         ///     HitObjects and TimingPoints MUST be sorted by StartTime prior to calling this method,
@@ -1014,6 +1019,9 @@ namespace Quaver.API.Maps
         /// <param name="mods">a list of mods to apply</param>
         public void ApplyMods(ModIdentifier mods)
         {
+            if (mods.HasFlag(ModIdentifier.NoMines))
+                RemoveMines();
+
             if (mods.HasFlag(ModIdentifier.NoLongNotes))
                 ReplaceLongNotesWithRegularNotes();
 
