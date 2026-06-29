@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Quaver.API.Enums;
 using Quaver.API.Maps.Structures;
 
@@ -101,6 +103,7 @@ namespace Quaver.API.Maps.Parsers.Stepmania
         /// <param name="lines"></param>
         private void Parse(string[] lines)
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             // The currently parsed chart
             StepFileChart currentChart = null;
 
