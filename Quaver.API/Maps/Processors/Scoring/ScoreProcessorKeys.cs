@@ -34,6 +34,11 @@ namespace Quaver.API.Maps.Processors.Scoring
         private int TotalJudgements { get; }
 
         /// <summary>
+        ///     Total number of mines in the map.
+        /// </summary>
+        private int MineCount { get; }
+
+        /// <summary>
         ///     See: ScoreProcessorKeys.CalculateSummedScore();
         /// </summary>
         private int SummedScore { get; }
@@ -143,6 +148,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         public ScoreProcessorKeys(Qua map, ModIdentifier mods, JudgementWindows windows = null) : base(map, mods, windows)
         {
             TotalJudgements = GetTotalJudgementCount();
+            MineCount = map.MineCount;
             SummedScore = CalculateSummedScore();
             InitializeHealthWeighting();
         }
@@ -157,6 +163,7 @@ namespace Quaver.API.Maps.Processors.Scoring
         public ScoreProcessorKeys(Qua map, ModIdentifier mods, ScoreProcessorMultiplayer multiplayer, JudgementWindows windows = null) : base(map, mods, multiplayer, windows)
         {
             TotalJudgements = GetTotalJudgementCount();
+            MineCount = map.MineCount;
             SummedScore = CalculateSummedScore();
             InitializeHealthWeighting();
         }
@@ -247,6 +254,8 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             // Update Judgement count
             CurrentJudgements[judgement]++;
+
+            if (isMine) CountMineHit++;
 
             // Calculate and set the new accuracy.
             Accuracy = CalculateAccuracy();
@@ -402,9 +411,14 @@ namespace Quaver.API.Maps.Processors.Scoring
             // Multiplier doesn't increase after this amount.
             var maxMultiplierCount = MultiplierMaxIndex * MultiplierCountToIncreaseIndex;
 
+            // The total number of judgements for a maximum score would be excluding the number of mines.
+            // This is because both a mine hit (a miss) and a mine clear (nothing) will gain 0 point,
+            // but a mine hit resets combo, reducing score.
+            var totalJudgements = TotalJudgements - MineCount;
+
             // Calculate score for notes below max multiplier combo
             // Note: This block could be a constant for songs that have max combo that exceeds the max multiplier count, but that will mean we will have to manually change the constant everytime we update any single other constant.
-            for (var i = 1; i <= TotalJudgements && i < maxMultiplierCount; i++)
+            for (var i = 1; i <= totalJudgements && i < maxMultiplierCount; i++)
                 summedScore += JudgementScoreWeighting[Judgement.Marv] + MultiplierCountToIncreaseIndex * (int) Math.Floor((float)i / MultiplierCountToIncreaseIndex);
 
             // Calculate score for notes once max multiplier combo is reached

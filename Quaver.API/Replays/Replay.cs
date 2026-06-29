@@ -22,9 +22,16 @@ namespace Quaver.API.Replays
     public class Replay
     {
         /// <summary>
+        ///     The version string of the replay.
+        /// </summary>
+        public static string CurrentVersionString => CurrentVersion.ToString();
+
+        public static readonly Version VersionMineHit = new Version(0, 0, 3);
+
+        /// <summary>
         ///     The version of the replay.
         /// </summary>
-        public static string CurrentVersion { get; } = "0.0.2";
+        public static Version CurrentVersion => VersionMineHit;
 
         /// <summary>
         ///     The game mode this replay is for.
@@ -115,6 +122,11 @@ namespace Quaver.API.Replays
         ///     Amount of miss judgements.
         /// </summary>
         public int CountMiss { get; set; }
+        
+        /// <summary>
+        ///     Amount of mine hits.
+        /// </summary>
+        public int CountMineHit { get; set; }
 
         /// <summary>
         ///     The amount of times paused in the play.
@@ -162,6 +174,16 @@ namespace Quaver.API.Replays
                 {
                     // Version None (Original data)
                     ReplayVersion = br.ReadString();
+
+                    // Reject future versions
+                    if (ReplayVersion != "None")
+                    {
+                        if (!Version.TryParse(ReplayVersion, out var version) || version > CurrentVersion)
+                        {
+                            throw new ArgumentOutOfRangeException($"Replay version {version} is newer than current version {CurrentVersion}");
+                        }
+                    }
+
                     MapMd5 = br.ReadString();
                     Md5 = br.ReadString();
                     PlayerName = br.ReadString();
@@ -211,6 +233,12 @@ namespace Quaver.API.Replays
                     CountGood = br.ReadInt32();
                     CountOkay = br.ReadInt32();
                     CountMiss = br.ReadInt32();
+
+                    if (Version.TryParse(ReplayVersion, out var ver) && ver >= VersionMineHit)
+                    {
+                        CountMineHit = br.ReadInt32();
+                    }
+                    
                     PauseCount = br.ReadInt32();
 
                     // Versions beyond None
@@ -259,12 +287,7 @@ namespace Quaver.API.Replays
         {
             var frames = FramesToString();
 
-            // TOOD: This should be removed when everyone is running the new redesign client
-            // This will manually downgrade the replay version if the user isn't using new modifiers to keep
-            // compatibility between old and new clients.
-            // 0.0.1 used to write the modifiers as a 32-bit integer, but because of the amount of new mods, they need
-            // to be written as 64-bit.
-            ReplayVersion = Mods < ModIdentifier.Speed105X ? "0.0.1" : CurrentVersion;
+            ReplayVersion = CurrentVersionString;
 
             using (var replayDataStream = new MemoryStream(Encoding.ASCII.GetBytes(frames)))
             using (var bw = new BinaryWriter(File.Open(path, FileMode.Create)))
@@ -291,6 +314,12 @@ namespace Quaver.API.Replays
                 bw.Write(CountGood);
                 bw.Write(CountOkay);
                 bw.Write(CountMiss);
+
+                if (Version.TryParse(ReplayVersion, out var ver) && ver >= VersionMineHit)
+                {
+                    bw.Write(CountMineHit);
+                }
+
                 bw.Write(PauseCount);
                 bw.Write(RandomizeModifierSeed);
 
@@ -318,6 +347,7 @@ namespace Quaver.API.Replays
             CountGood = processor.CurrentJudgements[Judgement.Good];
             CountOkay = processor.CurrentJudgements[Judgement.Okay];
             CountMiss = processor.CurrentJudgements[Judgement.Miss];
+            CountMineHit = processor.CountMineHit;
         }
 
         /// <summary>
@@ -481,6 +511,12 @@ namespace Quaver.API.Replays
         /// <returns></returns>
         public string GetMd5(string frames)
         {
+            if (Version.TryParse(CurrentVersionString, out var ver) && ver >= VersionMineHit)
+            {
+                return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int)Mode}-" +
+                                                $"{(int)Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
+                                                $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{CountMineHit}-{PauseCount}-{RandomizeModifierSeed}-{frames}");
+            }
             return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int)Mode}-" +
                                             $"{(int)Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +
                                             $"{CountGreat}-{CountGood}-{CountOkay}-{CountMiss}-{PauseCount}-{RandomizeModifierSeed}-{frames}");
