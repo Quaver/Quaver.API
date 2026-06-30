@@ -46,6 +46,7 @@ namespace Quaver.Tools.Commands
             Replay.CountGood,
             Replay.CountOkay,
             Replay.CountMiss,
+            Replay.CountMineHit,
             Replay.PauseCount,
             Replay.HasData,
             Replay.Frames.Count
