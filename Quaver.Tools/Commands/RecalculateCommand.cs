@@ -55,8 +55,7 @@ namespace Quaver.Tools.Commands
                 var qua = new Qua();
 
                 var totalObjects = (int)score["count_marv"] + (int)score["count_perf"] + (int)score["count_great"] +
-                                   (int)score["count_good"] + (int)score["count_okay"] + (int)score["count_miss"] +
-                                   (int)score["count_minehit"];
+                                   (int)score["count_good"] + (int)score["count_okay"] + (int)score["count_miss"];
 
                 for (var i = 0; i < totalObjects; i++)
                     qua.HitObjects.Add(new HitObjectInfo());
@@ -80,9 +79,6 @@ namespace Quaver.Tools.Commands
 
                 for (var i = 0; i < (int)score["count_miss"]; i++)
                     processor.CalculateScore(Judgement.Miss, false, false);
-
-                for (var i = 0; i < (int)score["count_minehit"]; i++)
-                    processor.CalculateScore(Judgement.Miss, false, true);
 
                 var difficultyRating = (double)score["performance_rating"] / Math.Pow((double)score["accuracy"] / 98, 6);
 
