@@ -121,7 +121,8 @@ namespace Quaver.Tools.Commands
                     Replay.CountGreat,
                     Replay.CountGood,
                     Replay.CountOkay,
-                    Replay.CountMiss
+                    Replay.CountMiss,
+                    Replay.CountMineHit
                 },
                 VirtualReplayPlayer = new
                 {
@@ -134,6 +135,7 @@ namespace Quaver.Tools.Commands
                     CountGood = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Good],
                     CountOkay = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Okay],
                     CountMiss = virtualPlayer.ScoreProcessor.CurrentJudgements[Judgement.Miss],
+                    virtualPlayer.ScoreProcessor.CountMineHit,
                     Hits = hits
                 },
             }));

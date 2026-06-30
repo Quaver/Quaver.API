@@ -299,12 +299,7 @@ namespace Quaver.API.Replays
                 bw.Write(DateTime.Now.ToString(CultureInfo.InvariantCulture));
                 bw.Write(TimePlayed);
                 bw.Write((int)Mode);
-                // This check is to keep compatibility with older clients.
-                // We only want to write a 64-bit integer for replays with newer mods activated
-                if (ReplayVersion == "0.0.1" || Mods < ModIdentifier.Speed105X)
-                    bw.Write((int)Mods);
-                else
-                    bw.Write((long)Mods);
+                bw.Write((long)Mods);
                 bw.Write(Score);
                 bw.Write(Accuracy);
                 bw.Write(MaxCombo);
@@ -511,7 +506,7 @@ namespace Quaver.API.Replays
         /// <returns></returns>
         public string GetMd5(string frames)
         {
-            if (Version.TryParse(CurrentVersionString, out var ver) && ver >= VersionMineHit)
+            if (Version.TryParse(ReplayVersion, out var ver) && ver >= VersionMineHit)
             {
                 return CryptoHelper.StringToMd5($"{ReplayVersion}-{TimePlayed}-{MapMd5}-{PlayerName}-{(int)Mode}-" +
                                                 $"{(int)Mods}-{Score}-{Accuracy}-{MaxCombo}-{CountMarv}-{CountPerf}-" +

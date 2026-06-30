@@ -26,7 +26,7 @@ namespace Quaver.Tools.Commands
 
         /// <summary>
         /// <replay_path> <output_path> <quaver_version> <map_md5> <timestamp> <mode> <mods> <score>
-        /// <accuracy> <max_combo> <count_marv> <count_perf> <count_great> <count_good> <count_okay> <count_miss> <pause_count> <username>
+        /// <accuracy> <max_combo> <count_marv> <count_perf> <count_great> <count_good> <count_okay> <count_miss> <count_mine_hit> <pause_count> <username>
         /// </summary>
         /// <param name="args"></param>
         public ReplayBuildCommand(string[] args) : base(args)
@@ -52,7 +52,8 @@ namespace Quaver.Tools.Commands
                 CountGood = int.Parse(args[14]),
                 CountOkay = int.Parse(args[15]),
                 CountMiss = int.Parse(args[16]),
-                PauseCount = int.Parse(args[17])
+                CountMineHit = int.Parse(args[17]),
+                PauseCount = int.Parse(args[18])
             };
 
             OutputPath = args[2];
