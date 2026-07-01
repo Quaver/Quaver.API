@@ -142,39 +142,7 @@ namespace Quaver.API.Replays.Virtual
         {
             if (CurrentFrame >= Replay.Frames.Count && !ExtendedFailingReplay && !DontExtendReplay)
             {
-                // Handle when the replay isn't extended enough to have enough misses to cause a failure.
-                var totalJudgementCount = ScoreProcessor.GetTotalJudgementCount();
-                var totalScoredJudgements = ScoreProcessor.TotalJudgementCount;
-                var judgementDifference = totalJudgementCount - totalScoredJudgements;
-
-                if (judgementDifference != 0)
-                {
-                    for (var i = totalScoredJudgements; i < totalJudgementCount; i++)
-                    {
-                        var obj = Map.GetHitObjectAtJudgementIndex(i);
-
-                        var hitStat = obj.Type switch
-                        {
-                            HitObjectType.Normal => new HitStat(HitStatType.Miss, KeyPressType.None, obj, obj.StartTime,
-                                Judgement.Miss, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health),
-                            HitObjectType.Mine => new HitStat(HitStatType.Hit, KeyPressType.None, obj, obj.StartTime,
-                                Judgement.Marv, 0, ScoreProcessor.Accuracy, ScoreProcessor.Health),
-                            _ => throw new ArgumentOutOfRangeException(nameof(obj.Type), obj.Type,
-                                "Unhandled note type")
-                        };
-
-                        ScoreProcessor.CalculateScore(hitStat);
-
-                        ScoreProcessor.Stats.Add(hitStat);
-
-                        if (!ScoreProcessor.Failed)
-                            continue;
-
-                        ExtendedFailingReplay = true;
-                        return;
-                    }
-                }
-
+                ExtendWithRemainingHitObjects();
                 ExtendedFailingReplay = true;
                 return;
             }
@@ -195,6 +163,54 @@ namespace Quaver.API.Replays.Virtual
 
                 CurrentFrame++;
             }
+        }
+
+        /// <summary>
+        ///     Extends incomplete replays with misses from objects that are still active.
+        /// </summary>
+        private void ExtendWithRemainingHitObjects()
+        {
+            ActiveHitObjectsToRemove = new List<HitObjectInfo>();
+            ActiveHeldLongNotesToRemove = new List<HitObjectInfo>();
+            ActiveMinesToRemove = new List<HitObjectInfo>();
+
+            foreach (var hitObject in ActiveHeldLongNotes.OrderBy(x => x.EndTime).ToList())
+            {
+                var missedReleaseJudgement = ScoreProcessor.Windows.LNMissJudgement.Value;
+                var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.EndTime,
+                    missedReleaseJudgement, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
+                ScoreProcessor.CalculateScore(missedReleaseJudgement, true);
+                ScoreProcessor.Stats.Add(stat);
+                ActiveHeldLongNotesToRemove.Add(hitObject);
+
+                if (ScoreProcessor.Failed)
+                    return;
+            }
+
+            foreach (var hitObject in ActiveHitObjects.OrderBy(x => x.StartTime).ToList())
+            {
+                AddMissedHitObject(hitObject);
+                ActiveHitObjectsToRemove.Add(hitObject);
+
+                if (ScoreProcessor.Failed)
+                    return;
+            }
+        }
+
+        private void AddMissedHitObject(HitObjectInfo hitObject)
+        {
+            var stat = new HitStat(HitStatType.Miss, KeyPressType.None, hitObject, hitObject.StartTime,
+                Judgement.Miss, int.MinValue, ScoreProcessor.Accuracy, ScoreProcessor.Health);
+
+            ScoreProcessor.CalculateScore(stat);
+            ScoreProcessor.Stats.Add(stat);
+
+            if (!hitObject.IsLongNote)
+                return;
+
+            ScoreProcessor.CalculateScore(Judgement.Miss, true, false);
+            ScoreProcessor.Stats.Add(stat);
         }
 
         /// <summary>
