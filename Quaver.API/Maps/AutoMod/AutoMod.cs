@@ -19,7 +19,7 @@ using Quaver.API.Maps.AutoMod.Issues.TimingPoints;
 using Quaver.API.Maps.Structures;
 using Quaver.API.Replays;
 using Quaver.API.Replays.Virtual;
-using SixLabors.ImageSharp;
+using SkiaSharp;
 
 namespace Quaver.API.Maps.AutoMod
 {
@@ -455,15 +455,33 @@ namespace Quaver.API.Maps.AutoMod
             if (new FileInfo(path).Length > maxSize)
                 Issues.Add(new AutoModIssueImageTooLarge(item, maxSize));
 
+            if (!TryGetImageDimensions(path, out var width, out var height))
+                return;
+
+            if (width < minWidth || height < minHeight || width > maxWidth || height > maxHeight)
+                Issues.Add(new AutoModIssueImageResolution(item, minWidth, minHeight, maxWidth, maxHeight));
+        }
+
+        private static bool TryGetImageDimensions(string path, out int width, out int height)
+        {
+            width = 0;
+            height = 0;
+
             try
             {
-                using (var image = Image.Load(path))
-                    if (image.Width < minWidth || image.Height < minHeight || image.Width > maxWidth || image.Height > maxHeight)
-                        Issues.Add(new AutoModIssueImageResolution(item, minWidth, minHeight, maxWidth, maxHeight));
+                using (var codec = SKCodec.Create(path))
+                {
+                    if (codec == null)
+                        return false;
+
+                    width = codec.Info.Width;
+                    height = codec.Info.Height;
+                    return width > 0 && height > 0;
+                }
             }
             catch (Exception)
             {
-                // ignored
+                return false;
             }
         }
 
