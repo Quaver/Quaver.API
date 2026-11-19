@@ -126,6 +126,20 @@ namespace Quaver.API.Maps.Processors.Scoring
             {Judgement.Miss, -6.0f}
         };
 
+        /// <summary>
+        ///     Experimental base health weighting used instead of <see cref="JudgementHealthWeighting"/>
+        ///     when <see cref="ModIdentifier.HeatlthAdjust"/> is active.
+        /// </summary>
+        private static Dictionary<Judgement, float> ExperimentalHealthWeighting { get; } = new Dictionary<Judgement, float>()
+        {
+            {Judgement.Marv, 0.5f},
+            {Judgement.Perf, 0.4f},
+            {Judgement.Great, 0.2f},
+            {Judgement.Good, -1.5f},
+            {Judgement.Okay, -6.0f},
+            {Judgement.Miss, -3.0f}
+        };
+
         /// <inheritdoc />
         /// <summary>
         /// </summary>
@@ -354,6 +368,12 @@ namespace Quaver.API.Maps.Processors.Scoring
         {
             if (Mods.HasFlag(ModIdentifier.Autoplay))
                 return;
+
+            if (Mods.HasFlag(ModIdentifier.HeatlthAdjust))
+            {
+                foreach (var item in ExperimentalHealthWeighting)
+                    JudgementHealthWeighting[item.Key] = item.Value;
+            }
 
             var density = Map.GetActionsPerSecond(ModHelper.GetRateFromMods(Mods));
 
